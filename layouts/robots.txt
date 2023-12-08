@@ -2,7 +2,7 @@ User-agent: *
 
 # Start AI crawler block
 #
-# n0rdy does not permit unlicensed use of our content for training large language models or other
+# n0rdy does not permit unlicensed use of my content for training large language models or other
 # artificial intelligence technology. All uses, reproductions and extractions of my content for
 # such purposes require specific approval by n0rdy. I explicitly disallow text and data mining and
 # all other technical means designed to or with the effect that they enable unlicensed use,

@@ -39,7 +39,7 @@ type Worker struct {
 }
 ```
 
-This and other code examples are available in this [GitHub repo](https://github.com/n0rdy/n0rdy-blog-code-samples/20231204-go-channels-and-goroutines).
+This and other code examples are available in this [GitHub repo](https://github.com/n0rdy/n0rdy-blog-code-samples/tree/main/20231207-go-channels-and-goroutines).
 
 <details> 
   <summary>If you are new to Go and don't know what struct is</summary>
