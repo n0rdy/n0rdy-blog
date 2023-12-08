@@ -41,6 +41,7 @@ paginate = 5
 
     github_url = "https://github.com/n0rdy"
     linkedin_url = "https://www.linkedin.com/in/mykola-shumyn"
+    email_url = "mailto://hello@n0rdy.foo"
 
     rss_icon = true
     rss_section = "posts"
