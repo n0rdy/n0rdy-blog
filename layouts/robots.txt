@@ -8,15 +8,48 @@ User-agent: *
 # all other technical means designed to or with the effect that they enable unlicensed use,
 # reproduction or extraction of my content for training AI models.
 
-User-agent: CCBot
-Disallow: /
-
-User-agent: GPTBot
-Disallow: /
-
 User-agent: anthropic-ai
+Disallow: /
+
+User-agent: CCBot
 Disallow: /
 
 User-agent: Google-Extended
 Disallow: /
+
+User-agent: GPTBot
+Disallow: /
 # End AI crawler block
+
+# Start known spiders block
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: facebookexternalhit
+Disallow: /
+
+User-agent: ia_archiver
+Disallow: /
+
+User-Agent: LinkedInBot
+Disallow: /
+
+User-Agent: LinkedInBot/1.0
+Disallow: /
+
+User-agent: Pinterestbot
+Disallow: /
+
+User-agent: TelegramBot
+Disallow: /
+
+User-agent: Twitterbot
+Disallow: /
+
+User-agent: Yandex
+Disallow: /
+
+# End known spiders block
+
+Sitemap: https://n0rdy.foo/sitemap.xml
