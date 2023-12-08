@@ -1,7 +1,7 @@
 ---
 title: "Go concurrency simplified. Part 1: Channels and goroutines"
 draft: false
-date: 2023-12-08T20:00:00+02:00
+date: 2023-12-08T17:00:00+02:00
 tags: ["go", "concurrency", "goroutines", "channels"]
 series: "Go concurrency simplified"
 ---
