@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>About on n0rdy personal blog</title>
+    <link>https://n0rdy.foo/about/</link>
+    <description>Recent content in About on n0rdy personal blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language><atom:link href="https://n0rdy.foo/about/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>About</title>
+      <link>https://n0rdy.foo/about/about/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://n0rdy.foo/about/about/</guid>
+      <description>Hello there!
+I haven&amp;rsquo;t come up with a good way to introduce myself yet, so I&amp;rsquo;ll just leave you with this quote from J.R.R. Tolkien&amp;rsquo;s The Hobbit that I feel personal connection to:
+&amp;hellip;then something Tookish woke up inside him, and he wished to go and see the great mountains, and hear the pine-trees and the waterfalls, and explore the caves, and wear a sword instead of a walking-stick&amp;hellip;</description>
+    </item>
+    
+  </channel>
+</rss>
