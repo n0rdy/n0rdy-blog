@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>n0rdy personal blog</title>
-    <link>https://n0rdy.foo/</link>
-    <description>Recent content on n0rdy personal blog</description>
+    <title>concurrency on n0rdy personal blog</title>
+    <link>https://n0rdy.foo/tags/concurrency/</link>
+    <description>Recent content in concurrency on n0rdy personal blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 Dec 2023 22:00:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 07 Dec 2023 22:00:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/concurrency/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go concurrency simplified. Part 1: Channels and goroutines</title>
       <link>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</link>
@@ -14,17 +14,6 @@
       
       <guid>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</guid>
       <description>Go concurrency simplified. Part 1: Channels and goroutines Christmas season is around the corner, that&amp;rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on my open-source library for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.</description>
-    </item>
-    
-    <item>
-      <title>About</title>
-      <link>https://n0rdy.foo/about/about/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://n0rdy.foo/about/about/</guid>
-      <description>Hello there!
-I haven&amp;rsquo;t come up with a good way to introduce myself yet, so I&amp;rsquo;ll just leave you with this quote from J.R.R. Tolkien&amp;rsquo;s The Hobbit that I feel personal connection to:
-&amp;hellip;then something Tookish woke up inside him, and he wished to go and see the great mountains, and hear the pine-trees and the waterfalls, and explore the caves, and wear a sword instead of a walking-stick&amp;hellip;</description>
     </item>
     
   </channel>

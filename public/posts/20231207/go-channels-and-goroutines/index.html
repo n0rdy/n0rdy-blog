@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+    
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.a43a549406127e0715f68083c987d71d0c71054cd57edea77aa709ed9958af6e.js"></script>
+
+
+
+<script defer data-domain="n0rdy.foo" src="https://plausible.n0rdy.foo/js/script.js"></script>
+
+
+
+
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <link rel="icon" href=/favicon.ico>
+
+    
+    
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+
+
+<!-- Open Graph image and Twitter Card metadata -->
+
+<title itemprop="name">n0rdy - Go concurrency simplified. Part 1: Channels and goroutines</title>
+<meta property="og:title" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;1:&#32;Channels&#32;and&#32;goroutines />
+<meta name="twitter:title" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;1:&#32;Channels&#32;and&#32;goroutines />
+<meta itemprop="name" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;1:&#32;Channels&#32;and&#32;goroutines />
+<meta name="application-name" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;1:&#32;Channels&#32;and&#32;goroutines />
+<meta property="og:site_name" content="n0rdy personal blog" />
+
+
+<meta name="description" content="" />
+<meta itemprop="description" content="" />
+<meta property="og:description" content="" />
+<meta name="twitter:description" content="" />
+
+
+<base href="https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/" />
+<link rel="canonical" href="https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/" itemprop="url" />
+<meta name="url" content="https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/" />
+<meta name="twitter:url" content="https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/" />
+<meta property="og:url" content="https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/" />
+
+
+<meta property="og:updated_time" content=7012-07-10T120:00:23&#43;0200 />
+
+
+<link rel="sitemap" type="application/xml" title="Sitemap" href='https://n0rdy.foo/sitemap.xml' />
+
+<meta name="robots" content="index,follow" />
+<meta name="googlebot" content="index,follow" />
+
+
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+<meta property="fb:admins" content="" />
+
+
+<meta name="apple-mobile-web-app-title" content="n0rdy personal blog" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+
+
+
+
+
+
+<meta property="og:type" content="article" />
+<meta property="article:publisher" content="" />
+<meta property="og:article:published_time" content=7012-07-10T120:00:23&#43;0200 />
+<meta property="article:published_time" content=7012-07-10T120:00:23&#43;0200 />
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.119.0">
+
+
+    
+    
+
+<link type="text/css" rel="stylesheet" href="/css/bundle.min.9253bc12513d029afeda19b8831df5c2e217d0092a9f142adac20b5376162a30.css">
+
+
+    
+    <style>
+    body {
+        --sidebar-bg-color: #202020;
+        --sidebar-img-border-color: #515151;
+        --sidebar-p-color: #909090;
+        --sidebar-h1-color: #FFF;
+        --sidebar-a-color: #FFF;
+        --sidebar-socials-color: #FFF;
+        --text-color: #222;
+        --bkg-color: #FAF9F6;
+        --post-title-color: #303030;
+        --list-color: #5a5a5a;
+        --link-color: #268bd2;
+        --date-color: #515151;
+        --table-border-color: #E5E5E5;
+        --table-stripe-color: #F9F9F9;
+        --code-color: #000;
+        --code-background-color: #E5E5E5;
+        --code-block-color: #fff;
+        --code-block-background-color: #272822;
+        --moon-sun-color: #FFF;
+        --moon-sun-background-color: #515151;
+    }
+    body.dark-theme {
+        --text-color: #eee;
+        --bkg-color: #121212;
+        --post-title-color: #DBE2E9;
+        --list-color: #9d9d9d;
+        --link-color: #268bd2;
+        --date-color: #9a9a9a;
+        --table-border-color: #515151;
+        --table-stripe-color: #202020;
+        --code-color: #fff;
+        --code-background-color: #515151;
+        --code-block-color: #fff;
+        --code-block-background-color: #272822;
+    }
+    body {
+        background-color: var(--bkg-color);
+    }
+</style>
+
+</head>
+
+    <body class="dark-theme">
+        <div class="wrapper">
+            <aside class="sidebar">
+    <div class="container sidebar-sticky">
+        <div class="light-dark" align="right">
+    <button class="btn-light-dark" title="Toggle light/dark mode">
+        <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M6 .278a.768.768 0 0 1 .08.858a7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277c.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316a.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71C0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        </svg>
+        <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M8 12a4 4 0 1 0 0-8a4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+        </svg>
+    </button>
+</div>
+
+        <div class="sidebar-about">
+    <h1 class="brand">
+        
+            <a href="https://n0rdy.foo/">
+                <img src="/images/avatar.jpg" alt="brand image">
+            </a>
+        
+        
+            <a href="https://n0rdy.foo/">
+                <h1>n0rdy</h1>
+            </a>
+        
+    </h1>
+    <p class="lead">
+    In tech we trust
+    </p>
+</div>
+
+        <nav>
+    <ul class="sidebar-nav">
+
+        
+        
+        
+        
+            
+
+            
+                
+                
+                    <li class="heading">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                
+            
+                
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+                    <li class="heading">
+                        <a href="/posts/">Posts</a>
+                    </li>
+                    
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+            
+            
+                
+                    <li class="heading">
+                        <a href="/series/">Series</a>
+                    </li>
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                    <li class="heading">
+                        <a href="/tags/">Tags</a>
+                    </li>
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+
+    </ul>
+</nav>
+
+        
+    <a target="_blank" class="social" title="GitHub" href="https://github.com/n0rdy">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="-2 -2 24 24">
+            <path fill="currentColor" d="M18.88 1.099C18.147.366 17.265 0 16.233 0H3.746C2.714 0 1.832.366 1.099 1.099C.366 1.832 0 2.714 0 3.746v12.487c0 1.032.366 1.914 1.099 2.647c.733.733 1.615 1.099 2.647 1.099H6.66c.19 0 .333-.007.429-.02a.504.504 0 0 0 .286-.169c.095-.1.143-.245.143-.435l-.007-.885c-.004-.564-.006-1.01-.006-1.34l-.3.052c-.19.035-.43.05-.721.046a5.555 5.555 0 0 1-.904-.091a2.026 2.026 0 0 1-.872-.39a1.651 1.651 0 0 1-.572-.8l-.13-.3a3.25 3.25 0 0 0-.41-.663c-.186-.243-.375-.407-.566-.494l-.09-.065a.956.956 0 0 1-.17-.156a.723.723 0 0 1-.117-.182c-.026-.061-.004-.111.065-.15c.07-.04.195-.059.378-.059l.26.04c.173.034.388.138.643.311a2.1 2.1 0 0 1 .631.677c.2.355.44.626.722.813c.282.186.566.28.852.28c.286 0 .533-.022.742-.065a2.59 2.59 0 0 0 .585-.196c.078-.58.29-1.028.637-1.34a8.907 8.907 0 0 1-1.333-.234a5.314 5.314 0 0 1-1.223-.507a3.5 3.5 0 0 1-1.047-.872c-.277-.347-.505-.802-.683-1.365c-.177-.564-.266-1.215-.266-1.952c0-1.049.342-1.942 1.027-2.68c-.32-.788-.29-1.673.091-2.652c.252-.079.625-.02 1.119.175c.494.195.856.362 1.086.5c.23.14.414.257.553.352a9.233 9.233 0 0 1 2.497-.338c.859 0 1.691.113 2.498.338l.494-.312a6.997 6.997 0 0 1 1.197-.572c.46-.174.81-.221 1.054-.143c.39.98.424 1.864.103 2.653c.685.737 1.028 1.63 1.028 2.68c0 .737-.089 1.39-.267 1.957c-.177.568-.407 1.023-.689 1.366a3.65 3.65 0 0 1-1.053.865c-.42.234-.828.403-1.223.507a8.9 8.9 0 0 1-1.333.235c.45.39.676 1.005.676 1.846v3.11c0 .147.021.266.065.357a.36.36 0 0 0 .208.189c.096.034.18.056.254.064c.074.01.18.013.318.013h2.914c1.032 0 1.914-.366 2.647-1.099c.732-.732 1.099-1.615 1.099-2.647V3.746c0-1.032-.367-1.914-1.1-2.647z"/>
+        </svg>
+    </a>
+
+
+
+    <a target="_blank" class="social" title="LinkedIn" href="https://www.linkedin.com/in/mykola-shumyn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 448 512">
+            <path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5c0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7c-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5c67.2 0 79.7 44.3 79.7 101.9V416z"/>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a target="_blank" class="social" title="RSS Feed" href="https://n0rdy.foo//posts/index.xml">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 1280.000000 1280.000000">
+            <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)" fill="currentColor">
+                <path d="M2295 11929 c-284 -12 -642 -45 -707 -65 -17 -5 -18 -63 -18 -1039 0 -569 4 -1036 8 -1039 5 -3 74 6 153 19 510 86 1168 95 1789 25 1348 -153 2602 -677 3670 -1531 385 -308 820 -744 1126 -1129 842 -1060 1362 -2313 1514 -3650 70 -621 61 -1279 -25 -1789 -13 -79 -22 -148 -19 -153 3 -4 471 -8 1039 -8 l1035 0 5 23 c51 225 85 942 67 1419 -23 605 -77 1044 -198 1617 -294 1400 -927 2734 -1823 3846 -1043 1295 -2364 2259 -3909 2854 -1158 447 -2451 656 -3707 600z"/>
+                <path d="M2255 7845 c-269 -25 -620 -81 -667 -106 -17 -9 -18 -55 -18 -899 0 -706 3 -890 13 -890 6 0 66 18 132 41 130 44 288 79 467 105 154 21 577 30 749 15 1207 -107 2267 -823 2814 -1902 166 -327 268 -637 330 -1001 38 -227 48 -384 42 -662 -8 -348 -44 -590 -126 -831 -23 -66 -41 -126 -41 -132 0 -10 184 -13 890 -13 844 0 890 1 899 18 27 50 88 452 110 725 14 162 14 624 1 782 -59 703 -233 1323 -545 1945 -481 956 -1313 1788 -2270 2268 -620 310 -1239 483 -1940 542 -165 14 -669 10 -840 -5z"/>
+                <path d="M2519 3815 c-391 -66 -725 -336 -868 -703 -79 -201 -96 -462 -45 -677 83 -344 338 -641 666 -774 116 -47 205 -69 330 -80 412 -39 811 153 1040 500 193 292 240 648 128 981 -135 403 -492 699 -914 757 -100 14 -241 12 -337 -4z"/>
+            </g>
+        </svg>
+    </a>
+
+
+
+        <p class="footnote">
+powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
+    <br>
+    &copy; 2023 n0rdy personal blog. All rights reserved.
+</p>
+
+  </div>
+</aside>
+
+            <main class="content container">
+                <div class="post">
+  <div class="info">
+    <h1 class="post-title">
+        <a href="https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/">Go concurrency simplified. Part 1: Channels and goroutines</a>
+    </h1>
+    
+        <time datetime="2023-12-07T22:00:00&#43;0200" class="post-date">
+            December 7, 2023
+        </time>
+    
+    
+    <ul class="tags">
+        
+        <li class="tag-go">
+            <a href="https://n0rdy.foo/tags/go">go</a>
+        </li>
+        
+        <li class="tag-concurrency">
+            <a href="https://n0rdy.foo/tags/concurrency">concurrency</a>
+        </li>
+        
+        <li class="tag-goroutines">
+            <a href="https://n0rdy.foo/tags/goroutines">goroutines</a>
+        </li>
+        
+        <li class="tag-channels">
+            <a href="https://n0rdy.foo/tags/channels">channels</a>
+        </li>
+        
+    </ul>
+    
+    
+    
+    
+        <p class="seriesname">
+            Series: <a href="https://n0rdy.foo/series/go-concurrency-simplified">Go concurrency simplified</a>
+        </p>
+    
+    
+    
+</div>
+
+  <h1 id="go-concurrency-simplified-part-1-channels-and-goroutines">Go concurrency simplified. Part 1: Channels and goroutines</h1>
+<p>Christmas season is around the corner, that&rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on <a href="https://github.com/n0rdy/pippin" target="_blank">my open-source library</a> for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.</p>
+<p><img src="/images/20231207/0001.png" alt="image" title="A queue"></p>
+<p>Suppose we imagine the post office as an application. In that case, it becomes clear that we are dealing with the classical &ldquo;consumer-producer&rdquo; problem, where customers like me are producers (because we bring boxes, letters, etc.), and the postman is a consumer of all these. And it&rsquo;s pretty easy to see that the system bottleneck is that there is only one consumer for N producers.</p>
+<p>So, how can we improve this? Shall we increase the amount of consumers? Or should we open more postal windows? A little bit of both? And how can we map this into the application and code after all? These are good questions, so let&rsquo;s try to answer them in this series of blog posts.</p>
+<h2 id="a-step-aside">A step aside</h2>
+<p>Let&rsquo;s take a short break before diving deep into the technical topic and discuss the context for this series of blog posts. As you might have noticed from the post title, the main idea is to examine the concurrency in the Go programming language. And even though I&rsquo;d love to jump into such powerful concepts like <code>select</code> statements, <code>for</code> loops with channels, <code>WaitGroup</code>, etc., this will be unfair to the readers who are not that familiar with Go but still would like to follow along to explore and learn the power and beauty of it. That&rsquo;s why we&rsquo;ll take it slowly here and start with the basics.</p>
+<p>Wait a minute! Why the heck are we talking about Go in the first place? Well, this is a fair question. I promise you that my blog won&rsquo;t be only about any specific language, framework, or tool but rather about software engineering and tech in general. However, to discuss some topics/concepts, I&rsquo;ll need to pick a language or a tool to use, and I believe that this time Go is the right choice. Why? Google designed this language to be both powerful and simple, and while I wouldn&rsquo;t claim it to be the best language out there (I don&rsquo;t believe in the concept of &ldquo;the best&rdquo; at all, by the way), it is a good one to have in the toolbox - for instance, it&rsquo;s my language of choice for writing the CLI applications. Also, it has a clear syntax that should be easy to understand if you are familiar with any C-like language.</p>
+<p>However, while Go is pretty straightforward, some parts of the language might not &ldquo;click&rdquo; from day 1. And concurrency is one of those. Therefore, I&rsquo;ll use real-life examples alongside the code to guide you all the way to the &ldquo;aha&rdquo; moment. Let&rsquo;s jump into it!</p>
+<h2 id="back-to-the-post-office">Back to the post office</h2>
+<p>Welcome back to the post office! The queue is still here, so the problem hasn&rsquo;t solved itself - surprise-surprise. But you know what - it&rsquo;s time to represent the situation we have with a code. Let&rsquo;s start with the models&rsquo; definitions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Customer</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Item</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Worker</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This and other code examples are available in this <a href="https://github.com/n0rdy/n0rdy-blog-code-samples/20231204-go-channels-and-goroutines" target="_blank">GitHub repo</a>.</p>
+<details> 
+  <summary>If you are new to Go and don't know what struct is</summary>
+   Struct is a Go way to represent user-defined types in the form of a collection of fields. Thinks of them as Java/Python/Kotlin/C#/many other languages classes. If the field name starts with the uppercase letter, the field is public, while the lowercase ones are private.
+</details>
+<br/>
+<p>Let&rsquo;s add some actions that those actors can perform:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Customer</span>) <span style="color:#a6e22e">GiveAway</span>() <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Item</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%s gives away %s\n&#34;</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Item</span> = <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">item</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s started processing %s...\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s processed %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><details> 
+  <summary>If you are new to Go and don't know what `(c *Customer)` is</summary>
+   It's a Go way to say: "This function belongs to the Customer struct. Use `c` to access a current instance of the struct within the function." In this context, think of `c` as Java/Kotlin/C# `this` or Python `self` keywords.
+</details>
+<br/>
+<p>And now, it&rsquo;s time to combine all of this to recreate the post-office situation:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">bobWorker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Worker</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">zlatan</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Zlatan&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;football&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ben</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Ben&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;box&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">jenny</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Jenny&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;watermelon&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">eric</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Eric&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;teddy bear&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">lisa</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Lisa&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;basketball&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">queue</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">lisa</span>, <span style="color:#a6e22e">eric</span>, <span style="color:#a6e22e">jenny</span>, <span style="color:#a6e22e">ben</span>, <span style="color:#a6e22e">zlatan</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">customer</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">queue</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">customer</span>.<span style="color:#a6e22e">GiveAway</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">bobWorker</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><details> 
+  <summary>If you are new to Go and don't know what `[]Customer` is</summary>
+   It's a Go way to specify a slice of Customers. Thinks of slice as Java/Kotlin/C# ArrayList, Python list, or dynamic arrays in general.
+</details>
+<br/>
+<details> 
+  <summary>If you are new to Go and don't know what `_` is</summary>
+   It's a Go way to ignore the result of the function. Go compiler is pretty strict and throws a compilation error if there are unused variables within the codebase. 
+  `range` returns two results: the current index and the current element of the slice. In this context, we don't need an index. That's why we use `_` to make the compiler happy. 
+</details>
+<br/>
+<p>If, after looking at this code, you find it silly - it is silly indeed. However, it is done this way to simplify it and focus on the post&rsquo;s main topic.</p>
+<p>Once we run it, the result will be like this:</p>
+<pre tabindex="0"><code>Lisa gives away basketball
+Worker Bob received basketball
+Worker Bob started processing basketball...
+Worker Bob processed basketball
+
+Eric gives away teddy bear
+Worker Bob received teddy bear
+Worker Bob started processing teddy bear...
+Worker Bob processed teddy bear
+
+Jenny gives away watermelon
+Worker Bob received watermelon
+Worker Bob started processing watermelon...
+Worker Bob processed watermelon
+
+Ben gives away box
+Worker Bob received box
+Worker Bob started processing box...
+Worker Bob processed box
+
+Zlatan gives away football
+Worker Bob received football
+Worker Bob started processing football...
+Worker Bob processed football
+</code></pre><p>If you followed along and ran this program, you might have noticed that the execution was done in no time. So, no problem then, right? Well, not really. I bet you have visited the post office in your life. And the chances are that you stayed in the queue, and maybe even in a quite long one. Then you know that the real-life processing of the parcels the customer would like to send or receive is way more complicated than this piece of code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s started processing %s...\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s processed %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Depending on the digitalization level of the post offices in the country of your residence, once you pass the parcel to the worker there, the following might happen:</p>
+<ul>
+<li>they might request your ID</li>
+<li>they might need to type your and the parcel&rsquo;s info into their system</li>
+<li>they might scan the QR code attached to the parcel</li>
+<li>they might need to &ldquo;parse&rdquo; your handwriting on a parcel and type it into the system</li>
+<li>if you brought the item without the package, they might need to put it into a box or an envelope</li>
+<li>you might need to sign some documents</li>
+<li>you might need to pay for their service</li>
+<li>you might have some questions for them</li>
+<li>and so on and so forth</li>
+</ul>
+<p>I&rsquo;m trying to say here that the processing of one customer might take a while, so if we want to be 100% precise in the code, it will be fair to add some waiting time between the &ldquo;started processing&rdquo; and &ldquo;processed&rdquo; stages. Let&rsquo;s assume that the average processing time is 1 minute, then the code would look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s started processing %s...\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to simulate long processing
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Minute</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s processed %s\n\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see, the only change we made was adding a <code>time.Sleep(1 * time.Minute)</code> part, which suspends the function execution for 1 minute. Obviously, if we run our code once again, it will take around 5 minutes for it to complete. And it is despite the fact that 1 minute is quite a generous estimate, as we could have easily picked up 5 minutes, and that would still be fair - the total execution would be around 25 minutes. That&rsquo;s far too long!</p>
+<p>I hope the challenge we have is crystal clear as of now. How can we solve it?</p>
+<h2 id="possible-solutions">Possible solutions</h2>
+<p>In an ideal world, the solution will be super simple: to have 1 worker per 1 customer. Then, in our scenario, if the average processing time is 1 minute, it will take exactly 1 minute to handle the entire queue. Impressive, right?</p>
+<p><img src="/images/20231207/0002.png" alt="image" title="An ideal world solution"></p>
+<p>Well, it&rsquo;s pretty doable with 5 customers, like in our example, but what if the queue is 10 people long? What about 50? 100? It&rsquo;s obvious that in the real world, there are limits: money, time, space, etc., that&rsquo;s why the post office (or any other business, for that matter) won&rsquo;t hire that many employees to have a 1-1 ratio with the customers. What are the alternatives?</p>
+<p>If we are limited by the number of workers, let&rsquo;s consider improving the quality of work. What if we try to reduce the amount of work the worker needs to do with the customer by doing the rest of the work later or by delegating to colleagues? Let&rsquo;s imagine that all the worker has to do is scan the QR code on the parcel, compare the photo from the system with the person standing in front, and pass the parcel to the other colleague - the customer can leave right away, as the rest of the activities will be done without their presence. Cool!</p>
+<p>If you have an experience in programming, I bet you have already recognized this pattern - asynchronous execution. The beauty of such an approach is that the resources (the customer in our case) can be released fast, as the processing happens in a background fashion.</p>
+<details> 
+  <summary>Concurrency vs Parallelism</summary>
+   If you want to dive deeper into this topic, there is no way that I can present it better than Rob Pike (one of the Go creators) did: https://go.dev/blog/waza-talk
+</details>
+<br/>
+<p>We now clearly understand how to solve the challenge we faced, but before jumping into the code, we need to discuss Go concepts for asynchronous/concurrent programming. As the post title suggests, we&rsquo;ll explore goroutines and channels today.</p>
+<h2 id="goroutines">Goroutines</h2>
+<p><a href="https://go.dev/tour/concurrency/1" target="_blank">A Tour of Go</a> defines goroutines as</p>
+<blockquote>
+<p>a lightweight thread managed by the Go runtime</p>
+</blockquote>
+<p>The word &ldquo;thread&rdquo; suggests that if some part of the code is wrapped into the goroutines, the execution won&rsquo;t be sequential.</p>
+<p>If this doesn&rsquo;t make sense - fear not; let&rsquo;s try to see that via the simple code example. Here is a <code>printNTimes</code> function that does what the name suggests: prints a string the number of requested times:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printNTimes</span>(<span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">n</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And let&rsquo;s call it from the main function to see how it works:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;Hello there.&#34;</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;General Kenobi. You are a bold one.&#34;</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If we run this code, the output is as expected:</p>
+<pre tabindex="0"><code>Hello there.
+Hello there.
+Hello there.
+Hello there.
+Hello there.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+</code></pre><p>This is the sequential order of execution we discussed above, meaning that there is a defined order:</p>
+<ol>
+<li><code>printNTimes(&quot;Hello there.&quot;, 5)</code> runs and finishes its execution</li>
+<li><code>printNTimes(&quot;General Kenobi. You are a bold one.&quot;, 5)</code> runs and finishes its execution</li>
+<li>the application finishes the execution</li>
+</ol>
+<p>Let&rsquo;s try to run one of the <code>printNTimes</code> as a goroutine to see a difference. But wait a minute, how can we do that? Luckily, it&rsquo;s super-duper simple in Go - the only thing we have to do is to add a <code>go</code> keyword before the function call:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;Hello there.&#34;</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;General Kenobi. You are a bold one.&#34;</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If you try to run this code, you might get different results. For instance, my first 5 attempts to run got this output:</p>
+<pre tabindex="0"><code>General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+</code></pre><p>I tried to rerun it and got this:</p>
+<pre tabindex="0"><code>General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+Hello there.
+</code></pre><p>And even this:</p>
+<pre tabindex="0"><code>General Kenobi. You are a bold one.
+Hello there.
+Hello there.
+Hello there.
+Hello there.
+Hello there.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+</code></pre><p>What&rsquo;s going on here? Why is the code wrapped into a goroutine so unpredictable and sometimes even not executed? These are good questions, and if you are familiar with concurrency/parallelism/multithreading from any other programming languages, you know the answer already, so feel free to scroll down ahead. For the rest, let&rsquo;s dive into this.</p>
+<p>We discussed above that the goroutines are the lightweight threads managed by the Go runtime, and we need to use the <code>go</code> keyword to start a new one. However, there is one edge case that we didn&rsquo;t mention: if you run the Go application (or rather the <code>main</code> function, to be more specific), the Go runtime creates 1 goroutine and runs the app within it - it is called a main goroutine. Then, if we do <code>go printNTimes(&quot;Hello there.&quot;, 5)</code>, the Go runtime creates a new goroutine which is a child (or a branch) from the main one. And here is the catch:</p>
+<ul>
+<li>if the child goroutine is done before the main one - it&rsquo;s OK, the app execution goes on</li>
+<li>if the main goroutine is done, the app doesn&rsquo;t wait for the child ones to be completed, but exits the execution</li>
+</ul>
+<p>If this sounds too complex, let me use a simple example from real life. I&rsquo;m a happy owner of the PlayStation game console and a remote controller for it. When I turn my console on (like running a <code>main</code> function and a main goroutine), PS starts. Then I have to explicitly turn my remote controller on and connect it to the console (like running a child goroutine). If I turn my remote controller off in the middle of the game (or it gets disconnected/runs out of power), the console will keep running as before (see the 1st statement above). But if I turn my PS off, my remote controller will stop working properly immediately (see the 2nd statement).</p>
+<p>And this is precisely what happens in our code:</p>
+<ul>
+<li>when we run the app, the main goroutine starts</li>
+<li><code>go printNTimes(&quot;Hello there.&quot;, 5)</code> starts a new goroutine - please, note it takes some time to start it</li>
+<li>while the Go runtime creates, initiates, and runs a new goroutine, the execution goes on, and the <code>printNTimes(&quot;General Kenobi. You are a bold one.&quot;, 5)</code></li>
+<li>the rest depends on many OS and hardware factors, but the possible outcomes are the following:
+<ul>
+<li>the <code>printNTimes(&quot;General Kenobi. You are a bold one.&quot;, 5)</code> (and the app itself) finishes before the new goroutine starts - then there is no &ldquo;Hello there&rdquo; printed to the console</li>
+<li>the <code>printNTimes(&quot;General Kenobi. You are a bold one.&quot;, 5)</code> (and the app itself) finishes in the middle of the child goroutine execution - then there are less than 5 &ldquo;Hello there&rdquo; messages printed to the console.</li>
+<li>the <code>printNTimes(&quot;General Kenobi. You are a bold one.&quot;, 5)</code> (and the app itself) finishes after the child goroutine has finished its execution - then all the &ldquo;Hello there&rdquo; messages are printed to the console.</li>
+</ul>
+</li>
+</ul>
+<p>I believe it should make good sense now.</p>
+<p>How can we fix that, though? We need to make the main goroutine wait a bit for the child to finish. There are elegant ways to achieve that, which we&rsquo;ll discuss in future posts. But we&rsquo;ll start with the simple one by forcing the main goroutine to wait for a dedicated amount of time (for example, 1 second) before exiting.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;Hello there.&#34;</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;General Kenobi. You are a bold one.&#34;</span>, <span style="color:#ae81ff">5</span>)
+</span></span><span style="display:flex;"><span>	
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to prevent the program from exiting before goroutine finishes
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>time.Sleep(1 * time.Second)</code> is the code that will do nothing (sleep) for 1 second.</p>
+<p>If we run this code, we should see that all the 10 messages are printed:</p>
+<pre tabindex="0"><code>General Kenobi. You are a bold one.
+Hello there.
+Hello there.
+Hello there.
+Hello there.
+Hello there.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+</code></pre><p>The chances are that you might get a different order of messages printed on your machine. And if you rerun the app again, the order might or might not change. This is the nature of the concurrent execution when the order is not guaranteed but decided by the Go runtime.</p>
+<p>It is possible to compare it with real life: imagine you got a task to write &ldquo;Hello there&rdquo; 5 times (starting each from a new line) in a Google Doc / Microsoft Word document. And your colleague got a similar task, but with the &ldquo;General Kenobi. You are a bold one.&rdquo; message. Both of you will have to use the same document to do that. Most likely, the result won&rsquo;t be like that if you both start writing at the same time:</p>
+<pre tabindex="0"><code>Hello there.
+Hello there.
+Hello there.
+Hello there.
+Hello there.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+</code></pre><p>But rather this:</p>
+<pre tabindex="0"><code>Hello there.
+General Kenobi. You are a bold one.
+Hello there.
+Hello there.
+General Kenobi. You are a bold one.
+Hello there.
+Hello there.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+General Kenobi. You are a bold one.
+</code></pre><p>Or any other non-sequential combination depends on many factors like typing speed, copy-paste skills, internet connection speed/stability, etc. The same applies to the concurrent code.</p>
+<p>Now we have learned the very basics about the goroutines, and we can create them. It is a good time to jump to another important Go concept - channels.</p>
+<h2 id="channels">Channels</h2>
+<p>Why do we need a new concept alongside the goroutines? The thing is, while goroutines are pretty powerful, they have some limits. And one of them is that it is impossible to return any value from the goroutine. This means that the code like this won&rsquo;t compile:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">add</span>(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">result</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">a</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">b</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">b</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The error is:</p>
+<pre tabindex="0"><code>./main.go:6:12: syntax error: unexpected go, expected expression
+</code></pre><p>This limit makes sense if we think about it for a moment: the code inside the goroutine is executed asynchronously, meaning that the main program continues its execution. In that case, when the <code>go add(1, 2)</code> code runs, there is no result right away - it will be but some time in the future. And there is nothing to assign to the variable <code>result := </code> and nothing to print in the following line.</p>
+<p>Different languages come up with various workaround for that: JVM ones (Java, Scala) introduced a concept of <code>Future</code>-s, while JavaScript/TypeScript operates with <code>Promise</code>-s and C# has <code>Task</code>-s. The idea behind these approaches is the following:</p>
+<ul>
+<li>the asynchronous code returns an instance of <code>Future</code> with the desired type within (<code>int</code> in our case)</li>
+<li>the <code>Future</code> doesn&rsquo;t contain the value right away, but it will once the async execution is completed</li>
+<li>it is possible to request the value from the future by calling its <code>get()</code> method - this will stop the program execution and wait until the result is ready</li>
+</ul>
+<p>Our example in Java will look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">Main</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">void</span> <span style="color:#a6e22e">main</span><span style="color:#f92672">(</span>String<span style="color:#f92672">[]</span> args<span style="color:#f92672">)</span> <span style="color:#66d9ef">throws</span> ExecutionException<span style="color:#f92672">,</span> InterruptedException <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        Future<span style="color:#f92672">&lt;</span>Integer<span style="color:#f92672">&gt;</span> future <span style="color:#f92672">=</span> CompletableFuture<span style="color:#f92672">.</span><span style="color:#a6e22e">supplyAsync</span><span style="color:#f92672">(</span>
+</span></span><span style="display:flex;"><span>                <span style="color:#f92672">()</span> <span style="color:#f92672">-&gt;</span> add<span style="color:#f92672">(</span><span style="color:#ae81ff">1</span><span style="color:#f92672">,</span> <span style="color:#ae81ff">2</span><span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#f92672">);</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        System<span style="color:#f92672">.</span><span style="color:#a6e22e">out</span><span style="color:#f92672">.</span><span style="color:#a6e22e">println</span><span style="color:#f92672">(</span>future<span style="color:#f92672">.</span><span style="color:#a6e22e">get</span><span style="color:#f92672">());</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">private</span> <span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">add</span><span style="color:#f92672">(</span><span style="color:#66d9ef">int</span> a<span style="color:#f92672">,</span> <span style="color:#66d9ef">int</span> b<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> a <span style="color:#f92672">+</span> b<span style="color:#f92672">;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>And <code>3</code> is printed to the console.</p>
+<p>Go creators decided to choose another path by introducing a concept of channels, as a place to put the value once the async execution is completed.</p>
+<p>If we reference <a href="https://go.dev/tour/concurrency/2" target="_blank">A Tour of Go</a> once again, it says that channels are</p>
+<blockquote>
+<p>a typed conduit through which you can send and receive values with the channel operator, <code>&lt;-</code>.</p>
+</blockquote>
+<p>and the following example is provided:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">v</span>    <span style="color:#75715e">// Send v to channel ch.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>  <span style="color:#75715e">// Receive from ch, and assign value to v.
+</span></span></span></code></pre></div><p>The only missing part is how to create channels. Luckily, it&rsquo;s pretty straightforward:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+</span></span></code></pre></div><p>where:</p>
+<ul>
+<li><code>chan</code> the built-in channel data type</li>
+<li><code>int</code> the data type of the elements that will be put into the channel</li>
+</ul>
+<p>If we rewrite our code, it will look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">defer</span> close(<span style="color:#a6e22e">ch</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">ch</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">result</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">ch</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">a</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">b</span> <span style="color:#66d9ef">int</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">b</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As expected, <code>3</code> is printed into the console.</p>
+<p>But how does this code work? To answer this question, let me take a step aside for the moment and go back to the post-office example to explain this. I hope you remember my drawing (or should I say a masterpiece) from there:</p>
+<p><img src="/images/20231207/0001.png" alt="image" title="A queue"></p>
+<p>Such a beauty! But let me get back to business: we are interested now in the rightmost side of it, where the customer puts a basketball onto the post office desk, and the post worker takes it from there. This is a good representation of the channels, and here is the same part of the picture but close with the arrows and some text descriptions:</p>
+<p><img src="/images/20231207/0003.png" alt="image" title="A post-office desk like a Go channel"></p>
+<p>While this is a straightforward transaction, there are some important concepts behind it:</p>
+<ul>
+<li>if there is nothing on the post office desk, the postman has nothing to take from it, so they just wait</li>
+<li>there is a room for only 1 basketball on the post office desk</li>
+<li>if there is something on the post office desk, the customer can&rsquo;t put their stuff there, so they just wait</li>
+<li>once the customer puts the basketball on the desk, the postman picks it up reasonably fast - but it&rsquo;s not guaranteed that this will happen right away</li>
+<li>if the post office desk is closed, it is not possible to put new items onto it, but the postman can get the item from the desk if there is something left</li>
+</ul>
+<p>The same rules apply to the Go channels:</p>
+<ul>
+<li>if the channel is empty and the code tries to read from it, the execution is blocked, and the program waits until there is an item in the channel</li>
+<li><code>make(chan int)</code> creates a channel that has room for only 1 item of type <code>int</code> (we&rsquo;ll discuss further how to create channels with larger capacity)</li>
+<li>if the channel has an item within, the code that tries to put a new value into it is blocked until the channel is empty again</li>
+<li>once the item is in the channel, the code that reads from it will pick it up soon</li>
+<li>if the channel is closed, it is impossible to write into it (<code>panic: send on closed channel</code>), but the reader can <a href="https://go.dev/ref/spec#Receive_operator" target="_blank">get the existing value from the channel</a>. If the reader keeps reading from the channel, it will receive the default values (e.g. <code>0</code> for <code>int</code>)</li>
+</ul>
+<p>I hope this part is clear, so now we are ready to take a look at the code from the above again:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">defer</span> close(<span style="color:#a6e22e">ch</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">ch</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">result</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">result</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">add</span>(<span style="color:#a6e22e">ch</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">a</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">b</span> <span style="color:#66d9ef">int</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">b</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Let&rsquo;s go through it step-by-step to see what happens here:</p>
+<ol>
+<li><code>ch := make(chan int)</code> creates a new channel of the type <code>int</code> with the default capacity of <code>1</code></li>
+<li><code>defer close(ch)</code> tells the program to close the channel once the <code>main</code> function is completed - that&rsquo;s a bit outside of the scope of this post, but TLDR: even though <a href="https://groups.google.com/g/golang-nuts/c/pZwdYRGxCIk/m/qpbHxRRPJdUJ?pli=1" target="_blank">not necessary</a>, it is a good practice to close the channels after they are not needed anymore.</li>
+<li><code>go add(ch, 1, 2)</code> wraps a call to the <code>add</code> function into a new goroutine and passes the channel from the previous step into the function</li>
+<li>inside the <code>add</code> function, the result of <code>a + b</code> is written to the channel via the <code>ch &lt;-</code>  piece of code</li>
+<li><code>result := &lt;-ch</code> code blocks the execution until the <code>go add(ch, 1, 2)</code> is completed and the result is passed to the channel; once the channel has the result from the <code>add</code> function, the <code>result := &lt;-ch</code> piece of code reads it and assigns to the <code>result</code> variable</li>
+<li><code>fmt.Println(result)</code> prints the result to the console.</li>
+</ol>
+<p>Unlike the code from the section where we introduced goroutines, this one doesn&rsquo;t need any tricks like <code>time.Sleep()</code> to get the result before the app is finished. This is the beauty of the <code>&lt;-ch</code> reading from the channel operation that waits for the result.</p>
+<p>There is one last thing I&rsquo;d like to discuss here before I wrap this post up - channels with a capacity larger than 1.</p>
+<h3 id="buffered-channels">Buffered channels</h3>
+<p>That&rsquo;s what they called. To create such a channel with, let&rsquo;s say, capacity for 2 items, you have to do this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">2</span>)
+</span></span></code></pre></div><p>This is how we can use them:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>, <span style="color:#ae81ff">2</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> close(<span style="color:#a6e22e">ch</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">result1</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">result2</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">result1</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">result2</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>You should see such results in the terminal:</p>
+<pre tabindex="0"><code>1
+2
+</code></pre><p>As you can see, since the channel has capacity for 2 elements, we could do this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>without having anyone to read from there. If we try to do the same with the channel of the default capacity, the code will never finish but will rather wait forever:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> close(<span style="color:#a6e22e">ch</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">result1</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">result2</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">ch</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">result1</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">result2</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>so the Go compiler will throw an error:</p>
+<pre tabindex="0"><code>fatal error: all goroutines are asleep - deadlock!
+
+goroutine 1 [chan send]:
+main.main()
+        /n0rdy-blog-code-samples/20231204-go-channels-and-goroutines/05-buffered-channels/bufferedchans.go:23 +0x71
+</code></pre><p>By the way, kudos to Go that its compiler detects deadlocks and fails on them rather than silently keeping the code in the blocked state forever.</p>
+<p><code>fatal error: all goroutines are asleep - deadlock!</code> means exactly what we have predicted: <code>ch &lt;- 2</code> tries to write to the channel that is already full -&gt; the code waits -&gt; the goroutine falls asleep -&gt; since we have only 1 goroutine (main), it means that all the goroutines are asleep -&gt; deadlock</p>
+<p>To understand the concept of the buffered channels, let&rsquo;s get back to our post-office example again and take a look at this picture:</p>
+<p><img src="/images/20231207/0004.png" alt="image" title="A post-office desk like a Go buffered channel"></p>
+<p>As you can see, the post office desk has become larger and has room for 3 items simultaneously. It means 3 customers can put their stuff onto the desk and leave, so the next ones in the queue can proceed. However, there is still only 1 post office worker, so that they will take the items one by one in the first-in-first-out (FIFO) order.</p>
+<p>The similar rules apply here as for the channel with the default capacity:</p>
+<ul>
+<li>if the channel is empty and the code tries to read from it, the execution is blocked, and the program waits until there is an item in the channel</li>
+<li><code>make(chan int, n)</code> creates a channel that has room for only <code>n</code> items of type <code>int</code></li>
+<li>if the channel has <code>n</code> items within, the code that tries to put a new value into it is blocked until the channel has a free capacity again</li>
+<li>once the item is in the channel, the code that reads from it will pick it up soon in the FIFO order</li>
+<li>if the channel is closed, it is impossible to write into it (<code>panic: send on closed channel</code>), but the reader can <a href="https://go.dev/ref/spec#Receive_operator" target="_blank">get the existing values from the channel</a>. If the reader keeps reading from the channel, it will receive the default values (e.g. <code>0</code> for <code>int</code>)</li>
+</ul>
+<p>So, does this mean that the buffered channels are better than the default ones? Well, not really: as usual in software engineering (or in life in general), the answer is &ldquo;it depends&rdquo;. We&rsquo;ll dive deeper into that later. However, even the <code>add</code> example we used today clearly shows that there is no need to have a buffered channel there since we expect to get only 1 value.</p>
+<p>We did a good job today, and there is quite a lot of info to digest. Still, you should have a good understanding of the goroutines and channels (on top of my drawing skills) now, so we&rsquo;ll dive deeper into this topic next time and go through the built-in constructs to operate channels and goroutines, and get closer to the solution of the post-office long queue problem.</p>
+<p>In the meantime, thank you for your time (that was quite a journey), and have fun! =)</p>
+
+  
+    <hr>
+<div class="newsletters">
+    <div class="help-block-for-success"></div>
+    <div class="help-block-for-error"></div>
+    <form id="email-subscription-form">
+        <label for="email-subscription-input">If you liked this post, you can subscribe to my irregular newsletter. No spam =)</label>
+        <input type="email" id="email-subscription-input" name="email-subscription-input" placeholder="Email address" />
+        <button type="submit">Subscribe</button>
+    </form>
+
+    <script>
+      const listmonkHost = "https://mail.n0rdy.foo";
+      const listmonkSubscriptionSuccessMessage = "Thanks for subscribing =) Please, check your email to confirm subscription.";
+      const listmonkSubscriptionErrorMessage = "Something went wrong =( Please, try again later.";
+
+      const form = document.getElementById("email-subscription-form");
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = form.querySelector("#email-subscription-input").value;
+        const data = {
+          email: email,
+          list_uuids: [
+            "3ba79b71-880f-417d-9587-d388b62e0986"
+          ]
+      };
+        fetch(`${listmonkHost}/api/public/subscription`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }).then((response) => {
+          if (response.status === 200) {
+            const successBlock = document.getElementsByClassName('help-block-for-success')[0];
+            successBlock.classList.add('help-block-show');
+            successBlock.textContent = listmonkSubscriptionSuccessMessage;
+            document.getElementById('email-subscription-form').classList.add('email-subscription-form-hide');
+          } else {
+            const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
+            errorBlock.classList.add('help-block-show');
+            errorBlock.textContent = listmonkSubscriptionErrorMessage;
+          }
+        }).catch(() => {
+          const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
+          errorBlock.classList.add('help-block-show');
+          errorBlock.textContent = listmonkSubscriptionErrorMessage;
+        });
+      })
+    </script>
+</div>
+  
+  <hr>
+<div class="footer">
+    
+    
+    
+    <p>
+    This is a post in the <b><a href="https://n0rdy.foo/series/go-concurrency-simplified">Go concurrency simplified</a></b> series.
+        <br>Other posts in this series:
+        <ul class="series">
+            
+            
+            
+            <li>
+                December 7, 2023 -
+                
+                    Go concurrency simplified. Part 1: Channels and goroutines
+                
+            </li>
+            
+        </ul>
+    </p>
+    
+</div>
+
+  
+    <div class="comments">
+    
+        <div id="remark42"></div>
+        <script>
+            themeFromLS = localStorage.getItem("theme")
+            themeFromHugo = document.body.classList.contains("dark-theme") ? "dark" : "light"
+            currentTheme = themeFromLS ? themeFromLS : themeFromHugo;
+
+            var remark_config = {
+                host: "https://www.remark42.n0rdy.foo",
+                site_id: "remark42.n0rdy",
+                theme: currentTheme,
+                max_shown_comments: 100,
+            }
+        </script>
+        <script>!function(e,n){for(var o=0;o<e.length;o++){var r=n.createElement("script"),c=".js",d=n.head||n.body;"noModule"in r?(r.type="module",c=".mjs"):r.async=!0,r.defer=!0,r.src=remark_config.host+"/web/"+e[o]+c,d.appendChild(r)}}(remark_config.components||["embed"],document);</script>
+    
+</div>
+
+  
+</div>
+            </main>
+            
+  
+    <div class="article-toc ">
+    <div class="toc-wrapper">
+      <h4 id="contents"></h4>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#a-step-aside">A step aside</a></li>
+    <li><a href="#back-to-the-post-office">Back to the post office</a></li>
+    <li><a href="#possible-solutions">Possible solutions</a></li>
+    <li><a href="#goroutines">Goroutines</a></li>
+    <li><a href="#channels">Channels</a>
+      <ul>
+        <li><a href="#buffered-channels">Buffered channels</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+  
+
+        </div>
+    </body>
+</html>

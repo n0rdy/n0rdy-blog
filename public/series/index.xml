@@ -5,6 +5,16 @@
     <link>https://n0rdy.foo/series/</link>
     <description>Recent content in Series on n0rdy personal blog</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>en-us</language><atom:link href="https://n0rdy.foo/series/index.xml" rel="self" type="application/rss+xml" />
+    <language>en-us</language>
+    <lastBuildDate>Thu, 07 Dec 2023 22:00:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/series/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go concurrency simplified</title>
+      <link>https://n0rdy.foo/series/go-concurrency-simplified/</link>
+      <pubDate>Thu, 07 Dec 2023 22:00:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/series/go-concurrency-simplified/</guid>
+      <description></description>
+    </item>
+    
   </channel>
 </rss>
