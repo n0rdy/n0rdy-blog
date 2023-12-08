@@ -1,0 +1,55 @@
+User-agent: *
+
+# Start AI crawler block
+#
+# n0rdy does not permit unlicensed use of our content for training large language models or other
+# artificial intelligence technology. All uses, reproductions and extractions of my content for
+# such purposes require specific approval by n0rdy. I explicitly disallow text and data mining and
+# all other technical means designed to or with the effect that they enable unlicensed use,
+# reproduction or extraction of my content for training AI models.
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+# End AI crawler block
+
+# Start known spiders block
+
+User-agent: Baiduspider
+Disallow: /
+
+User-agent: facebookexternalhit
+Disallow: /
+
+User-agent: ia_archiver
+Disallow: /
+
+User-Agent: LinkedInBot
+Disallow: /
+
+User-Agent: LinkedInBot/1.0
+Disallow: /
+
+User-agent: Pinterestbot
+Disallow: /
+
+User-agent: TelegramBot
+Disallow: /
+
+User-agent: Twitterbot
+Disallow: /
+
+User-agent: Yandex
+Disallow: /
+
+# End known spiders block
+
+Sitemap: https://n0rdy.foo/sitemap.xml
