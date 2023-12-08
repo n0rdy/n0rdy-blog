@@ -1,0 +1,20 @@
+# Start AI crawler block
+#
+# n0rdy does not permit unlicensed use of our content for training large language models or other
+# artificial intelligence technology. All uses, reproductions and extractions of my content for
+# such purposes require specific approval by n0rdy. I explicitly disallow text and data mining and
+# all other technical means designed to or with the effect that they enable unlicensed use,
+# reproduction or extraction of my content for training AI models.
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: GPTBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+# End AI crawler block
