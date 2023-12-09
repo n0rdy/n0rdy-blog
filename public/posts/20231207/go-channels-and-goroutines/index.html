@@ -381,6 +381,12 @@
     </a>
 
 
+    <a target="_blank" class="social" title="Email" href="mailto://hello@n0rdy.foo">
+       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 485.211 485.211">
+            <path fill="currentColor" d="M301.393,241.631L464.866,424.56H20.332l163.474-182.928l58.801,51.443L301.393,241.631z M462.174,60.651H23.027 l219.579,192.142L462.174,60.651z M324.225,221.67l160.986,180.151V80.792L324.225,221.67z M0,80.792v321.029L160.972,221.64 L0,80.792z"/>
+       </svg>
+    </a>
+
 
         <p class="footnote">
 powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
@@ -436,7 +442,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 
   <h1 id="go-concurrency-simplified-part-1-channels-and-goroutines">Go concurrency simplified. Part 1: Channels and goroutines</h1>
 <p>Christmas season is around the corner, that&rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on <a href="https://github.com/n0rdy/pippin" target="_blank">my open-source library</a> for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.</p>
-<p><img src="/images/20231207/0001.png" alt="image" title="A queue"></p>
+<p><img src="/images/drawings/20231207-0001.png" alt="image" title="A queue"></p>
 <p>Suppose we imagine the post office as an application. In that case, it becomes clear that we are dealing with the classical &ldquo;consumer-producer&rdquo; problem, where customers like me are producers (because we bring boxes, letters, etc.), and the postman is a consumer of all these. And it&rsquo;s pretty easy to see that the system bottleneck is that there is only one consumer for N producers.</p>
 <p>So, how can we improve this? Shall we increase the amount of consumers? Or should we open more postal windows? A little bit of both? And how can we map this into the application and code after all? These are good questions, so let&rsquo;s try to answer them in this series of blog posts.</p>
 <h2 id="a-step-aside">A step aside</h2>
@@ -507,31 +513,31 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <br/>
 <p>If, after looking at this code, you find it silly - it is silly indeed. However, it is done this way to simplify it and focus on the post&rsquo;s main topic.</p>
 <p>Once we run it, the result will be like this:</p>
-<pre tabindex="0"><code>Lisa gives away basketball
-Worker Bob received basketball
-Worker Bob started processing basketball...
-Worker Bob processed basketball
-
-Eric gives away teddy bear
-Worker Bob received teddy bear
-Worker Bob started processing teddy bear...
-Worker Bob processed teddy bear
-
-Jenny gives away watermelon
-Worker Bob received watermelon
-Worker Bob started processing watermelon...
-Worker Bob processed watermelon
-
-Ben gives away box
-Worker Bob received box
-Worker Bob started processing box...
-Worker Bob processed box
-
-Zlatan gives away football
-Worker Bob received football
-Worker Bob started processing football...
-Worker Bob processed football
-</code></pre><p>If you followed along and ran this program, you might have noticed that the execution was done in no time. So, no problem then, right? Well, not really. I bet you have visited the post office in your life. And the chances are that you stayed in the queue, and maybe even in a quite long one. Then you know that the real-life processing of the parcels the customer would like to send or receive is way more complicated than this piece of code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Lisa gives away basketball
+</span></span><span style="display:flex;"><span>Worker Bob received basketball
+</span></span><span style="display:flex;"><span>Worker Bob started processing basketball...
+</span></span><span style="display:flex;"><span>Worker Bob processed basketball
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Eric gives away teddy bear
+</span></span><span style="display:flex;"><span>Worker Bob received teddy bear
+</span></span><span style="display:flex;"><span>Worker Bob started processing teddy bear...
+</span></span><span style="display:flex;"><span>Worker Bob processed teddy bear
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Jenny gives away watermelon
+</span></span><span style="display:flex;"><span>Worker Bob received watermelon
+</span></span><span style="display:flex;"><span>Worker Bob started processing watermelon...
+</span></span><span style="display:flex;"><span>Worker Bob processed watermelon
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Ben gives away box
+</span></span><span style="display:flex;"><span>Worker Bob received box
+</span></span><span style="display:flex;"><span>Worker Bob started processing box...
+</span></span><span style="display:flex;"><span>Worker Bob processed box
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Zlatan gives away football
+</span></span><span style="display:flex;"><span>Worker Bob received football
+</span></span><span style="display:flex;"><span>Worker Bob started processing football...
+</span></span><span style="display:flex;"><span>Worker Bob processed football
+</span></span></code></pre></div><p>If you followed along and ran this program, you might have noticed that the execution was done in no time. So, no problem then, right? Well, not really. I bet you have visited the post office in your life. And the chances are that you stayed in the queue, and maybe even in a quite long one. Then you know that the real-life processing of the parcels the customer would like to send or receive is way more complicated than this piece of code:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s started processing %s...\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
@@ -563,7 +569,7 @@ Worker Bob processed football
 <p>I hope the challenge we have is crystal clear as of now. How can we solve it?</p>
 <h2 id="possible-solutions">Possible solutions</h2>
 <p>In an ideal world, the solution will be super simple: to have 1 worker per 1 customer. Then, in our scenario, if the average processing time is 1 minute, it will take exactly 1 minute to handle the entire queue. Impressive, right?</p>
-<p><img src="/images/20231207/0002.png" alt="image" title="An ideal world solution"></p>
+<p><img src="/images/drawings/20231207-0002.png" alt="image" title="An ideal world solution"></p>
 <p>Well, it&rsquo;s pretty doable with 5 customers, like in our example, but what if the queue is 10 people long? What about 50? 100? It&rsquo;s obvious that in the real world, there are limits: money, time, space, etc., that&rsquo;s why the post office (or any other business, for that matter) won&rsquo;t hire that many employees to have a 1-1 ratio with the customers. What are the alternatives?</p>
 <p>If we are limited by the number of workers, let&rsquo;s consider improving the quality of work. What if we try to reduce the amount of work the worker needs to do with the customer by doing the rest of the work later or by delegating to colleagues? Let&rsquo;s imagine that all the worker has to do is scan the QR code on the parcel, compare the photo from the system with the person standing in front, and pass the parcel to the other colleague - the customer can leave right away, as the rest of the activities will be done without their presence. Cool!</p>
 <p>If you have an experience in programming, I bet you have already recognized this pattern - asynchronous execution. The beauty of such an approach is that the resources (the customer in our case) can be released fast, as the processing happens in a background fashion.</p>
@@ -591,17 +597,17 @@ Worker Bob processed football
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;General Kenobi. You are a bold one.&#34;</span>, <span style="color:#ae81ff">5</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>If we run this code, the output is as expected:</p>
-<pre tabindex="0"><code>Hello there.
-Hello there.
-Hello there.
-Hello there.
-Hello there.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-</code></pre><p>This is the sequential order of execution we discussed above, meaning that there is a defined order:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span></code></pre></div><p>This is the sequential order of execution we discussed above, meaning that there is a defined order:</p>
 <ol>
 <li><code>printNTimes(&quot;Hello there.&quot;, 5)</code> runs and finishes its execution</li>
 <li><code>printNTimes(&quot;General Kenobi. You are a bold one.&quot;, 5)</code> runs and finishes its execution</li>
@@ -613,30 +619,30 @@ General Kenobi. You are a bold one.
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;General Kenobi. You are a bold one.&#34;</span>, <span style="color:#ae81ff">5</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>If you try to run this code, you might get different results. For instance, my first 5 attempts to run got this output:</p>
-<pre tabindex="0"><code>General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-</code></pre><p>I tried to rerun it and got this:</p>
-<pre tabindex="0"><code>General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-Hello there.
-</code></pre><p>And even this:</p>
-<pre tabindex="0"><code>General Kenobi. You are a bold one.
-Hello there.
-Hello there.
-Hello there.
-Hello there.
-Hello there.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-</code></pre><p>What&rsquo;s going on here? Why is the code wrapped into a goroutine so unpredictable and sometimes even not executed? These are good questions, and if you are familiar with concurrency/parallelism/multithreading from any other programming languages, you know the answer already, so feel free to scroll down ahead. For the rest, let&rsquo;s dive into this.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span></code></pre></div><p>I tried to rerun it and got this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span></code></pre></div><p>And even this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span></code></pre></div><p>What&rsquo;s going on here? Why is the code wrapped into a goroutine so unpredictable and sometimes even not executed? These are good questions, and if you are familiar with concurrency/parallelism/multithreading from any other programming languages, you know the answer already, so feel free to scroll down ahead. For the rest, let&rsquo;s dive into this.</p>
 <p>We discussed above that the goroutines are the lightweight threads managed by the Go runtime, and we need to use the <code>go</code> keyword to start a new one. However, there is one edge case that we didn&rsquo;t mention: if you run the Go application (or rather the <code>main</code> function, to be more specific), the Go runtime creates 1 goroutine and runs the app within it - it is called a main goroutine. Then, if we do <code>go printNTimes(&quot;Hello there.&quot;, 5)</code>, the Go runtime creates a new goroutine which is a child (or a branch) from the main one. And here is the catch:</p>
 <ul>
 <li>if the child goroutine is done before the main one - it&rsquo;s OK, the app execution goes on</li>
@@ -667,40 +673,40 @@ General Kenobi. You are a bold one.
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><code>time.Sleep(1 * time.Second)</code> is the code that will do nothing (sleep) for 1 second.</p>
 <p>If we run this code, we should see that all the 10 messages are printed:</p>
-<pre tabindex="0"><code>General Kenobi. You are a bold one.
-Hello there.
-Hello there.
-Hello there.
-Hello there.
-Hello there.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-</code></pre><p>The chances are that you might get a different order of messages printed on your machine. And if you rerun the app again, the order might or might not change. This is the nature of the concurrent execution when the order is not guaranteed but decided by the Go runtime.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span></code></pre></div><p>The chances are that you might get a different order of messages printed on your machine. And if you rerun the app again, the order might or might not change. This is the nature of the concurrent execution when the order is not guaranteed but decided by the Go runtime.</p>
 <p>It is possible to compare it with real life: imagine you got a task to write &ldquo;Hello there&rdquo; 5 times (starting each from a new line) in a Google Doc / Microsoft Word document. And your colleague got a similar task, but with the &ldquo;General Kenobi. You are a bold one.&rdquo; message. Both of you will have to use the same document to do that. Most likely, the result won&rsquo;t be like that if you both start writing at the same time:</p>
-<pre tabindex="0"><code>Hello there.
-Hello there.
-Hello there.
-Hello there.
-Hello there.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-</code></pre><p>But rather this:</p>
-<pre tabindex="0"><code>Hello there.
-General Kenobi. You are a bold one.
-Hello there.
-Hello there.
-General Kenobi. You are a bold one.
-Hello there.
-Hello there.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-General Kenobi. You are a bold one.
-</code></pre><p>Or any other non-sequential combination depends on many factors like typing speed, copy-paste skills, internet connection speed/stability, etc. The same applies to the concurrent code.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span></code></pre></div><p>But rather this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>Hello there.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span><span style="display:flex;"><span>General Kenobi. You are a bold one.
+</span></span></code></pre></div><p>Or any other non-sequential combination depends on many factors like typing speed, copy-paste skills, internet connection speed/stability, etc. The same applies to the concurrent code.</p>
 <p>Now we have learned the very basics about the goroutines, and we can create them. It is a good time to jump to another important Go concept - channels.</p>
 <h2 id="channels">Channels</h2>
 <p>Why do we need a new concept alongside the goroutines? The thing is, while goroutines are pretty powerful, they have some limits. And one of them is that it is impossible to return any value from the goroutine. This means that the code like this won&rsquo;t compile:</p>
@@ -713,8 +719,8 @@ General Kenobi. You are a bold one.
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">a</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">b</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>The error is:</p>
-<pre tabindex="0"><code>./main.go:6:12: syntax error: unexpected go, expected expression
-</code></pre><p>This limit makes sense if we think about it for a moment: the code inside the goroutine is executed asynchronously, meaning that the main program continues its execution. In that case, when the <code>go add(1, 2)</code> code runs, there is no result right away - it will be but some time in the future. And there is nothing to assign to the variable <code>result := </code> and nothing to print in the following line.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>./main.go:6:12: syntax error: unexpected go, expected expression
+</span></span></code></pre></div><p>This limit makes sense if we think about it for a moment: the code inside the goroutine is executed asynchronously, meaning that the main program continues its execution. In that case, when the <code>go add(1, 2)</code> code runs, there is no result right away - it will be but some time in the future. And there is nothing to assign to the variable <code>result := </code> and nothing to print in the following line.</p>
 <p>Different languages come up with various workaround for that: JVM ones (Java, Scala) introduced a concept of <code>Future</code>-s, while JavaScript/TypeScript operates with <code>Promise</code>-s and C# has <code>Task</code>-s. The idea behind these approaches is the following:</p>
 <ul>
 <li>the asynchronous code returns an instance of <code>Future</code> with the desired type within (<code>int</code> in our case)</li>
@@ -767,9 +773,9 @@ General Kenobi. You are a bold one.
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>As expected, <code>3</code> is printed into the console.</p>
 <p>But how does this code work? To answer this question, let me take a step aside for the moment and go back to the post-office example to explain this. I hope you remember my drawing (or should I say a masterpiece) from there:</p>
-<p><img src="/images/20231207/0001.png" alt="image" title="A queue"></p>
+<p><img src="/images/drawings/20231207-0001.png" alt="image" title="A queue"></p>
 <p>Such a beauty! But let me get back to business: we are interested now in the rightmost side of it, where the customer puts a basketball onto the post office desk, and the post worker takes it from there. This is a good representation of the channels, and here is the same part of the picture but close with the arrows and some text descriptions:</p>
-<p><img src="/images/20231207/0003.png" alt="image" title="A post-office desk like a Go channel"></p>
+<p><img src="/images/drawings/20231207-0003.png" alt="image" title="A post-office desk like a Go channel"></p>
 <p>While this is a straightforward transaction, there are some important concepts behind it:</p>
 <ul>
 <li>if there is nothing on the post office desk, the postman has nothing to take from it, so they just wait</li>
@@ -829,9 +835,9 @@ General Kenobi. You are a bold one.
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">result2</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>You should see such results in the terminal:</p>
-<pre tabindex="0"><code>1
-2
-</code></pre><p>As you can see, since the channel has capacity for 2 elements, we could do this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>1
+</span></span><span style="display:flex;"><span>2
+</span></span></code></pre></div><p>As you can see, since the channel has capacity for 2 elements, we could do this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">1</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">ch</span> <span style="color:#f92672">&lt;-</span> <span style="color:#ae81ff">2</span>
 </span></span></code></pre></div><p>without having anyone to read from there. If we try to do the same with the channel of the default capacity, the code will never finish but will rather wait forever:</p>
@@ -849,15 +855,15 @@ General Kenobi. You are a bold one.
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">result2</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>so the Go compiler will throw an error:</p>
-<pre tabindex="0"><code>fatal error: all goroutines are asleep - deadlock!
-
-goroutine 1 [chan send]:
-main.main()
-        /n0rdy-blog-code-samples/20231204-go-channels-and-goroutines/05-buffered-channels/bufferedchans.go:23 +0x71
-</code></pre><p>By the way, kudos to Go that its compiler detects deadlocks and fails on them rather than silently keeping the code in the blocked state forever.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>fatal error: all goroutines are asleep - deadlock!
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine 1 [chan send]:
+</span></span><span style="display:flex;"><span>main.main()
+</span></span><span style="display:flex;"><span>        /n0rdy-blog-code-samples/20231204-go-channels-and-goroutines/05-buffered-channels/bufferedchans.go:23 +0x71
+</span></span></code></pre></div><p>By the way, kudos to Go that its compiler detects deadlocks and fails on them rather than silently keeping the code in the blocked state forever.</p>
 <p><code>fatal error: all goroutines are asleep - deadlock!</code> means exactly what we have predicted: <code>ch &lt;- 2</code> tries to write to the channel that is already full -&gt; the code waits -&gt; the goroutine falls asleep -&gt; since we have only 1 goroutine (main), it means that all the goroutines are asleep -&gt; deadlock</p>
 <p>To understand the concept of the buffered channels, let&rsquo;s get back to our post-office example again and take a look at this picture:</p>
-<p><img src="/images/20231207/0004.png" alt="image" title="A post-office desk like a Go buffered channel"></p>
+<p><img src="/images/drawings/20231207-0004.png" alt="image" title="A post-office desk like a Go buffered channel"></p>
 <p>As you can see, the post office desk has become larger and has room for 3 items simultaneously. It means 3 customers can put their stuff onto the desk and leave, so the next ones in the queue can proceed. However, there is still only 1 post office worker, so that they will take the items one by one in the first-in-first-out (FIFO) order.</p>
 <p>The similar rules apply here as for the channel with the default capacity:</p>
 <ul>
@@ -877,7 +883,7 @@ main.main()
     <div class="help-block-for-success"></div>
     <div class="help-block-for-error"></div>
     <form id="email-subscription-form">
-        <label for="email-subscription-input">If you liked this post, you can subscribe to my irregular newsletter. No spam =)</label>
+        <label for="email-subscription-input">Here you can subscribe to my irregular newsletter. No spam, only good stuff =)</label>
         <input type="email" id="email-subscription-input" name="email-subscription-input" placeholder="Email address" />
         <button type="submit">Subscribe</button>
     </form>
