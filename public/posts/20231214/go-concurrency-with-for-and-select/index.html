@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+    
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.a43a549406127e0715f68083c987d71d0c71054cd57edea77aa709ed9958af6e.js"></script>
+
+
+
+<script defer data-domain="n0rdy.foo" src="https://plausible.n0rdy.foo/js/script.js"></script>
+
+
+
+
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <link rel="icon" href=/favicon.ico>
+
+    
+    
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+
+
+<!-- Open Graph image and Twitter Card metadata -->
+
+<title itemprop="name">n0rdy - Go concurrency simplified. Part 3: Managing channels with for loops and select statements</title>
+<meta property="og:title" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;3:&#32;Managing&#32;channels&#32;with&#32;for&#32;loops&#32;and&#32;select&#32;statements />
+<meta name="twitter:title" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;3:&#32;Managing&#32;channels&#32;with&#32;for&#32;loops&#32;and&#32;select&#32;statements />
+<meta itemprop="name" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;3:&#32;Managing&#32;channels&#32;with&#32;for&#32;loops&#32;and&#32;select&#32;statements />
+<meta name="application-name" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;3:&#32;Managing&#32;channels&#32;with&#32;for&#32;loops&#32;and&#32;select&#32;statements />
+<meta property="og:site_name" content="n0rdy personal blog" />
+
+
+<meta name="description" content="" />
+<meta itemprop="description" content="" />
+<meta property="og:description" content="" />
+<meta name="twitter:description" content="" />
+
+
+<base href="https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/" />
+<link rel="canonical" href="https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/" itemprop="url" />
+<meta name="url" content="https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/" />
+<meta name="twitter:url" content="https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/" />
+<meta property="og:url" content="https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/" />
+
+
+<meta property="og:updated_time" content=14012-14-02T1230:00:23&#43;0200 />
+
+
+<link rel="sitemap" type="application/xml" title="Sitemap" href='https://n0rdy.foo/sitemap.xml' />
+
+<meta name="robots" content="index,follow" />
+<meta name="googlebot" content="index,follow" />
+
+
+<meta name="twitter:site" content="" />
+<meta name="twitter:creator" content="" />
+<meta property="fb:admins" content="" />
+
+
+<meta name="apple-mobile-web-app-title" content="n0rdy personal blog" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+
+
+
+
+
+
+<meta property="og:type" content="article" />
+<meta property="article:publisher" content="" />
+<meta property="og:article:published_time" content=14012-14-02T1230:00:23&#43;0200 />
+<meta property="article:published_time" content=14012-14-02T1230:00:23&#43;0200 />
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.119.0">
+
+
+    
+    
+
+<link type="text/css" rel="stylesheet" href="/css/bundle.min.9253bc12513d029afeda19b8831df5c2e217d0092a9f142adac20b5376162a30.css">
+
+
+    
+    <style>
+    body {
+        --sidebar-bg-color: #202020;
+        --sidebar-img-border-color: #515151;
+        --sidebar-p-color: #909090;
+        --sidebar-h1-color: #FFF;
+        --sidebar-a-color: #FFF;
+        --sidebar-socials-color: #FFF;
+        --text-color: #222;
+        --bkg-color: #FAF9F6;
+        --post-title-color: #303030;
+        --list-color: #5a5a5a;
+        --link-color: #268bd2;
+        --date-color: #515151;
+        --table-border-color: #E5E5E5;
+        --table-stripe-color: #F9F9F9;
+        --code-color: #000;
+        --code-background-color: #E5E5E5;
+        --code-block-color: #fff;
+        --code-block-background-color: #272822;
+        --moon-sun-color: #FFF;
+        --moon-sun-background-color: #515151;
+    }
+    body.dark-theme {
+        --text-color: #eee;
+        --bkg-color: #121212;
+        --post-title-color: #DBE2E9;
+        --list-color: #9d9d9d;
+        --link-color: #268bd2;
+        --date-color: #9a9a9a;
+        --table-border-color: #515151;
+        --table-stripe-color: #202020;
+        --code-color: #fff;
+        --code-background-color: #515151;
+        --code-block-color: #fff;
+        --code-block-background-color: #272822;
+    }
+    body {
+        background-color: var(--bkg-color);
+    }
+</style>
+
+</head>
+
+    <body class="dark-theme">
+        <div class="wrapper">
+            <aside class="sidebar">
+    <div class="container sidebar-sticky">
+        <div class="light-dark" align="right">
+    <button class="btn-light-dark" title="Toggle light/dark mode">
+        <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M6 .278a.768.768 0 0 1 .08.858a7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277c.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316a.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71C0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        </svg>
+        <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M8 12a4 4 0 1 0 0-8a4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+        </svg>
+    </button>
+</div>
+
+        <div class="sidebar-about">
+    <h1 class="brand">
+        
+            <a href="https://n0rdy.foo/">
+                <img src="/images/avatar.jpg" alt="brand image">
+            </a>
+        
+        
+            <a href="https://n0rdy.foo/">
+                <h1>n0rdy</h1>
+            </a>
+        
+    </h1>
+    <p class="lead">
+    In tech we trust
+    </p>
+</div>
+
+        <nav>
+    <ul class="sidebar-nav">
+
+        
+        
+        
+        
+            
+
+            
+                
+                
+                    <li class="heading">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                
+            
+                
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+                    <li class="heading">
+                        <a href="/posts/">Posts</a>
+                    </li>
+                    
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+            
+            
+                
+                    <li class="heading">
+                        <a href="/series/">Series</a>
+                    </li>
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                    <li class="heading">
+                        <a href="/tags/">Tags</a>
+                    </li>
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+
+    </ul>
+</nav>
+
+        
+    <a target="_blank" class="social" title="GitHub" href="https://github.com/n0rdy">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="-2 -2 24 24">
+            <path fill="currentColor" d="M18.88 1.099C18.147.366 17.265 0 16.233 0H3.746C2.714 0 1.832.366 1.099 1.099C.366 1.832 0 2.714 0 3.746v12.487c0 1.032.366 1.914 1.099 2.647c.733.733 1.615 1.099 2.647 1.099H6.66c.19 0 .333-.007.429-.02a.504.504 0 0 0 .286-.169c.095-.1.143-.245.143-.435l-.007-.885c-.004-.564-.006-1.01-.006-1.34l-.3.052c-.19.035-.43.05-.721.046a5.555 5.555 0 0 1-.904-.091a2.026 2.026 0 0 1-.872-.39a1.651 1.651 0 0 1-.572-.8l-.13-.3a3.25 3.25 0 0 0-.41-.663c-.186-.243-.375-.407-.566-.494l-.09-.065a.956.956 0 0 1-.17-.156a.723.723 0 0 1-.117-.182c-.026-.061-.004-.111.065-.15c.07-.04.195-.059.378-.059l.26.04c.173.034.388.138.643.311a2.1 2.1 0 0 1 .631.677c.2.355.44.626.722.813c.282.186.566.28.852.28c.286 0 .533-.022.742-.065a2.59 2.59 0 0 0 .585-.196c.078-.58.29-1.028.637-1.34a8.907 8.907 0 0 1-1.333-.234a5.314 5.314 0 0 1-1.223-.507a3.5 3.5 0 0 1-1.047-.872c-.277-.347-.505-.802-.683-1.365c-.177-.564-.266-1.215-.266-1.952c0-1.049.342-1.942 1.027-2.68c-.32-.788-.29-1.673.091-2.652c.252-.079.625-.02 1.119.175c.494.195.856.362 1.086.5c.23.14.414.257.553.352a9.233 9.233 0 0 1 2.497-.338c.859 0 1.691.113 2.498.338l.494-.312a6.997 6.997 0 0 1 1.197-.572c.46-.174.81-.221 1.054-.143c.39.98.424 1.864.103 2.653c.685.737 1.028 1.63 1.028 2.68c0 .737-.089 1.39-.267 1.957c-.177.568-.407 1.023-.689 1.366a3.65 3.65 0 0 1-1.053.865c-.42.234-.828.403-1.223.507a8.9 8.9 0 0 1-1.333.235c.45.39.676 1.005.676 1.846v3.11c0 .147.021.266.065.357a.36.36 0 0 0 .208.189c.096.034.18.056.254.064c.074.01.18.013.318.013h2.914c1.032 0 1.914-.366 2.647-1.099c.732-.732 1.099-1.615 1.099-2.647V3.746c0-1.032-.367-1.914-1.1-2.647z"/>
+        </svg>
+    </a>
+
+
+
+    <a target="_blank" class="social" title="LinkedIn" href="https://www.linkedin.com/in/mykola-shumyn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 448 512">
+            <path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5c0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7c-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5c67.2 0 79.7 44.3 79.7 101.9V416z"/>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <a target="_blank" class="social" title="RSS Feed" href="https://n0rdy.foo//posts/index.xml">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 1280.000000 1280.000000">
+            <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)" fill="currentColor">
+                <path d="M2295 11929 c-284 -12 -642 -45 -707 -65 -17 -5 -18 -63 -18 -1039 0 -569 4 -1036 8 -1039 5 -3 74 6 153 19 510 86 1168 95 1789 25 1348 -153 2602 -677 3670 -1531 385 -308 820 -744 1126 -1129 842 -1060 1362 -2313 1514 -3650 70 -621 61 -1279 -25 -1789 -13 -79 -22 -148 -19 -153 3 -4 471 -8 1039 -8 l1035 0 5 23 c51 225 85 942 67 1419 -23 605 -77 1044 -198 1617 -294 1400 -927 2734 -1823 3846 -1043 1295 -2364 2259 -3909 2854 -1158 447 -2451 656 -3707 600z"/>
+                <path d="M2255 7845 c-269 -25 -620 -81 -667 -106 -17 -9 -18 -55 -18 -899 0 -706 3 -890 13 -890 6 0 66 18 132 41 130 44 288 79 467 105 154 21 577 30 749 15 1207 -107 2267 -823 2814 -1902 166 -327 268 -637 330 -1001 38 -227 48 -384 42 -662 -8 -348 -44 -590 -126 -831 -23 -66 -41 -126 -41 -132 0 -10 184 -13 890 -13 844 0 890 1 899 18 27 50 88 452 110 725 14 162 14 624 1 782 -59 703 -233 1323 -545 1945 -481 956 -1313 1788 -2270 2268 -620 310 -1239 483 -1940 542 -165 14 -669 10 -840 -5z"/>
+                <path d="M2519 3815 c-391 -66 -725 -336 -868 -703 -79 -201 -96 -462 -45 -677 83 -344 338 -641 666 -774 116 -47 205 -69 330 -80 412 -39 811 153 1040 500 193 292 240 648 128 981 -135 403 -492 699 -914 757 -100 14 -241 12 -337 -4z"/>
+            </g>
+        </svg>
+    </a>
+
+
+    <a target="_blank" class="social" title="Email" href="mailto://hello@n0rdy.foo">
+       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 485.211 485.211">
+            <path fill="currentColor" d="M301.393,241.631L464.866,424.56H20.332l163.474-182.928l58.801,51.443L301.393,241.631z M462.174,60.651H23.027 l219.579,192.142L462.174,60.651z M324.225,221.67l160.986,180.151V80.792L324.225,221.67z M0,80.792v321.029L160.972,221.64 L0,80.792z"/>
+       </svg>
+    </a>
+
+
+        <p class="footnote">
+powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
+    <br>
+    &copy; 2023 n0rdy personal blog. All rights reserved.
+</p>
+
+  </div>
+</aside>
+
+            <main class="content container">
+                <div class="post">
+  <div class="info">
+    <h1 class="post-title">
+        <a href="https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/">Go concurrency simplified. Part 3: Managing channels with for loops and select statements</a>
+    </h1>
+    
+        <time datetime="2023-12-14T14:30:00&#43;0200" class="post-date">
+            December 14, 2023
+        </time>
+    
+    
+    <ul class="tags">
+        
+        <li class="tag-go">
+            <a href="https://n0rdy.foo/tags/go">go</a>
+        </li>
+        
+        <li class="tag-concurrency">
+            <a href="https://n0rdy.foo/tags/concurrency">concurrency</a>
+        </li>
+        
+    </ul>
+    
+    
+    
+    
+        <p class="seriesname">
+            Series: <a href="https://n0rdy.foo/series/go-concurrency-simplified">Go concurrency simplified</a>
+        </p>
+    
+    
+    
+</div>
+
+  <h1 id="go-concurrency-simplified-part-3-managing-channels-with-for-loops-and-select-statements">Go concurrency simplified. Part 3: Managing channels with <code>for</code> loops and <code>select</code> statements</h1>
+<p>Hello there! I feel like I got my covid under control and will be back to daily life soon. In the meantime, I&rsquo;m sitting at my desk in a nearly empty apartment (I&rsquo;m moving soon) and wondering whether it&rsquo;s possible to produce an echo if I scream loud enough 🤔 Anyway, I feel like it&rsquo;s the right time to start working on Part 3 of the &ldquo;Go concurrency simplified&rdquo; series. Today, we&rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will get us closer to solving the queue situation in the post office we discussed last time. But let&rsquo;s start with a short recap of where we stopped in the previous post (if you missed it, <a href="https://n0rdy.foo/posts/20231211/go-waitgroup/" target="_blank">here is the link</a>).</p>
+<h2 id="recap">Recap</h2>
+<p>Last time, we refactored our post office code by replacing the ugly <code>time.Sleep()</code> workaround with a <code>sync.WaitGroup</code> approach. Here is the entire code for that:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Customer</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Item</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Customer</span>) <span style="color:#a6e22e">GiveAway</span>() <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Item</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%s gives away %s\n&#34;</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Item</span> = <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">item</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Worker</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span>           <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">item</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">deskChan</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;the desk is closed - time to go home&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s started processing %s...\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to simulate long processing
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s processed %s\n\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">bobWorker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Worker</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">bobWorker</span>.<span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">zlatan</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Zlatan&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;football&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ben</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Ben&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;box&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">jenny</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Jenny&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;watermelon&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">eric</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Eric&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;teddy bear&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">lisa</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Lisa&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;basketball&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">queue</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">lisa</span>, <span style="color:#a6e22e">eric</span>, <span style="color:#a6e22e">jenny</span>, <span style="color:#a6e22e">ben</span>, <span style="color:#a6e22e">zlatan</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">customer</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">queue</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">customer</span>.<span style="color:#a6e22e">GiveAway</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	close(<span style="color:#a6e22e">deskChan</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If we take a closer look at this code using the experience of the refactoring we did in Part 2, it becomes clear that there is one part that looks hacky - I mean this one:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">item</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">deskChan</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A quick reminder of what&rsquo;s happening there: the code is supposed to fetch and process items from the channel until it&rsquo;s open. Once the channel is closed, the code should finish. Even though our solution does its job, our engineering experience tells us that it feels kinda weird that the designers of Go implemented channels but made us reinvent the wheel to consume items from them. And that&rsquo;s a good way of thinking! What if I tell you that actually there is a way to use <code>for</code> loops with channels? Let&rsquo;s jump into it!</p>
+<h2 id="managing-channels-with-for-loops">Managing channels with <code>for</code> loops</h2>
+<p>If we summarize what the code above does, it will be:</p>
+<ul>
+<li>read items from the channel while it&rsquo;s open</li>
+<li>if the channel is closed, finish the execution</li>
+</ul>
+<p>And that&rsquo;s the exact description of how <code>for</code> loop works with the channel. Let me show you how we can rewrite the piece of code above:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">deskChan</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And that&rsquo;s it - as simple as that. The line <code>for item := range deskChan</code> blocks the execution until there is a new item in the channel or until the channel is closed.</p>
+<p>Let&rsquo;s apply this change to the <code>StartWorkingDay</code> function:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">deskChan</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;the desk is closed - time to go home&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>You can find the code samples for the post in this <a href="https://github.com/n0rdy/n0rdy-blog-code-samples/tree/main/20231214-go-concurrency-with-for-and-select" target="_blank">GitHub repo</a>.</p>
+<p>And run the code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Lisa</span> <span style="color:#a6e22e">gives</span> <span style="color:#a6e22e">away</span> <span style="color:#a6e22e">basketball</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Eric</span> <span style="color:#a6e22e">gives</span> <span style="color:#a6e22e">away</span> <span style="color:#a6e22e">teddy</span> <span style="color:#a6e22e">bear</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">received</span> <span style="color:#a6e22e">basketball</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">started</span> <span style="color:#a6e22e">processing</span> <span style="color:#a6e22e">basketball</span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">processed</span> <span style="color:#a6e22e">basketball</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">received</span> <span style="color:#a6e22e">teddy</span> <span style="color:#a6e22e">bear</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">started</span> <span style="color:#a6e22e">processing</span> <span style="color:#a6e22e">teddy</span> <span style="color:#a6e22e">bear</span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Jenny</span> <span style="color:#a6e22e">gives</span> <span style="color:#a6e22e">away</span> <span style="color:#a6e22e">watermelon</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">processed</span> <span style="color:#a6e22e">teddy</span> <span style="color:#a6e22e">bear</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">received</span> <span style="color:#a6e22e">watermelon</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">started</span> <span style="color:#a6e22e">processing</span> <span style="color:#a6e22e">watermelon</span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Ben</span> <span style="color:#a6e22e">gives</span> <span style="color:#a6e22e">away</span> <span style="color:#a6e22e">box</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">processed</span> <span style="color:#a6e22e">watermelon</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">received</span> <span style="color:#a6e22e">box</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">started</span> <span style="color:#a6e22e">processing</span> <span style="color:#a6e22e">box</span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Zlatan</span> <span style="color:#a6e22e">gives</span> <span style="color:#a6e22e">away</span> <span style="color:#a6e22e">football</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">processed</span> <span style="color:#a6e22e">box</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">received</span> <span style="color:#a6e22e">football</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">started</span> <span style="color:#a6e22e">processing</span> <span style="color:#a6e22e">football</span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">processed</span> <span style="color:#a6e22e">football</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">the</span> <span style="color:#a6e22e">desk</span> <span style="color:#a6e22e">is</span> <span style="color:#a6e22e">closed</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">time</span> <span style="color:#a6e22e">to</span> <span style="color:#66d9ef">go</span> <span style="color:#a6e22e">home</span>
+</span></span></code></pre></div><p>Works like a charm!</p>
+<p>This straightforward approach opens endless opportunities. Let&rsquo;s imagine that NASA asks us to build a data pipeline that has the following stages:</p>
+<ul>
+<li>Mars rover sends metrics to the International Space Station (ISS)</li>
+<li>ISS enriches the data and forwards it to the NASA data center</li>
+<li>the NASA data center processes the data</li>
+</ul>
+<h3 id="lets-help-nasa">Let&rsquo;s help NASA</h3>
+<p>This might sound like a challenging task, but since we&rsquo;ll mock the business logic of processing data and focus on the data pipeline part only, you&rsquo;ll see the beauty and the simplicity of Go here:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;math/rand&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strconv&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">MarsRover</span> <span style="color:#66d9ef">struct</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">mr</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">MarsRover</span>) <span style="color:#a6e22e">GatherMetrics</span>() <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Mars rover: gathering metrics...&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Int</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Iss</span> <span style="color:#66d9ef">struct</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">i</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Iss</span>) <span style="color:#a6e22e">Enrich</span>(<span style="color:#a6e22e">metrics</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;ISS: enriching metrics [%d]...\n&#34;</span>, <span style="color:#a6e22e">metrics</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;ISS&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#a6e22e">metrics</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">NasaDataCenter</span> <span style="color:#66d9ef">struct</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">ndc</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">NasaDataCenter</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">data</span> <span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Nasa data center: processing data [%s]...\n&#34;</span>, <span style="color:#a6e22e">data</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">marsRover</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">MarsRover</span>{}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">iss</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Iss</span>{}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">nasaDataCenter</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">NasaDataCenter</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">issChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">int</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">nasaChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">metrics</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">issChan</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">nasaChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">iss</span>.<span style="color:#a6e22e">Enrich</span>(<span style="color:#a6e22e">metrics</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">data</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">nasaChan</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">nasaDataCenter</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">data</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">issChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">marsRover</span>.<span style="color:#a6e22e">GatherMetrics</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><details> 
+  <summary>If you are new to Go and don't know what `rand.Int()` does</summary>
+   `math/rand` package offers ways to generate random data. `rand.Int()` returns a random integer value.
+  Please, note that if you need a secure random data, use `crypto/rand` package instead.
+</details>
+<br/>
+<details> 
+  <summary>If you are new to Go and don't know what `strconv.Itoa(metrics)` does</summary>
+   `strconv.Itoa` is function to convert integer value to string. So if you pass `42` there, you'll get `"42"` as a result of it. 
+  ITOA stands for "Integer to ASCII".
+  This StackOverFlow answer (https://stackoverflow.com/a/2909772) shows that the `itoa` (or `atoi` - so, the opposite action) was mentioned in the manuals in 1971 - that's quite a while ago!
+</details>
+<br/>
+<p>If you run this code, it will be printing data like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Mars rover: gathering metrics...
+</span></span><span style="display:flex;"><span>ISS: enriching metrics [7508100157780980863]...
+</span></span><span style="display:flex;"><span>ISS: enriching metrics [8542411963209765260]...
+</span></span><span style="display:flex;"><span>Mars rover: gathering metrics...
+</span></span><span style="display:flex;"><span>Nasa data center: processing data [ISS7508100157780980863]...
+</span></span><span style="display:flex;"><span>Nasa data center: processing data [ISS8542411963209765260]...
+</span></span><span style="display:flex;"><span>ISS: enriching metrics [6666611277333029651]...
+</span></span><span style="display:flex;"><span>Nasa data center: processing data [ISS6666611277333029651]...
+</span></span></code></pre></div><p>Please terminate the execution manually by either clicking a stop button in your IDE or pressing <code>CTRL+C</code> or <code>CTRL+D</code>in your terminal. Otherwise, it will run forever and keep producing logs like I showed above.</p>
+<p>As you can see, the solution is super simple and uses concurrency concepts we have learned so far: goroutines, channels, and for-loops. Next time you need to do a task that reminds a sequence of steps that you need to repeat many times, you can reuse the example above and tweak it to your needs.</p>
+<p>So, are we done with the Go concurrency? Have we already learned all we need? I wish! Let&rsquo;s leave the space for now and get back to the post office, as we have a situation there.</p>
+<h3 id="back-to-the-post-office">Back to the post office</h3>
+<p>Our good old friend postman Ben has just received a call from his manager, Triss. She has a new business idea that should increase customer satisfaction - install a phone so the customers can call it when they have questions. This means that Ben will have a new responsibility on top of handling the parcels that clients bring. This is the new setup:</p>
+<p><img src="/images/drawings/20231214-0001.png" alt="image" title="A new post office setup with a phone"></p>
+<p>Hmm&hellip;it means that Ben needs to handle 2 tasks instead of 1 from now on. But what is he supposed to do once there are both customers and a phone call? Well, he is free to choose which one to handle - &ldquo;We have a lot of freedom at work,&rdquo; as Triss likes to say.</p>
+<p>But how should we represent the phone with the code? It wouldn&rsquo;t be surprising that you already know the answer - another channel.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">phoneChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// listen to the phone calls:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">call</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">phoneChan</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Got a call: &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">call</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// somebody calls the phone:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">phoneChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;Yo! What&#39;s up?&#34;</span>
+</span></span><span style="display:flex;"><span>	close(<span style="color:#a6e22e">phoneChan</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The output is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Got a call: Yo! What&#39;s up?
+</span></span></code></pre></div><p>Let&rsquo;s take another look at the code that we wrote to represent the working day of the postman:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">deskChan</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;the desk is closed - time to go home&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As we can see, the code is perfectly fit to handle the data from 1 channel. But we have just mentioned that from now on, there will be 2 channels instead. Shall we come up with another workaround? It&rsquo;s a good time to introduce a new Go concept for managing multiple channels simultaneously - <code>select</code> statement.</p>
+<h2 id="managing-multiple-channels-with-select-statements">Managing multiple channels with <code>select</code> statements</h2>
+<p>As we see now, the <code>for</code> loop is a handy construction when we need to query only 1 channel. And this might cover a lot of cases that you are going to face sooner or later. However, once this limit is reached, it&rsquo;s time to onboard the <code>select</code> statement.</p>
+<p>The syntax for this construct is pretty straightforward and (my guess) inspired by the <code>switch</code> statement:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#a6e22e">f</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">firstChan</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handleFirst</span>(<span style="color:#a6e22e">f</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">secondChan</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handleSecond</span>(<span style="color:#a6e22e">s</span>)
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">thirdChan</span>:
+</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handleThird</span>(<span style="color:#a6e22e">t</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p><code>f := &lt;-firstChan</code> is exactly the same syntax we used to fetch data from the channel once we first met the concept of channels at all. This means it is possible to do <code>f, ok := &lt;-firstChan</code> as well if we&rsquo;d like to know whether the <code>firstChan</code> is opened.</p>
+<p>Let&rsquo;s replace our <code>for</code> loop with the <code>select</code> statement and see how it works:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">phoneChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">deskChan</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">call</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">phoneChan</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received a call: %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">call</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;the desk is closed - time to go home&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We also need to apply changes to the <code>main</code> function to setup the phone and add the code to make calls to it with a provided interval:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">phoneChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">bobWorker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Worker</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">bobWorker</span>.<span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span>, <span style="color:#a6e22e">phoneChan</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">zlatan</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Zlatan&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;football&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ben</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Ben&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;box&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">jenny</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Jenny&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;watermelon&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">eric</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Eric&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;teddy bear&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">lisa</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Lisa&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;basketball&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">queue</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">lisa</span>, <span style="color:#a6e22e">eric</span>, <span style="color:#a6e22e">jenny</span>, <span style="color:#a6e22e">ben</span>, <span style="color:#a6e22e">zlatan</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">phoneChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;Has my package arrived?&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">phoneChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;What about now?&#34;</span>
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">customer</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">queue</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">customer</span>.<span style="color:#a6e22e">GiveAway</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	close(<span style="color:#a6e22e">deskChan</span>)
+</span></span><span style="display:flex;"><span>	close(<span style="color:#a6e22e">phoneChan</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Let&rsquo;s run the code and see whether it works or not:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Lisa gives away basketball
+</span></span><span style="display:flex;"><span>Worker Bob received a call: Has my package arrived?
+</span></span><span style="display:flex;"><span>the desk is closed - time to go home
+</span></span><span style="display:flex;"><span>fatal error: all goroutines are asleep - deadlock!
+</span></span><span style="display:flex;"><span>goroutine 1 [chan send]:
+</span></span><span style="display:flex;"><span>main.main()
+</span></span><span style="display:flex;"><span>        /n0rdy-blog-code-samples/20231214-go-concurrency-with-for-and-select/04-select-without-loop/select.go:74 +0x2b8
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine 19 [chan send]:
+</span></span><span style="display:flex;"><span>main.main.func2()
+</span></span><span style="display:flex;"><span>        /n0rdy-blog-code-samples/20231214-go-concurrency-with-for-and-select/04-select-without-loop/select.go:70 +0x45
+</span></span><span style="display:flex;"><span>created by main.main in goroutine 1
+</span></span><span style="display:flex;"><span>        /n0rdy-blog-code-samples/20231214-go-concurrency-with-for-and-select/04-select-without-loop/select.go:67 +0x25f
+</span></span></code></pre></div><p>Wait a minute, that&rsquo;s not the output we were supposed to get! How come there is a deadlock? And why the <code>the desk is closed - time to go home</code> message</p>
+<p>Actually, there is a tiny detail that I have entirely forgotten to mention - unlike <code>for</code> loops, the <code>select</code> statements are not loops but rather 1-time actions, the same as the <code>switch</code> operator. That&rsquo;s why this part</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">deskChan</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">call</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">phoneChan</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received a call: %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">call</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>was executed once, and then the code proceeded to the <code>fmt.Println(&quot;the desk is closed - time to go home&quot;)</code> line, so Ben called it a day and went home. Since the queue of customers was still there, and there was nobody to handle them, we ended up in a deadlock situation. A nasty issue to have!</p>
+<p>I think it&rsquo;s clear that we need to make our <code>select</code> statement run as a loop somehow. Without playing hide and seek, let me tell you that the Go-idiomatic way of solving this is wrapping it with a <code>for</code> loop on top like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">deskChan</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">call</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">phoneChan</span>:
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received a call: %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">call</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>However, there is a clear issue: we don&rsquo;t even need to run code to spot that this loop will run indefinitely, and there is no way to stop it. And let me tell you that Go has no dedicated language-level features to solve this. But fear not, we can fix this with what we already know.</p>
+<p>Actually, there are 2 (or maybe even more, but I usually use these 2) idiomatic ways to solve this:</p>
+<ol>
+<li>Create a boolean flag that will keep the <code>for</code> loop running while it is <code>true</code>. Once either of the channels is closed, set this flag to <code>false</code> and terminate the loop this way.</li>
+<li>In the <code>main</code> function, create a new channel that will be notified once the <code>select</code> statement has to finish its execution. Pass this channel to the method with the <code>select</code> statement and introduce a new <code>case</code> for it. If there is an input to that channel, break the loop. A real-life representation of this approach is like setting a timer/an alarm: once it rings, the postman knows it&rsquo;s time to call it a day.</li>
+</ol>
+<p>The 1st approach (the boolean flag one) looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">phoneChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">keepRunning</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">keepRunning</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">item</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">deskChan</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>			} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">keepRunning</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">call</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">phoneChan</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received a call: %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">call</span>)
+</span></span><span style="display:flex;"><span>			} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">keepRunning</span> = <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>			}
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;the desk is closed - time to go home&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If we run our application now, we&rsquo;ll see that the deadlock issue is gone, and the output is the way it should be:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Lisa gives away basketball
+</span></span><span style="display:flex;"><span>Worker Bob received a call: Has my package arrived?
+</span></span><span style="display:flex;"><span>Worker Bob received basketball
+</span></span><span style="display:flex;"><span>Worker Bob started processing basketball...
+</span></span><span style="display:flex;"><span>Eric gives away teddy bear
+</span></span><span style="display:flex;"><span>Worker Bob processed basketball
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Worker Bob received teddy bear
+</span></span><span style="display:flex;"><span>Worker Bob started processing teddy bear...
+</span></span><span style="display:flex;"><span>Jenny gives away watermelon
+</span></span><span style="display:flex;"><span>Worker Bob processed teddy bear
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Worker Bob received a call: What about now?
+</span></span><span style="display:flex;"><span>Worker Bob received watermelon
+</span></span><span style="display:flex;"><span>Worker Bob started processing watermelon...
+</span></span><span style="display:flex;"><span>Ben gives away box
+</span></span><span style="display:flex;"><span>Worker Bob processed watermelon
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Worker Bob received box
+</span></span><span style="display:flex;"><span>Worker Bob started processing box...
+</span></span><span style="display:flex;"><span>Zlatan gives away football
+</span></span><span style="display:flex;"><span>Worker Bob processed box
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Worker Bob received football
+</span></span><span style="display:flex;"><span>Worker Bob started processing football...
+</span></span><span style="display:flex;"><span>Worker Bob processed football
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>the desk is closed - time to go home
+</span></span></code></pre></div><p>The 2nd approach (a new channel) will look a bit different code-wise:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">phoneChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">shutdownChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">select</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">deskChan</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">call</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">phoneChan</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received a call: %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">call</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">shutdownChan</span>:
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;the desk is closed - time to go home&#34;</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We also need to introduce <code>shutdownChan</code> in the <code>main</code> function and send a signal to it at some point:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">phoneChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">shutdownChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{})
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">bobWorker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Worker</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">bobWorker</span>.<span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span>, <span style="color:#a6e22e">phoneChan</span>, <span style="color:#a6e22e">shutdownChan</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">zlatan</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Zlatan&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;football&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ben</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Ben&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;box&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">jenny</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Jenny&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;watermelon&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">eric</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Eric&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;teddy bear&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">lisa</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Lisa&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;basketball&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">queue</span> <span style="color:#f92672">:=</span> []<span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">lisa</span>, <span style="color:#a6e22e">eric</span>, <span style="color:#a6e22e">jenny</span>, <span style="color:#a6e22e">ben</span>, <span style="color:#a6e22e">zlatan</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">phoneChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;Has my package arrived?&#34;</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">phoneChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#e6db74">&#34;What about now?&#34;</span>
+</span></span><span style="display:flex;"><span>	}()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">customer</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">queue</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">customer</span>.<span style="color:#a6e22e">GiveAway</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">shutdownChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">struct</span>{}{}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	close(<span style="color:#a6e22e">deskChan</span>)
+</span></span><span style="display:flex;"><span>	close(<span style="color:#a6e22e">phoneChan</span>)
+</span></span><span style="display:flex;"><span>	close(<span style="color:#a6e22e">shutdownChan</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If you find the type of the <code>shutdownChan</code> a bit unusual - <code>struct{}</code> - this is a Go style of specifying the channel in which data will be ignored. As in our case, we don&rsquo;t care about the data being sent to this channel - all we need is that someone triggered it so we can use it as a signal to shut down the execution.</p>
+<p>If we run this code, we&rsquo;ll see that it works as expected - good job! Triss is happy, and our customers are happy, but what about the postman, Ben? Well, we can&rsquo;t make everyone happy, can we?!</p>
+<p>I believe this is a perfect moment to stop. We have learned a lot today, and now you know how to manage channels in a simple yet powerful way. I&rsquo;m confident that you are more than ready to solve the post office issue finally we started talking about in <a href="https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/" target="_blank">Part 1</a> of this series. And that&rsquo;s what we are going to do in the next post, as well as turning our post office into a proper data streaming-like pipeline with respect to the working day hours.</p>
+<p>Stay tuned, as you don&rsquo;t want to miss out on the end of this story. See you in Part 4, and in the meantime, have fun! =)</p>
+
+  
+    <hr>
+<div class="newsletters">
+    <div class="help-block-for-success"></div>
+    <div class="help-block-for-error"></div>
+    <form id="email-subscription-form">
+        <label for="email-subscription-input">Here you can subscribe to my irregular newsletter. No spam, only good stuff =)</label>
+        <input type="email" id="email-subscription-input" name="email-subscription-input" placeholder="Email address" />
+        <button type="submit">Subscribe</button>
+    </form>
+
+    <script>
+      const listmonkHost = "https://mail.n0rdy.foo";
+      const listmonkSubscriptionSuccessMessage = "Thanks for subscribing =) Please, check your email to confirm subscription.";
+      const listmonkSubscriptionErrorMessage = "Something went wrong =( Please, try again later.";
+
+      const form = document.getElementById("email-subscription-form");
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = form.querySelector("#email-subscription-input").value;
+        const data = {
+          email: email,
+          list_uuids: [
+            "3ba79b71-880f-417d-9587-d388b62e0986"
+          ]
+      };
+        fetch(`${listmonkHost}/api/public/subscription`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }).then((response) => {
+          if (response.status === 200) {
+            const successBlock = document.getElementsByClassName('help-block-for-success')[0];
+            successBlock.classList.add('help-block-show');
+            successBlock.textContent = listmonkSubscriptionSuccessMessage;
+            document.getElementById('email-subscription-form').classList.add('email-subscription-form-hide');
+          } else {
+            const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
+            errorBlock.classList.add('help-block-show');
+            errorBlock.textContent = listmonkSubscriptionErrorMessage;
+          }
+        }).catch(() => {
+          const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
+          errorBlock.classList.add('help-block-show');
+          errorBlock.textContent = listmonkSubscriptionErrorMessage;
+        });
+      })
+    </script>
+</div>
+  
+  <hr>
+<div class="footer">
+    
+    
+    
+    <p>
+    This is a post in the <b><a href="https://n0rdy.foo/series/go-concurrency-simplified">Go concurrency simplified</a></b> series.
+        <br>Other posts in this series:
+        <ul class="series">
+            
+            
+            
+            <li>
+                December 14, 2023 -
+                
+                    Go concurrency simplified. Part 3: Managing channels with for loops and select statements
+                
+            </li>
+            
+            <li>
+                December 11, 2023 -
+                
+                    <a href="/posts/20231211/go-waitgroup/">Go concurrency simplified. Part 2: Syncing goroutines with sync.WaitGroup</a>
+                
+            </li>
+            
+            <li>
+                December 7, 2023 -
+                
+                    <a href="/posts/20231207/go-channels-and-goroutines/">Go concurrency simplified. Part 1: Channels and goroutines</a>
+                
+            </li>
+            
+        </ul>
+    </p>
+    
+</div>
+
+  
+    <div class="comments">
+    
+        <div id="remark42"></div>
+        <script>
+            themeFromLS = localStorage.getItem("theme")
+            themeFromHugo = document.body.classList.contains("dark-theme") ? "dark" : "light"
+            currentTheme = themeFromLS ? themeFromLS : themeFromHugo;
+
+            var remark_config = {
+                host: "https://www.remark42.n0rdy.foo",
+                site_id: "remark42.n0rdy",
+                theme: currentTheme,
+                max_shown_comments: 100,
+            }
+        </script>
+        <script>!function(e,n){for(var o=0;o<e.length;o++){var r=n.createElement("script"),c=".js",d=n.head||n.body;"noModule"in r?(r.type="module",c=".mjs"):r.async=!0,r.defer=!0,r.src=remark_config.host+"/web/"+e[o]+c,d.appendChild(r)}}(remark_config.components||["embed"],document);</script>
+    
+</div>
+
+  
+</div>
+            </main>
+            
+  
+    <div class="article-toc ">
+    <div class="toc-wrapper">
+      <h4 id="contents"></h4>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#recap">Recap</a></li>
+    <li><a href="#managing-channels-with-for-loops">Managing channels with <code>for</code> loops</a>
+      <ul>
+        <li><a href="#lets-help-nasa">Let&rsquo;s help NASA</a></li>
+        <li><a href="#back-to-the-post-office">Back to the post office</a></li>
+      </ul>
+    </li>
+    <li><a href="#managing-multiple-channels-with-select-statements">Managing multiple channels with <code>select</code> statements</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+  
+
+        </div>
+    </body>
+</html>

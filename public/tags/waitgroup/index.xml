@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>waitgroup on n0rdy personal blog</title>
+    <link>https://n0rdy.foo/tags/waitgroup/</link>
+    <description>Recent content in waitgroup on n0rdy personal blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 11 Dec 2023 18:00:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/waitgroup/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go concurrency simplified. Part 2: Syncing goroutines with sync.WaitGroup</title>
+      <link>https://n0rdy.foo/posts/20231211/go-waitgroup/</link>
+      <pubDate>Mon, 11 Dec 2023 18:00:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/posts/20231211/go-waitgroup/</guid>
+      <description>Go concurrency simplified. Part 2: Syncing goroutines with sync.WaitGroup Hello there! Despite the beautiful snowy weather outside, I&amp;rsquo;m at home these days with covid, so I can dedicate some additional time to blogging.
+Last time, we discussed the very basic concepts of Go concurrency: goroutines and channels. If you missed that post, please check it out here, it has some cool drawings =) Today, we&amp;rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will help us get rid of some hacky workarounds we have used so far.</description>
+    </item>
+    
+  </channel>
+</rss>
