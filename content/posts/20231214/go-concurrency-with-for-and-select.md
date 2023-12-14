@@ -28,7 +28,7 @@ func (c *Customer) GiveAway() string {
 }
 
 type Worker struct {
-	Name           string
+	Name string
 }
 
 func (w *Worker) StartWorkingDay(deskChan chan string) {
