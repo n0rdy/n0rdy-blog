@@ -2,34 +2,43 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://n0rdy.foo/tags/channels/</loc>
-    <lastmod>2023-12-07T22:00:00+02:00</lastmod>
-  </url><url>
     <loc>https://n0rdy.foo/tags/concurrency/</loc>
-    <lastmod>2023-12-07T22:00:00+02:00</lastmod>
+    <lastmod>2023-12-14T14:30:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/go/</loc>
-    <lastmod>2023-12-07T22:00:00+02:00</lastmod>
+    <lastmod>2023-12-14T14:30:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/series/go-concurrency-simplified/</loc>
+    <lastmod>2023-12-14T14:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/</loc>
+    <lastmod>2023-12-14T14:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/</loc>
+    <lastmod>2023-12-14T14:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/posts/</loc>
+    <lastmod>2023-12-14T14:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/series/</loc>
+    <lastmod>2023-12-14T14:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/</loc>
+    <lastmod>2023-12-14T14:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/posts/20231211/go-waitgroup/</loc>
+    <lastmod>2023-12-11T18:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/waitgroup/</loc>
+    <lastmod>2023-12-11T18:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/channels/</loc>
     <lastmod>2023-12-07T22:00:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</loc>
     <lastmod>2023-12-07T22:00:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/goroutines/</loc>
-    <lastmod>2023-12-07T22:00:00+02:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/</loc>
-    <lastmod>2023-12-07T22:00:00+02:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/posts/</loc>
-    <lastmod>2023-12-07T22:00:00+02:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/series/</loc>
-    <lastmod>2023-12-07T22:00:00+02:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/tags/</loc>
     <lastmod>2023-12-07T22:00:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/about/</loc>

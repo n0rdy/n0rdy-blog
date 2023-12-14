@@ -6,20 +6,11 @@
     <description>Recent content in Tags on n0rdy personal blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 Dec 2023 22:00:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>channels</title>
-      <link>https://n0rdy.foo/tags/channels/</link>
-      <pubDate>Thu, 07 Dec 2023 22:00:00 +0200</pubDate>
-      
-      <guid>https://n0rdy.foo/tags/channels/</guid>
-      <description></description>
-    </item>
-    
+    <lastBuildDate>Thu, 14 Dec 2023 14:30:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>concurrency</title>
       <link>https://n0rdy.foo/tags/concurrency/</link>
-      <pubDate>Thu, 07 Dec 2023 22:00:00 +0200</pubDate>
+      <pubDate>Thu, 14 Dec 2023 14:30:00 +0200</pubDate>
       
       <guid>https://n0rdy.foo/tags/concurrency/</guid>
       <description></description>
@@ -28,9 +19,27 @@
     <item>
       <title>go</title>
       <link>https://n0rdy.foo/tags/go/</link>
-      <pubDate>Thu, 07 Dec 2023 22:00:00 +0200</pubDate>
+      <pubDate>Thu, 14 Dec 2023 14:30:00 +0200</pubDate>
       
       <guid>https://n0rdy.foo/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>waitgroup</title>
+      <link>https://n0rdy.foo/tags/waitgroup/</link>
+      <pubDate>Mon, 11 Dec 2023 18:00:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/tags/waitgroup/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>channels</title>
+      <link>https://n0rdy.foo/tags/channels/</link>
+      <pubDate>Thu, 07 Dec 2023 22:00:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/tags/channels/</guid>
       <description></description>
     </item>
     

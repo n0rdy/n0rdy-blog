@@ -6,7 +6,26 @@
     <description>Recent content in go on n0rdy personal blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 Dec 2023 22:00:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 14 Dec 2023 14:30:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Go concurrency simplified. Part 3: Managing channels with for loops and select statements</title>
+      <link>https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/</link>
+      <pubDate>Thu, 14 Dec 2023 14:30:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/</guid>
+      <description>Go concurrency simplified. Part 3: Managing channels with for loops and select statements Hello there! I feel like I got my covid under control and will be back to daily life soon. In the meantime, I&amp;rsquo;m sitting at my desk in a nearly empty apartment (I&amp;rsquo;m moving soon) and wondering whether it&amp;rsquo;s possible to produce an echo if I scream loud enough 🤔 Anyway, I feel like it&amp;rsquo;s the right time to start working on Part 3 of the &amp;ldquo;Go concurrency simplified&amp;rdquo; series.</description>
+    </item>
+    
+    <item>
+      <title>Go concurrency simplified. Part 2: Syncing goroutines with sync.WaitGroup</title>
+      <link>https://n0rdy.foo/posts/20231211/go-waitgroup/</link>
+      <pubDate>Mon, 11 Dec 2023 18:00:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/posts/20231211/go-waitgroup/</guid>
+      <description>Go concurrency simplified. Part 2: Syncing goroutines with sync.WaitGroup Hello there! Despite the beautiful snowy weather outside, I&amp;rsquo;m at home these days with covid, so I can dedicate some additional time to blogging.
+Last time, we discussed the very basic concepts of Go concurrency: goroutines and channels. If you missed that post, please check it out here, it has some cool drawings =) Today, we&amp;rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will help us get rid of some hacky workarounds we have used so far.</description>
+    </item>
+    
     <item>
       <title>Go concurrency simplified. Part 1: Channels and goroutines</title>
       <link>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</link>

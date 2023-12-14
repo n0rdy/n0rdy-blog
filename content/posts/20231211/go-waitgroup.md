@@ -433,8 +433,7 @@ type Worker struct {
    If the name is uppercase - it means that the field is public and can be accessible from the outside of the current package, while the lowercase stands for private visibility. 
   By the way, the same approach applies to the functions' namings.
 </details>
-
-</br>
+<br/>
 
 So far, so good! Let's make sure to set it to `false` once we call the `StartWorkingDay` and change it to `true`. Here is how it looks now:
 
@@ -620,6 +619,7 @@ As of now, you should be pretty familiar with the concept of `sync.WaitGroup`, s
 
 These are the steps we are going to take here:
 
+- remove `isDoneForToday` field from the `Worker` struct and its usage across the codebase
 - remove `WaitToFinish` function
 - create an instance of `sync.WaitGroup` in the `main` function and use it to control the execution of the worker goroutine
 - use `wg.Wait()` instead of the removed `WaitToFinish` function at the end of the `main` function.
@@ -663,7 +663,7 @@ func main() {
   The `()` part calls this function immediately.
   We could have achieved a similar result by extracting the body of this function into a separate function and calling it here. But since we don't need that function for our business logic, I used this approach.
 </details>
-</br>
+<br/>
 
 Running this code gives the same result as the previous version - nice work! 
 
