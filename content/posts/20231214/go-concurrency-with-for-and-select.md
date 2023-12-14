@@ -101,8 +101,8 @@ A quick reminder of what's happening there: the code is supposed to fetch and pr
 
 If we summarize what the code above does, it will be:
 
-- read items from the channel while it's open
-- if the channel is closed, finish the execution
+- reads items from the channel while it's open
+- if the channel is closed, finishes the execution
 
 And that's the exact description of how `for` loop works with the channel. Let me show you how we can rewrite the piece of code above:
 
