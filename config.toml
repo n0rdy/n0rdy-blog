@@ -40,6 +40,8 @@ paginate = 5
     listmonk_subcription_error_message = "Something went wrong =( Please, try again later."
 
     github_url = "https://github.com/n0rdy"
+    twitter_url = "https://twitter.com/_n0rdy_"
+    mastodon_url = "https://me.dm/@n0rdy"
     linkedin_url = "https://www.linkedin.com/in/mykola-shumyn"
     email_url = "mailto://hello@n0rdy.foo"
 
