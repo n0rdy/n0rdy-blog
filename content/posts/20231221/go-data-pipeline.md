@@ -311,7 +311,7 @@ deskShutdownChan := make(chan struct{})
 backOfficeDeskShutdownChan := make(chan struct{})
 ```
 
-We need to make sure we send a shutdown signal 3 times to the `backOfficeDeskShutdownChan:
+We need to make sure we send a shutdown signal 3 times to the `backOfficeDeskShutdownChan`:
 
 ```go
 deskShutdownChan <- struct{}{}
