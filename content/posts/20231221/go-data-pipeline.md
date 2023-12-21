@@ -1220,7 +1220,7 @@ Good job, my friend! Triss is happy, so should we be, as we can officially claim
 
 ## Where to go from here
 
-Before wrapping the ["Go concurrency simplified" series](https://n0rdy.foo/series/) up, let me give you some hints on where you can go from here:
+Before wrapping the ["Go concurrency simplified" series](https://n0rdy.foo/series/go-concurrency-simplified) up, let me give you some hints on where you can go from here:
 
 - try to play with a code we implemented and change it: for example, introduce a new type of worker - a delivery worker that is responsible for picking up the parcels processed by the back office and delivering them to the destination; then try adding a new desk, so there are 2 desk workers to handle the customers, etc.
 - implement your own data pipeline: for example, you can create a search engine that will receive a path to a directory to scan, then read all the text files from this directory & subdirectories and search for some word you choose within those files - it should be doable with the knowledge you've learned so far; feel free to share links your GitHub repos with the program you've implemented in the comments section
