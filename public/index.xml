@@ -9,10 +9,10 @@
     <lastBuildDate>Thu, 21 Dec 2023 23:20:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go concurrency simplified. Part 4: Post office as a data pipeline</title>
-      <link>https://n0rdy.foo/posts/20231220/go-data-pipeline/</link>
+      <link>https://n0rdy.foo/posts/20231221/go-data-pipeline/</link>
       <pubDate>Thu, 21 Dec 2023 23:20:00 +0200</pubDate>
       
-      <guid>https://n0rdy.foo/posts/20231220/go-data-pipeline/</guid>
+      <guid>https://n0rdy.foo/posts/20231221/go-data-pipeline/</guid>
       <description>Go concurrency simplified. Part 4: Post office as a data pipeline Hello there! The main part of my moving to a new place adventures seems to be behind. Since I&amp;rsquo;m still waiting for a furniture delivery, I&amp;rsquo;m writing this post while lying on the floor using my foam camping mat as a sofa. It&amp;rsquo;s not the most ideal setup, but it works. Anyway, I feel like today is the right time to start working on Part 4 of the &amp;ldquo;Go concurrency simplified&amp;rdquo; series.</description>
     </item>
     
