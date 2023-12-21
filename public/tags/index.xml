@@ -6,11 +6,11 @@
     <description>Recent content in Tags on n0rdy personal blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 14 Dec 2023 14:30:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 21 Dec 2023 23:20:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>concurrency</title>
       <link>https://n0rdy.foo/tags/concurrency/</link>
-      <pubDate>Thu, 14 Dec 2023 14:30:00 +0200</pubDate>
+      <pubDate>Thu, 21 Dec 2023 23:20:00 +0200</pubDate>
       
       <guid>https://n0rdy.foo/tags/concurrency/</guid>
       <description></description>
@@ -19,9 +19,18 @@
     <item>
       <title>go</title>
       <link>https://n0rdy.foo/tags/go/</link>
-      <pubDate>Thu, 14 Dec 2023 14:30:00 +0200</pubDate>
+      <pubDate>Thu, 21 Dec 2023 23:20:00 +0200</pubDate>
       
       <guid>https://n0rdy.foo/tags/go/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>pipeline</title>
+      <link>https://n0rdy.foo/tags/pipeline/</link>
+      <pubDate>Thu, 21 Dec 2023 23:20:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/tags/pipeline/</guid>
       <description></description>
     </item>
     

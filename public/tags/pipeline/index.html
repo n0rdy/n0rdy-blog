@@ -51,18 +51,14 @@
 
 
 
-  
-  
-  
-
 
 <!-- Open Graph image and Twitter Card metadata -->
 
-<title itemprop="name">n0rdy - About</title>
-<meta property="og:title" content=n0rdy&#32;-&#32;About />
-<meta name="twitter:title" content=n0rdy&#32;-&#32;About />
-<meta itemprop="name" content=n0rdy&#32;-&#32;About />
-<meta name="application-name" content=n0rdy&#32;-&#32;About />
+<title itemprop="name">n0rdy personal blog</title>
+<meta property="og:title" content=n0rdy&#32;personal&#32;blog />
+<meta name="twitter:title" content=n0rdy&#32;personal&#32;blog />
+<meta itemprop="name" content=n0rdy&#32;personal&#32;blog />
+<meta name="application-name" content=n0rdy&#32;personal&#32;blog />
 <meta property="og:site_name" content="n0rdy personal blog" />
 
 
@@ -72,17 +68,18 @@
 <meta name="twitter:description" content="" />
 
 
-<base href="https://n0rdy.foo/about/about/" />
-<link rel="canonical" href="https://n0rdy.foo/about/about/" itemprop="url" />
-<meta name="url" content="https://n0rdy.foo/about/about/" />
-<meta name="twitter:url" content="https://n0rdy.foo/about/about/" />
-<meta property="og:url" content="https://n0rdy.foo/about/about/" />
+<base href="https://n0rdy.foo/tags/pipeline/" />
+<link rel="canonical" href="https://n0rdy.foo/tags/pipeline/" itemprop="url" />
+<meta name="url" content="https://n0rdy.foo/tags/pipeline/" />
+<meta name="twitter:url" content="https://n0rdy.foo/tags/pipeline/" />
+<meta property="og:url" content="https://n0rdy.foo/tags/pipeline/" />
 
 
-<meta property="og:updated_time" content=1001-01-12T10:00:01Z />
+<meta property="og:updated_time" content=21012-21-11T1220:00:23&#43;0200 />
 
 
 <link rel="sitemap" type="application/xml" title="Sitemap" href='https://n0rdy.foo/sitemap.xml' />
+<link href="https://n0rdy.foo/tags/pipeline/index.xml" rel="alternate" type="application/rss+xml" title="n0rdy personal blog" />
 
 <meta name="robots" content="index,follow" />
 <meta name="googlebot" content="index,follow" />
@@ -412,120 +409,25 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </aside>
 
             <main class="content container">
-                <div class="post">
-  <div class="info">
-    <h1 class="post-title">
-        <a href="https://n0rdy.foo/about/about/">About</a>
-    </h1>
+                <h1 class="title">pipeline</h1>
+<ul class="entries">
     
+        <h3 style="text-align: center;">2023</h3>
+        
+            <li>
+                <span class="title">
+                    <a href="/posts/20231220/go-data-pipeline/">Go concurrency simplified. Part 4: Post office as a data pipeline</a>
+                </span>
+                <span class="published">
+                    <time class="pull-right post-list">December 21, 2023</time>
+                </span>
+            </li>
+        
     
-    
-    
-    
-    
-    
-</div>
+</ul>
 
-  <p>Hello there!</p>
-<p>I haven&rsquo;t come up with a good way to introduce myself yet, so I&rsquo;ll just leave you with this quote from J.R.R. Tolkien&rsquo;s <em>The Hobbit</em> that I feel personal connection to:</p>
-<blockquote>
-<p>&hellip;then something Tookish woke up inside him, and he wished to go and see the great mountains, and hear the pine-trees and the waterfalls, and explore the caves, and wear a sword instead of a walking-stick&hellip;</p>
-</blockquote>
-
-  
-    <hr>
-<div class="newsletters">
-    <div class="help-block-for-success"></div>
-    <div class="help-block-for-error"></div>
-    <form id="email-subscription-form">
-        <label for="email-subscription-input">If you don&#39;t want to miss my new posts, subscribe to my newsletter. No spam, only good stuff =)</label>
-        <input type="email" id="email-subscription-input" name="email-subscription-input" placeholder="Email address" />
-        <button type="submit">Subscribe</button>
-    </form>
-
-    <script>
-      const listmonkHost = "https://mail.n0rdy.foo";
-      const listmonkSubscriptionSuccessMessage = "Thanks for subscribing =) Please, check your email to confirm subscription. If you don't see confirmation email, please, check your spam folder.";
-      const listmonkSubscriptionErrorMessage = "Something went wrong =( Please, try again later.";
-
-      const form = document.getElementById("email-subscription-form");
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = form.querySelector("#email-subscription-input").value;
-        const data = {
-          email: email,
-          list_uuids: [
-            "3ba79b71-880f-417d-9587-d388b62e0986"
-          ]
-      };
-        fetch(`${listmonkHost}/api/public/subscription`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }).then((response) => {
-          if (response.status === 200) {
-            const successBlock = document.getElementsByClassName('help-block-for-success')[0];
-            successBlock.classList.add('help-block-show');
-            successBlock.textContent = listmonkSubscriptionSuccessMessage;
-            document.getElementById('email-subscription-form').classList.add('email-subscription-form-hide');
-          } else {
-            const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
-            errorBlock.classList.add('help-block-show');
-            errorBlock.textContent = listmonkSubscriptionErrorMessage;
-          }
-        }).catch(() => {
-          const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
-          errorBlock.classList.add('help-block-show');
-          errorBlock.textContent = listmonkSubscriptionErrorMessage;
-        });
-      })
-    </script>
-</div>
-  
-  <hr>
-<div class="footer">
-    
-	    
-	    
-    
-</div>
-
-  
-    <div class="comments">
-    
-        <div id="remark42"></div>
-        <script>
-            themeFromLS = localStorage.getItem("theme")
-            themeFromHugo = document.body.classList.contains("dark-theme") ? "dark" : "light"
-            currentTheme = themeFromLS ? themeFromLS : themeFromHugo;
-
-            var remark_config = {
-                host: "https://www.remark42.n0rdy.foo",
-                site_id: "remark42.n0rdy",
-                theme: currentTheme,
-                max_shown_comments: 100,
-            }
-        </script>
-        <script>!function(e,n){for(var o=0;o<e.length;o++){var r=n.createElement("script"),c=".js",d=n.head||n.body;"noModule"in r?(r.type="module",c=".mjs"):r.async=!0,r.defer=!0,r.src=remark_config.host+"/web/"+e[o]+c,d.appendChild(r)}}(remark_config.components||["embed"],document);</script>
-    
-</div>
-
-  
-</div>
             </main>
             
-  
-    <div class="article-toc ">
-    <div class="toc-wrapper">
-      <h4 id="contents"></h4>
-      <nav id="TableOfContents"></nav>
-    </div>
-</div>
-
-  
-
         </div>
     </body>
 </html>

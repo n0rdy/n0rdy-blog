@@ -35,8 +35,8 @@ paginate = 5
     listmonk = true
     listmonk_host = "https://mail.n0rdy.foo"
     listmonk_subscription_list_uiid = "3ba79b71-880f-417d-9587-d388b62e0986"
-    listmonk_subscription_form_text = "Here you can subscribe to my irregular newsletter. No spam, only good stuff =)"
-    listmonk_subscription_success_message = "Thanks for subscribing =) Please, check your email to confirm subscription."
+    listmonk_subscription_form_text = "If you don't want to miss my new posts, subscribe to my newsletter. No spam, only good stuff =)"
+    listmonk_subscription_success_message = "Thanks for subscribing =) Please, check your email to confirm subscription. If you don't see confirmation email, please, check your spam folder."
     listmonk_subcription_error_message = "Something went wrong =( Please, try again later."
 
     github_url = "https://github.com/n0rdy"

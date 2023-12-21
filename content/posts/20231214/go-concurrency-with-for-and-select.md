@@ -263,11 +263,11 @@ So, are we done with the Go concurrency? Have we already learned all we need? I 
 
 ### Back to the post office
 
-Our good old friend postman Ben has just received a call from his manager, Triss. She has a new business idea that should increase customer satisfaction - install a phone so the customers can call it when they have questions. This means that Ben will have a new responsibility on top of handling the parcels that clients bring. This is the new setup:
+Our good old friend postman Bob has just received a call from his manager, Triss. She has a new business idea that should increase customer satisfaction - install a phone so the customers can call it when they have questions. This means that Ben will have a new responsibility on top of handling the parcels that clients bring. This is the new setup:
 
 ![image](/images/drawings/20231214-0001.png "A new post office setup with a phone")
 
-Hmm...it means that Ben needs to handle 2 tasks instead of 1 from now on. But what is he supposed to do once there are both customers and a phone call? Well, he is free to choose which one to handle - "We have a lot of freedom at work," as Triss likes to say.
+Hmm...it means that Bob needs to handle 2 tasks instead of 1 from now on. But what is he supposed to do once there are both customers and a phone call? Well, he is free to choose which one to handle - "We have a lot of freedom at work," as Triss likes to say.
 
 But how should we represent the phone with the code? It wouldn't be surprising that you already know the answer - another channel.
 
@@ -415,7 +415,7 @@ Actually, there is a tiny detail that I have entirely forgotten to mention - unl
 	}
 ```
 
-was executed once, and then the code proceeded to the `fmt.Println("the desk is closed - time to go home")` line, so Ben called it a day and went home. Since the queue of customers was still there, and there was nobody to handle them, we ended up in a deadlock situation. A nasty issue to have!
+was executed once, and then the code proceeded to the `fmt.Println("the desk is closed - time to go home")` line, so Bob called it a day and went home. Since the queue of customers was still there, and there was nobody to handle them, we ended up in a deadlock situation. A nasty issue to have!
 
 I think it's clear that we need to make our `select` statement run as a loop somehow. Without playing hide and seek, let me tell you that the Go-idiomatic way of solving this is wrapping it with a `for` loop on top like this:
 
@@ -561,7 +561,7 @@ func main() {
 
 If you find the type of the `shutdownChan` a bit unusual - `struct{}` - this is a Go style of specifying the channel in which data will be ignored. As in our case, we don't care about the data being sent to this channel - all we need is that someone triggered it so we can use it as a signal to shut down the execution. 
 
-If we run this code, we'll see that it works as expected - good job! Triss is happy, and our customers are happy, but what about the postman, Ben? Well, we can't make everyone happy, can we?!
+If we run this code, we'll see that it works as expected - good job! Triss is happy, and our customers are happy, but what about the postman, Bob? Well, we can't make everyone happy, can we?!
 
 I believe this is a perfect moment to stop. We have learned a lot today, and now you know how to manage channels in a simple yet powerful way. I'm confident that you are more than ready to solve the post office issue finally we started talking about in [Part 1](https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/) of this series. And that's what we are going to do in the next post, as well as turning our post office into a proper data streaming-like pipeline with respect to the working day hours. 
 
