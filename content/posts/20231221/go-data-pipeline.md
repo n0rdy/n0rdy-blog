@@ -1214,7 +1214,7 @@ This is a perfect post office implementation:
 
 And this is exactly how the data pipelines look like out there: if we drop the technical part, what is left at the end of the day is the data flow pipeline, where we can see a data transformation happening on each step with a clear [producer-consumer pattern](https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem):
 
-![image](/images/drawings/20231214-0006.png "A post office as a data pipeline")
+![image](/images/drawings/20231221-0006.png "A post office as a data pipeline")
 
 Good job, my friend! Triss is happy, so should we be, as we can officially claim that we have just solved the inefficient post office queue handling issue we've been discussing since [Part 1](https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/). 
 
