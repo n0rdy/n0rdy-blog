@@ -50,7 +50,4 @@ Disallow: /
 
 # End known spiders block
 
-User-agent: *
-Allow: /
-
 Sitemap: https://n0rdy.foo/sitemap.xml
