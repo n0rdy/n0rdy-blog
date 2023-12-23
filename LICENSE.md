@@ -6,9 +6,9 @@ All the files inside `/content` directory and their HTML representations inside 
 
 # Images
 
-`/static/favicon.ico` and `/static/images/avatar.jpg` files and their generated representations inside `/public` directory are copyrighted to n0rdy (Mykola Shumyn). All rights reserved. 
+`/static/favicon.ico` and `/static/images/avatar.jpg` files and their generated representations inside `/public` directory are copyrighted to [n0rdy](https://github.com/n0rdy). All rights reserved. 
 
-All the files inside `/static/images/drawings` directory and their generated representations inside `/public` directory are copyrighted to n0rdy (Mykola Shumyn). All rights reserved.
+All the files inside `/static/images/drawings` and `/assets/covers/drawings` directories and their generated representations inside `/public` directory are copyrighted to [n0rdy](https://github.com/n0rdy). All rights reserved.
 
 # Hugo "Poison" theme
 

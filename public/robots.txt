@@ -1,5 +1,3 @@
-User-agent: *
-
 # Start AI crawler block
 #
 # n0rdy does not permit unlicensed use of my content for training large language models or other

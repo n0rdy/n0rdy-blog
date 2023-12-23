@@ -58,6 +58,13 @@
 
 <!-- Open Graph image and Twitter Card metadata -->
 
+  <meta property="og:image" content="/covers/drawings/20231221.png" />
+  <meta name="twitter:image" content="/covers/drawings/20231221.png"/>
+      <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image:width" content="4558">
+    <meta property="og:image:height" content="2055">
+    <meta property="og:image:type" content="image/png">
+
 <title itemprop="name">n0rdy - Go concurrency simplified. Part 4: Post office as a data pipeline</title>
 <meta property="og:title" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;4:&#32;Post&#32;office&#32;as&#32;a&#32;data&#32;pipeline />
 <meta name="twitter:title" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;4:&#32;Post&#32;office&#32;as&#32;a&#32;data&#32;pipeline />
@@ -704,7 +711,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span></code></pre></div><p>Since we have 2 types of employees now instead of 1, let&rsquo;s have 2 shutdown channels for each:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">deskShutdownChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{})
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">backOfficeDeskShutdownChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{})
-</span></span></code></pre></div><p>We need to make sure we send a shutdown signal 3 times to the `backOfficeDeskShutdownChan:</p>
+</span></span></code></pre></div><p>We need to make sure we send a shutdown signal 3 times to the <code>backOfficeDeskShutdownChan</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">deskShutdownChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">struct</span>{}{}
 </span></span><span style="display:flex;"><span><span style="color:#75715e">// 3 stands for the number of back office workers
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">3</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
@@ -1494,7 +1501,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p><img src="/images/drawings/20231221-0006.png" alt="image" title="A post office as a data pipeline"></p>
 <p>Good job, my friend! Triss is happy, so should we be, as we can officially claim that we have just solved the inefficient post office queue handling issue we&rsquo;ve been discussing since <a href="https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/" target="_blank">Part 1</a>.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
-<p>Before wrapping the <a href="https://n0rdy.foo/series/" target="_blank">&ldquo;Go concurrency simplified&rdquo; series</a> up, let me give you some hints on where you can go from here:</p>
+<p>Before wrapping the <a href="https://n0rdy.foo/series/go-concurrency-simplified" target="_blank">&ldquo;Go concurrency simplified&rdquo; series</a> up, let me give you some hints on where you can go from here:</p>
 <ul>
 <li>try to play with a code we implemented and change it: for example, introduce a new type of worker - a delivery worker that is responsible for picking up the parcels processed by the back office and delivering them to the destination; then try adding a new desk, so there are 2 desk workers to handle the customers, etc.</li>
 <li>implement your own data pipeline: for example, you can create a search engine that will receive a path to a directory to scan, then read all the text files from this directory &amp; subdirectories and search for some word you choose within those files - it should be doable with the knowledge you&rsquo;ve learned so far; feel free to share links your GitHub repos with the program you&rsquo;ve implemented in the comments section</li>

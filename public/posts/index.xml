@@ -44,5 +44,15 @@ Last time, we discussed the very basic concepts of Go concurrency: goroutines an
       <description>Go concurrency simplified. Part 1: Channels and goroutines Christmas season is around the corner, that&amp;rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on my open-source library for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.</description>
     </item>
     
+    <item>
+      <title></title>
+      <link>https://n0rdy.foo/posts/20231226/ai-tools-for-developers-limits-and-challenges/</link>
+      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+      
+      <guid>https://n0rdy.foo/posts/20231226/ai-tools-for-developers-limits-and-challenges/</guid>
+      <description>AI tools for developers - things to be careful about Hello there! If you followed tech news this year, I believe you&amp;rsquo;ll agree that AI was the hottest topic in 2023. And the chances are that in 2024, this area will grow even bigger alongside the new astonishing scientific discoveries in this field.
+I can guess with a high probability that you have already embedded some of the AI tools in your daily life or career-related activities - if you haven&amp;rsquo;t, you are missing out a lot, my friend!</description>
+    </item>
+    
   </channel>
 </rss>

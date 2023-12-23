@@ -1,5 +1,6 @@
 ---
 title: "Go concurrency simplified. Part 3: Managing channels with for loops and select statements"
+image: "/covers/drawings/20231214.png"
 draft: false
 date: 2023-12-14T23:00:00+02:00
 tags: ["go", "concurrency"]

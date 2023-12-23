@@ -1,5 +1,6 @@
 ---
 title: "Go concurrency simplified. Part 2: Syncing goroutines with sync.WaitGroup"
+image: "/covers/drawings/20231211.png"
 draft: false
 date: 2023-12-11T18:00:00+02:00
 tags: ["go", "concurrency", "waitgroup"]
