@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ai on n0rdy personal blog</title>
+    <link>https://n0rdy.foo/tags/ai/</link>
+    <description>Recent content in ai on n0rdy personal blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 26 Dec 2023 15:25:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/ai/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI tools for software engineers: 5 things to be careful about/aware of</title>
+      <link>https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/</link>
+      <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/</guid>
+      <description>AI tools for software engineers: 5 things to be careful about/aware of Hello there! 2023 is about to end soon, so it&amp;rsquo;s a good time to sit and reflect on it. If we think about the tech industry, in general, it&amp;rsquo;s easy to define which topic was the hottest this year - AI. And the chances are that in 2024, this area will grow even bigger alongside the growing investments and the new astonishing scientific discoveries in this field.</description>
+    </item>
+    
+  </channel>
+</rss>

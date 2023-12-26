@@ -6,7 +6,34 @@
     <description>Recent content in Tags on n0rdy personal blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 Dec 2023 23:20:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Dec 2023 15:25:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ai</title>
+      <link>https://n0rdy.foo/tags/ai/</link>
+      <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/tags/ai/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>opinion</title>
+      <link>https://n0rdy.foo/tags/opinion/</link>
+      <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/tags/opinion/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>tech</title>
+      <link>https://n0rdy.foo/tags/tech/</link>
+      <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/tags/tech/</guid>
+      <description></description>
+    </item>
+    
     <item>
       <title>concurrency</title>
       <link>https://n0rdy.foo/tags/concurrency/</link>

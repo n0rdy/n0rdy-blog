@@ -6,7 +6,16 @@
     <description>Recent content in Posts on n0rdy personal blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 Dec 2023 23:20:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 26 Dec 2023 15:25:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>AI tools for software engineers: 5 things to be careful about/aware of</title>
+      <link>https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/</link>
+      <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/</guid>
+      <description>AI tools for software engineers: 5 things to be careful about/aware of Hello there! 2023 is about to end soon, so it&amp;rsquo;s a good time to sit and reflect on it. If we think about the tech industry, in general, it&amp;rsquo;s easy to define which topic was the hottest this year - AI. And the chances are that in 2024, this area will grow even bigger alongside the growing investments and the new astonishing scientific discoveries in this field.</description>
+    </item>
+    
     <item>
       <title>Go concurrency simplified. Part 4: Post office as a data pipeline</title>
       <link>https://n0rdy.foo/posts/20231221/go-data-pipeline/</link>
@@ -42,16 +51,6 @@ Last time, we discussed the very basic concepts of Go concurrency: goroutines an
       
       <guid>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</guid>
       <description>Go concurrency simplified. Part 1: Channels and goroutines Christmas season is around the corner, that&amp;rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on my open-source library for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.</description>
-    </item>
-    
-    <item>
-      <title></title>
-      <link>https://n0rdy.foo/posts/20231226/ai-tools-for-developers-limits-and-challenges/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      
-      <guid>https://n0rdy.foo/posts/20231226/ai-tools-for-developers-limits-and-challenges/</guid>
-      <description>AI tools for developers - things to be careful about Hello there! If you followed tech news this year, I believe you&amp;rsquo;ll agree that AI was the hottest topic in 2023. And the chances are that in 2024, this area will grow even bigger alongside the new astonishing scientific discoveries in this field.
-I can guess with a high probability that you have already embedded some of the AI tools in your daily life or career-related activities - if you haven&amp;rsquo;t, you are missing out a lot, my friend!</description>
     </item>
     
   </channel>

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+    
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.a43a549406127e0715f68083c987d71d0c71054cd57edea77aa709ed9958af6e.js"></script>
+
+
+
+<script defer data-domain="n0rdy.foo" src="https://plausible.n0rdy.foo/js/script.js"></script>
+
+
+
+
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <link rel="icon" href=/favicon.ico>
+
+    
+    
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+
+
+<!-- Open Graph image and Twitter Card metadata -->
+
+  <meta property="og:image" content="/covers/drawings/20231226.jpg" />
+  <meta name="twitter:image" content="/covers/drawings/20231226.jpg"/>
+      <meta name="twitter:card" content="summary_large_image">
+    <meta property="og:image:width" content="2386">
+    <meta property="og:image:height" content="1491">
+    <meta property="og:image:type" content="image/jpeg">
+
+<title itemprop="name">n0rdy - AI tools for software engineers: 5 things to be careful about/aware of</title>
+<meta property="og:title" content=n0rdy&#32;-&#32;AI&#32;tools&#32;for&#32;software&#32;engineers:&#32;5&#32;things&#32;to&#32;be&#32;careful&#32;about/aware&#32;of />
+<meta name="twitter:title" content=n0rdy&#32;-&#32;AI&#32;tools&#32;for&#32;software&#32;engineers:&#32;5&#32;things&#32;to&#32;be&#32;careful&#32;about/aware&#32;of />
+<meta itemprop="name" content=n0rdy&#32;-&#32;AI&#32;tools&#32;for&#32;software&#32;engineers:&#32;5&#32;things&#32;to&#32;be&#32;careful&#32;about/aware&#32;of />
+<meta name="application-name" content=n0rdy&#32;-&#32;AI&#32;tools&#32;for&#32;software&#32;engineers:&#32;5&#32;things&#32;to&#32;be&#32;careful&#32;about/aware&#32;of />
+<meta property="og:site_name" content="n0rdy personal blog" />
+
+
+<meta name="description" content="" />
+<meta itemprop="description" content="" />
+<meta property="og:description" content="" />
+<meta name="twitter:description" content="" />
+
+
+<base href="https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/" />
+<link rel="canonical" href="https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/" itemprop="url" />
+<meta name="url" content="https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/" />
+<meta name="twitter:url" content="https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/" />
+<meta property="og:url" content="https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/" />
+
+
+<meta property="og:updated_time" content=26012-26-03T1225:00:23&#43;0200 />
+
+
+<link rel="sitemap" type="application/xml" title="Sitemap" href='https://n0rdy.foo/sitemap.xml' />
+
+<meta name="robots" content="index,follow" />
+<meta name="googlebot" content="index,follow" />
+
+
+<meta name="twitter:site" content="https://twitter.com/_n0rdy_" />
+<meta name="twitter:creator" content="https://twitter.com/_n0rdy_" />
+<meta property="fb:admins" content="" />
+
+
+<meta name="apple-mobile-web-app-title" content="n0rdy personal blog" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+
+
+
+
+
+
+<meta property="og:type" content="article" />
+<meta property="article:publisher" content="" />
+<meta property="og:article:published_time" content=26012-26-03T1225:00:23&#43;0200 />
+<meta property="article:published_time" content=26012-26-03T1225:00:23&#43;0200 />
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.119.0">
+
+
+    
+    
+
+<link type="text/css" rel="stylesheet" href="/css/bundle.min.9253bc12513d029afeda19b8831df5c2e217d0092a9f142adac20b5376162a30.css">
+
+
+    
+    <style>
+    body {
+        --sidebar-bg-color: #202020;
+        --sidebar-img-border-color: #515151;
+        --sidebar-p-color: #909090;
+        --sidebar-h1-color: #FFF;
+        --sidebar-a-color: #FFF;
+        --sidebar-socials-color: #FFF;
+        --text-color: #222;
+        --bkg-color: #FAF9F6;
+        --post-title-color: #303030;
+        --list-color: #5a5a5a;
+        --link-color: #268bd2;
+        --date-color: #515151;
+        --table-border-color: #E5E5E5;
+        --table-stripe-color: #F9F9F9;
+        --code-color: #000;
+        --code-background-color: #E5E5E5;
+        --code-block-color: #fff;
+        --code-block-background-color: #272822;
+        --moon-sun-color: #FFF;
+        --moon-sun-background-color: #515151;
+    }
+    body.dark-theme {
+        --text-color: #eee;
+        --bkg-color: #121212;
+        --post-title-color: #DBE2E9;
+        --list-color: #9d9d9d;
+        --link-color: #268bd2;
+        --date-color: #9a9a9a;
+        --table-border-color: #515151;
+        --table-stripe-color: #202020;
+        --code-color: #fff;
+        --code-background-color: #515151;
+        --code-block-color: #fff;
+        --code-block-background-color: #272822;
+    }
+    body {
+        background-color: var(--bkg-color);
+    }
+</style>
+
+</head>
+
+    <body class="dark-theme">
+        <div class="wrapper">
+            <aside class="sidebar">
+    <div class="container sidebar-sticky">
+        <div class="light-dark" align="right">
+    <button class="btn-light-dark" title="Toggle light/dark mode">
+        <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M6 .278a.768.768 0 0 1 .08.858a7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277c.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316a.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71C0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        </svg>
+        <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M8 12a4 4 0 1 0 0-8a4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+        </svg>
+    </button>
+</div>
+
+        <div class="sidebar-about">
+    <h1 class="brand">
+        
+            <a href="https://n0rdy.foo/">
+                <img src="/images/avatar.jpg" alt="brand image">
+            </a>
+        
+        
+            <a href="https://n0rdy.foo/">
+                <h1>n0rdy</h1>
+            </a>
+        
+    </h1>
+    <p class="lead">
+    In tech we trust
+    </p>
+</div>
+
+        <nav>
+    <ul class="sidebar-nav">
+
+        
+        
+        
+        
+            
+
+            
+                
+                
+                    <li class="heading">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                
+            
+                
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+                    <li class="heading">
+                        <a href="/posts/">Posts</a>
+                    </li>
+                    
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+            
+            
+                
+                    <li class="heading">
+                        <a href="/series/">Series</a>
+                    </li>
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                    <li class="heading">
+                        <a href="/tags/">Tags</a>
+                    </li>
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+
+    </ul>
+</nav>
+
+        
+    <a target="_blank" class="social" title="GitHub" href="https://github.com/n0rdy">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="-2 -2 24 24">
+            <path fill="currentColor" d="M18.88 1.099C18.147.366 17.265 0 16.233 0H3.746C2.714 0 1.832.366 1.099 1.099C.366 1.832 0 2.714 0 3.746v12.487c0 1.032.366 1.914 1.099 2.647c.733.733 1.615 1.099 2.647 1.099H6.66c.19 0 .333-.007.429-.02a.504.504 0 0 0 .286-.169c.095-.1.143-.245.143-.435l-.007-.885c-.004-.564-.006-1.01-.006-1.34l-.3.052c-.19.035-.43.05-.721.046a5.555 5.555 0 0 1-.904-.091a2.026 2.026 0 0 1-.872-.39a1.651 1.651 0 0 1-.572-.8l-.13-.3a3.25 3.25 0 0 0-.41-.663c-.186-.243-.375-.407-.566-.494l-.09-.065a.956.956 0 0 1-.17-.156a.723.723 0 0 1-.117-.182c-.026-.061-.004-.111.065-.15c.07-.04.195-.059.378-.059l.26.04c.173.034.388.138.643.311a2.1 2.1 0 0 1 .631.677c.2.355.44.626.722.813c.282.186.566.28.852.28c.286 0 .533-.022.742-.065a2.59 2.59 0 0 0 .585-.196c.078-.58.29-1.028.637-1.34a8.907 8.907 0 0 1-1.333-.234a5.314 5.314 0 0 1-1.223-.507a3.5 3.5 0 0 1-1.047-.872c-.277-.347-.505-.802-.683-1.365c-.177-.564-.266-1.215-.266-1.952c0-1.049.342-1.942 1.027-2.68c-.32-.788-.29-1.673.091-2.652c.252-.079.625-.02 1.119.175c.494.195.856.362 1.086.5c.23.14.414.257.553.352a9.233 9.233 0 0 1 2.497-.338c.859 0 1.691.113 2.498.338l.494-.312a6.997 6.997 0 0 1 1.197-.572c.46-.174.81-.221 1.054-.143c.39.98.424 1.864.103 2.653c.685.737 1.028 1.63 1.028 2.68c0 .737-.089 1.39-.267 1.957c-.177.568-.407 1.023-.689 1.366a3.65 3.65 0 0 1-1.053.865c-.42.234-.828.403-1.223.507a8.9 8.9 0 0 1-1.333.235c.45.39.676 1.005.676 1.846v3.11c0 .147.021.266.065.357a.36.36 0 0 0 .208.189c.096.034.18.056.254.064c.074.01.18.013.318.013h2.914c1.032 0 1.914-.366 2.647-1.099c.732-.732 1.099-1.615 1.099-2.647V3.746c0-1.032-.367-1.914-1.1-2.647z"/>
+        </svg>
+    </a>
+
+
+
+    <a target="_blank" class="social" title="LinkedIn" href="https://www.linkedin.com/in/mykola-shumyn">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 448 512">
+            <path fill="currentColor" d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3zM135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5c0 21.3-17.2 38.5-38.5 38.5zm282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7c-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5c67.2 0 79.7 44.3 79.7 101.9V416z"/>
+        </svg>
+    </a>
+
+
+    <a target="_blank" class="social" title="Twitter" href="https://twitter.com/_n0rdy_">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M5.032 14.286c6.037 0 9.34-4.837 9.34-9.032c0-.137 0-.274-.01-.41A6.56 6.56 0 0 0 16 3.2c-.6.256-1.235.425-1.885.5a3.207 3.207 0 0 0 1.443-1.757c-.645.37-1.35.63-2.085.77a3.322 3.322 0 0 0-1.862-.958a3.384 3.384 0 0 0-2.082.334a3.223 3.223 0 0 0-1.442 1.49a3.08 3.08 0 0 0-.208 2.03a9.57 9.57 0 0 1-3.747-.963a9.269 9.269 0 0 1-3.018-2.354a3.086 3.086 0 0 0-.36 2.314c.189.787.68 1.475 1.376 1.924a3.344 3.344 0 0 1-1.49-.398v.04c0 .734.263 1.444.743 2.01a3.3 3.3 0 0 0 1.89 1.102c-.483.128-.99.146-1.482.055a3.19 3.19 0 0 0 1.168 1.577a3.36 3.36 0 0 0 1.9.627A6.732 6.732 0 0 1 0 12.86a9.527 9.527 0 0 0 5.032 1.423"/>
+        </svg>
+    </a>
+
+
+    <a target="_blank" class="social" rel="me" title="Mastodon" href="https://me.dm/@n0rdy">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M20.94 14c-.28 1.41-2.44 2.96-4.97 3.26c-1.31.15-2.6.3-3.97.24c-2.25-.11-4-.54-4-.54v.62c.32 2.22 2.22 2.35 4.03 2.42c1.82.05 3.44-.46 3.44-.46l.08 1.65s-1.28.68-3.55.81c-1.25.07-2.81-.03-4.62-.5c-3.92-1.05-4.6-5.24-4.7-9.5l-.01-3.43c0-4.34 2.83-5.61 2.83-5.61C6.95 2.3 9.41 2 11.97 2h.06c2.56 0 5.02.3 6.47.96c0 0 2.83 1.27 2.83 5.61c0 0 .04 3.21-.39 5.43M18 8.91c0-1.08-.3-1.91-.85-2.56c-.56-.63-1.3-.96-2.23-.96c-1.06 0-1.87.41-2.42 1.23l-.5.88l-.5-.88c-.56-.82-1.36-1.23-2.43-1.23c-.92 0-1.66.33-2.23.96C6.29 7 6 7.83 6 8.91v5.26h2.1V9.06c0-1.06.45-1.62 1.36-1.62c1 0 1.5.65 1.5 1.93v2.79h2.07V9.37c0-1.28.5-1.93 1.51-1.93c.9 0 1.35.56 1.35 1.62v5.11H18V8.91Z"/>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a target="_blank" class="social" title="RSS Feed" href="https://n0rdy.foo//posts/index.xml">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 1280.000000 1280.000000">
+            <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)" fill="currentColor">
+                <path d="M2295 11929 c-284 -12 -642 -45 -707 -65 -17 -5 -18 -63 -18 -1039 0 -569 4 -1036 8 -1039 5 -3 74 6 153 19 510 86 1168 95 1789 25 1348 -153 2602 -677 3670 -1531 385 -308 820 -744 1126 -1129 842 -1060 1362 -2313 1514 -3650 70 -621 61 -1279 -25 -1789 -13 -79 -22 -148 -19 -153 3 -4 471 -8 1039 -8 l1035 0 5 23 c51 225 85 942 67 1419 -23 605 -77 1044 -198 1617 -294 1400 -927 2734 -1823 3846 -1043 1295 -2364 2259 -3909 2854 -1158 447 -2451 656 -3707 600z"/>
+                <path d="M2255 7845 c-269 -25 -620 -81 -667 -106 -17 -9 -18 -55 -18 -899 0 -706 3 -890 13 -890 6 0 66 18 132 41 130 44 288 79 467 105 154 21 577 30 749 15 1207 -107 2267 -823 2814 -1902 166 -327 268 -637 330 -1001 38 -227 48 -384 42 -662 -8 -348 -44 -590 -126 -831 -23 -66 -41 -126 -41 -132 0 -10 184 -13 890 -13 844 0 890 1 899 18 27 50 88 452 110 725 14 162 14 624 1 782 -59 703 -233 1323 -545 1945 -481 956 -1313 1788 -2270 2268 -620 310 -1239 483 -1940 542 -165 14 -669 10 -840 -5z"/>
+                <path d="M2519 3815 c-391 -66 -725 -336 -868 -703 -79 -201 -96 -462 -45 -677 83 -344 338 -641 666 -774 116 -47 205 -69 330 -80 412 -39 811 153 1040 500 193 292 240 648 128 981 -135 403 -492 699 -914 757 -100 14 -241 12 -337 -4z"/>
+            </g>
+        </svg>
+    </a>
+
+
+    <a target="_blank" class="social" title="Email" href="mailto://hello@n0rdy.foo">
+       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 485.211 485.211">
+            <path fill="currentColor" d="M301.393,241.631L464.866,424.56H20.332l163.474-182.928l58.801,51.443L301.393,241.631z M462.174,60.651H23.027 l219.579,192.142L462.174,60.651z M324.225,221.67l160.986,180.151V80.792L324.225,221.67z M0,80.792v321.029L160.972,221.64 L0,80.792z"/>
+       </svg>
+    </a>
+
+
+        <p class="footnote">
+powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
+    <br>
+    &copy; 2023 n0rdy personal blog. All rights reserved.
+</p>
+
+  </div>
+</aside>
+
+            <main class="content container">
+                <div class="post">
+  <div class="info">
+    <h1 class="post-title">
+        <a href="https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/">AI tools for software engineers: 5 things to be careful about/aware of</a>
+    </h1>
+    
+        <time datetime="2023-12-26T15:25:00&#43;0200" class="post-date">
+            December 26, 2023
+        </time>
+    
+    
+    <ul class="tags">
+        
+        <li class="tag-ai">
+            <a href="https://n0rdy.foo/tags/ai">ai</a>
+        </li>
+        
+        <li class="tag-tech">
+            <a href="https://n0rdy.foo/tags/tech">tech</a>
+        </li>
+        
+        <li class="tag-opinion">
+            <a href="https://n0rdy.foo/tags/opinion">opinion</a>
+        </li>
+        
+    </ul>
+    
+    
+    
+    
+    
+    
+</div>
+
+  <h1 id="ai-tools-for-software-engineers-5-things-to-be-careful-aboutaware-of">AI tools for software engineers: 5 things to be careful about/aware of</h1>
+<p>Hello there! 2023 is about to end soon, so it&rsquo;s a good time to sit and reflect on it. If we think about the tech industry, in general, it&rsquo;s easy to define which topic was the hottest this year - AI. And the chances are that in 2024, this area will grow even bigger alongside the growing investments and the new astonishing scientific discoveries in this field.</p>
+<p>Unlike previous &ldquo;big things&rdquo; in tech, like blockchain, crypto, NFT, Web3, etc., AI is way more accessible and covers more use cases than the rest:</p>
+<ul>
+<li>I can guess with a high probability that you have already embedded some of the AI tools in your daily life or career-related activities</li>
+<li>the chances are that the backlog of your project(s) has/had quite a few tasks related to introducing/integrating AI capabilities, and some of them are pretty damn good features!</li>
+</ul>
+<p>If you answer &ldquo;no&rdquo; to these bullet points, you are missing out a lot, my friend. In my case, I&rsquo;m actively using GitHub Copilot for coding assistance and ChatGPT for brainstorming ideas. I believe this list is very familiar to my fellow software engineers out there, and it&rsquo;s not only me who experienced a significant productivity boost thanks to these tools.</p>
+<p>Of course, we will see what will happen with AI development once the hype is gone (and some investments with it) and there is a new &ldquo;big thing&rdquo; out there, like quantum computing or something less useful/practical. But for me, personally, the tools I started to use in 2023 are here to stay, as now they are a part of the essential toolset alongside Git, Docker, Excel/Google Spreadsheets, note-taking apps, etc.</p>
+<p>As you can see, I&rsquo;m pretty happy about the possibilities AI brought to us this year. And many articles out there talking about the cool features those tools have and the game-changing UX they bring. Sometimes, they create a feeling that those are silver bullets. However, it&rsquo;s not common for those posts to explore the problems, limits, and challenges of those tools. &ldquo;Know your tool!&rdquo; - someone wise once said. That&rsquo;s why today we are going to discuss some of these &ldquo;dark parts&rdquo; of the AI tools we use to be aware.</p>
+<p>A short disclaimer: the message of this post is not &ldquo;don&rsquo;t use the AI tools,&rdquo; but instead &ldquo;use the AI tools mindfully.&rdquo; - the author is not one of the <a href="https://en.wikipedia.org/wiki/Luddite" target="_blank">Luddites</a>, I can assure you =)</p>
+<h2 id="contextless-advises">Contextless advises</h2>
+<p>Let me introduce you to Dave. Dave is a friendly and very talkative guy, the social bee, if you will. But you should know this about him: Dave likes to share his opinions and, even more, give his advice regarding whether he has been asked to or not. Usually, he doesn&rsquo;t bother diving deep into your situation, but instead, he prefers to share his thoughts right away: &ldquo;Do you want to buy a car? Buy Tesla!&rdquo;, &ldquo;Are you considering upgrading your laptop? MacBook Pro is all you need, I assure you!&rdquo;. Here is him:</p>
+<p><img src="/images/drawings/20231226-0001.jpg" alt="image" title="Dave"></p>
+<p>Do you have any Dave-s in your life? I wouldn&rsquo;t be surprised if you do.</p>
+<p>As you can see from Dave&rsquo;s answers, he is not a bad guy, he really wants to help, and his advice is not dumb, but it&rsquo;s not something we should rely upon, at least at the very beginning of the conversation.</p>
+<p>Why did I mention Dave at all? The post was supposed to be about AI tools. Well, let me tell you that GitHub Copilot is one of the &ldquo;Dave-s&rdquo;, especially once you have created a new project. It&rsquo;s easy to reproduce this behavior as of the day of writing this post:</p>
+<ul>
+<li>open your favorite IDE (I use IntelliJ IDEA from JetBrains)</li>
+<li>create a new project</li>
+<li>create a new file &ldquo;test.md&rdquo; there</li>
+<li>open it and start typing &ldquo;My name is &quot;</li>
+</ul>
+<p>Not sure about you, but in my case, I got this suggestion from GitHub Copilot:</p>
+<p><img src="/images/screenshots/20231226-0001.png" alt="image"></p>
+<p>Ok, let&rsquo;s accept the suggestion and add <code>and I'm from </code> - I got this:</p>
+<p><img src="/images/screenshots/20231226-0002.png" alt="image"></p>
+<p>Hey, wait, but it&rsquo;s not a code! I hear you, let&rsquo;s try the same with a code:</p>
+<ul>
+<li>create a <code>main.go</code> file in the root of your project</li>
+<li>make sure it has the <code>package main</code> on top</li>
+<li>type/copy-paste this <code>func pickLast() string {</code> and wait for the suggestion</li>
+</ul>
+<p>I got this on my machine:</p>
+<p><img src="/images/screenshots/20231226-0003.png" alt="image"></p>
+<p>It&rsquo;s a fair suggestion, and it compiles, but is this something you, as a software engineer, would suggest? Would you suggest anything at this moment of project development if, let&rsquo;s say, you are assisting your colleague via the pair programming session, but you knew nothing about this project before now? It&rsquo;s a rhetorical question.</p>
+<h3 id="what-should-we-do-about-it">What should we do about it?</h3>
+<p>Well, the same as with Dave, we should be aware of this way of working with GitHub Copilot and be careful with the suggestions it provides at the very early stage of the project or before its model has enough time and data to learn about your project.</p>
+<p>Also, I&rsquo;d recommend enabling native IDE suggestions alongside the GitHub Copilot ones to get the best of the 2 worlds: AI-based and docs/code-based, meaning that the latter doesn&rsquo;t suffer from <a href="https://en.wikipedia.org/wiki/Hallucination_%28artificial_intelligence%29" target="_blank">hallucinations</a>. You can do that:</p>
+<ul>
+<li>in JetBrains IDEs by: <code>Settings</code> -&gt; <code>Languages &amp; Frameworks</code> -&gt; <code>GitHub Copilot</code> -&gt; enable <code>Show IDE completions side-by-side</code> option under the <code>Editor</code> settings chapter
+<img src="/images/screenshots/20231226-0004.png" alt="image"></li>
+</ul>
+<p>Once enabled, it works like this:</p>
+<p><img src="/images/screenshots/20231226-0005.png" alt="image"></p>
+<p>I&rsquo;m not a heavy VS Code/Vim/Neovim user, that&rsquo;s why I&rsquo;m not sure how to achieve the same there - if you know, please, let me and others know in the comments section - <a href="https://en.wikipedia.org/wiki/Pay_it_forward" target="_blank">pay it forward</a> =)</p>
+<h2 id="xy-problem">XY problem</h2>
+<p>Have you ever heard of XY problem? If not, here is how <a href="https://en.wikipedia.org/wiki/XY_problem" target="_blank">Wikipedia</a> defines it:</p>
+<blockquote>
+<p>The XY problem is a communication problem encountered in help desk, technical support, software engineering, or customer service situations where the question is about an end user&rsquo;s attempted solution (X) rather than the root problem itself (Y or Why?).</p>
+<p>The XY problem obscures the real issues and may even introduce secondary problems that lead to miscommunication, resource mismanagement, and sub-par solutions. The solution for the support personnel is to ask probing questions as to why the information is needed in order to identify the root problem Y and redirect the end user away from an unproductive path of inquiry.</p>
+</blockquote>
+<p>If that doesn&rsquo;t make sense, here is a good example from <a href="https://xyproblem.info/" target="_blank">&ldquo;The XY Problem&rdquo; website</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>&lt;bob&gt; How can I echo the last three characters in a filename?
+</span></span><span style="display:flex;"><span>&lt;feline&gt; If they&#39;re in a variable: echo ${foo: -3}
+</span></span><span style="display:flex;"><span>&lt;feline&gt; Why 3 characters? What do you REALLY want?
+</span></span><span style="display:flex;"><span>&lt;feline&gt; Do you want the extension?
+</span></span><span style="display:flex;"><span>&lt;bob&gt; Yes.
+</span></span><span style="display:flex;"><span>&lt;feline&gt; There&#39;s no guarantee that every filename will have a three-letter extension,
+</span></span><span style="display:flex;"><span>&lt;feline&gt; so blindly grabbing three characters does not solve the problem.
+</span></span><span style="display:flex;"><span>&lt;feline&gt; echo ${foo##*.}
+</span></span></code></pre></div><p>As you can see from this example, the person who answers the question should have a certain level of both professionalism and soft skills to get to the root of the challenge the other person is facing. That&rsquo;s not an easy task, I have to admit!</p>
+<p>What about our AI friends? Lately, I have been brainstorming an idea for creating a tool that will:</p>
+<ul>
+<li>fetch a list of GitHub projects within different organizations I have access to</li>
+<li>do specific manipulations within the <code>package.json</code> of each repo</li>
+</ul>
+<p>And I used ChatGPT to be my buddy in that process. I provided a high-level context for the tool and said that I&rsquo;m considering writing a script that will clone each of these repositories, read the content of the <code>package.json</code> file via the IO operation, make the desired change, and write the modified context back to the file. My AI friend replied that it was a good idea and explained how to do that with some pseudocode. However, I felt that I was reinventing the wheel with all of that, so I decided to double-check:</p>
+<p><img src="/images/screenshots/20231226-0006.png" alt="image"></p>
+<p>and then ChatGPT suggested a list of alternative approaches, one of which was to use the existing <code>GET /repos/:owner/:repo/contents/:path</code> endpoint of the GitHub API. That was good advice and exactly the way I went forward (successfully if you are wondering). But would I have gotten it if I hadn&rsquo;t explicitly asked about more elegant ways of achieving the desired result? Nope.</p>
+<h3 id="what-should-we-do-about-it-1">What should we do about it?</h3>
+<p>That&rsquo;s something that I&rsquo;d like you to be aware of while using tools like ChatGPT: they are falling (still?) into the XY problem, so be mindful and explicitly double-check whether the way you are going right now is the best one and whether there are any better alternatives.</p>
+<h2 id="the-code-that-looks-damn-realistic-but-has-some-hard-to-notice-issues">The code that looks damn realistic but has some hard-to-notice issues</h2>
+<p>Some time ago, I was working on my simple terminal reminder app <a href="https://github.com/n0rdy/remindme" target="_blank">remindme</a> (btw, check it out, it&rsquo;s pretty good and might be useful for you, and it&rsquo;s <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank">FOSS</a>), and it was one of the first times when I could feel the power of the GitHub Copilot assistance: it basically wrote all of the SQL-related code in my project. And I have to say that the queries were pretty good: here is what one of the functions looked like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sqliteReminderRepo</span>) <span style="color:#a6e22e">List</span>() ([]<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">Reminder</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rows</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">Query</span>(<span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">		SELECT id, message, remind_at FROM reminders;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	`</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">reminders</span> <span style="color:#f92672">:=</span> make([]<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">Reminder</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">rows</span>.<span style="color:#a6e22e">Next</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">id</span> <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">message</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">remindAt</span> <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rows</span>.<span style="color:#a6e22e">Scan</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">id</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">message</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">remindAt</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">reminders</span> = append(<span style="color:#a6e22e">reminders</span>, <span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">Reminder</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">ID</span>:       <span style="color:#a6e22e">id</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Message</span>:  <span style="color:#a6e22e">message</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">RemindAt</span>: <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Unix</span>(<span style="color:#a6e22e">remindAt</span>, <span style="color:#ae81ff">0</span>),
+</span></span><span style="display:flex;"><span>		})
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">reminders</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It&rsquo;s a decent code, but there is one catch that is easy to miss while doing a code review, especially if the pull request is quite big: a <code>rows</code> variable created in line 2 of the code is of type <code>*sql.Rows</code>. And <a href="https://github.com/golang/go/issues/46863" target="_blank">it should be closed</a> to release the resources once the processing is completed, that&rsquo;s why we need to add <code>defer rows.Close()</code> after the 1st <code>if err != nil { ... }</code> statement like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sqliteReminderRepo</span>) <span style="color:#a6e22e">List</span>() ([]<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">Reminder</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rows</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">Query</span>(<span style="color:#e6db74">`
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">		SELECT id, message, remind_at FROM reminders;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	`</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">rows</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">reminders</span> <span style="color:#f92672">:=</span> make([]<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">Reminder</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">rows</span>.<span style="color:#a6e22e">Next</span>() {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">id</span> <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">message</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">remindAt</span> <span style="color:#66d9ef">int64</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rows</span>.<span style="color:#a6e22e">Scan</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">id</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">message</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">remindAt</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">reminders</span> = append(<span style="color:#a6e22e">reminders</span>, <span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">Reminder</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">ID</span>:       <span style="color:#a6e22e">id</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Message</span>:  <span style="color:#a6e22e">message</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">RemindAt</span>: <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Unix</span>(<span style="color:#a6e22e">remindAt</span>, <span style="color:#ae81ff">0</span>),
+</span></span><span style="display:flex;"><span>		})
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">reminders</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In this case, leaving <code>rows</code> open won&rsquo;t cause huge problems because the app is small and is not exposed to the big scale. However, not closing resources (especially the IO or network ones) in the production code can lead to severe issues and wake the on-call fellas up in the middle of the night.</p>
+<p>I believe you&rsquo;ll agree that it&rsquo;s easier to miss this line while reading the code written by someone (the colleague or AI assistant) than to make the same mistake while writing this function manually.</p>
+<p>Let me show the same &ldquo;realistic but not entirely correct code&rdquo; problem but from a different angle. Some time ago, a company that I was collaborating with got a new junior engineer - let&rsquo;s call them Knut. It was the guy&rsquo;s first job ever, and I heard from the other colleagues (who worked full-time on the same project as Knut) that the new hire was doing great.</p>
+<p>Some weeks later, I got an email that Knut requested my review of their pull request. I opened the link and saw <code>Files changed 70</code> . &ldquo;Wow!&rdquo; was my first reaction, and then I grabbed a cup of coffee and decided to allocate an hour or so to do a deep review. I left a bunch of comments, nothing biggie, but there was one moment I couldn&rsquo;t comprehend: I noticed that Knut introduced a new dependency by adding a pretty big library (one of those &ldquo;Chuck Norris&rdquo; tools that can do everything). I briefly went through the list of code changes one more time, but I couldn&rsquo;t see where this library was used. I left a comment about that change as well, and on top of that, I sent a private message to Knut and said that if there is a need to jump into the call to clarify some of the comments or explain some code-/domain-wise moments, I could help with that.</p>
+<p>Pretty soon, we jumped into the call and had a good discussion on the places to improve within the PR. Finally, I had an opportunity to ask about that new dependency introduced by the pull request. Knut explained that otherwise, the project wouldn&rsquo;t compile, so the guy asked ChatGPT about how to fix those errors, and that&rsquo;s the solution the tool suggested using. And it helped!</p>
+<p>Let me step aside for a moment here to share some context. Suppose you have experience with the Java language and a Spring framework. In that case,  you might be familiar with the situation when there is a library, <code>something-cool-for-web</code>, that, for example, brings you a bunch of tools for web development, but it might provide only the interface for some parts, like HTTP Client. And now, it&rsquo;s up to you to provide the implementation or the explicit dependency for the HTTP Client to make the tool work. Otherwise, the compiler won&rsquo;t be happy, as the interface without the implementation is not a way to go.</p>
+<p>So, the correct solution is to use the <code>some-cool-and-tiny-http-client</code> library and provide the missing implementation to the <code>something-cool-for-web</code> configs. Instead, ChatGPT suggested using the <code>huge-and-heavy-all-inclusive</code> library, which has our <code>some-cool-and-tiny-http-client</code> within its sub-dependencies but also hundreds of others on top. Yes, this approach fixed the issue and made the compiler happy, but do we need those 100+ new libraries within the project? Of course not, as it creates a lot of risks, from unexpected bugs/behaviors to security vulnerabilities. But it was easy to miss this part while doing a code review of the pull request with 70 files changed.</p>
+<p>Don&rsquo;t get me wrong, the pre-AI tools we used (and still use), like StackOverflow, are also exposed to the same issue, but that doesn&rsquo;t mean we shouldn&rsquo;t mention it then.</p>
+<h3 id="what-should-we-do-about-it-2">What should we do about it?</h3>
+<p>As with other AI hallucinations, we should be extra careful with all the output provided by those tools and do our best to verify it. In the examples above, I mentioned only the manual verifications, but it&rsquo;s a good practice to rely on the automation tools as well, like different kinds of tests (unit, integration, end-to-end, etc.), linters, dependency restrictions, pro-commit hooks, code-formatters, etc.</p>
+<p>On top of that, we should aim to introduce/advocate a practice of smaller PRs (whenever possible) to make it easier to review and increase the chances of finding issues, if any.</p>
+<p>And my personal reflection: since AI assistants are getting pretty good at writing code, we should invest more time and effort into the skill of reading/reviewing code, as it becomes more and more important these days.</p>
+<h2 id="the-sunk-cost-fallacy">The sunk cost fallacy</h2>
+<p>This one is not a problem of the AI tools, but rather of us humans. And it&rsquo;s the most questionable point of this post, so please feel free to disagree. But let me explain first what I mean here.</p>
+<p>According to <a href="https://www.scribbr.com/fallacies/sunk-cost-fallacy/" target="_blank">this article on Scribbr</a>:</p>
+<blockquote>
+<p>The sunk cost fallacy is the tendency for people to continue an endeavor or course of action even when abandoning it would be more beneficial. Because we have invested our time, energy, or other resources, we feel that it would all have been for nothing if we quit.</p>
+<p>Sunk cost fallacy example
+You are watching a movie, and after 30 minutes you realize it’s not what you expected. Instead of finding another movie, you convince yourself to continue. You think to yourself that you have already invested half an hour and the whole movie is just an hour and a half. If you quit now, you will have wasted your time, so you decide to stick it out.</p>
+</blockquote>
+<p>I&rsquo;m not sure about you, but it&rsquo;s something that has happened to me. Here is one of the examples in the scope of the AI tools.</p>
+<p>These days, whenever I have time, I work on my new FOSS pet project: a service to ping your APIs/websites that is configurable via a simple YAML file and should support various queries/selectors (CSS, jq, etc.) and different protocols (HTTP(S), TCP, UDP, GRPS, GraphQL, etc.). One of the most challenging (and boring, IMHO) parts was to define the structure of the YAML config file, as it feels like creating a new DSL, so it&rsquo;s essential to keep it simple, extendable, and as short as possible. For that reason, I postponed the YAML part until the stage when I created a skeleton for the business logic and implemented a happy path for one of the protocols (HTTP). Once the time came, I decided to create a YAML config example with all the possible options before making the specifications and schema.</p>
+<p>I started with the first lines like these (<code>pingheim</code> is the name of the tool):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">pingheim</span>: <span style="color:#ae81ff">0.0.1</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">description</span>: <span style="color:#ae81ff">A sample of a full YAML file</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">pings</span>:
+</span></span></code></pre></div><p>To my great surprise, GitHub Copilot immediately offered me a completion that created the structure of the ping with the desired feature I had introduced in my business logic. I was quite happy about it, as it seemed like I could outsource the most boring part to my AI friend. So I accepted all the suggestions (there were dozens of lines of YAML code), quickly implemented the code of deserialization of this file, plugged it into the existing business logic, and decided to call it a day.</p>
+<p>I didn&rsquo;t have time to get back to this project for the next couple of days, and when I finally could, I opened my IDE and saw the generated YAML configurations with a fresh look. Well, it was clear that while there were a lot of valid points and even interesting ideas I had foreseen, the result itself was definitely far from being perfect and production-ready. What&rsquo;s worse is that it required proper surgery rather than a few minor changes to make it the way it should be, considering the abovementioned requirements. Did I mention that I found this part boring? Well, that was the moment when my inner resistance struck the most: &ldquo;Come on, man, it&rsquo;s not that bad!&rdquo;, &ldquo;It will require changing the entire codebase if we modify this part&rdquo;, &ldquo;Let&rsquo;s keep it for now and change it in the future&rdquo;, &ldquo;It&rsquo;s a tool for your own purposes, why bother?&rdquo;, &ldquo;You invested so much time and effort to go back and reiterate!&rdquo; and so on and so forth.</p>
+<p>As you can see, I became a victim of the sunk cost fallacy. I even had to interrupt the coding session and go for a short walk to fix the frustration part. At the end of the day, I made the right choice and spent another couple of evenings changing everything the way it should be, but that was mentally hard to start/keep doing. Otherwise, my tool won&rsquo;t be the one I wanted to build, but rather the one that generated code pointed me to.</p>
+<p>Again, it&rsquo;s not a problem of the AI tool, but rather my problem of non-ideal human-being - according to the fact that such effect has a separate term and <code>About 1,920,000 results</code> in Google search, I&rsquo;m not alone here. The thing is that AI tools can help create the feeling of a massive investment by generating tons of code that is not that easy to refactor once accepted as it is. In the pre-AI era, the same situations could have happened if folks were copy-pasting large chunks of code from StackOverflow or similar places, but AI helps make it faster and in larger volumes.</p>
+<p>While doing a couple of pair programming sessions with other engineers of different levels (from intern to staff), I realized that I&rsquo;m definitely not alone there: some people are being caught in the same trap I mentioned above, and then it&rsquo;s up to their level of discipline and professionalism whether they can overcome it. Have you ever seen/experienced something similar?</p>
+<h3 id="what-should-we-do-about-it-3">What should we do about it?</h3>
+<p>The answer is simple to define but sometimes hard to follow: be aware of such cognitive bias and always remain professional and disciplined. If you feel tired, call it a day or go for a short walk/physical activity to let the brain relax, as it&rsquo;s way easier to be hooked by this bias once you are tired, and, therefore, you might be considering shortcuts to finish the task.</p>
+<h2 id="privacy-and-legal">Privacy and Legal</h2>
+<p>This is the most boring and overlooked (by us engineers) challenge AI tools introduce: privacy and legal compliance. I remember that as soon as GitHub Copilot was released (in Beta?) for individual users, some of my friends and colleagues got access to it and started using it both for their pet projects and at work. It&rsquo;s only another tool, right? Well, it&rsquo;s not that simple.</p>
+<p>There is <a href="https://github.com/orgs/community/discussions/7163" target="_blank">an interesting discussion about &ldquo;Is Github Copilot safe privacy wise?&rdquo; on GitHub</a>. The short conclusion is that it&rsquo;s not, meaning that you should not use your individual license with a code that belongs to the company, as the tool collects metrics, telemetry, and, probably, some code/suggestions/prompts as well. I can see that the same conclusion came from the privacy and legal teams of the different tech companies out there, so the company started the enterprise agreements&rsquo; negotiations with GitHub to obtain the business licenses instead, which are more privacy-friendly.</p>
+<p>For example, here is what GitHub states in the <a href="https://docs.github.com/en/enterprise-cloud@latest/copilot/overview-of-github-copilot/about-github-copilot-individual#understanding-the-differences-between-copilot-individual-and-copilot-business" target="_blank">&ldquo;About GitHub Copilot Individual&rdquo; article</a>:</p>
+<p><img src="/images/screenshots/20231226-0007.png" alt="image"></p>
+<p>As you can see, they are pretty transparent about the telemetry they collect from the individual users, but not for the business ones.</p>
+<p><a href="https://www.businessinsider.com/chatgpt-companies-issued-bans-restrictions-openai-ai-amazon-apple-2023-7" target="_blank">Many companies</a> applied similar restrictions for the use of ChatGPT. The same approach goes for the other AI tools out there.</p>
+<h3 id="what-should-we-do-about-it-4">What should we do about it?</h3>
+<p>If you are using your private license with the production data, stop it right away! Talk to the lawyers in your company before sharing any company-owned data with the AI tools. Treat no approval as forbidden. We didn&rsquo;t share the company code on the internet forums and other services like StackOverflow, so we should treat AI tools the same way.</p>
+<h2 id="final-words">Final words</h2>
+<p>I know there are other issues and challenges with the tools we discussed above, especially related to the current AI limitations, but I am no expert in this field, so I&rsquo;d like to let scientists discuss this.</p>
+<p>I hope this post has triggered some thoughts, and it&rsquo;s more than OK to disagree with some. or all the points above (except the last one, as it&rsquo;s a law) - I&rsquo;m open to meaningful discussion. As I said at the beginning of the article, there is no message to stop using these tools, but rather to be aware of their limits and use them in a better and more productive way.</p>
+<p>As usual, if you liked my post and don’t want to miss out on my future publications, consider subscribing to <a href="https://mail.n0rdy.foo/subscription/form" target="_blank">my newsletter</a> to stay tuned and get my new posts delivered right to your email inbox.</p>
+<p>Merry Christmas and a Happy New Year to those who celebrate. See you in 2024!</p>
+<p>Have fun =)</p>
+
+  
+    <hr>
+<div class="newsletters">
+    <div class="help-block-for-success"></div>
+    <div class="help-block-for-error"></div>
+    <form id="email-subscription-form">
+        <label for="email-subscription-input">If you don&#39;t want to miss my new posts, subscribe to my newsletter. No spam, only good stuff =)</label>
+        <input type="email" id="email-subscription-input" name="email-subscription-input" placeholder="Email address" />
+        <button type="submit">Subscribe</button>
+    </form>
+
+    <script>
+      const listmonkHost = "https://mail.n0rdy.foo";
+      const listmonkSubscriptionSuccessMessage = "Thanks for subscribing =) Please, check your email to confirm subscription. If you don't see confirmation email, please, check your spam folder.";
+      const listmonkSubscriptionErrorMessage = "Something went wrong =( Please, try again later.";
+
+      const form = document.getElementById("email-subscription-form");
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = form.querySelector("#email-subscription-input").value;
+        const data = {
+          email: email,
+          list_uuids: [
+            "3ba79b71-880f-417d-9587-d388b62e0986"
+          ]
+      };
+        fetch(`${listmonkHost}/api/public/subscription`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }).then((response) => {
+          if (response.status === 200) {
+            const successBlock = document.getElementsByClassName('help-block-for-success')[0];
+            successBlock.classList.add('help-block-show');
+            successBlock.textContent = listmonkSubscriptionSuccessMessage;
+            document.getElementById('email-subscription-form').classList.add('email-subscription-form-hide');
+          } else {
+            const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
+            errorBlock.classList.add('help-block-show');
+            errorBlock.textContent = listmonkSubscriptionErrorMessage;
+          }
+        }).catch(() => {
+          const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
+          errorBlock.classList.add('help-block-show');
+          errorBlock.textContent = listmonkSubscriptionErrorMessage;
+        });
+      })
+    </script>
+</div>
+  
+  <hr>
+<div class="footer">
+    
+	    
+            <a class="previous-post" href="https://n0rdy.foo/posts/20231221/go-data-pipeline/?ref=footer"><span style="font-weight:bold;">« Previous</span><br>Go concurrency simplified. Part 4: Post office as...</a>
+        
+	    
+    
+</div>
+
+  
+    <div class="comments">
+    
+        <div id="remark42"></div>
+        <script>
+            themeFromLS = localStorage.getItem("theme")
+            themeFromHugo = document.body.classList.contains("dark-theme") ? "dark" : "light"
+            currentTheme = themeFromLS ? themeFromLS : themeFromHugo;
+
+            var remark_config = {
+                host: "https://www.remark42.n0rdy.foo",
+                site_id: "remark42.n0rdy",
+                theme: currentTheme,
+                max_shown_comments: 100,
+            }
+        </script>
+        <script>!function(e,n){for(var o=0;o<e.length;o++){var r=n.createElement("script"),c=".js",d=n.head||n.body;"noModule"in r?(r.type="module",c=".mjs"):r.async=!0,r.defer=!0,r.src=remark_config.host+"/web/"+e[o]+c,d.appendChild(r)}}(remark_config.components||["embed"],document);</script>
+    
+</div>
+
+  
+</div>
+            </main>
+            
+  
+    <div class="article-toc ">
+    <div class="toc-wrapper">
+      <h4 id="contents"></h4>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#contextless-advises">Contextless advises</a>
+      <ul>
+        <li><a href="#what-should-we-do-about-it">What should we do about it?</a></li>
+      </ul>
+    </li>
+    <li><a href="#xy-problem">XY problem</a>
+      <ul>
+        <li><a href="#what-should-we-do-about-it-1">What should we do about it?</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-code-that-looks-damn-realistic-but-has-some-hard-to-notice-issues">The code that looks damn realistic but has some hard-to-notice issues</a>
+      <ul>
+        <li><a href="#what-should-we-do-about-it-2">What should we do about it?</a></li>
+      </ul>
+    </li>
+    <li><a href="#the-sunk-cost-fallacy">The sunk cost fallacy</a>
+      <ul>
+        <li><a href="#what-should-we-do-about-it-3">What should we do about it?</a></li>
+      </ul>
+    </li>
+    <li><a href="#privacy-and-legal">Privacy and Legal</a>
+      <ul>
+        <li><a href="#what-should-we-do-about-it-4">What should we do about it?</a></li>
+      </ul>
+    </li>
+    <li><a href="#final-words">Final words</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+  
+
+        </div>
+    </body>
+</html>

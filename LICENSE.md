@@ -9,6 +9,7 @@ All the files inside `/content` directory and their HTML representations inside 
 `/static/favicon.ico` and `/static/images/avatar.jpg` files and their generated representations inside `/public` directory are copyrighted to [n0rdy](https://github.com/n0rdy). All rights reserved. 
 
 All the files inside `/static/images/drawings` and `/assets/covers/drawings` directories and their generated representations inside `/public` directory are copyrighted to [n0rdy](https://github.com/n0rdy). All rights reserved.
+All the files inside `/static/images/screenshots` and their generated representations inside `/public` directory require the one who uses them to verify the license of the original image or the tool the screenshot was taken from - the text of the posts where the screenshots appear contains enough context to get the name of the original tool/place/image/webpage/etc. As for the content of the screenshots, it is licensed under the [CC BY-SA 4.0 licence](https://creativecommons.org/licenses/by-sa/4.0/) if the content was produced by n0rdy. If the content was produced by someone else, the license of the original content applies.  
 
 # Hugo "Poison" theme
 
