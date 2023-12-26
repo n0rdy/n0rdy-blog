@@ -13,7 +13,8 @@
       <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
       
       <guid>https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/</guid>
-      <description>AI tools for software engineers: 5 things to be careful about/aware of Hello there! 2023 is about to end soon, so it&amp;rsquo;s a good time to sit and reflect on it. If we think about the tech industry, in general, it&amp;rsquo;s easy to define which topic was the hottest this year - AI. And the chances are that in 2024, this area will grow even bigger alongside the growing investments and the new astonishing scientific discoveries in this field.</description>
+      <description>Hello there! 2023 is about to end soon, so it&amp;rsquo;s a good time to sit and reflect on it. If we think about the tech industry, in general, it&amp;rsquo;s easy to define which topic was the hottest this year - AI. And the chances are that in 2024, this area will grow even bigger alongside the growing investments and the new astonishing scientific discoveries in this field.
+Unlike previous &amp;ldquo;big things&amp;rdquo; in tech, like blockchain, crypto, NFT, Web3, etc.</description>
     </item>
     
     <item>
@@ -22,7 +23,7 @@
       <pubDate>Thu, 21 Dec 2023 23:20:00 +0200</pubDate>
       
       <guid>https://n0rdy.foo/posts/20231221/go-data-pipeline/</guid>
-      <description>Go concurrency simplified. Part 4: Post office as a data pipeline Hello there! The main part of my moving to a new place adventures seems to be behind. Since I&amp;rsquo;m still waiting for a furniture delivery, I&amp;rsquo;m writing this post while lying on the floor using my foam camping mat as a sofa. It&amp;rsquo;s not the most ideal setup, but it works. Anyway, I feel like today is the right time to start working on Part 4 of the &amp;ldquo;Go concurrency simplified&amp;rdquo; series.</description>
+      <description>Hello there! The main part of my moving to a new place adventures seems to be behind. Since I&amp;rsquo;m still waiting for a furniture delivery, I&amp;rsquo;m writing this post while lying on the floor using my foam camping mat as a sofa. It&amp;rsquo;s not the most ideal setup, but it works. Anyway, I feel like today is the right time to start working on Part 4 of the &amp;ldquo;Go concurrency simplified&amp;rdquo; series.</description>
     </item>
     
     <item>
@@ -31,7 +32,7 @@
       <pubDate>Thu, 14 Dec 2023 23:00:00 +0200</pubDate>
       
       <guid>https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/</guid>
-      <description>Go concurrency simplified. Part 3: Managing channels with for loops and select statements Hello there! I feel like I got my covid under control and will be back to daily life soon. In the meantime, I&amp;rsquo;m sitting at my desk in a nearly empty apartment (I&amp;rsquo;m moving soon) and wondering whether it&amp;rsquo;s possible to produce an echo if I scream loud enough 🤔 Anyway, I feel like it&amp;rsquo;s the right time to start working on Part 3 of the &amp;ldquo;Go concurrency simplified&amp;rdquo; series.</description>
+      <description>Hello there! I feel like I got my covid under control and will be back to daily life soon. In the meantime, I&amp;rsquo;m sitting at my desk in a nearly empty apartment (I&amp;rsquo;m moving soon) and wondering whether it&amp;rsquo;s possible to produce an echo if I scream loud enough 🤔 Anyway, I feel like it&amp;rsquo;s the right time to start working on Part 3 of the &amp;ldquo;Go concurrency simplified&amp;rdquo; series. Today, we&amp;rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will get us closer to solving the queue situation in the post office we discussed last time.</description>
     </item>
     
     <item>
@@ -40,7 +41,7 @@
       <pubDate>Mon, 11 Dec 2023 18:00:00 +0200</pubDate>
       
       <guid>https://n0rdy.foo/posts/20231211/go-waitgroup/</guid>
-      <description>Go concurrency simplified. Part 2: Syncing goroutines with sync.WaitGroup Hello there! Despite the beautiful snowy weather outside, I&amp;rsquo;m at home these days with covid, so I can dedicate some additional time to blogging.
+      <description>Hello there! Despite the beautiful snowy weather outside, I&amp;rsquo;m at home these days with covid, so I can dedicate some additional time to blogging.
 Last time, we discussed the very basic concepts of Go concurrency: goroutines and channels. If you missed that post, please check it out here, it has some cool drawings =) Today, we&amp;rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will help us get rid of some hacky workarounds we have used so far.</description>
     </item>
     
@@ -50,7 +51,7 @@ Last time, we discussed the very basic concepts of Go concurrency: goroutines an
       <pubDate>Thu, 07 Dec 2023 22:00:00 +0200</pubDate>
       
       <guid>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</guid>
-      <description>Go concurrency simplified. Part 1: Channels and goroutines Christmas season is around the corner, that&amp;rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on my open-source library for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.</description>
+      <description>Christmas season is around the corner, that&amp;rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on my open-source library for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.</description>
     </item>
     
   </channel>

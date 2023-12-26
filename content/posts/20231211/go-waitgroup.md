@@ -7,8 +7,6 @@ tags: ["go", "concurrency", "waitgroup"]
 series: "Go concurrency simplified"
 ---
 
-# Go concurrency simplified. Part 2: Syncing goroutines with `sync.WaitGroup`
-
 Hello there! Despite the beautiful snowy weather outside, I'm at home these days with covid, so I can dedicate some additional time to blogging. 
 
 Last time, we discussed the very basic concepts of Go concurrency: goroutines and channels. If you missed that post, please check it out [here](https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/), it has some cool drawings =) Today, we'll move on and explore the ways Go offers us to sync goroutines - it will help us get rid of some hacky workarounds we have used so far.

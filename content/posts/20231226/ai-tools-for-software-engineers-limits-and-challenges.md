@@ -5,8 +5,6 @@ draft: false
 date: 2023-12-26T15:25:00+02:00
 tags: ["ai", "tech", "opinion"]
 ---
-# AI tools for software engineers: 5 things to be careful about/aware of
-
 Hello there! 2023 is about to end soon, so it's a good time to sit and reflect on it. If we think about the tech industry, in general, it's easy to define which topic was the hottest this year - AI. And the chances are that in 2024, this area will grow even bigger alongside the growing investments and the new astonishing scientific discoveries in this field. 
 
 Unlike previous "big things" in tech, like blockchain, crypto, NFT, Web3, etc., AI is way more accessible and covers more use cases than the rest:

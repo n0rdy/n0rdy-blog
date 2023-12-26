@@ -13,7 +13,7 @@
       <pubDate>Mon, 11 Dec 2023 18:00:00 +0200</pubDate>
       
       <guid>https://n0rdy.foo/posts/20231211/go-waitgroup/</guid>
-      <description>Go concurrency simplified. Part 2: Syncing goroutines with sync.WaitGroup Hello there! Despite the beautiful snowy weather outside, I&amp;rsquo;m at home these days with covid, so I can dedicate some additional time to blogging.
+      <description>Hello there! Despite the beautiful snowy weather outside, I&amp;rsquo;m at home these days with covid, so I can dedicate some additional time to blogging.
 Last time, we discussed the very basic concepts of Go concurrency: goroutines and channels. If you missed that post, please check it out here, it has some cool drawings =) Today, we&amp;rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will help us get rid of some hacky workarounds we have used so far.</description>
     </item>
     

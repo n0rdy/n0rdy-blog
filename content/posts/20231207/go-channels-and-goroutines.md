@@ -7,8 +7,6 @@ tags: ["go", "concurrency", "goroutines", "channels"]
 series: "Go concurrency simplified"
 ---
 
-# Go concurrency simplified. Part 1: Channels and goroutines
-
 Christmas season is around the corner, that's why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on [my open-source library](https://github.com/n0rdy/pippin) for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels. 
 
 ![image](/images/drawings/20231207-0001.png "A queue")

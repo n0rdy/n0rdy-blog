@@ -7,8 +7,6 @@ tags: ["go", "concurrency", "pipeline"]
 series: "Go concurrency simplified"
 ---
 
-# Go concurrency simplified. Part 4: Post office as a data pipeline
-
 Hello there! The main part of my moving to a new place adventures seems to be behind. Since I'm still waiting for a furniture delivery, I'm writing this post while lying on the floor using my foam camping mat as a sofa. It's not the most ideal setup, but it works. Anyway, I feel like today is the right time to start working on Part 4 of the ["Go concurrency simplified" series](https://n0rdy.foo/series/go-concurrency-simplified). So far, we have learned and explored the key Go concurrency concepts, such as goroutines, channels, and the ways to synchronize and manage them. And today, we are going to combine all of our knowledge to make this world a better place to live (not really) or at least to help the post office (and our good old friend postman Bob) by making the queue handling process more effective. In the meantime, let's briefly recap where we stopped in Part 3 (if you missed it, [here is the link](https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/)). 
 
 ## Recap

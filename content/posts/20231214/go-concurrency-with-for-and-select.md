@@ -7,8 +7,6 @@ tags: ["go", "concurrency"]
 series: "Go concurrency simplified"
 ---
 
-# Go concurrency simplified. Part 3: Managing channels with `for` loops and `select` statements
-
 Hello there! I feel like I got my covid under control and will be back to daily life soon. In the meantime, I'm sitting at my desk in a nearly empty apartment (I'm moving soon) and wondering whether it's possible to produce an echo if I scream loud enough 🤔 Anyway, I feel like it's the right time to start working on Part 3 of the "Go concurrency simplified" series. Today, we'll move on and explore the ways Go offers us to sync goroutines - it will get us closer to solving the queue situation in the post office we discussed last time. But let's start with a short recap of where we stopped in the previous post (if you missed it, [here is the link](https://n0rdy.foo/posts/20231211/go-waitgroup/)).
 
 ## Recap
