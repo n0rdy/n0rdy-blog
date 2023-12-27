@@ -10,7 +10,7 @@ paginate = 5
 [params]
     brand = "n0rdy"
     brand_image = "/images/avatar.jpg"
-    description = "In tech we trust"
+    description = "A blog about software engineering and technology"
     dark_mode = true
     favicon = "/favicon.ico"
 
