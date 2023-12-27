@@ -6,7 +6,7 @@ omitDate: true
 
 Hello there! Good to see you here.
 
-It's Mykola, a guy behind the n0rdy blog, a software engineer passionate about tech, books, and mountains.
+It's Mykola, a guy behind the n0rdy blog and a software engineer passionate about tech, books, and mountains.
 
 > ...then something Tookish woke up inside him, and he wished to go and see the great mountains, and hear the pine trees and the waterfalls, and explore the caves, and wear a sword instead of a walking stick...
 
