@@ -17,9 +17,9 @@ I hope you'll find something useful for yourself, learn something new, or just h
 
 If you have any questions or suggestions or would like to say "Hi!", you can find my contacts in the footer.
 
-If you like my blog and don't want to miss new posts, you can subscribe to my newsletter below.
+If you like my blog and don't want to miss new posts, subscribe to my newsletter below.
 The new issue is sent once I publish a new post - it's not quite often, so you won't get spammed.
 
-You can find the previous issues of my newsletter [here](https://mail.n0rdy.foo/archive).
+See the previous issues of my newsletter [here](https://mail.n0rdy.foo/archive).
 
 Have fun! =)
