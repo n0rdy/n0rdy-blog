@@ -4,7 +4,7 @@ draft: false
 omitDate: true
 ---
 
-Hello there! Good to see you here.
+Hello there and welcome! 👋
 
 It's Mykola, a guy behind the n0rdy blog and a software engineer passionate about tech, books, and mountains.
 
