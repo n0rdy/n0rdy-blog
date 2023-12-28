@@ -17,7 +17,7 @@ My contacts are in the footer if you have any questions or just want to say "Hi"
 
 If you like my blog and don't want to miss out on new posts, subscribe to my newsletter below.
 The new issue is sent once I publish a new post. 
-I include some additional info there, like cool tech-related stuff I read/watched/came across lately.
+I include some additional info there, like cool tech-related stuff I've read / watched / came across lately.
 
 You can find the previous issues of my newsletter [here](https://mail.n0rdy.foo/archive).
 
