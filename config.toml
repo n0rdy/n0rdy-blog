@@ -10,7 +10,7 @@ paginate = 5
 [params]
     brand = "n0rdy"
     brand_image = "/images/avatar.jpg"
-    description = "A blog about software engineering and tech"
+    description = "Exploring software engineering and tech"
     dark_mode = true
     favicon = "/favicon.ico"
 
