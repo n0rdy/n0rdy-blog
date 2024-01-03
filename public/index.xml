@@ -6,7 +6,18 @@
     <description>Recent content on n0rdy personal blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 26 Dec 2023 15:25:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 03 Jan 2024 17:00:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Understanding CORS</title>
+      <link>https://n0rdy.foo/posts/20240103/understanding-cors/</link>
+      <pubDate>Wed, 03 Jan 2024 17:00:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/posts/20240103/understanding-cors/</guid>
+      <description>Hello there! Happy New Year! I hope you had an opportunity to get some rest during the winter holidays and maybe even made a snowman or two =)
+Several days ago, I had a dialog with a friend of mine (let&amp;rsquo;s call her Eowyn) who has recently started her path in software engineering:
+Eowyn: Hey, buddy! I&amp;rsquo;m building a web project that has the frontend and backend parts. Whenever I click a button on the UI (that triggers a DELETE request to the server), my browser blows with these errors: I tried calling the same endpoint with the curl command, and it works.</description>
+    </item>
+    
     <item>
       <title>AI tools for software engineers: 5 things to be careful about/aware of</title>
       <link>https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/</link>
@@ -60,9 +71,10 @@ Last time, we discussed the very basic concepts of Go concurrency: goroutines an
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://n0rdy.foo/about/about/</guid>
-      <description>Hello there! Thanks for visiting my blog.
-My name is Mykola. I&amp;rsquo;m a software engineer passionate about tech, books, and mountains. Here is my favorite quote from J.R.R. Tolkien&amp;rsquo;s The Hobbit that I feel a personal connection to:
-&amp;hellip;then something Tookish woke up inside him, and he wished to go and see the great mountains, and hear the pine trees and the waterfalls, and explore the caves, and wear a sword instead of a walking stick&amp;hellip;</description>
+      <description>Hello there, and welcome! 👋
+It&amp;rsquo;s Mykola, a guy behind the n0rdy blog and a software engineer passionate about tech, books, and mountains.
+&amp;hellip;then something Tookish woke up inside him, and he wished to go and see the great mountains, and hear the pine trees and the waterfalls, and explore the caves, and wear a sword instead of a walking stick&amp;hellip;
+This blog is about different aspects of software engineering and technology in general, as I don&amp;rsquo;t believe in &amp;ldquo;the best programming language/paradigm/framework&amp;rdquo; concepts.</description>
     </item>
     
   </channel>
