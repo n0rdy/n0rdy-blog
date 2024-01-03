@@ -587,7 +587,7 @@ The same applies for `http` vs `https` - CORS is very strict:
 
 ![image](/images/screenshots/20240103-0010.png)
 
-There is possibility, though, of allowing anyone to call your API - by using `*` as a value for the `Access-Control-Allow-Origin` header:
+There is a possibility, though, of allowing anyone to call your API - by using `*` as a value for the `Access-Control-Allow-Origin` header:
 
 ```go
 func enableCors(w http.ResponseWriter) {
@@ -708,6 +708,6 @@ As I mentioned on the disclaimer section, there is [an excellent longread from M
 
 If you are more into the RFC types of read, [here is the one that covers CORS as well](https://fetch.spec.whatwg.org/#http-cors-protocol) - the link leads exactly to the CORS section, but feel free to read all of it, if you have time and inspiration. 
 
-Anyway, it's getting late in my time zone, so I need to call it a day and get some sleep. I hope you learn some new today and get a good grasp on what CORS is and how it works under the hood. See you on the next posts!
+Anyway, it's getting late in my time zone, so I need to call it a day and get some sleep. I hope you learn some new today and get a good grasp on what CORS is and how it works under the hood. See you in the next posts!
 
 Have fun =)

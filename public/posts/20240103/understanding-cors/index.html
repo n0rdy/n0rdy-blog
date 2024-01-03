@@ -1015,7 +1015,7 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 <p><img src="/images/screenshots/20240103-0009.png" alt="image"></p>
 <p>The same applies for <code>http</code> vs <code>https</code> - CORS is very strict:</p>
 <p><img src="/images/screenshots/20240103-0010.png" alt="image"></p>
-<p>There is possibility, though, of allowing anyone to call your API - by using <code>*</code> as a value for the <code>Access-Control-Allow-Origin</code> header:</p>
+<p>There is a possibility, though, of allowing anyone to call your API - by using <code>*</code> as a value for the <code>Access-Control-Allow-Origin</code> header:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">enableCors</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;*&#34;</span>)
@@ -1098,7 +1098,7 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>As I mentioned on the disclaimer section, there is <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS" target="_blank">an excellent longread from Mozilla</a> on that topic - I know that now you are well-equipped for it.</p>
 <p>If you are more into the RFC types of read, <a href="https://fetch.spec.whatwg.org/#http-cors-protocol" target="_blank">here is the one that covers CORS as well</a> - the link leads exactly to the CORS section, but feel free to read all of it, if you have time and inspiration.</p>
-<p>Anyway, it&rsquo;s getting late in my time zone, so I need to call it a day and get some sleep. I hope you learn some new today and get a good grasp on what CORS is and how it works under the hood. See you on the next posts!</p>
+<p>Anyway, it&rsquo;s getting late in my time zone, so I need to call it a day and get some sleep. I hope you learn some new today and get a good grasp on what CORS is and how it works under the hood. See you in the next posts!</p>
 <p>Have fun =)</p>
 
   
