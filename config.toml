@@ -24,7 +24,7 @@ paginate = 5
     # Remark42
     remark42 = true
     remark42_host = "https://www.remark42.n0rdy.foo"
-    remark42_site_id = "remark42.n0rdy"
+    remark42_site_id = "remark42.n0rdy.foo"
 
     # Plausible
     plausible = true
