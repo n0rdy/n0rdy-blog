@@ -994,14 +994,13 @@ The only difference here is that we need to generate and use RSA keys instead of
 
 Here is the output of this code:
 
-```go
+```text
 Sender part:
 eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTE2MzEyODYsIm1lc3NhZ2UiOiJIZWxsbyB0aGVyZSwgQ3JhaWchIFdoYXQncyB1cCwgYnVkZHk_Iiwic3ViIjoiQ3JhaWcifQ.jZ4OIgCRyP2dHxa8wV_QqNYweT1p1ntGUfWHAxbHQyonAQAHhHcL75hCfPhxduGKqGU_dsrepKv6epBFGtMpUwlqvDiduQWKut0slqr6OQI_BedoQ8QB2Z9XdPM-smya7f1teEwYF9lDmU2Rz6s5pff_vwuuIQU2JRISg_fCKr0EqQv0Z5kvlxBeWJ3T5G0VBTTQccZZXkPCNovjT7eTXyChIQ8LT6RV4Fc5giLHi_-eydmJIcPCjJR2mjUk7-JI94b3QR2-ZTQcx96fbmMT3kp4RGn3r9SCAGAZQob43zxc2rcwEEEx07t4cuSa1BpJHrkzYA5bzpiRDH1fxWclyw
 
 Receiver part:
 The signature matches - the original message hasn't been modified
 {"iat":1711631286,"message":"Hello there, Craig! What's up, buddy?","sub":"Craig"}
-
 ```
 
 ### JWE

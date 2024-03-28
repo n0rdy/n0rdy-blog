@@ -6,7 +6,17 @@
     <description>Recent content in eli5 on n0rdy personal blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 03 Jan 2024 17:00:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/eli5/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 28 Mar 2024 20:00:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/eli5/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JWT, JWS, JWE and how to cook them</title>
+      <link>https://n0rdy.foo/posts/20240328/jwt-jws-jwe-and-how-to-cook-them/</link>
+      <pubDate>Thu, 28 Mar 2024 20:00:00 +0200</pubDate>
+      
+      <guid>https://n0rdy.foo/posts/20240328/jwt-jws-jwe-and-how-to-cook-them/</guid>
+      <description>Hello there! It&amp;rsquo;s been a while since I wrote here - all of a sudden, 2024 became way busier than I planned it to be. But hey, it&amp;rsquo;s good to be back!
+Similar to my previous post, Understanding CORS, this one has the same backstory: lately, I have had to explain a few times to different people about such concepts as JSON Web Tokens (JWT), their structure, types, use cases, etc.</description>
+    </item>
+    
     <item>
       <title>Understanding CORS</title>
       <link>https://n0rdy.foo/posts/20240103/understanding-cors/</link>
