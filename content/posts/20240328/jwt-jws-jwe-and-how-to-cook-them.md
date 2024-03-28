@@ -922,7 +922,7 @@ The signature matches - the original message hasn't been modified
 {"iat":1711631062,"message":"Hello there, Craig! What's up, buddy?","sub":"Craig"}
 ```
 
-### Asymmetric algorithm example
+#### Asymmetric algorithm example
 
 ```go
 import (
