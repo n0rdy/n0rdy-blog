@@ -8,7 +8,7 @@ tags: ["tech", "web", "security"]
 
 Hello there! Another evening, on my way back home, I decided to check the mailbox. I don't mean my email inbox, but the old-school actual box where the postman puts the physical letters. And to my great surprise, I found an envelope there with something inside! While opening it, I spent a few moments hoping that it's the decades delayed letter from Hogwarts. But then I had to get back down to Earth, once I noticed that it's a boring "grown-up" letter from the bank. I skimmed through the text and realized that my "digital-only" bank for cool kids had been acquired by the biggest player on the local market. And as a token of the new beginning, they added this to the envelope:
 
-![image](/images/drawings/20241210-0001.png)
+![image](/images/drawings/20241210-0001.jpg)
 
 Alongside the instructions on how to use it.
 
