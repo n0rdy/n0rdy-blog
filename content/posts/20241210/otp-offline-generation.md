@@ -155,6 +155,7 @@ fmt.Println("Code: ", formattedCode)
 ```
 
 The `fmt.Sprintf("%06d", code)` part appends leading zeros in case if our code value has less than 6 digits. For example, `1234` will be converted into `001234`.
+The entire code for this post can be found [here](https://github.com/n0rdy/n0rdy-blog-code-samples/tree/main/20241210-otp-offline-generation).
 
 Let's run this code:
 
