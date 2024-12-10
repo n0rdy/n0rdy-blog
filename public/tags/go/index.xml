@@ -1,48 +1,40 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>go on n0rdy personal blog</title>
+    <title>Go on n0rdy personal blog</title>
     <link>https://n0rdy.foo/tags/go/</link>
-    <description>Recent content in go on n0rdy personal blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Go on n0rdy personal blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 Dec 2023 23:20:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/go/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 21 Dec 2023 23:20:00 +0200</lastBuildDate>
+    <atom:link href="https://n0rdy.foo/tags/go/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go concurrency simplified. Part 4: Post office as a data pipeline</title>
       <link>https://n0rdy.foo/posts/20231221/go-data-pipeline/</link>
       <pubDate>Thu, 21 Dec 2023 23:20:00 +0200</pubDate>
-      
       <guid>https://n0rdy.foo/posts/20231221/go-data-pipeline/</guid>
-      <description>Hello there! The main part of my moving to a new place adventures seems to be behind. Since I&amp;rsquo;m still waiting for a furniture delivery, I&amp;rsquo;m writing this post while lying on the floor using my foam camping mat as a sofa. It&amp;rsquo;s not the most ideal setup, but it works. Anyway, I feel like today is the right time to start working on Part 4 of the &amp;ldquo;Go concurrency simplified&amp;rdquo; series.</description>
+      <description>&lt;p&gt;Hello there! The main part of my moving to a new place adventures seems to be behind. Since I&amp;rsquo;m still waiting for a furniture delivery, I&amp;rsquo;m writing this post while lying on the floor using my foam camping mat as a sofa. It&amp;rsquo;s not the most ideal setup, but it works. Anyway, I feel like today is the right time to start working on Part 4 of the &lt;a href=&#34;https://n0rdy.foo/series/go-concurrency-simplified&#34; target=&#34;_blank&#34;&gt;&amp;ldquo;Go concurrency simplified&amp;rdquo; series&lt;/a&gt;. So far, we have learned and explored the key Go concurrency concepts, such as goroutines, channels, and the ways to synchronize and manage them. And today, we are going to combine all of our knowledge to make this world a better place to live (not really) or at least to help the post office (and our good old friend postman Bob) by making the queue handling process more effective. In the meantime, let&amp;rsquo;s briefly recap where we stopped in Part 3 (if you missed it, &lt;a href=&#34;https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/&#34; target=&#34;_blank&#34;&gt;here is the link&lt;/a&gt;).&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Go concurrency simplified. Part 3: Managing channels with for loops and select statements</title>
       <link>https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/</link>
       <pubDate>Thu, 14 Dec 2023 23:00:00 +0200</pubDate>
-      
       <guid>https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/</guid>
-      <description>Hello there! I feel like I got my covid under control and will be back to daily life soon. In the meantime, I&amp;rsquo;m sitting at my desk in a nearly empty apartment (I&amp;rsquo;m moving soon) and wondering whether it&amp;rsquo;s possible to produce an echo if I scream loud enough 🤔 Anyway, I feel like it&amp;rsquo;s the right time to start working on Part 3 of the &amp;ldquo;Go concurrency simplified&amp;rdquo; series. Today, we&amp;rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will get us closer to solving the queue situation in the post office we discussed last time.</description>
+      <description>&lt;p&gt;Hello there! I feel like I got my covid under control and will be back to daily life soon. In the meantime, I&amp;rsquo;m sitting at my desk in a nearly empty apartment (I&amp;rsquo;m moving soon) and wondering whether it&amp;rsquo;s possible to produce an echo if I scream loud enough 🤔 Anyway, I feel like it&amp;rsquo;s the right time to start working on Part 3 of the &amp;ldquo;Go concurrency simplified&amp;rdquo; series. Today, we&amp;rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will get us closer to solving the queue situation in the post office we discussed last time. But let&amp;rsquo;s start with a short recap of where we stopped in the previous post (if you missed it, &lt;a href=&#34;https://n0rdy.foo/posts/20231211/go-waitgroup/&#34; target=&#34;_blank&#34;&gt;here is the link&lt;/a&gt;).&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Go concurrency simplified. Part 2: Syncing goroutines with sync.WaitGroup</title>
       <link>https://n0rdy.foo/posts/20231211/go-waitgroup/</link>
       <pubDate>Mon, 11 Dec 2023 18:00:00 +0200</pubDate>
-      
       <guid>https://n0rdy.foo/posts/20231211/go-waitgroup/</guid>
-      <description>Hello there! Despite the beautiful snowy weather outside, I&amp;rsquo;m at home these days with covid, so I can dedicate some additional time to blogging.
-Last time, we discussed the very basic concepts of Go concurrency: goroutines and channels. If you missed that post, please check it out here, it has some cool drawings =) Today, we&amp;rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will help us get rid of some hacky workarounds we have used so far.</description>
+      <description>&lt;p&gt;Hello there! Despite the beautiful snowy weather outside, I&amp;rsquo;m at home these days with covid, so I can dedicate some additional time to blogging.&lt;/p&gt;&#xA;&lt;p&gt;Last time, we discussed the very basic concepts of Go concurrency: goroutines and channels. If you missed that post, please check it out &lt;a href=&#34;https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/&#34; target=&#34;_blank&#34;&gt;here&lt;/a&gt;, it has some cool drawings =) Today, we&amp;rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will help us get rid of some hacky workarounds we have used so far.&lt;/p&gt;</description>
     </item>
-    
     <item>
       <title>Go concurrency simplified. Part 1: Channels and goroutines</title>
       <link>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</link>
       <pubDate>Thu, 07 Dec 2023 22:00:00 +0200</pubDate>
-      
       <guid>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</guid>
-      <description>Christmas season is around the corner, that&amp;rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on my open-source library for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.</description>
+      <description>&lt;p&gt;Christmas season is around the corner, that&amp;rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on &lt;a href=&#34;https://github.com/n0rdy/pippin&#34; target=&#34;_blank&#34;&gt;my open-source library&lt;/a&gt; for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

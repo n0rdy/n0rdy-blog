@@ -1,20 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>goroutines on n0rdy personal blog</title>
+    <title>Goroutines on n0rdy personal blog</title>
     <link>https://n0rdy.foo/tags/goroutines/</link>
-    <description>Recent content in goroutines on n0rdy personal blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <description>Recent content in Goroutines on n0rdy personal blog</description>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 07 Dec 2023 22:00:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/goroutines/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Thu, 07 Dec 2023 22:00:00 +0200</lastBuildDate>
+    <atom:link href="https://n0rdy.foo/tags/goroutines/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go concurrency simplified. Part 1: Channels and goroutines</title>
       <link>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</link>
       <pubDate>Thu, 07 Dec 2023 22:00:00 +0200</pubDate>
-      
       <guid>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</guid>
-      <description>Christmas season is around the corner, that&amp;rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on my open-source library for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.</description>
+      <description>&lt;p&gt;Christmas season is around the corner, that&amp;rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on &lt;a href=&#34;https://github.com/n0rdy/pippin&#34; target=&#34;_blank&#34;&gt;my open-source library&lt;/a&gt; for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.&lt;/p&gt;</description>
     </item>
-    
   </channel>
 </rss>

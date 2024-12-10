@@ -49,20 +49,16 @@
 
 
 
-  
-  
-  
-
 
 
 
 <!-- Open Graph image and Twitter Card metadata -->
 
-<title itemprop="name">n0rdy - About</title>
-<meta property="og:title" content=n0rdy&#32;-&#32;About />
-<meta name="twitter:title" content=n0rdy&#32;-&#32;About />
-<meta itemprop="name" content=n0rdy&#32;-&#32;About />
-<meta name="application-name" content=n0rdy&#32;-&#32;About />
+<title itemprop="name">n0rdy personal blog</title>
+<meta property="og:title" content=n0rdy&#32;personal&#32;blog />
+<meta name="twitter:title" content=n0rdy&#32;personal&#32;blog />
+<meta itemprop="name" content=n0rdy&#32;personal&#32;blog />
+<meta name="application-name" content=n0rdy&#32;personal&#32;blog />
 <meta property="og:site_name" content="n0rdy personal blog" />
 
 
@@ -72,18 +68,18 @@
 <meta name="twitter:description" content="" />
 
 
-<base href="https://n0rdy.foo/about/" />
-<link rel="canonical" href="https://n0rdy.foo/about/" itemprop="url" />
-<meta name="url" content="https://n0rdy.foo/about/" />
-<meta name="twitter:url" content="https://n0rdy.foo/about/" />
-<meta property="og:url" content="https://n0rdy.foo/about/" />
+<base href="https://n0rdy.foo/tags/security/" />
+<link rel="canonical" href="https://n0rdy.foo/tags/security/" itemprop="url" />
+<meta name="url" content="https://n0rdy.foo/tags/security/" />
+<meta name="twitter:url" content="https://n0rdy.foo/tags/security/" />
+<meta property="og:url" content="https://n0rdy.foo/tags/security/" />
 
 
-<meta property="og:updated_time" content="0001-01-01T00:00:00Z" />
+<meta property="og:updated_time" content="2024-12-10T17:30:00&#43;02:00" />
 
 
 <link rel="sitemap" type="application/xml" title="Sitemap" href='https://n0rdy.foo/sitemap.xml' />
-<link href="https://n0rdy.foo/about/index.xml" rel="alternate" type="application/rss+xml" title="n0rdy personal blog" />
+<link href="https://n0rdy.foo/tags/security/index.xml" rel="alternate" type="application/rss+xml" title="n0rdy personal blog" />
 
 <meta name="robots" content="index,follow" />
 <meta name="googlebot" content="index,follow" />
@@ -478,82 +474,22 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </aside>
 
             <main class="content container">
-                
-<div class="post">
+                <h1 class="title">Security</h1>
+<ul class="entries">
     
+        <h3 style="text-align: center;">2024</h3>
         
-            
-                <h1 class="post-title">About</h1>
-                <p>Hello there, and welcome! 👋</p>
-<p>It&rsquo;s Mykola, a guy behind the n0rdy blog and a software engineer passionate about tech, books, and mountains.</p>
-<blockquote>
-<p>&hellip;then something Tookish woke up inside him, and he wished to go and see the great mountains, and hear the pine trees and the waterfalls, and explore the caves, and wear a sword instead of a walking stick&hellip;</p>
-</blockquote>
-<p>This blog is about different aspects of software engineering and technology in general, as I don&rsquo;t believe in &ldquo;the best programming language/paradigm/framework&rdquo; concepts.
-I do have some preferences, though ;)
-I hope you&rsquo;ll find something useful here, learn a thing or two, or just have a good time reading my posts ☕️</p>
-<p>My contacts are in the footer if you have any questions or just want to say &ldquo;Hi&rdquo;.</p>
-<p>If you like my blog and don&rsquo;t want to miss out on new posts, subscribe to my newsletter below.
-The new issue is sent once I publish a new post.</p>
-<p>You can find the previous issues of my newsletter <a href="https://mail.n0rdy.foo/archive" target="_blank">here</a>.</p>
-<p>Have fun! =)</p>
-
-            
+            <li>
+                <span class="title">
+                    <a href="/posts/20241210/otp-offline-generation/">Demystifying OTPs: the logic behind the offline generation of tokens</a>
+                </span>
+                <span class="published">
+                    <time class="pull-right post-list">December 10, 2024</time>
+                </span>
+            </li>
         
     
-    
-        <hr>
-<div class="newsletters">
-    <div class="help-block-for-success"></div>
-    <div class="help-block-for-error"></div>
-    <form id="email-subscription-form">
-        <label for="email-subscription-input">Receive an email once a new post is published</label>
-        <input type="email" id="email-subscription-input" name="email-subscription-input" placeholder="Email address" />
-        <button type="submit">Subscribe</button>
-    </form>
-
-    <script>
-      const listmonkHost = "https://mail.n0rdy.foo";
-      const listmonkSubscriptionSuccessMessage = "Almost there! =) Please, check your email to confirm subscription. Check your spam folder if you didn't get the email.";
-      const listmonkSubscriptionErrorMessage = "Something went wrong =( Please, try again later.";
-
-      const form = document.getElementById("email-subscription-form");
-      form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        const email = form.querySelector("#email-subscription-input").value;
-        const data = {
-          email: email,
-          list_uuids: [
-            "3ba79b71-880f-417d-9587-d388b62e0986"
-          ]
-      };
-        fetch(`${listmonkHost}/api/public/subscription`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(data),
-        }).then((response) => {
-          if (response.status === 200) {
-            const successBlock = document.getElementsByClassName('help-block-for-success')[0];
-            successBlock.classList.add('help-block-show');
-            successBlock.textContent = listmonkSubscriptionSuccessMessage;
-            document.getElementById('email-subscription-form').classList.add('email-subscription-form-hide');
-          } else {
-            const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
-            errorBlock.classList.add('help-block-show');
-            errorBlock.textContent = listmonkSubscriptionErrorMessage;
-          }
-        }).catch(() => {
-          const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
-          errorBlock.classList.add('help-block-show');
-          errorBlock.textContent = listmonkSubscriptionErrorMessage;
-        });
-      })
-    </script>
-</div>
-    
-</div>
+</ul>
 
             </main>
             

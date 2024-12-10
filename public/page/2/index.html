@@ -20,7 +20,7 @@
 
 
 
-<script defer language="javascript" type="text/javascript" src="/js/bundle.min.a43a549406127e0715f68083c987d71d0c71054cd57edea77aa709ed9958af6e.js"></script>
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.145453261a7755f5042a854c4213501d215a8fbe34c08d181c40f803f1315e74.js"></script>
 
 
 
@@ -76,7 +76,7 @@
 <meta property="og:url" content="https://n0rdy.foo/" />
 
 
-<meta property="og:updated_time" content=28003-28-08T30:00:24&#43;0200 />
+<meta property="og:updated_time" content="2024-12-10T17:30:00&#43;02:00" />
 
 
 <link rel="sitemap" type="application/xml" title="Sitemap" href='https://n0rdy.foo/sitemap.xml' />
@@ -86,8 +86,11 @@
 <meta name="googlebot" content="index,follow" />
 
 
-<meta name="twitter:site" content="https://twitter.com/_n0rdy_" />
-<meta name="twitter:creator" content="https://twitter.com/_n0rdy_" />
+
+  
+    <meta name="twitter:site" content="@_n0rdy_" />
+    <meta name="twitter:creator" content="@_n0rdy_" />
+
 <meta property="fb:admins" content="" />
 
 
@@ -100,7 +103,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.119.0">
+<meta name="generator" content="Hugo 0.135.0">
 
 
     
@@ -242,6 +245,8 @@
                 
                         
                 
+                        
+                
             
         
         
@@ -266,6 +271,8 @@
                 
             
                 
+                
+                        
                 
                         
                 
@@ -343,6 +350,8 @@
                 
                         
                 
+                        
+                
             
         
         
@@ -393,6 +402,8 @@
                 
                         
                 
+                        
+                
             
         
 
@@ -414,6 +425,8 @@
             <path fill="currentColor" d="M5.032 14.286c6.037 0 9.34-4.837 9.34-9.032c0-.137 0-.274-.01-.41A6.56 6.56 0 0 0 16 3.2c-.6.256-1.235.425-1.885.5a3.207 3.207 0 0 0 1.443-1.757c-.645.37-1.35.63-2.085.77a3.322 3.322 0 0 0-1.862-.958a3.384 3.384 0 0 0-2.082.334a3.223 3.223 0 0 0-1.442 1.49a3.08 3.08 0 0 0-.208 2.03a9.57 9.57 0 0 1-3.747-.963a9.269 9.269 0 0 1-3.018-2.354a3.086 3.086 0 0 0-.36 2.314c.189.787.68 1.475 1.376 1.924a3.344 3.344 0 0 1-1.49-.398v.04c0 .734.263 1.444.743 2.01a3.3 3.3 0 0 0 1.89 1.102c-.483.128-.99.146-1.482.055a3.19 3.19 0 0 0 1.168 1.577a3.36 3.36 0 0 0 1.9.627A6.732 6.732 0 0 1 0 12.86a9.527 9.527 0 0 0 5.032 1.423"/>
         </svg>
     </a>
+
+
 
 
     <a target="_blank" class="social" rel="me" title="Mastodon" href="https://me.dm/@n0rdy">
@@ -450,6 +463,8 @@
     </a>
 
 
+
+
         <p class="footnote">
 powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
     <br>
@@ -466,11 +481,70 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
     <article class="post">
         <div class="info">
   <h1 class="post-title">
+    <a href="https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/">Go concurrency simplified. Part 3: Managing channels with for loops and select statements</a>
+  </h1>
+
+  <div class="headline">
+    <div>
+      
+      
+      <time datetime=" 2023-12-14T23:00:00&#43;0200" class="post-date">
+        December 14, 2023
+      </time>
+      
+      <span> - </span>
+      <span class="reading-time">
+        
+          
+        
+
+        <span>14 mins read</span>
+      </span>
+    </div>
+
+    
+    <ul class="tags">
+      
+      <li class="tag-go">
+        <a href="https://n0rdy.foo/tags/go">go</a>
+      </li>
+      
+      <li class="tag-concurrency">
+        <a href="https://n0rdy.foo/tags/concurrency">concurrency</a>
+      </li>
+      
+    </ul>
+    
+  </div>
+
+  
+  
+  <p class="seriesname">
+    Series: <a href="https://n0rdy.foo/series/go-concurrency-simplified">Go concurrency simplified</a>
+  </p>
+  
+
+  
+</div>
+
+        
+        <p>Hello there! I feel like I got my covid under control and will be back to daily life soon. In the meantime, I&rsquo;m sitting at my desk in a nearly empty apartment (I&rsquo;m moving soon) and wondering whether it&rsquo;s possible to produce an echo if I scream loud enough 🤔 Anyway, I feel like it&rsquo;s the right time to start working on Part 3 of the &ldquo;Go concurrency simplified&rdquo; series. Today, we&rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will get us closer to solving the queue situation in the post office we discussed last time. But let&rsquo;s start with a short recap of where we stopped in the previous post (if you missed it, <a href="https://n0rdy.foo/posts/20231211/go-waitgroup/" target="_blank">here is the link</a>).</p>
+        
+        <div class="read-more-link">
+            <a href="/posts/20231214/go-concurrency-with-for-and-select/">Read More…</a>
+        </div>
+        
+        
+    </article>
+    <article class="post">
+        <div class="info">
+  <h1 class="post-title">
     <a href="https://n0rdy.foo/posts/20231211/go-waitgroup/">Go concurrency simplified. Part 2: Syncing goroutines with sync.WaitGroup</a>
   </h1>
 
   <div class="headline">
     <div>
+      
       
       <time datetime=" 2023-12-11T18:00:00&#43;0200" class="post-date">
         December 11, 2023
@@ -516,8 +590,8 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </div>
 
         
-        Hello there! Despite the beautiful snowy weather outside, I&rsquo;m at home these days with covid, so I can dedicate some additional time to blogging.
-Last time, we discussed the very basic concepts of Go concurrency: goroutines and channels. If you missed that post, please check it out here, it has some cool drawings =) Today, we&rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will help us get rid of some hacky workarounds we have used so far.
+        <p>Hello there! Despite the beautiful snowy weather outside, I&rsquo;m at home these days with covid, so I can dedicate some additional time to blogging.</p>
+<p>Last time, we discussed the very basic concepts of Go concurrency: goroutines and channels. If you missed that post, please check it out <a href="https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/" target="_blank">here</a>, it has some cool drawings =) Today, we&rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will help us get rid of some hacky workarounds we have used so far.</p>
         
         <div class="read-more-link">
             <a href="/posts/20231211/go-waitgroup/">Read More…</a>
@@ -533,6 +607,7 @@ Last time, we discussed the very basic concepts of Go concurrency: goroutines an
 
   <div class="headline">
     <div>
+      
       
       <time datetime=" 2023-12-07T22:00:00&#43;0200" class="post-date">
         December 7, 2023
@@ -582,7 +657,7 @@ Last time, we discussed the very basic concepts of Go concurrency: goroutines an
 </div>
 
         
-        Christmas season is around the corner, that&rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on my open-source library for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.
+        <p>Christmas season is around the corner, that&rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on <a href="https://github.com/n0rdy/pippin" target="_blank">my open-source library</a> for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.</p>
         
         <div class="read-more-link">
             <a href="/posts/20231207/go-channels-and-goroutines/">Read More…</a>

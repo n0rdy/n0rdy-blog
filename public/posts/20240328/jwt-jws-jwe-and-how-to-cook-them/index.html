@@ -1,0 +1,1726 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+    
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.145453261a7755f5042a854c4213501d215a8fbe34c08d181c40f803f1315e74.js"></script>
+
+
+
+<script defer data-domain="n0rdy.foo" src="https://plausible.n0rdy.foo/js/script.js"></script>
+
+
+
+
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <link rel="icon" href=/favicon.ico>
+
+    
+    
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+
+
+<!-- Open Graph image and Twitter Card metadata -->
+
+  
+    <meta property="og:image" content="/covers/drawings/20240328.jpg" />
+    <meta name="twitter:image" content="/covers/drawings/20240328.jpg"/>
+          <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:image:width" content="1197">
+        <meta property="og:image:height" content="1445">
+      <meta property="og:image:type" content="image/jpeg">
+  
+<title itemprop="name">n0rdy - JWT, JWS, JWE and how to cook them</title>
+<meta property="og:title" content=n0rdy&#32;-&#32;JWT,&#32;JWS,&#32;JWE&#32;and&#32;how&#32;to&#32;cook&#32;them />
+<meta name="twitter:title" content=n0rdy&#32;-&#32;JWT,&#32;JWS,&#32;JWE&#32;and&#32;how&#32;to&#32;cook&#32;them />
+<meta itemprop="name" content=n0rdy&#32;-&#32;JWT,&#32;JWS,&#32;JWE&#32;and&#32;how&#32;to&#32;cook&#32;them />
+<meta name="application-name" content=n0rdy&#32;-&#32;JWT,&#32;JWS,&#32;JWE&#32;and&#32;how&#32;to&#32;cook&#32;them />
+<meta property="og:site_name" content="n0rdy personal blog" />
+
+
+<meta name="description" content="" />
+<meta itemprop="description" content="" />
+<meta property="og:description" content="" />
+<meta name="twitter:description" content="" />
+
+
+<base href="https://n0rdy.foo/posts/20240328/jwt-jws-jwe-and-how-to-cook-them/" />
+<link rel="canonical" href="https://n0rdy.foo/posts/20240328/jwt-jws-jwe-and-how-to-cook-them/" itemprop="url" />
+<meta name="url" content="https://n0rdy.foo/posts/20240328/jwt-jws-jwe-and-how-to-cook-them/" />
+<meta name="twitter:url" content="https://n0rdy.foo/posts/20240328/jwt-jws-jwe-and-how-to-cook-them/" />
+<meta property="og:url" content="https://n0rdy.foo/posts/20240328/jwt-jws-jwe-and-how-to-cook-them/" />
+
+
+<meta property="og:updated_time" content="2024-03-28T20:00:00&#43;02:00" />
+
+
+<link rel="sitemap" type="application/xml" title="Sitemap" href='https://n0rdy.foo/sitemap.xml' />
+
+<meta name="robots" content="index,follow" />
+<meta name="googlebot" content="index,follow" />
+
+
+
+  
+    <meta name="twitter:site" content="@_n0rdy_" />
+    <meta name="twitter:creator" content="@_n0rdy_" />
+
+<meta property="fb:admins" content="" />
+
+
+<meta name="apple-mobile-web-app-title" content="n0rdy personal blog" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.135.0">
+
+
+    
+    
+
+<link type="text/css" rel="stylesheet" href="/css/bundle.min.94a339836f89f0d25f31980cb6b0631da21e20af128308747ce44e0525eb16ef.css">
+
+
+    
+    <style>
+    body {
+        --sidebar-bg-color: #202020;
+        --sidebar-img-border-color: #515151;
+        --sidebar-p-color: #909090;
+        --sidebar-h1-color: #FFF;
+        --sidebar-a-color: #FFF;
+        --sidebar-socials-color: #FFF;
+        --text-color: #222;
+        --bkg-color: #FAF9F6;
+        --post-title-color: #303030;
+        --list-color: #5a5a5a;
+        --link-color: #268bd2;
+        --date-color: #515151;
+        --table-border-color: #E5E5E5;
+        --table-stripe-color: #F9F9F9;
+        --code-color: #000;
+        --code-background-color: #E5E5E5;
+        --code-block-color: #fff;
+        --code-block-background-color: #272822;
+        --moon-sun-color: #FFF;
+        --moon-sun-background-color: #515151;
+    }
+    body.dark-theme {
+        --text-color: #eee;
+        --bkg-color: #121212;
+        --post-title-color: #DBE2E9;
+        --list-color: #9d9d9d;
+        --link-color: #268bd2;
+        --date-color: #9a9a9a;
+        --table-border-color: #515151;
+        --table-stripe-color: #202020;
+        --code-color: #fff;
+        --code-background-color: #515151;
+        --code-block-color: #fff;
+        --code-block-background-color: #272822;
+    }
+    body {
+        background-color: var(--bkg-color);
+    }
+</style>
+
+</head>
+
+    <body class="dark-theme">
+        <div class="wrapper">
+            <aside class="sidebar">
+    <div class="container sidebar-sticky">
+        <div class="light-dark" align="right">
+    <button class="btn-light-dark" title="Toggle light/dark mode">
+        <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M6 .278a.768.768 0 0 1 .08.858a7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277c.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316a.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71C0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        </svg>
+        <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M8 12a4 4 0 1 0 0-8a4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+        </svg>
+    </button>
+</div>
+
+        <div class="sidebar-about">
+    <h1 class="brand">
+        
+            <a href="https://n0rdy.foo/">
+                <img src="/images/avatar.jpg" alt="brand image">
+            </a>
+        
+        
+            <a href="https://n0rdy.foo/">
+                <h1>n0rdy</h1>
+            </a>
+        
+    </h1>
+    <p class="lead">
+    Exploring software engineering and tech
+    </p>
+</div>
+
+        <nav>
+    <ul class="sidebar-nav">
+
+        
+        
+        
+        
+            
+
+            
+                
+                
+                    <li class="heading">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                
+            
+                
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+                    <li class="heading">
+                        <a href="/posts/">Posts</a>
+                    </li>
+                    
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+            
+            
+                
+                    <li class="heading">
+                        <a href="/series/">Series</a>
+                    </li>
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                    <li class="heading">
+                        <a href="/tags/">Tags</a>
+                    </li>
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+
+    </ul>
+</nav>
+
+        
+    <a target="_blank" class="social" title="GitHub" href="https://github.com/n0rdy">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="-2 -2 24 24">
+            <path fill="currentColor" d="M18.88 1.099C18.147.366 17.265 0 16.233 0H3.746C2.714 0 1.832.366 1.099 1.099C.366 1.832 0 2.714 0 3.746v12.487c0 1.032.366 1.914 1.099 2.647c.733.733 1.615 1.099 2.647 1.099H6.66c.19 0 .333-.007.429-.02a.504.504 0 0 0 .286-.169c.095-.1.143-.245.143-.435l-.007-.885c-.004-.564-.006-1.01-.006-1.34l-.3.052c-.19.035-.43.05-.721.046a5.555 5.555 0 0 1-.904-.091a2.026 2.026 0 0 1-.872-.39a1.651 1.651 0 0 1-.572-.8l-.13-.3a3.25 3.25 0 0 0-.41-.663c-.186-.243-.375-.407-.566-.494l-.09-.065a.956.956 0 0 1-.17-.156a.723.723 0 0 1-.117-.182c-.026-.061-.004-.111.065-.15c.07-.04.195-.059.378-.059l.26.04c.173.034.388.138.643.311a2.1 2.1 0 0 1 .631.677c.2.355.44.626.722.813c.282.186.566.28.852.28c.286 0 .533-.022.742-.065a2.59 2.59 0 0 0 .585-.196c.078-.58.29-1.028.637-1.34a8.907 8.907 0 0 1-1.333-.234a5.314 5.314 0 0 1-1.223-.507a3.5 3.5 0 0 1-1.047-.872c-.277-.347-.505-.802-.683-1.365c-.177-.564-.266-1.215-.266-1.952c0-1.049.342-1.942 1.027-2.68c-.32-.788-.29-1.673.091-2.652c.252-.079.625-.02 1.119.175c.494.195.856.362 1.086.5c.23.14.414.257.553.352a9.233 9.233 0 0 1 2.497-.338c.859 0 1.691.113 2.498.338l.494-.312a6.997 6.997 0 0 1 1.197-.572c.46-.174.81-.221 1.054-.143c.39.98.424 1.864.103 2.653c.685.737 1.028 1.63 1.028 2.68c0 .737-.089 1.39-.267 1.957c-.177.568-.407 1.023-.689 1.366a3.65 3.65 0 0 1-1.053.865c-.42.234-.828.403-1.223.507a8.9 8.9 0 0 1-1.333.235c.45.39.676 1.005.676 1.846v3.11c0 .147.021.266.065.357a.36.36 0 0 0 .208.189c.096.034.18.056.254.064c.074.01.18.013.318.013h2.914c1.032 0 1.914-.366 2.647-1.099c.732-.732 1.099-1.615 1.099-2.647V3.746c0-1.032-.367-1.914-1.1-2.647z"/>
+        </svg>
+    </a>
+
+
+
+
+    <a target="_blank" class="social" title="Twitter" href="https://twitter.com/_n0rdy_">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M5.032 14.286c6.037 0 9.34-4.837 9.34-9.032c0-.137 0-.274-.01-.41A6.56 6.56 0 0 0 16 3.2c-.6.256-1.235.425-1.885.5a3.207 3.207 0 0 0 1.443-1.757c-.645.37-1.35.63-2.085.77a3.322 3.322 0 0 0-1.862-.958a3.384 3.384 0 0 0-2.082.334a3.223 3.223 0 0 0-1.442 1.49a3.08 3.08 0 0 0-.208 2.03a9.57 9.57 0 0 1-3.747-.963a9.269 9.269 0 0 1-3.018-2.354a3.086 3.086 0 0 0-.36 2.314c.189.787.68 1.475 1.376 1.924a3.344 3.344 0 0 1-1.49-.398v.04c0 .734.263 1.444.743 2.01a3.3 3.3 0 0 0 1.89 1.102c-.483.128-.99.146-1.482.055a3.19 3.19 0 0 0 1.168 1.577a3.36 3.36 0 0 0 1.9.627A6.732 6.732 0 0 1 0 12.86a9.527 9.527 0 0 0 5.032 1.423"/>
+        </svg>
+    </a>
+
+
+
+
+    <a target="_blank" class="social" rel="me" title="Mastodon" href="https://me.dm/@n0rdy">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M20.94 14c-.28 1.41-2.44 2.96-4.97 3.26c-1.31.15-2.6.3-3.97.24c-2.25-.11-4-.54-4-.54v.62c.32 2.22 2.22 2.35 4.03 2.42c1.82.05 3.44-.46 3.44-.46l.08 1.65s-1.28.68-3.55.81c-1.25.07-2.81-.03-4.62-.5c-3.92-1.05-4.6-5.24-4.7-9.5l-.01-3.43c0-4.34 2.83-5.61 2.83-5.61C6.95 2.3 9.41 2 11.97 2h.06c2.56 0 5.02.3 6.47.96c0 0 2.83 1.27 2.83 5.61c0 0 .04 3.21-.39 5.43M18 8.91c0-1.08-.3-1.91-.85-2.56c-.56-.63-1.3-.96-2.23-.96c-1.06 0-1.87.41-2.42 1.23l-.5.88l-.5-.88c-.56-.82-1.36-1.23-2.43-1.23c-.92 0-1.66.33-2.23.96C6.29 7 6 7.83 6 8.91v5.26h2.1V9.06c0-1.06.45-1.62 1.36-1.62c1 0 1.5.65 1.5 1.93v2.79h2.07V9.37c0-1.28.5-1.93 1.51-1.93c.9 0 1.35.56 1.35 1.62v5.11H18V8.91Z"/>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a target="_blank" class="social" title="RSS Feed" href="/posts/index.xml">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 1280.000000 1280.000000">
+            <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)" fill="currentColor">
+                <path d="M2295 11929 c-284 -12 -642 -45 -707 -65 -17 -5 -18 -63 -18 -1039 0 -569 4 -1036 8 -1039 5 -3 74 6 153 19 510 86 1168 95 1789 25 1348 -153 2602 -677 3670 -1531 385 -308 820 -744 1126 -1129 842 -1060 1362 -2313 1514 -3650 70 -621 61 -1279 -25 -1789 -13 -79 -22 -148 -19 -153 3 -4 471 -8 1039 -8 l1035 0 5 23 c51 225 85 942 67 1419 -23 605 -77 1044 -198 1617 -294 1400 -927 2734 -1823 3846 -1043 1295 -2364 2259 -3909 2854 -1158 447 -2451 656 -3707 600z"/>
+                <path d="M2255 7845 c-269 -25 -620 -81 -667 -106 -17 -9 -18 -55 -18 -899 0 -706 3 -890 13 -890 6 0 66 18 132 41 130 44 288 79 467 105 154 21 577 30 749 15 1207 -107 2267 -823 2814 -1902 166 -327 268 -637 330 -1001 38 -227 48 -384 42 -662 -8 -348 -44 -590 -126 -831 -23 -66 -41 -126 -41 -132 0 -10 184 -13 890 -13 844 0 890 1 899 18 27 50 88 452 110 725 14 162 14 624 1 782 -59 703 -233 1323 -545 1945 -481 956 -1313 1788 -2270 2268 -620 310 -1239 483 -1940 542 -165 14 -669 10 -840 -5z"/>
+                <path d="M2519 3815 c-391 -66 -725 -336 -868 -703 -79 -201 -96 -462 -45 -677 83 -344 338 -641 666 -774 116 -47 205 -69 330 -80 412 -39 811 153 1040 500 193 292 240 648 128 981 -135 403 -492 699 -914 757 -100 14 -241 12 -337 -4z"/>
+            </g>
+        </svg>
+    </a>
+
+
+    <a target="_blank" class="social" title="Email" href="mailto://hello@n0rdy.foo">
+       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 485.211 485.211">
+            <path fill="currentColor" d="M301.393,241.631L464.866,424.56H20.332l163.474-182.928l58.801,51.443L301.393,241.631z M462.174,60.651H23.027 l219.579,192.142L462.174,60.651z M324.225,221.67l160.986,180.151V80.792L324.225,221.67z M0,80.792v321.029L160.972,221.64 L0,80.792z"/>
+       </svg>
+    </a>
+
+
+
+
+        <p class="footnote">
+powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
+    <br>
+    &copy; 2024 n0rdy personal blog. All rights reserved.
+</p>
+
+  </div>
+</aside>
+
+            <main class="content container">
+                <div class="post">
+  <div class="info">
+  <h1 class="post-title">
+    <a href="https://n0rdy.foo/posts/20240328/jwt-jws-jwe-and-how-to-cook-them/">JWT, JWS, JWE and how to cook them</a>
+  </h1>
+
+  <div class="headline">
+    <div>
+      
+      
+      <time datetime=" 2024-03-28T20:00:00&#43;0200" class="post-date">
+        March 28, 2024
+      </time>
+      
+      <span> - </span>
+      <span class="reading-time">
+        
+          
+        
+
+        <span>38 mins read</span>
+      </span>
+    </div>
+
+    
+    <ul class="tags">
+      
+      <li class="tag-tutorial">
+        <a href="https://n0rdy.foo/tags/tutorial">tutorial</a>
+      </li>
+      
+      <li class="tag-beginners">
+        <a href="https://n0rdy.foo/tags/beginners">beginners</a>
+      </li>
+      
+      <li class="tag-eli5">
+        <a href="https://n0rdy.foo/tags/eli5">eli5</a>
+      </li>
+      
+    </ul>
+    
+  </div>
+
+  
+  
+
+  
+</div>
+
+  <p>Hello there! It&rsquo;s been a while since I wrote here - all of a sudden, 2024 became way busier than I planned it to be. But hey, it&rsquo;s good to be back!</p>
+<p>Similar to my previous post, <a href="https://n0rdy.foo/posts/20240103/understanding-cors/" target="_blank">Understanding CORS</a>, this one has the same backstory: lately, I have had to explain a few times to different people about such concepts as JSON Web Tokens (JWT), their structure, types, use cases, etc., so I realized that it would be smart to write a post about that and use it for the future reference. I hope it will be helpful for someone else out there.</p>
+<p>Traditionally, let&rsquo;s start with a real-life example.</p>
+<h2 id="real-life-example">Real-life example</h2>
+<p>Let me introduce you to Craig and Clyde, two buddies from the same class. They like to hang out together after school, but they also don&rsquo;t miss the opportunity to chat during the lessons. It didn&rsquo;t go unnoticed by their teacher, Mr. Garisson, so he made sure they didn&rsquo;t sit next to each other. Well, challenge accepted, there are other ways to contact each other: their classmates use smartphones and different message apps for that, but these two dudes are a bit nerdy, so they came up with something smarter - they pass messages written on a piece of paper. However, the message written on a piece of paper is not plain text but something more complicated. Let me show you a small example.</p>
+<p>Imagine that Clyde wants to send a &ldquo;Hello there!&rdquo; message to Craig. Then, the message on a piece of paper will look like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>ewogICJzdWIiOiJDcmFpZyIsCiAgImlhdCI6MTcxMDYxMTk1MywKICAibWVzc2FnZSI6IkhlbGxvIHRoZXJlISIKfQ
+</span></span></code></pre></div><p>Weird, right? How come is the mumbo jumbo above &ldquo;Hello world!&rdquo;? And why bother? Too many characters for such a simple phrase! Good questions, my friend! There are 2 good reasons for the following:</p>
+<ol>
+<li>Remember, I mentioned that their teacher made sure that they didn&rsquo;t sit next to each other? Well, actually, there is only one desk between them, but the guy sitting on that desk, Eric, is well-known for his curiosity and evil pranks attitude. And since the piece of paper goes through him each time, Craig and Clyde had to come up with some layer of privacy. This leads us to the 2nd reason.</li>
+<li>As I stated while introducing the guys, they are nerdy, so they found it to be funny in their way.</li>
+</ol>
+<p>Ok, the &ldquo;why&rdquo; is clear now, but the &ldquo;how&rdquo;, or, to be more specific, the &ldquo;what the hell is that text?&rdquo; question remains. That&rsquo;s the exact question Eric asked himself each time he passed the piece of paper between Craig and Clyde as his curiosity grew day by day.</p>
+<p><img src="/images/drawings/20240328-0001.jpg" alt="image"></p>
+<p>Soon, he understood that there was no way he could solve the mystery on his own, so he went to the place where other nerdy folks hang out - the internet! Some &ldquo;good&rdquo; people out there, after shaming him for asking such simple questions, gave him a hint that this piece of text is nothing more than a Base64URL-encoded string, and there are plenty of online tools to decode it.</p>
+<h3 id="decoding-the-message">Decoding the message</h3>
+<p>Once Eric posted the text he copied from the piece of paper to the Base64URL online decoder, he saw this output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;sub&#34;</span>: <span style="color:#e6db74">&#34;Craig&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;iat&#34;</span>: <span style="color:#ae81ff">1710611953</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;message&#34;</span>: <span style="color:#e6db74">&#34;Hello there!&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Lucky day, the mystery is not a mystery anymore!</p>
+<p>If Eric had some coding experience, he could have easily decoded the text without any online tools by using this code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encodedMessage</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;ewogICJzdWIiOiJDcmFpZyIsCiAgImlhdCI6MTcxMDYxMTk1MywKICAibWVzc2FnZSI6IkhlbGxvIHRoZXJlISIKfQ&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">encodedMessage</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">res</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>All the code examples are available <a href="https://github.com/n0rdy/n0rdy-blog-code-samples/tree/main/20240328-jwt-jws-jwe" target="_blank">here</a>. If you run this code, you&rsquo;ll see the same JSON printed to the terminal as above.</p>
+<p>As you can see the original JSON contains several fields:</p>
+<ul>
+<li><code>sub</code> stays for &ldquo;subject&rdquo; and specifies whom the message refers to</li>
+<li><code>iat</code> is the acronym for &ldquo;issued at&rdquo; and shows when the message was created in a Unix epoch seconds timestamp fashion - meaning how many seconds have passed since the <del>beginning of times</del> 1st January 1970</li>
+<li><code>message</code> is self-explanatory and the main reason of all this hustle</li>
+</ul>
+<p>Not sure about you, but for me all of these fields make sense, as they somewhat mimic the message and associated metadata we can see in WhatsApp/Telegram/Signal/SMS/youNameIt messaging apps.</p>
+<p>If you don&rsquo;t know what Base64URL encoding is, let me give you a brief explanation: it is a technique for transforming any text (or binary data) into a sequence of characters. A set of 64 unique characters is used for the resulting text. It means that regardless of whether the input is Latin, Cyrillic, Arabic, Chinese, etc. chars, the output is always generated with the same 64 characters. That&rsquo;s where the &ldquo;64&rdquo; name part comes from. The important moment to highlight is that <em><strong>the text can be easily encoded and decoded back and forth by anyone, as Base64 doesn&rsquo;t imply any security for the original input</strong></em>. Check the corresponding <a href="https://en.wikipedia.org/wiki/Base64#URL_applications" target="_blank">Wikipedia page</a> for more details about Base64 and its Base64URL subtype.</p>
+<p>As you can see, I highlighted the</p>
+<blockquote>
+<p>the text can be easily encoded and decoded back and forth by anyone, as Base64 doesn&rsquo;t imply any security for the original input</p>
+</blockquote>
+<p>part. As soon as Eric learned this, he immediately saw the opportunity for a cool evil prank there.</p>
+<h3 id="the-prank">The prank</h3>
+<p>The idea behind the prank was both simple and easy: since now Eric knows how they encode their messages, nothing stops him from decoding the original input, modifying the <code>message</code> field value in some evil way, decoding it back, writing to a piece of paper and passing it forward to the desired destination. Guys don&rsquo;t suspect he knows their secret, so he has an advantage.</p>
+<p>Soon enough, he received a piece of paper from Craig that he was supposed to pass forward to Clyde. The text looked like that:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>ewogICJzdWIiOiJDbHlkZSIsCiAgImlhdCI6MTcxMDYxNTMzOCwKICAibWVzc2FnZSI6IkxldCdzIHBsYXkgZm9vdGJhbGwgdG9nZXRoZXIgbGF0ZXIgdG9kYXkhIgp9
+</span></span></code></pre></div><p>&ldquo;An opportunity!&rdquo; - Eric immediately decoded the message the way he already knew, and saw this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;sub&#34;</span>:<span style="color:#e6db74">&#34;Clyde&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;iat&#34;</span>:<span style="color:#ae81ff">1710615338</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;message&#34;</span>:<span style="color:#e6db74">&#34;Let&#39;s play football together later today!&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>&ldquo;Let me fix this a bit!&rdquo;</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;sub&#34;</span>:<span style="color:#e6db74">&#34;Clyde&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;iat&#34;</span>:<span style="color:#ae81ff">1710615338</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;message&#34;</span>:<span style="color:#e6db74">&#34;I see that I&#39;m too smart to be friends with a guy like you - don&#39;t talk to me, ok?&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>But how to decode this back? Well, while there are plenty of online tools to help with that, let&rsquo;s achieve the same result with the code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">message</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">`{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;sub&#34;:&#34;Clyde&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;iat&#34;:1710615338,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;message&#34;:&#34;I see that I&#39;m too smart to be friends with a guy like you - don&#39;t talk to me, ok?&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}`</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encodedMessage</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>([]byte(<span style="color:#a6e22e">message</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">encodedMessage</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The result is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>ewogICJzdWIiOiJDbHlkZSIsCiAgImlhdCI6MTcxMDYxNTMzOCwKICAibWVzc2FnZSI6Ikkgc2VlIHRoYXQgSSdtIHRvbyBzbWFydCB0byBiZSBmcmllbmRzIHdpdGggYSBndXkgbGlrZSB5b3UgLSBkb24ndCB0YWxrIHRvIG1lLCBvaz8iCn0
+</span></span></code></pre></div><p>Eric quickly replaced the original text on a piece of paper with a new one and passed it to Clyde. Soon enough, he got Clyde&rsquo;s response which contained the message that if I decided to share here, I&rsquo;d need to use a &ldquo;Strong language&rdquo; warning. &ldquo;Great success!&rdquo; - Eric thought and tried hard not to laugh. I told you about his attitude, so don&rsquo;t be surprised!</p>
+<p>For the next couple of days, there was no correspondence between the two friends, so Eric felt kinda proud of his smart little trick. But one rainy day (like that wasn&rsquo;t too bad already), Craig gave him a piece of paper and asked to pass it to Clyde. Eric immediately realized that something was wrong with the message:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>ewogICJ0eXAiOiJKV1QiLAogICJhbGciOiJIUzI1NiIKfQ.ewogICJzdWIiOiJDbHlkZSIsCiAgImlhdCI6MTcxMDYxNzA5MSwKICAibWVzc2FnZSI6IkhleSwgYnVkZHkhIEJvYXJkIGdhbWVzIHRvbmlnaHQhIgp9.ny29zDJjI-QCbihNyPx7hjj0wxpM3E6Isagktf9U-1o
+</span></span></code></pre></div><p>When he tried to decode it via the online tool, he got this output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  &#34;typ&#34;:&#34;JWT&#34;,
+</span></span><span style="display:flex;"><span>  &#34;alg&#34;:&#34;HS256&#34;
+</span></span><span style="display:flex;"><span>}&#39;7V&#34;#$6ǖFR&#34;&amp;B#scs&amp;W76vR#$W&#39;VFG&amp;&amp;BvRvBFF EI?U6?=W(KtC
+</span></span></code></pre></div><p>which was definitelly off. Trying the same with the Go code didn&rsquo;t change the result much:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  &#34;typ&#34;:&#34;JWT&#34;,
+</span></span><span style="display:flex;"><span>  &#34;alg&#34;:&#34;HS256&#34;
+</span></span></code></pre></div><p>After the short moments of panic, Eric calmed himself down and took a closer look at the new message format. Soon enough, he noticed an interesting moment: the message contains 3 parts that are separated by the <code>.</code> symbol. &ldquo;Ok, we are getting to something!&rdquo; It seemed logical to try to split the text into 3 chunks and decode them separately:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encodedMessage</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;ewogICJ0eXAiOiJKV1QiLAogICJhbGciOiJIUzI1NiIKfQ.ewogICJzdWIiOiJDbHlkZSIsCiAgImlhdCI6MTcxMDYxNzA5MSwKICAibWVzc2FnZSI6IkhleSwgYnVkZHkhIEJvYXJkIGdhbWVzIHRvbmlnaHQhIgp9.ny29zDJjI-QCbihNyPx7hjj0wxpM3E6Isagktf9U-1o&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">chunks</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">encodedMessage</span>, <span style="color:#e6db74">&#34;.&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">chunk</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">chunks</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">res</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">chunk</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">res</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;\n&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The result is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  &#34;typ&#34;:&#34;JWT&#34;,
+</span></span><span style="display:flex;"><span>  &#34;alg&#34;:&#34;HS256&#34;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  &#34;sub&#34;:&#34;Clyde&#34;,
+</span></span><span style="display:flex;"><span>  &#34;iat&#34;:1710617091,
+</span></span><span style="display:flex;"><span>  &#34;message&#34;:&#34;Hey, buddy! Board games tonight!&#34;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>�-��2c
+</span></span></code></pre></div><p>&ldquo;Ha! And they call themselves smart!&rdquo;. The first and the third parts looked kinda of weird to Eric, but was sure they tried to confuse him this way, so without further hesitation, he changed the <code>message</code> part of the second JSON to &ldquo;Hey! Board games tonight for smart guys only, so you are not invited!&rdquo;, encoded it back, appended 1st and 3rd part to where they belong to unchanged and passed the modified piece of paper to Clyde. The answer came back in a few minutes:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>ewogICJ0eXAiOiJKV1QiLAogICJhbGciOiJIUzI1NiIKfQ.ewogICJzdWIiOiJFcmljIiwKICAiaWF0IjoxNzEwNjE3MTkxLAogICJtZXNzYWdlIjoiTmljZSB0cnksIEVyaWMsIGJ1dCBnbyBwbGF5IHdpdGggdGhlIGtpZHMgaW5zdGVhZCB3aGlsZSBtZW4gYXJlIHRhbGtpbmcgaGVyZSEiCn0.m1HhjXosZYlEdiOHE8X_34ydYBBNAhG08xgZBigaXtE
+</span></span></code></pre></div><p>Eric started decoding it with great impatience, being twice as proud of himself. However, the result was far from what he had expected:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  &#34;typ&#34;:&#34;JWT&#34;,
+</span></span><span style="display:flex;"><span>  &#34;alg&#34;:&#34;HS256&#34;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  &#34;sub&#34;:&#34;Eric&#34;,
+</span></span><span style="display:flex;"><span>  &#34;iat&#34;:1710617191,
+</span></span><span style="display:flex;"><span>  &#34;message&#34;:&#34;Nice try, Eric, but go play with the kids instead while men are talking here!&#34;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>�Q�z,e�Dv#�
+</span></span></code></pre></div><p>&ldquo;What&rsquo;s going on?!!&rdquo;</p>
+<h3 id="the-anti-prank-measures">The anti-prank measures</h3>
+<p>Little did he know that Craig and Clyde talked to each other to resolve the conflict they thought they had and figured out they had been fooled. And that was easy to guess who did that. The harder part was to come up with an idea of how to prevent this from happening. They realized Eric could read their messages, but that was fine - they didn&rsquo;t share anything sensitive. But the ability to modify them wasn&rsquo;t something they had a piece with. It meant they needed a way to see whether the original input had been changed along the way. And nerdy folks like them (or you and I) know the answer - the signature!</p>
+<p>If you are not familiar with this concept, no worries, it is pretty simple and looks like this:</p>
+<ul>
+<li>imagine there is a text that we&rsquo;d like to make sure stays the same along the way</li>
+<li>we need depending on the algorithm, either a secret phrase that both sender and receiver know, or the private and public key - only the public key is shared with the receiver in this case</li>
+<li>the sender takes the original text and applies a specific signing algorithm on it with the usage of either the secret phrase or the private key - the result looks similar to the third part of the message we saw above: for example, <code>ny29zDJjI-QCbihNyPx7hjj0wxpM3E6Isagktf9U-1o</code> - we&rsquo;ll call this a signature</li>
+<li>the signature is passed alongside the original text all the way to the receiver</li>
+<li>once receiver gets a message:
+<ul>
+<li>if the secret phrase was used, the receiver calculates the signature for the text they received the same way as the sender did above and compares the two - if they are the same, the original text was not modified; otherwise - it shouldn&rsquo;t be trusted. As long as the secret phrase is kept safe, the man-in-the-middle has no way to both change the text and add a valid signature to it</li>
+<li>if the private key was used, the flow is a bit complicated, and we&rsquo;ll discuss it a bit later, but the high-level idea remains the same</li>
+</ul>
+</li>
+</ul>
+<p>As you can already guess, that&rsquo;s exactly the measure that Craig and Clyde took against Eric&rsquo;s prank, and that&rsquo;s how they noticed when he replaced the original message with the fake one.</p>
+<p>Let&rsquo;s see how they achieve that by code. The secret phrase part was easy as they agreed on it before the lesson, so they both knew it.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">secretPhase</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;goToHellEric&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">part1</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">`{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;typ&#34;:&#34;JWT&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;alg&#34;:&#34;HS256&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">part2</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">`{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;sub&#34;:&#34;Eric&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;iat&#34;:1710617191,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;message&#34;:&#34;Nice try, Eric, but go play with the kids instead while men are talking here!&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">part1Encoded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">encode</span>(<span style="color:#a6e22e">part1</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">part2Encoded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">encode</span>(<span style="color:#a6e22e">part2</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sign</span>(<span style="color:#a6e22e">part1Encoded</span>, <span style="color:#a6e22e">part2Encoded</span>, <span style="color:#a6e22e">secretPhase</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encodedMessageWithSignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">part1Encoded</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">part2Encoded</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">signature</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>, <span style="color:#e6db74">&#34;.&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receiverSignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sign</span>(<span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">1</span>], <span style="color:#a6e22e">secretPhase</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">senderSignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">receiverSignature</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">senderSignature</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The signature matches - the original message hasn&#39;t been modified&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">part1Decoded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">decode</span>(<span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">part2Decoded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">decode</span>(<span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">part1Decoded</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">part2Decoded</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The signature differs - the original message has been modified&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">encode</span>(<span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>([]byte(<span style="color:#a6e22e">text</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">decode</span>(<span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">decoded</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">text</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> string(<span style="color:#a6e22e">decoded</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">sign</span>(<span style="color:#a6e22e">part1</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">part2</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">secretPhrase</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">textToSign</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">part1</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">part2</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hmac</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>, []byte(<span style="color:#a6e22e">secretPhrase</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signer</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#a6e22e">textToSign</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">binarySignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">signer</span>.<span style="color:#a6e22e">Sum</span>(<span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>(<span style="color:#a6e22e">binarySignature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>A disclaimer: the author of this post doesn&rsquo;t know why they used a wish for Eric to go to the specific <a href="https://en.wikipedia.org/wiki/Hell,_Norway" target="_blank">Norwegian village</a> as their secret phrase.</p>
+<p>I believe the code should be pretty straightforward, except maybe the <code>sign</code> function and the first part of the message:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;typ&#34;</span>:<span style="color:#e6db74">&#34;JWT&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;alg&#34;</span>:<span style="color:#e6db74">&#34;HS256&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Fear not, we&rsquo;ll discuss this soon. But I think now you should have a very good understanding of why Eric&rsquo;s prank didn&rsquo;t work once the signature was introduced - the <code>if receiverSignature == senderSignature</code> will return <code>false</code> in that case, so we won&rsquo;t even bother decoding the message.</p>
+<p>I think it&rsquo;s a good moment to pause our interactions with the guys (we&rsquo;ll get back to them soon though), and try to map what we have learned so far to the main topic of this post - JWT.</p>
+<h2 id="jwt-and-jws">JWT and JWS</h2>
+<p>If you have read the post all the way to this very point and began wondering why there is nothing about JWT/JWS/JWE yet, I have to say that it&rsquo;s a valid concern. But, hey, let me tell you this: with the things we have discussed above, you have learned almost everything I wanted to share about JWT and JWS. How come? Let me try to explain.</p>
+<p>The (probably) most famous web resource about JWT - <a href="https://jwt.io" target="_blank">https://jwt.io</a> - provides such a definition of JSON Web Tokens:</p>
+<blockquote>
+<p>JSON Web Token (JWT) is an open standard (<a href="https://tools.ietf.org/html/rfc7519" target="_blank">RFC 7519</a>) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be  verified and trusted because it is digitally signed. JWTs can be signed  using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.</p>
+</blockquote>
+<p>If we use <a href="https://en.wikipedia.org/wiki/JSON_Web_Token" target="_blank">a Wikipedia article about the JWT</a> as a reference, we&rsquo;ll notice that it specifies the following structure of JWTs:</p>
+<ul>
+<li>header</li>
+<li>payload</li>
+<li>signature</li>
+</ul>
+<p>Hmm&hellip;3 parts and our message had 3 parts - coincidence? Not really. Let&rsquo;s see what each part usually contains and compare it with the Craig and Clyde approach. A spoiler alert: we&rsquo;ll see soon enough that once guys took the anti-prank measures, they were using JWT/JWS format =)</p>
+<h3 id="header">Header</h3>
+<p>If you are familiar with the concept of HTTP headers, there is a similarity between the two in a way: the header part is used to pass some metadata. To be more specific: usually, the type of token and the algorithm used to generate the signature are provided there. Here is how it looks in our case:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;typ&#34;</span>:<span style="color:#e6db74">&#34;JWT&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;alg&#34;</span>:<span style="color:#e6db74">&#34;HS256&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It is clear to us that the type of the token is JWT, and the algorithm used is HS256, which stands for HMAC-SHA256. Algorithm info is very important for the receiver, as they need to know the way signature has been calculated, so they can follow the same algorithm in order to get the same result.</p>
+<p>There is some variety of algorithms available for the signature in the JWT specification. They belong to 3 main groups:</p>
+<ul>
+<li>HMAC</li>
+<li>RSA</li>
+<li>ECDSA</li>
+</ul>
+<p>The high-level key difference between them is the fact that the HMAC algorithms rely on the secret phrase (like we saw below), while RSA and ECDSA use a private-public keys pair for generating/verifying signature. We won&rsquo;t go deep into these algorithms, as it&rsquo;s way outside the scope of this post, but we&rsquo;ll discuss how to use private-public keys for JWT purposes further.</p>
+<p>There are other header fields available in the JWT specification, but the two above are the most commonly used.</p>
+<h3 id="payload">Payload</h3>
+<p>If we stick to the HTTP analogy, we can compare the payload with the request body, as this is the place where the domain-specific information can be found. The fields of the payload are called claims, and there is a list of the standard claims available in the JWT specification. To name a few:</p>
+<ul>
+<li><code>iss</code> - who issued the JWT</li>
+<li><code>sub</code> - the user/application the token belongs to</li>
+<li><code>exp</code> - expiration time for JWT</li>
+<li><code>nbf</code> - not before, the time at which the JWT becomes valid</li>
+<li><code>iat</code> - issued at</li>
+<li><code>jti</code> - the unique identifier of the JWT</li>
+</ul>
+<p>Users are free to include their own custom claims on top of these - we saw that in the Craig and Clyde example when they used the <code>message</code> claim for their needs:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;sub&#34;</span>:<span style="color:#e6db74">&#34;Clyde&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;iat&#34;</span>:<span style="color:#ae81ff">1710617091</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;message&#34;</span>:<span style="color:#e6db74">&#34;Hey, buddy! Board games tonight!&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><h3 id="signature">Signature</h3>
+<p>Well, we have already discussed this part and even saw what the secret phrase flow looks like for it. Let me mention, though, that in the realm of JWT, the signature is called JSON Web Signature (or JWS) - so now you know 2 out of 3 acronyms mentioned in the title of this post - good job! =)</p>
+<p>But let&rsquo;s another look at the code we wrote for the JWS:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">sign</span>(<span style="color:#a6e22e">part1</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">part2</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">secretPhrase</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">textToSign</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">part1</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">part2</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hmac</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>, []byte(<span style="color:#a6e22e">secretPhrase</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signer</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#a6e22e">textToSign</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">binarySignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">signer</span>.<span style="color:#a6e22e">Sum</span>(<span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>(<span style="color:#a6e22e">binarySignature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Since we know now that for the signature we used the HMAC-SHA256 algorithm, the line</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">signer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hmac</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>, []byte(<span style="color:#a6e22e">secretPhrase</span>))
+</span></span></code></pre></div><p>should make good sense - all we do is initiate the <code>signer</code> that will follow the HMAC-SHA256 algorithm to generate the signature using the secret phrase we provided. The next steps are as simple as that:</p>
+<ul>
+<li>combine a header and a payload with the <code>.</code> as a separator - please, note that both header and payload should be Base64URL encoded at that point</li>
+<li>create a signature - it has a binary format</li>
+<li>apply Base64URL encoding to the binary signature to get it as a string</li>
+</ul>
+<p>Well done! As we already know the receiver will follow the same steps and use the same secret phrase. That&rsquo;s the reason why the HMAC algorithm is known as a symmetric one.</p>
+<p>For this example, we used HS256 as the algorithm, but quite often, you can see the HS384 or HS512 within the alg JWT header. As you might have guessed so far, it&rsquo;s still the HMAC algorithm, but with different hashing logic applied: SHA-384 and SHA-512, respectively.</p>
+<p>HMAC, as any other symmetric algorithm, is a very decent one. However, there are certain cases when there is either no way to share the secret phrase between the parties in advance (remember that it was easy for Craig and Clyde, as they could meet in person before exchanging the JWTs) or the issues of JWT doesn&rsquo;t want to share it, as they want to be the only one who can issue that type of tokens. Imagine that the teacher of the class, Mr. Garisson, would like to send the scores for the math test in a JWT format. In that case, he wants to make sure that only he can issue that kind of token, as otherwise, some folks can try to hack the system and fake their scores. However, it is still important that there is a way for the receivers to verify the signature of the tokens. Here is when asymmetric algorithms like RSA and ECDSA come in handy.</p>
+<p>Since this post is not about cryptography, we won&rsquo;t go deep into those algorithms but rather look at how we can use the asymmetric approach for the JWS needs. We&rsquo;ll stick to the RSA one, as I feel it&rsquo;s way more adopted in the industry these days, as it&rsquo;s an older one.</p>
+<p>On a high level, the asymmetric algorithms rely on the concepts of the private and public keys. The private key is used for generating the signatures, and it is never shared with anyone by the JWT issues - remember Gandalf&rsquo;s rule of thumb &ldquo;keep it secret, keep it safe&rdquo;. The public key, as the name suggests, is something that can be freely shared with anyone who needs to verify the signature - it can even be retrieved via the call to the specific public endpoint to simplify the flow. The main moment here is the following:</p>
+<ul>
+<li>private key can only generate the signature but not verify it</li>
+<li>public key can only verify the signature but not generate it</li>
+</ul>
+<p>That&rsquo;s why such algorithms are called assymetric.</p>
+<p>Here is how the signature flow looks for the sender - notice that it is very similar to the HMAC one:</p>
+<ul>
+<li>combine a header and a payload with the <code>.</code> as a separator - please, note that both header and payload should be Base64URL encoded at that point</li>
+<li>hash the resulted string by using the SHA-256 (for RS256) algorithm - it seems to be a new step, but only because the HS256 algorithm did it implicitly due to the Go implementation</li>
+<li>sign the hashed value by applying the RSA algorithm with the usage of the private key - the signature has a binary format</li>
+<li>apply Base64URL encoding to the binary signature to get it as a string</li>
+</ul>
+<p>For the receiver the flow is a bit different:</p>
+<ul>
+<li>combine a header and a payload with the <code>.</code> as a separator</li>
+<li>hash the resulted string by using the SHA-256 (for RS256) algorithm</li>
+<li>verify the signature by applying the RSA verification algorithm with the usage of the private key and the signature attached to the JWT</li>
+</ul>
+<p>Let&rsquo;s see how it looks in the code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">privateKey</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">GenerateKey</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Reader</span>, <span style="color:#ae81ff">2048</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">publicKey</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">privateKey</span>.<span style="color:#a6e22e">PublicKey</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">header</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">`{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;typ&#34;:&#34;JWT&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;alg&#34;:&#34;RS256&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">payload</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">`{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;sub&#34;:&#34;Clyde&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;iat&#34;:1710617191,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;message&#34;:&#34;Hey, buddy! Board games tonight!&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">headerEncoded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">encode</span>(<span style="color:#a6e22e">header</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">payloadEncoded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">encode</span>(<span style="color:#a6e22e">payload</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sign</span>(<span style="color:#a6e22e">headerEncoded</span>, <span style="color:#a6e22e">payloadEncoded</span>, <span style="color:#a6e22e">privateKey</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encodedMessageWithSignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">headerEncoded</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">payloadEncoded</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">signature</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>, <span style="color:#e6db74">&#34;.&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">senderSignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">2</span>]
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">verify</span>(<span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">1</span>], <span style="color:#a6e22e">senderSignature</span>, <span style="color:#a6e22e">publicKey</span>) {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The signature is valid - the original message hasn&#39;t been modified&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">headerDecoded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">decode</span>(<span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">0</span>])
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">payloadDecoded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">decode</span>(<span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">1</span>])
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">headerDecoded</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">payloadDecoded</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The signature differs - the original message has been modified&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">encode</span>(<span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>([]byte(<span style="color:#a6e22e">text</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">decode</span>(<span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">decoded</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">text</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> string(<span style="color:#a6e22e">decoded</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">sign</span>(<span style="color:#a6e22e">header</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">privateKey</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">PrivateKey</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">textToSign</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">header</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">payload</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hashed</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">Sum256</span>([]byte(<span style="color:#a6e22e">textToSign</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">binarySignature</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">SignPKCS1v15</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Reader</span>, <span style="color:#a6e22e">privateKey</span>, <span style="color:#a6e22e">crypto</span>.<span style="color:#a6e22e">SHA256</span>, <span style="color:#a6e22e">hashed</span>[:])
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>(<span style="color:#a6e22e">binarySignature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">verify</span>(<span style="color:#a6e22e">header</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">signature</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">publicKey</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">PublicKey</span>) <span style="color:#66d9ef">bool</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">textToSign</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">header</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">payload</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hashed</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">Sum256</span>([]byte(<span style="color:#a6e22e">textToSign</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">binarySignature</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">signature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">VerifyPKCS1v15</span>(<span style="color:#a6e22e">publicKey</span>, <span style="color:#a6e22e">crypto</span>.<span style="color:#a6e22e">SHA256</span>, <span style="color:#a6e22e">hashed</span>[:], <span style="color:#a6e22e">binarySignature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If we run the code, we&rsquo;ll see the following output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Sender part:
+</span></span><span style="display:flex;"><span>ewogICJ0eXAiOiJKV1QiLAogICJhbGciOiJSUzI1NiIKfQ.ewogICJzdWIiOiJDbHlkZSIsCiAgImlhdCI6MTcxMDYxNzE5MSwKICAibWVzc2FnZSI6IkhleSwgYnVkZHkhIEJvYXJkIGdhbWVzIHRvbmlnaHQhIgp9.0F0WJ08wQOoXwuqJrvboAlEBOuSuSwFUxH-OZFnPOw7CUqXKVp9l8uYWPtizLuN3_RnrN5AwTIySCh5BQrh6c4TeTtVBgguonKDFYXvxA33DhUeB8Zzpa_1w_NXbS20Xg-ZysE6nOpZDkI9EhUajK9_p3ulJ7wmI_0DIOj1oX7OfjMHrwg7Kj4NrBLgjOPV9cFd6-FysUWJTRfW6OeF6rKK3jacO_Bhtw9dF8Igjt4ZFjHosRKjCth67agFex4SmN_qaRxTW0d0TZSL5c_bp_xWP-gwosNWPctJKzc-AEY51ZHc-7izpOrcQYwM5TGliVDyL1FvDVhXF6qhwtb8jWw
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Receiver part:
+</span></span><span style="display:flex;"><span>The signature is valid - the original message hasn&#39;t been modified
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  &#34;typ&#34;:&#34;JWT&#34;,
+</span></span><span style="display:flex;"><span>  &#34;alg&#34;:&#34;RS256&#34;
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  &#34;sub&#34;:&#34;Clyde&#34;,
+</span></span><span style="display:flex;"><span>  &#34;iat&#34;:1710617191,
+</span></span><span style="display:flex;"><span>  &#34;message&#34;:&#34;Hey, buddy! Board games tonight!&#34;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Hopefully, this should make good sense now. You might have noticed that we are hardcoding the header and the payload part as strings, while the good practice here will be to rely on structs or, at least, a map. Good thinking, but I kept it like this to simplify the post and make it shorter - I believe I failed with the latter, though =)</p>
+<p>One important undiscussed point remains: how does the receiver get the public key? The answer is: it depends. It is not wrong to share the public key somehow directly by sending a file or so. But that requires manual actions, and since humans are lazy, and laziness is a good driver of a progress, the industry came up with something smarter for that - JSON Web Key Set (JWKS).</p>
+<h3 id="jwks">JWKS</h3>
+<p>JWKS is a set of keys containing the public keys used to verify the JWT signature. JWKS is usually shared as a public endpoint. For example, Auth0 keeps them in <code>https://{auth0CustomerDomain}/.well-known/jwks.json</code> .
+It looks something like this (the example is generated by ChatGPT):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;keys&#34;</span>: [
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;kty&#34;</span>: <span style="color:#e6db74">&#34;RSA&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;use&#34;</span>: <span style="color:#e6db74">&#34;sig&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;kid&#34;</span>: <span style="color:#e6db74">&#34;2&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;alg&#34;</span>: <span style="color:#e6db74">&#34;RS256&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;n&#34;</span>: <span style="color:#e6db74">&#34;vGtXtSE3pPmV...iC5X3kjMz4dVvw&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;e&#34;</span>: <span style="color:#e6db74">&#34;AQAB&#34;</span>
+</span></span><span style="display:flex;"><span>    },
+</span></span><span style="display:flex;"><span>    {
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;kty&#34;</span>: <span style="color:#e6db74">&#34;RSA&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;use&#34;</span>: <span style="color:#e6db74">&#34;sig&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;kid&#34;</span>: <span style="color:#e6db74">&#34;1&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;alg&#34;</span>: <span style="color:#e6db74">&#34;RS256&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;n&#34;</span>: <span style="color:#e6db74">&#34;pVMOEtC2ZvYg...kPQ2E7pFCl5LZpM&#34;</span>,
+</span></span><span style="display:flex;"><span>      <span style="color:#f92672">&#34;e&#34;</span>: <span style="color:#e6db74">&#34;AQAB&#34;</span>
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>  ]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We&rsquo;ll skip some of these fields, as they are outside the scope of this post, but let&rsquo;s notice the <code>kid</code> which is a unique identifier for the key. This <code>kid</code> is added as a header to the JWT by the issuer, so the sender can find the corresponding public key by its ID within the JWKS.</p>
+<p>This approach makes it very easy to rotate keys: once the new private key is issued, the corresponding public key is added to the JWKS with a new <code>kid</code>. Regardless of whether JWT was signed by the old or new private key, thanks to the <code>kid</code>, the sender can fetch the correct public key and successfully verify the signature. Simple as that!</p>
+<p>Ok, we know now what JWT is, also we went through its structure and took a very good look at the signature part. But the key part is missing: why do we need JWTs at all? A good question!</p>
+<h3 id="usage">Usage</h3>
+<p>While fellow developers out there might have come up with countless use cases for JWT, there are 2 most common scenarios for these tokens in the industry these days:</p>
+<ul>
+<li>authorization</li>
+<li>info exchange</li>
+</ul>
+<p>Both of them can be perfect candidates for a separate blog, so I&rsquo;ll not only briefly elaborate on these scenarios.</p>
+<h4 id="authorization">Authorization</h4>
+<p>This is by far the most common use case for JWT. Usually, it looks like this:</p>
+<ul>
+<li>the user visits the website and presses the login button</li>
+<li>they enter their credentials (or use any other sign-in method)</li>
+<li>as a result, they receive the JWT, that, from now on, will be passed within the request to the server - as a rule of thumb, via the <code>Authorization</code> header</li>
+</ul>
+<p>In such a case, JWT can contain user identifiers and some info (like name, email, etc.) within its payload., as well as the list of permissions the user has.</p>
+<h4 id="info-exchange">Info exchange</h4>
+<p>As we have seen before, thanks to the signature mechanism, JWT provides a simple way of ensuring that the information hasn&rsquo;t been modified along the way, which makes it a good candidate for the information exchange format.</p>
+<p>However, there is one critical moment to remember: JWT stores information in the open format, meaning that if intercepted, anyone can read it - as our example with the school dudes proved. But what if we&rsquo;d like to pass something that should remain hidden from the unwanted guests? Shall we abandon the JWT format entirely in that case? These are excellent questions, and let&rsquo;s get back to the classroom to find the answers together with our old friends Craig, Clyde, and Eric.</p>
+<h2 id="real-life-example-2">Real-life example #2</h2>
+<p>There have been peace and balance for quite a while: Craig and Clyde kept exchanging messages in the JWT format with a signature, and Eric didn&rsquo;t manage to figure out how to bypass the signature protection but was partly satisfied by his possibility to be able to read every single message they sent. Until the day came when two friends needed to discuss something more privately: they had a very cool idea for a new video game, and the last thing they wanted was to share it with anyone else, especially Eric. Should they abandon their ways of messaging and start using mobile phones like the rest of their classmates? That sounded too simple and not nerdy at all, so &ldquo;nope&rdquo; was their answer. And they began thinking and asking themselves the right questions:</p>
+<p>What is the key problem with the JWT in this case? The fact that the payload is passed in the opened format as the encoding (e.g., Base64) has nothing to do with the data protection.</p>
+<p>Are there other ways, then? Of course, encryption! What stops us from encrypting the payload and passing it this way? Nothing. Let&rsquo;s do it then!</p>
+<p>To achieve the desired result, the guys need to have one more secret phrase on top of the existing one and use it as the key for the encryption/decryption of the payload - they decided to use the symmetric algorithm again, as it is the most sufficient one for their use case. Once they have the key, they must add one extra step to their existing flow: encrypt the payload. Their signature should be calculated for the encrypted payload.</p>
+<p>At first, Craig and Clyde wanted to encrypt headers as well, but then they realized that it was not the best idea, as otherwise, they wouldn&rsquo;t be able to tell each other about the algorithm they used for the encryption.</p>
+<p>The same additional step applies to the message receiver flow: they need to decrypt the payload first and only then decode it. Here is how the sender and receiver flow looks on a code level:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signingSecretPhase</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;goToHellEric&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encryptionSecretPhase</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;keepItSecretKeepItSafe&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">jweHeader</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">`{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;typ&#34;:&#34;JWE&#34;,	
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;alg&#34;:&#34;dir&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;enc&#34;:&#34;A256GCM&#34;,	
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">payload</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">`{
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;sub&#34;:&#34;Craig&#34;,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;iat&#34;:1710617455,
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;message&#34;:&#34;I think we should include elves in our videogame!&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">}`</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">headersEncoded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">encode</span>(<span style="color:#a6e22e">jweHeader</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">payloadEncoded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">encode</span>(<span style="color:#a6e22e">payload</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">payloadEncrypted</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">encrypt</span>(<span style="color:#a6e22e">payloadEncoded</span>, <span style="color:#a6e22e">encryptionSecretPhase</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sign</span>(<span style="color:#a6e22e">headersEncoded</span>, <span style="color:#a6e22e">payloadEncrypted</span>, <span style="color:#a6e22e">signingSecretPhase</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encodedMessageWithSignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">headersEncoded</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;..&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">payloadEncrypted</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">signature</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>, <span style="color:#e6db74">&#34;.&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">headersReceived</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">0</span>]
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">payloadReceived</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">3</span>]
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signatureReceived</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">4</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receiverSignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sign</span>(<span style="color:#a6e22e">headersReceived</span>, <span style="color:#a6e22e">payloadReceived</span>, <span style="color:#a6e22e">signingSecretPhase</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">receiverSignature</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">signatureReceived</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The signature matches - the original message hasn&#39;t been modified&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">headersDecoded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">decode</span>(<span style="color:#a6e22e">headersReceived</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">payloadDecrypted</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">decrypt</span>(<span style="color:#a6e22e">payloadReceived</span>, <span style="color:#a6e22e">encryptionSecretPhase</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">payloadDecoded</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">decode</span>(<span style="color:#a6e22e">payloadDecrypted</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">headersDecoded</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>()
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">payloadDecoded</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The signature differs - the original message has been modified&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">encode</span>(<span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>([]byte(<span style="color:#a6e22e">text</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">decode</span>(<span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">decoded</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">text</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> string(<span style="color:#a6e22e">decoded</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">encrypt</span>(<span style="color:#a6e22e">payload</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">secretPhrase</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">Sum256</span>([]byte(<span style="color:#a6e22e">secretPhrase</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">secretKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hash</span>[:]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">block</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">aes</span>.<span style="color:#a6e22e">NewCipher</span>(<span style="color:#a6e22e">secretKey</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">gcm</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">cipher</span>.<span style="color:#a6e22e">NewGCM</span>(<span style="color:#a6e22e">block</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">nonce</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">gcm</span>.<span style="color:#a6e22e">NonceSize</span>())
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">ReadFull</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Reader</span>, <span style="color:#a6e22e">nonce</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encodedNonce</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>(<span style="color:#a6e22e">nonce</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ciphertext</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gcm</span>.<span style="color:#a6e22e">Seal</span>(<span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">nonce</span>, []byte(<span style="color:#a6e22e">payload</span>), <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encodedCiphertext</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>(<span style="color:#a6e22e">ciphertext</span>)
+</span></span><span style="display:flex;"><span>  
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// The encrypted payload includes the IV and the ciphertext, separated by a dot.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%s.%s&#34;</span>, <span style="color:#a6e22e">encodedNonce</span>, <span style="color:#a6e22e">encodedCiphertext</span>), <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">decrypt</span>(<span style="color:#a6e22e">encryptedPayload</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">secretPhrase</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">Sum256</span>([]byte(<span style="color:#a6e22e">secretPhrase</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">secretKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hash</span>[:]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// The encryptedPayload includes the IV and the ciphertext, separated by a dot.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">encryptedPayload</span>, <span style="color:#e6db74">&#34;.&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">parts</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;invalid encrypted payload format&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encodedNonce</span>, <span style="color:#a6e22e">encodedCiphertext</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">1</span>]
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">nonce</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">encodedNonce</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ciphertext</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">DecodeString</span>(<span style="color:#a6e22e">encodedCiphertext</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">block</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">aes</span>.<span style="color:#a6e22e">NewCipher</span>(<span style="color:#a6e22e">secretKey</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">gcm</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">cipher</span>.<span style="color:#a6e22e">NewGCM</span>(<span style="color:#a6e22e">block</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">decrypted</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gcm</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">nonce</span>, <span style="color:#a6e22e">ciphertext</span>, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> string(<span style="color:#a6e22e">decrypted</span>), <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">sign</span>(<span style="color:#a6e22e">part1</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">part2</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">secretPhrase</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">textToSign</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">part1</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;.&#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">part2</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signer</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hmac</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>, []byte(<span style="color:#a6e22e">secretPhrase</span>))
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signer</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#a6e22e">textToSign</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">binarySignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">signer</span>.<span style="color:#a6e22e">Sum</span>(<span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>(<span style="color:#a6e22e">binarySignature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>I should warn you here: this code is written for educational purposes only, and while it was sufficient for the boys&rsquo; case, it is not good enough for the proper production systems - please treat it like that.</p>
+<p>If we run this code, we&rsquo;ll see that it works well. The resulting token looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>ewogICJ0eXAiOiJKV0UiLAkKICAiYWxnIjoiZGlyIiwKICAiZW5jIjoiQTI1NkdDTSIsCQp9..4kt2psa8PhmBLfz6.G7zzu7eJRL0x8vomHI6f9mQF4XODm8TbWpo6f13AGlkczA3ceU5OtL1-gF9crSlYdsHIhfe_4Z0U2gwk_tWxf_GWW6MV1XDfDecPFSQJOJhcgLoeLRwdzvMN5SA73WsZdf6atY8tS1TfbZ-mcLLkyfcLdSsig1pBr33dQBRdbp1RQ9fqxyhpszQwRgCbDXBLcXUvFYFF0Y1_pgw.318c4zbUNCAU36s1uBn5H_LbHC_OB12gnd_oC3PRXwE
+</span></span></code></pre></div><p>If you take a closer look, you&rsquo;ll see that its format differs from the JWT <code>header.payload.signature</code> one, as here we can see 4 dots instead of 2. What&rsquo;s going on? To answer this properly, we need to dive deeper into cryptography, and this post is not the right place for it. But let me give you a very short answer: to make sure that the receiver can decrypt the payload, the sender has to include additional parts to the token, so then the format looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>header.encryptedKey.initializationVector.cipherText.cipherText
+</span></span></code></pre></div><p>We know what a header is. The <code>encryptedKey</code> and the <code>initializationVector</code> parts are needed to decrypt the payload, as that&rsquo;s how some encryption/decryption algorithms work. The <code>cipherText</code> contains the encrypted payload, while the <code>cipherText</code> ensures the content hasn&rsquo;t been modified along the way. The code we wrote above mimics this, but with some hacks along the way, that&rsquo;s why I explicitly specified that it shouldn&rsquo;t be used outside this article.</p>
+<p>But let&rsquo;s get back to our friends. As we saw above, the format of the message has changed. Eric also noticed it when the message came to him. &ldquo;Hm, another trick, but I know what to do in such a case!&rdquo; - he thought and began decoding each part of the message.</p>
+<p>The <code>ewogICJ0eXAiOiJKV0UiLAkKICAiYWxnIjoiZGlyIiwKICAiZW5jIjoiQTI1NkdDTSIsCQp9</code> converted into the</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;typ&#34;</span>:<span style="color:#e6db74">&#34;JWE&#34;</span>,	
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;alg&#34;</span>:<span style="color:#e6db74">&#34;dir&#34;</span>,
+</span></span><span style="display:flex;"><span>  <span style="color:#f92672">&#34;enc&#34;</span>:<span style="color:#e6db74">&#34;A256GCM&#34;</span>,	
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>&ldquo;A good start!&rdquo; - he thought. But then the situation got worse:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>4kt2psa8PhmBLfz6 -&gt; �Kv�Ƽ&gt;�-��
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>G7zzu7eJRL0x8vomHI6f9mQF4XODm8TbWpo6f13AGlkczA3ceU5OtL1-gF9crSlYdsHIhfe_4Z0U2gwk_tWxf_GWW6MV1XDfDecPFSQJOJhcgLoeLRwdzvMN5SA73WsZdf6atY8tS1TfbZ-mcLLkyfcLdSsig1pBr33dQBRdbp1RQ9fqxyhpszQwRgCbDXBLcXUvFYFF0Y1_pgw 
+</span></span><span style="display:flex;"><span>-&gt; 
+</span></span><span style="display:flex;"><span>󻷉D1&amp;dsZ:]Y
+</span></span><span style="display:flex;"><span>yNN~_\)Xvȅ$ձ[p
+</span></span><span style="display:flex;"><span>$	8\-
+</span></span><span style="display:flex;"><span> ;ku-KTmpu+&#34;ZA}@]nQC(i40F�
+</span></span><span style="display:flex;"><span>pKqu/Eэ
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>318c4zbUNCAU36s1uBn5H_LbHC_OB12gnd_oC3PRXwE -&gt; _64 ߫5/]s_
+</span></span></code></pre></div><p>&ldquo;Oh, no! Something is completely off, I can&rsquo;t see their messages!&rdquo; - that was not his best day at school. And as he learned soon, there was nothing he could do about that - that&rsquo;s the beauty of the encryption.</p>
+<p>I bet you have already guessed that we have been talking about a new concept all this time, and you might even have guessed what kind of concept it is - JWE or JSON Web Encryption.</p>
+<h2 id="jwe">JWE</h2>
+<p>Finally, we have reached the last term in this post&rsquo;s title, so if you are running out of tea or coffee, fear not - it is fine, as we are getting closer to the end of the post.</p>
+<p>Since you have a very good understanding of JWT, it is easy to see why we sometimes need the encrypted version of it. As you have already noticed, the key difference between the two is that the payload is encrypted in the JWE, so only the designated actor can decrypt and read it.</p>
+<p>Similar to JWS, JWE can use either symmetric or asymmetric algorithms for the encryption, and the logic is similar to the JWS:</p>
+<ul>
+<li>symmetric reuses the same key or pass pharse</li>
+<li>asymmetric uses a private key to decrypt the payload and a public key to decrypt it</li>
+</ul>
+<p>There is a set of supported algorithms: to name a few, AES-CBC and AES-GCM are symmetric ones, and RSA-OAEP or ECDH-ES are asymmetric options. As with JWT, the algorithms are passed within the <code>alg</code> header. We won&rsquo;t try to reimplement the JWE asymmetric algorithms flow from scratch in this post, as it would be too artificial thing to do, considering the complexity of the cryptography behind it. However, later, I&rsquo;ll show you how to use proper libraries for that purpose - stay tuned!</p>
+<p>Remember we talked about the usage scenarios for JWT? The info exchange one is the primary use case for JWE, while it&rsquo;s not that common to use them for authorization (it still happens sometimes, though). Here is one of the possible ways of exchanging the data between the actors through the UI app with the use of the JWE:</p>
+<p><img src="/images/drawings/20240328-0002.png" alt="image"></p>
+<p>Since it doesn&rsquo;t mean that step 4 will be invoked right away after step 3, the UI might need to store the sensitive data within the browser storage, which leaves the data easily accessible by the browser users and the UI app in general. That&rsquo;s why using the JWE can be a good solution here, as the Data consumer can decrypt the JWE and retrieve the data.</p>
+<p>There might be one moment that I found confusing when I first came across it: the public key is used to encrypt the payload, and it can be publicly available, while the decryption is done by the private key that the receiver has access to. That&rsquo;s completely opposite from the signature algorithm - why is it so? Well, this is a very good question.</p>
+<p>The answer, while confusing, uses logic as reasoning: if one of the keys should be public (so anyone can repeat the same operation), what is more sensitive in the scope of JWE: that anyone can encrypt or decrypt it? The answer is obvious: if anyone can decrypt it, that destroys the purpose of the JWE concept, that&rsquo;s why the decryption should be done with the private key, not the encryption.</p>
+<p>There is one more important feature of JWE that I need to mention briefly: it is possible to nest a signed JWT inside the JWE, if there is a need to use the signature.</p>
+<h3 id="nested-jws">Nested JWS</h3>
+<p>As you might have noticed, the JWE structure has no signature:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>header.encryptedKey.initializationVector.cipherText.authenticationTag
+</span></span></code></pre></div><p>And while the authentication tag does its job to make sure that the data hasn&rsquo;t been modified by the man-in-the-middle (hey, Eric), there is one thing that signature does on top: verifies the senders&rsquo; identity - the same way as the signatures we (humans) use to sing the documents. As discussed above, encryption can be performed with the public key if the asymmetric algorithm is used, so anyone can do that and pretend they are the issuer. When this part becomes a problem, both JWS and JWE must be combined by nesting it within. Here is how the structure will look:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>JWE {
+</span></span><span style="display:flex;"><span>    Header (encryption algorithm, content type, etc.)
+</span></span><span style="display:flex;"><span>    Encrypted Key (if applicable)
+</span></span><span style="display:flex;"><span>    Initialization Vector
+</span></span><span style="display:flex;"><span>    Ciphertext (Encrypted {
+</span></span><span style="display:flex;"><span>        JWS {
+</span></span><span style="display:flex;"><span>            Header (signature algorithm, etc.)
+</span></span><span style="display:flex;"><span>            Payload (data)
+</span></span><span style="display:flex;"><span>            Signature
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    })
+</span></span><span style="display:flex;"><span>    Authentication Tag
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As you can see, JWS lives within the <code>Ciphertext</code>. In such cases, it is a good practice to pass the <code>cty</code> (content type) header with a value JWT to the JWE headers. This will hint to the receiver that the encrypted payload is not a set of claims, as usual, but rather a signed JWT.</p>
+<p>All right, that&rsquo;s all I wanted to share about the JWE, as the remaining parts are the same/similar to the JWT concepts that we discussed quite thoroughly before. But before wrapping it up, The title of the article promised to show how to cook the JWT/JWS/JWE, so let&rsquo;s look at how it is done in real life. We&rsquo;ll be brief =)</p>
+<h2 id="how-to-cook-them">How to cook them</h2>
+<p>I bet that even without me mentioning this, it was crystal clear to you that it&rsquo;s a bad practice to implement the JWT/JWS/JWE-related code from scratch. Good thinking! This is quite a trivial task to solve, and there are tonnes of battle-tested libraries in different programming languages for that matter, here is <a href="https://jwt.io/libraries" target="_blank">a quite comprehensive list</a> provided by the Auth0. Anyway, it&rsquo;s always wise to check the library repo to see whether it&rsquo;s supported, what kind of issues are opened, when the last activity was and whether the license is sufficient for your needs. It is also smart to try it with the required scenarios before pulling the library into your project - but I bet you already know that.</p>
+<p>Since I used Go for the examples above, let&rsquo;s use the <a href="https://github.com/go-jose/go-jose" target="_blank">Go JOSE</a> library to show how it can help us.</p>
+<h3 id="jwt-and-jws-1">JWT and JWS</h3>
+<h4 id="symmetric-algorithm-example">Symmetric algorithm example</h4>
+<p>Here what the code looks for the symmetric HS256 algorithm:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;crypto/sha256&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/go-jose/go-jose/v4&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/go-jose/go-jose/v4/jwt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Payload</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Claims</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Message</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;message&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signingSecretPhase</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;goToHellEric&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to make sure the secret is 256 bits long
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// it&#39;s better to use 256 bits long string instead of doing this
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">hasher</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hasher</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#a6e22e">signingSecretPhase</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signingSecret</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hasher</span>.<span style="color:#a6e22e">Sum</span>(<span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">payload</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Payload</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Claims</span>: <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Claims</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Subject</span>:  <span style="color:#e6db74">&#34;Craig&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">IssuedAt</span>: <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">NewNumericDate</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()),
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Hello there, Craig! What&#39;s up, buddy?&#34;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">signerOpts</span> = <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">SignerOptions</span>{}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signerOpts</span>.<span style="color:#a6e22e">WithType</span>(<span style="color:#e6db74">&#34;JWT&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">singer</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">NewSigner</span>(<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">SigningKey</span>{<span style="color:#a6e22e">Algorithm</span>: <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">HS256</span>, <span style="color:#a6e22e">Key</span>: <span style="color:#a6e22e">signingSecret</span>}, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">signerOpts</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signedJwt</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Signed</span>(<span style="color:#a6e22e">singer</span>).<span style="color:#a6e22e">Claims</span>(<span style="color:#a6e22e">payload</span>).<span style="color:#a6e22e">Serialize</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">signedJwt</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receiverJws</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ParseSigned</span>(<span style="color:#a6e22e">signedJwt</span>, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">SignatureAlgorithm</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">HS256</span>})
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">verifiedPayload</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">receiverJws</span>.<span style="color:#a6e22e">Verify</span>(<span style="color:#a6e22e">signingSecret</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The signature differs - the original message has been modified&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The signature matches - the original message hasn&#39;t been modified&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">verifiedPayload</span>))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If we run the code, we&rsquo;ll get this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Sender part:
+</span></span><span style="display:flex;"><span>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTE2MzEwNjIsIm1lc3NhZ2UiOiJIZWxsbyB0aGVyZSwgQ3JhaWchIFdoYXQncyB1cCwgYnVkZHk_Iiwic3ViIjoiQ3JhaWcifQ.tZ9j19pdM4vO7enkVSKuxoi6k3yB04aRlOKPzp_Rsnc
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Receiver part:
+</span></span><span style="display:flex;"><span>The signature matches - the original message hasn&#39;t been modified
+</span></span><span style="display:flex;"><span>{&#34;iat&#34;:1711631062,&#34;message&#34;:&#34;Hello there, Craig! What&#39;s up, buddy?&#34;,&#34;sub&#34;:&#34;Craig&#34;}
+</span></span></code></pre></div><h4 id="asymmetric-algorithm-example">Asymmetric algorithm example</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;crypto/rand&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;crypto/rsa&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/go-jose/go-jose/v4&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/go-jose/go-jose/v4/jwt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Payload</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Claims</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Message</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;message&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">privateKey</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">GenerateKey</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Reader</span>, <span style="color:#ae81ff">2048</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">payload</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Payload</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Claims</span>: <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Claims</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Subject</span>:  <span style="color:#e6db74">&#34;Craig&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">IssuedAt</span>: <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">NewNumericDate</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()),
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Hello there, Craig! What&#39;s up, buddy?&#34;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">signerOpts</span> = <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">SignerOptions</span>{}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signerOpts</span>.<span style="color:#a6e22e">WithType</span>(<span style="color:#e6db74">&#34;JWT&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">singer</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">NewSigner</span>(<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">SigningKey</span>{<span style="color:#a6e22e">Algorithm</span>: <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">RS256</span>, <span style="color:#a6e22e">Key</span>: <span style="color:#a6e22e">privateKey</span>}, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">signerOpts</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signedJwt</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Signed</span>(<span style="color:#a6e22e">singer</span>).<span style="color:#a6e22e">Claims</span>(<span style="color:#a6e22e">payload</span>).<span style="color:#a6e22e">Serialize</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">signedJwt</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receiverJws</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ParseSigned</span>(<span style="color:#a6e22e">signedJwt</span>, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">SignatureAlgorithm</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">RS256</span>})
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">verifiedPayload</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">receiverJws</span>.<span style="color:#a6e22e">Verify</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">privateKey</span>.<span style="color:#a6e22e">PublicKey</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The signature differs - the original message has been modified&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The signature matches - the original message hasn&#39;t been modified&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">verifiedPayload</span>))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The only difference here is that we need to generate and use RSA keys instead of a secret phrase. Usually, such keys are not generated by the application but rather stored somewhere, so the application reads them on its startup.</p>
+<p>Here is the output of this code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Sender part:
+</span></span><span style="display:flex;"><span>eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE3MTE2MzEyODYsIm1lc3NhZ2UiOiJIZWxsbyB0aGVyZSwgQ3JhaWchIFdoYXQncyB1cCwgYnVkZHk_Iiwic3ViIjoiQ3JhaWcifQ.jZ4OIgCRyP2dHxa8wV_QqNYweT1p1ntGUfWHAxbHQyonAQAHhHcL75hCfPhxduGKqGU_dsrepKv6epBFGtMpUwlqvDiduQWKut0slqr6OQI_BedoQ8QB2Z9XdPM-smya7f1teEwYF9lDmU2Rz6s5pff_vwuuIQU2JRISg_fCKr0EqQv0Z5kvlxBeWJ3T5G0VBTTQccZZXkPCNovjT7eTXyChIQ8LT6RV4Fc5giLHi_-eydmJIcPCjJR2mjUk7-JI94b3QR2-ZTQcx96fbmMT3kp4RGn3r9SCAGAZQob43zxc2rcwEEEx07t4cuSa1BpJHrkzYA5bzpiRDH1fxWclyw
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Receiver part:
+</span></span><span style="display:flex;"><span>The signature matches - the original message hasn&#39;t been modified
+</span></span><span style="display:flex;"><span>{&#34;iat&#34;:1711631286,&#34;message&#34;:&#34;Hello there, Craig! What&#39;s up, buddy?&#34;,&#34;sub&#34;:&#34;Craig&#34;}
+</span></span></code></pre></div><h3 id="jwe-1">JWE</h3>
+<h4 id="symmetric-algorithm-example-1">Symmetric algorithm example</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;crypto/sha256&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/go-jose/go-jose/v4&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/go-jose/go-jose/v4/jwt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Payload</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Claims</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Message</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;message&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encryptionSecretPhase</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;goToHellEric&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to make sure the secret is 256 bits long
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">hasher</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hasher</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#a6e22e">encryptionSecretPhase</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encryptionSecret</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hasher</span>.<span style="color:#a6e22e">Sum</span>(<span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">payload</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Payload</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Claims</span>: <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Claims</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Subject</span>:  <span style="color:#e6db74">&#34;Craig&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">IssuedAt</span>: <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">NewNumericDate</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()),
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Hello there, Craig! What&#39;s up, buddy?&#34;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encrypter</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">NewEncrypter</span>(<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">A256GCM</span>, <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">Recipient</span>{<span style="color:#a6e22e">Algorithm</span>: <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">A256GCMKW</span>, <span style="color:#a6e22e">Key</span>: <span style="color:#a6e22e">encryptionSecret</span>}, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">issuedJwe</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Encrypted</span>(<span style="color:#a6e22e">encrypter</span>).<span style="color:#a6e22e">Claims</span>(<span style="color:#a6e22e">payload</span>).<span style="color:#a6e22e">Serialize</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">issuedJwe</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receiverJwe</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ParseEncrypted</span>(<span style="color:#a6e22e">issuedJwe</span>, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">KeyAlgorithm</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">A256GCMKW</span>}, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ContentEncryption</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">A256GCM</span>})
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">verifiedPayload</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">receiverJwe</span>.<span style="color:#a6e22e">Decrypt</span>(<span style="color:#a6e22e">encryptionSecret</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Error decrypting the payload&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The payload has been decrypted successfully&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">verifiedPayload</span>))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Sender part:
+</span></span><span style="display:flex;"><span>eyJhbGciOiJBMjU2R0NNS1ciLCJlbmMiOiJBMjU2R0NNIiwiaXYiOiJhS2VNLWctT3BtYzBJeEhoIiwidGFnIjoiZk11aF9wemZ1UmlsNDgtOVJfRzIxZyJ9.1LAUhXXHcfcCHXftex9qVFhHTx3UnCK4R-Mc6jBsmtg.TagB8zrlcBTc2125.YHiktAQ0oPZ_Rdiptp3ok11v-Xbh4fts4ovgrcwqHFsMnVy-766R6Dg4utOGs8NoOW-C7SeQCSWRv5ojMo5ksnyPM-fKGmbXeRYZC32U2vsKxQ.IzBaULb22KI0vjA7NvuwZQ
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Receiver part:
+</span></span><span style="display:flex;"><span>The payload has been decrypted successfully
+</span></span><span style="display:flex;"><span>{&#34;iat&#34;:1711631810,&#34;message&#34;:&#34;Hello there, Craig! What&#39;s up, buddy?&#34;,&#34;sub&#34;:&#34;Craig&#34;}
+</span></span></code></pre></div><h4 id="asymmetric-algorithm-example-1">Asymmetric algorithm example</h4>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;crypto/rand&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;crypto/rsa&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/go-jose/go-jose/v4&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/go-jose/go-jose/v4/jwt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Payload</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Claims</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Message</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;message&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encryptionKey</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">GenerateKey</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Reader</span>, <span style="color:#ae81ff">2048</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">payload</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Payload</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Claims</span>: <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Claims</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Subject</span>:  <span style="color:#e6db74">&#34;Craig&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">IssuedAt</span>: <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">NewNumericDate</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()),
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Hello there, Craig! What&#39;s up, buddy?&#34;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encrypter</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">NewEncrypter</span>(<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">A256GCM</span>, <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">Recipient</span>{<span style="color:#a6e22e">Algorithm</span>: <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">RSA_OAEP</span>, <span style="color:#a6e22e">Key</span>: <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">encryptionKey</span>.<span style="color:#a6e22e">PublicKey</span>}, <span style="color:#66d9ef">nil</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">issuedJwe</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Encrypted</span>(<span style="color:#a6e22e">encrypter</span>).<span style="color:#a6e22e">Claims</span>(<span style="color:#a6e22e">payload</span>).<span style="color:#a6e22e">Serialize</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">issuedJwe</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receiverJwe</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ParseEncrypted</span>(<span style="color:#a6e22e">issuedJwe</span>, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">KeyAlgorithm</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">RSA_OAEP</span>}, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ContentEncryption</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">A256GCM</span>})
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">verifiedPayload</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">receiverJwe</span>.<span style="color:#a6e22e">Decrypt</span>(<span style="color:#a6e22e">encryptionKey</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Error decrypting the payload&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The payload has been decrypted successfully&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">verifiedPayload</span>))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Sender part:
+</span></span><span style="display:flex;"><span>eyJhbGciOiJSU0EtT0FFUCIsImVuYyI6IkEyNTZHQ00ifQ.NNr1KAaT8gus0FEbvDWHBONo-CrXKy23aDQOZChKYm9mkuRHUX7NLj0G3ChuqCIy3jUDPsM_ICWQe4nX_XdJlBUnVN_-hKEPzaZ5cRcsNv_hKrohX657jRxcDxY15J9kVp68VaJsjG0rpPH69u1fDaT2kRNex5CZ54V-5Ywz0SvG0B_82pXDzoHfDxCCaKZFGQA7giBTJgaEsl1DVWB0xYHdZLo33JivSLGsKFUs48o_YSOKpbv5cnzSSj1cvrG5-36ousoPmJgIdkEqru8k_d6cG7T5xZILphYNrRaovBUT4IW2EZS4YpBoRxrZTLuXvN6ZcA-H78484PAqUZfxRA.qNhm_UONfkMr38Bv.BGciOa9CxI5iHou7TabTEhmXlJGr1OU-RPDvTx0FhzsPJUDUxF8cFRlDvIdNw7OdN_iblngtTSnB2hoEKpSfeHLQpqR1NwHfP2WufAnIexrjfQ.1uAbUYQR__j5Xtq4vW2t6g
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Receiver part:
+</span></span><span style="display:flex;"><span>The payload has been decrypted successfully
+</span></span><span style="display:flex;"><span>{&#34;iat&#34;:1711632447,&#34;message&#34;:&#34;Hello there, Craig! What&#39;s up, buddy?&#34;,&#34;sub&#34;:&#34;Craig&#34;}
+</span></span></code></pre></div><h4 id="nested-jws-1">Nested JWS</h4>
+<p>Asymmetric algorithms are used here for both signing and encrypting.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;crypto/rand&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;crypto/rsa&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/go-jose/go-jose/v4&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/go-jose/go-jose/v4/jwt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Payload</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Claims</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Message</span> <span style="color:#66d9ef">string</span> <span style="color:#e6db74">`json:&#34;message&#34;`</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signaturePrivateKey</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">GenerateKey</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Reader</span>, <span style="color:#ae81ff">2048</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encryptionPrivateKey</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">GenerateKey</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Reader</span>, <span style="color:#ae81ff">2048</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signedJwt</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">issueJws</span>(<span style="color:#a6e22e">signaturePrivateKey</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encryptedJwe</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">encryptJwe</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">encryptionPrivateKey</span>.<span style="color:#a6e22e">PublicKey</span>, <span style="color:#a6e22e">signedJwt</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">encryptedJwe</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">decryptedJwe</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">decryptJwe</span>(<span style="color:#a6e22e">encryptionPrivateKey</span>, <span style="color:#a6e22e">encryptedJwe</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">verifyJws</span>(<span style="color:#a6e22e">decryptedJwe</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">signaturePrivateKey</span>.<span style="color:#a6e22e">PublicKey</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">issueJws</span>(<span style="color:#a6e22e">privateKey</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">PrivateKey</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">payload</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Payload</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Claims</span>: <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Claims</span>{
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">Subject</span>:  <span style="color:#e6db74">&#34;Craig&#34;</span>,
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">IssuedAt</span>: <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">NewNumericDate</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()),
+</span></span><span style="display:flex;"><span>		},
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Message</span>: <span style="color:#e6db74">&#34;Hello there, Craig! What&#39;s up, buddy?&#34;</span>,
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">signerOpts</span> = <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">SignerOptions</span>{}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signerOpts</span>.<span style="color:#a6e22e">WithType</span>(<span style="color:#e6db74">&#34;JWT&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">singer</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">NewSigner</span>(<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">SigningKey</span>{<span style="color:#a6e22e">Algorithm</span>: <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">RS256</span>, <span style="color:#a6e22e">Key</span>: <span style="color:#a6e22e">privateKey</span>}, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">signerOpts</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signedJwt</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jwt</span>.<span style="color:#a6e22e">Signed</span>(<span style="color:#a6e22e">singer</span>).<span style="color:#a6e22e">Claims</span>(<span style="color:#a6e22e">payload</span>).<span style="color:#a6e22e">Serialize</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">signedJwt</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">encryptJwe</span>(<span style="color:#a6e22e">publicKey</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">PublicKey</span>, <span style="color:#a6e22e">signedJwt</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encryptionOpts</span> <span style="color:#f92672">:=</span> (<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">EncrypterOptions</span>{}).<span style="color:#a6e22e">WithContentType</span>(<span style="color:#e6db74">&#34;JWT&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encrypter</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">NewEncrypter</span>(<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">A256GCM</span>, <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">Recipient</span>{<span style="color:#a6e22e">Algorithm</span>: <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">RSA_OAEP</span>, <span style="color:#a6e22e">Key</span>: <span style="color:#a6e22e">publicKey</span>}, <span style="color:#a6e22e">encryptionOpts</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encryptedJwe</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">encrypter</span>.<span style="color:#a6e22e">Encrypt</span>([]byte(<span style="color:#a6e22e">signedJwt</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">serialized</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">encryptedJwe</span>.<span style="color:#a6e22e">CompactSerialize</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">serialized</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">decryptJwe</span>(<span style="color:#a6e22e">privateKey</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">PrivateKey</span>, <span style="color:#a6e22e">encryptedJwe</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">jwe</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ParseEncrypted</span>(<span style="color:#a6e22e">encryptedJwe</span>, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">KeyAlgorithm</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">RSA_OAEP</span>}, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ContentEncryption</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">A256GCM</span>})
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">decryptedJwe</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jwe</span>.<span style="color:#a6e22e">Decrypt</span>(<span style="color:#a6e22e">privateKey</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> string(<span style="color:#a6e22e">decryptedJwe</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">verifyJws</span>(<span style="color:#a6e22e">signedJwt</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">publicKey</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">PublicKey</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receiverJws</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ParseSigned</span>(<span style="color:#a6e22e">signedJwt</span>, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">SignatureAlgorithm</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">RS256</span>})
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">verifiedPayload</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">receiverJws</span>.<span style="color:#a6e22e">Verify</span>(<span style="color:#a6e22e">publicKey</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The signature differs - the original message has been modified&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The signature matches - the original message hasn&#39;t been modified&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(string(<span style="color:#a6e22e">verifiedPayload</span>))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Sender part:
+</span></span><span style="display:flex;"><span>eyJhbGciOiJSU0EtT0FFUCIsImN0eSI6IkpXVCIsImVuYyI6IkEyNTZHQ00ifQ.DiGVfL5PqRL5phPdN-8rxNyeb1orfJTfseJzDzV4lcXurdTiCNJ0jnmNS2bG1yF7NfKSOC6yslasBmvpAQb2OCishTwAvWqIUj9BOByER73sYJKmtBhmLbHkzn19UEgo1ihA7s7LdrqtYCCepX3PVGAhGRsjIZp8BiSGpoc2TfEP4_MknEyEkoaukpqtXiBUUTRDfUNfzJg2gyC_ca1xu-jrwB2AbQyDw7cXQX4dsxpBstCmXnpThjlRrjMB7lE4Upc05aONakv_WLOLBjH1UInywPgihXQ9zpjsejPtWRfjJmwvV0AHKmvWYAZ-0YXg02LzYcmrOzPaQpTOgPC6PQ.dkRdR2yTUt3r3_OY.J8kh2oIqXF0YwDLCj06sPzkTLy9uwbsWE2M2DZYKmJLM5YCAHzuwYSDoXqkAM0cebEmks8zPtMOVMSKC-3wTXZOK3v13GyrcTfHIahDiuu2KwRqZOEB_7yJM0IgbCzLK_M8BWT_aTEtAqxDobUUU9TRsR0W7Zmn4pvO53jMQ3cRq2iIppSWkTR9W8DiW8xspCAxOhYMXymvQVGt4-bF1rThyrhvtXsKdMcIiWbO4MWV4mD9j1sVLVEXQDnLhNBT0wmGXYKRI-MsC0Ka1NupUs7ItcMqfcQnUL2GrjmH27dDtsuCCjkqo5xU-EISpLOx4z1kZna0iv8O9X_S30VtR-T4jAehwGx7aG3vUjBVSKOqkjVcA0YGez8FDehhk5Zlu0-yteMcad6nHjcn_qVRZL64ebTD053jIn4bLBz7YrgukcMp-NX7AwKbZ12AxoSXPWj75vZHie_oFevN3mEVFh6kFHg7I_6xzmXQA5QaLLPnFXtkSkf1x2KZldZ3PMK7NIrUuKYp1_rejqHJxtXL8HE3OnAAMfw_xdbSYDPT0WeEO7CxAZ5EWAfNJ1qZI3cRyDfFFKpeAIWL5u1BJS9Gte9QS1glsb7iZ_N_GZ6_Bjj4VvEfDMjwXidpxJvoQ-xLYNf2O9wKDVOTUaA.mbvor-v6UmO6u7ZGoHxY9Q
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Receiver part:
+</span></span><span style="display:flex;"><span>The signature matches - the original message hasn&#39;t been modified
+</span></span><span style="display:flex;"><span>{&#34;iat&#34;:1711638756,&#34;message&#34;:&#34;Hello there, Craig! What&#39;s up, buddy?&#34;,&#34;sub&#34;:&#34;Craig&#34;}
+</span></span></code></pre></div><h3 id="things-to-be-aware-of">Things to be aware of</h3>
+<p>We spent a lot of time talking about JWT/JWS/JWE and also discussed how to implement them using the dedicated library. Everything sounds cool and logical, but are there any drawbacks to these concepts? Of course!</p>
+<p>First of all, it is important to remember that JWS and JWE heavily rely on cryptographic algorithms, as we have seen so far, and that means that they are exposed to the same problems as any other things in that realm:</p>
+<ul>
+<li>cryptography is a complex subject, so it is easy to mess things up while implementing the algorithms. It&rsquo;s not rare that flaws are found in the JWT libraries; that&rsquo;s why it&rsquo;s important that the libraries we use are well-maintained and we have automatic ways of detecting and fixing security vulnerabilities in our projects with tools like GitHub Dependabot or similar ones.</li>
+<li>some cryptographic algorithms that have been used for a long time, can become obsolete and insecure, like, for example, MD5 these days. And JWT specification sometimes too slow to react on that, so it can still support those algorithms that should be avoided (for example, like <a href="https://www.chosenplaintext.ca/2015/03/31/jwt-algorithm-confusion.html" target="_blank">this time</a> in the past). It&rsquo;s our, engineers, responsibility to make sure that we are using reliable algorithms. Good linters can help detect this as well.</li>
+</ul>
+<p>There is another crucial moment about JWT that many engineers have encountered if they had to work with the authorization domain: there is no way to revoke the JWT after it has been issued. As we discussed before, once the user provides their credentials, the JWT is issued to prove that the user is signed in. We can set up the expiry date for it, but imagine if the user clicked the &ldquo;log out&rdquo; button, JWT is still valid per se, but it shouldn&rsquo;t be trusted anymore in the scope of the user session. Some auth-providers handle this on your behalf, but others leave this problem to their users, so we, engineers, need to solve it somehow. One solution for this case is a DB table with the blocklist of revoked JWTs; we should keep them there until they expire.</p>
+<p>There are other things to be aware of, but these are the most critical in my opinion.</p>
+<h2 id="farewell">Farewell</h2>
+<p>It&rsquo;s been a long journey, and it took me a few evenings to finish this post. So, thanks a lot for reading it, and I hope you have learned a thing or two about JWT/JWS/JWEs today. Before I say, &ldquo;That&rsquo;s all, folks&rdquo;, let me share further readings if you&rsquo;d like to dive deeper into the topics. And there is nothing more profound than dedicated RFCs:</p>
+<ul>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc7519" target="_blank">RFC 7519</a> - JSON Web Token (JWT)</li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc7515" target="_blank">RFC 7515</a> - JSON Web Signature (JWS)</li>
+<li><a href="https://datatracker.ietf.org/doc/html/rfc7516" target="_blank">RFC 7516</a> - JSON Web Encryption (JWE)</li>
+</ul>
+<p>Have fun! =)</p>
+
+  
+    <hr>
+<div class="newsletters">
+    <div class="help-block-for-success"></div>
+    <div class="help-block-for-error"></div>
+    <form id="email-subscription-form">
+        <label for="email-subscription-input">Receive an email once a new post is published</label>
+        <input type="email" id="email-subscription-input" name="email-subscription-input" placeholder="Email address" />
+        <button type="submit">Subscribe</button>
+    </form>
+
+    <script>
+      const listmonkHost = "https://mail.n0rdy.foo";
+      const listmonkSubscriptionSuccessMessage = "Almost there! =) Please, check your email to confirm subscription. Check your spam folder if you didn't get the email.";
+      const listmonkSubscriptionErrorMessage = "Something went wrong =( Please, try again later.";
+
+      const form = document.getElementById("email-subscription-form");
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = form.querySelector("#email-subscription-input").value;
+        const data = {
+          email: email,
+          list_uuids: [
+            "3ba79b71-880f-417d-9587-d388b62e0986"
+          ]
+      };
+        fetch(`${listmonkHost}/api/public/subscription`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }).then((response) => {
+          if (response.status === 200) {
+            const successBlock = document.getElementsByClassName('help-block-for-success')[0];
+            successBlock.classList.add('help-block-show');
+            successBlock.textContent = listmonkSubscriptionSuccessMessage;
+            document.getElementById('email-subscription-form').classList.add('email-subscription-form-hide');
+          } else {
+            const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
+            errorBlock.classList.add('help-block-show');
+            errorBlock.textContent = listmonkSubscriptionErrorMessage;
+          }
+        }).catch(() => {
+          const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
+          errorBlock.classList.add('help-block-show');
+          errorBlock.textContent = listmonkSubscriptionErrorMessage;
+        });
+      })
+    </script>
+</div>
+  
+  <hr>
+<div class="footer">
+    
+	    
+            <a class="previous-post" href="https://n0rdy.foo/posts/20240103/understanding-cors/?ref=footer"><span style="font-weight:bold;">« Previous</span><br>Understanding CORS</a>
+        
+	    
+            <div class="next-post">
+                <a href="https://n0rdy.foo/posts/20241210/otp-offline-generation/?ref=footer"><span style="font-weight:bold;">Next »</span><br>Demystifying OTPs: the logic behind the offline...</a>
+            </div>
+        
+    
+</div>
+
+  
+    <div class="comments">
+    
+        <div id="remark42"></div>
+        <script>
+            themeFromLS = localStorage.getItem("theme")
+            themeFromHugo = document.body.classList.contains("dark-theme") ? "dark" : "light"
+            currentTheme = themeFromLS ? themeFromLS : themeFromHugo;
+
+            var remark_config = {
+                host: "https://www.remark42.n0rdy.foo",
+                site_id: "remark42.n0rdy.foo",
+                theme: currentTheme,
+                max_shown_comments: 100,
+            }
+        </script>
+        <script>!function(e,n){for(var o=0;o<e.length;o++){var r=n.createElement("script"),c=".js",d=n.head||n.body;"noModule"in r?(r.type="module",c=".mjs"):r.async=!0,r.defer=!0,r.src=remark_config.host+"/web/"+e[o]+c,d.appendChild(r)}}(remark_config.components||["embed"],document);</script>
+    
+</div>
+
+  
+</div>
+            </main>
+            
+  
+    <div class="article-toc ">
+    <div class="toc-wrapper">
+      <h4 id="contents"></h4>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#real-life-example">Real-life example</a>
+      <ul>
+        <li><a href="#decoding-the-message">Decoding the message</a></li>
+        <li><a href="#the-prank">The prank</a></li>
+        <li><a href="#the-anti-prank-measures">The anti-prank measures</a></li>
+      </ul>
+    </li>
+    <li><a href="#jwt-and-jws">JWT and JWS</a>
+      <ul>
+        <li><a href="#header">Header</a></li>
+        <li><a href="#payload">Payload</a></li>
+        <li><a href="#signature">Signature</a></li>
+        <li><a href="#jwks">JWKS</a></li>
+        <li><a href="#usage">Usage</a></li>
+      </ul>
+    </li>
+    <li><a href="#real-life-example-2">Real-life example #2</a></li>
+    <li><a href="#jwe">JWE</a>
+      <ul>
+        <li><a href="#nested-jws">Nested JWS</a></li>
+      </ul>
+    </li>
+    <li><a href="#how-to-cook-them">How to cook them</a>
+      <ul>
+        <li><a href="#jwt-and-jws-1">JWT and JWS</a></li>
+        <li><a href="#jwe-1">JWE</a></li>
+        <li><a href="#things-to-be-aware-of">Things to be aware of</a></li>
+      </ul>
+    </li>
+    <li><a href="#farewell">Farewell</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+  
+
+        </div>
+    </body>
+</html>

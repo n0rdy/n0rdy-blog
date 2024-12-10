@@ -4,125 +4,107 @@
     <title>Tags on n0rdy personal blog</title>
     <link>https://n0rdy.foo/tags/</link>
     <description>Recent content in Tags on n0rdy personal blog</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 Mar 2024 20:00:00 +0200</lastBuildDate><atom:link href="https://n0rdy.foo/tags/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Tue, 10 Dec 2024 17:30:00 +0200</lastBuildDate>
+    <atom:link href="https://n0rdy.foo/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>beginners</title>
-      <link>https://n0rdy.foo/tags/beginners/</link>
-      <pubDate>Thu, 28 Mar 2024 20:00:00 +0200</pubDate>
-      
-      <guid>https://n0rdy.foo/tags/beginners/</guid>
+      <title>Security</title>
+      <link>https://n0rdy.foo/tags/security/</link>
+      <pubDate>Tue, 10 Dec 2024 17:30:00 +0200</pubDate>
+      <guid>https://n0rdy.foo/tags/security/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>eli5</title>
-      <link>https://n0rdy.foo/tags/eli5/</link>
-      <pubDate>Thu, 28 Mar 2024 20:00:00 +0200</pubDate>
-      
-      <guid>https://n0rdy.foo/tags/eli5/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tutorial</title>
-      <link>https://n0rdy.foo/tags/tutorial/</link>
-      <pubDate>Thu, 28 Mar 2024 20:00:00 +0200</pubDate>
-      
-      <guid>https://n0rdy.foo/tags/tutorial/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>web</title>
-      <link>https://n0rdy.foo/tags/web/</link>
-      <pubDate>Wed, 03 Jan 2024 17:00:00 +0200</pubDate>
-      
-      <guid>https://n0rdy.foo/tags/web/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>ai</title>
-      <link>https://n0rdy.foo/tags/ai/</link>
-      <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
-      
-      <guid>https://n0rdy.foo/tags/ai/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>opinion</title>
-      <link>https://n0rdy.foo/tags/opinion/</link>
-      <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
-      
-      <guid>https://n0rdy.foo/tags/opinion/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>tech</title>
+      <title>Tech</title>
       <link>https://n0rdy.foo/tags/tech/</link>
-      <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
-      
+      <pubDate>Tue, 10 Dec 2024 17:30:00 +0200</pubDate>
       <guid>https://n0rdy.foo/tags/tech/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>concurrency</title>
+      <title>Web</title>
+      <link>https://n0rdy.foo/tags/web/</link>
+      <pubDate>Tue, 10 Dec 2024 17:30:00 +0200</pubDate>
+      <guid>https://n0rdy.foo/tags/web/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Beginners</title>
+      <link>https://n0rdy.foo/tags/beginners/</link>
+      <pubDate>Thu, 28 Mar 2024 20:00:00 +0200</pubDate>
+      <guid>https://n0rdy.foo/tags/beginners/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Eli5</title>
+      <link>https://n0rdy.foo/tags/eli5/</link>
+      <pubDate>Thu, 28 Mar 2024 20:00:00 +0200</pubDate>
+      <guid>https://n0rdy.foo/tags/eli5/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tutorial</title>
+      <link>https://n0rdy.foo/tags/tutorial/</link>
+      <pubDate>Thu, 28 Mar 2024 20:00:00 +0200</pubDate>
+      <guid>https://n0rdy.foo/tags/tutorial/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Ai</title>
+      <link>https://n0rdy.foo/tags/ai/</link>
+      <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
+      <guid>https://n0rdy.foo/tags/ai/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Opinion</title>
+      <link>https://n0rdy.foo/tags/opinion/</link>
+      <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
+      <guid>https://n0rdy.foo/tags/opinion/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Concurrency</title>
       <link>https://n0rdy.foo/tags/concurrency/</link>
       <pubDate>Thu, 21 Dec 2023 23:20:00 +0200</pubDate>
-      
       <guid>https://n0rdy.foo/tags/concurrency/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>go</title>
+      <title>Go</title>
       <link>https://n0rdy.foo/tags/go/</link>
       <pubDate>Thu, 21 Dec 2023 23:20:00 +0200</pubDate>
-      
       <guid>https://n0rdy.foo/tags/go/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>pipeline</title>
+      <title>Pipeline</title>
       <link>https://n0rdy.foo/tags/pipeline/</link>
       <pubDate>Thu, 21 Dec 2023 23:20:00 +0200</pubDate>
-      
       <guid>https://n0rdy.foo/tags/pipeline/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>waitgroup</title>
+      <title>Waitgroup</title>
       <link>https://n0rdy.foo/tags/waitgroup/</link>
       <pubDate>Mon, 11 Dec 2023 18:00:00 +0200</pubDate>
-      
       <guid>https://n0rdy.foo/tags/waitgroup/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>channels</title>
+      <title>Channels</title>
       <link>https://n0rdy.foo/tags/channels/</link>
       <pubDate>Thu, 07 Dec 2023 22:00:00 +0200</pubDate>
-      
       <guid>https://n0rdy.foo/tags/channels/</guid>
       <description></description>
     </item>
-    
     <item>
-      <title>goroutines</title>
+      <title>Goroutines</title>
       <link>https://n0rdy.foo/tags/goroutines/</link>
       <pubDate>Thu, 07 Dec 2023 22:00:00 +0200</pubDate>
-      
       <guid>https://n0rdy.foo/tags/goroutines/</guid>
       <description></description>
     </item>
-    
   </channel>
 </rss>

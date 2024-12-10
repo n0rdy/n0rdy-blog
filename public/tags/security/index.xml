@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Tech on n0rdy personal blog</title>
-    <link>https://n0rdy.foo/tags/tech/</link>
-    <description>Recent content in Tech on n0rdy personal blog</description>
+    <title>Security on n0rdy personal blog</title>
+    <link>https://n0rdy.foo/tags/security/</link>
+    <description>Recent content in Security on n0rdy personal blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Tue, 10 Dec 2024 17:30:00 +0200</lastBuildDate>
-    <atom:link href="https://n0rdy.foo/tags/tech/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://n0rdy.foo/tags/security/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Demystifying OTPs: the logic behind the offline generation of tokens</title>
       <link>https://n0rdy.foo/posts/20241210/otp-offline-generation/</link>
       <pubDate>Tue, 10 Dec 2024 17:30:00 +0200</pubDate>
       <guid>https://n0rdy.foo/posts/20241210/otp-offline-generation/</guid>
       <description>&lt;p&gt;Hello there! Another evening, on my way back home, I decided to check the mailbox. I don&amp;rsquo;t mean my email inbox, but the old-school actual box where the postman puts the physical letters. And to my great surprise, I found an envelope there with something inside! While opening it, I spent a few moments hoping that it&amp;rsquo;s the decades delayed letter from Hogwarts. But then I had to get back down to Earth, once I noticed that it&amp;rsquo;s a boring &amp;ldquo;grown-up&amp;rdquo; letter from the bank. I skimmed through the text and realized that my &amp;ldquo;digital-only&amp;rdquo; bank for cool kids had been acquired by the biggest player on the local market. And as a token of the new beginning, they added this to the envelope:&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>AI tools for software engineers: 5 things to be careful about/aware of</title>
-      <link>https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/</link>
-      <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
-      <guid>https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/</guid>
-      <description>&lt;p&gt;Hello there! 2023 is about to end soon, so it&amp;rsquo;s a good time to sit and reflect on it. If we think about the tech industry, in general, it&amp;rsquo;s easy to define which topic was the hottest this year - AI. And the chances are that in 2024, this area will grow even bigger alongside the growing investments and the new astonishing scientific discoveries in this field.&lt;/p&gt;&#xA;&lt;p&gt;Unlike previous &amp;ldquo;big things&amp;rdquo; in tech, like blockchain, crypto, NFT, Web3, etc., AI is way more accessible and covers more use cases than the rest:&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
