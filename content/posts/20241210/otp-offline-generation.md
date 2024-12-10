@@ -526,7 +526,7 @@ function generateTOTP(secretKey):
     return otp
 ```
 
-As you can see, we got very close to that, but the original algorithm uses more advanced hashing (HMAC-SHA1 in this example), and performs some bitwise operations to normalise the output.
+As you can see, we got very close to that, but the original algorithm uses more advanced hashing (HMAC-SHA1 in this example), and performs some bitwise operations to normalize the output.
 
 ## Security considerations: reuse rather than build yourself
 
