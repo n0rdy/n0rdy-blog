@@ -40,8 +40,9 @@ paginate = 5
     listmonk_subcription_error_message = "Something went wrong =( Please, try again later."
 
     github_url = "https://github.com/n0rdy"
+    bluesky_url = "https://bsky.app/profile/n0rdy.foo"
     twitter_url = "https://twitter.com/_n0rdy_"
-    mastodon_url = "https://me.dm/@n0rdy"
+    mastodon_url = "https://mastodon.social/@n0rdy"
     email_url = "mailto://hello@n0rdy.foo"
 
     rss_icon = true
