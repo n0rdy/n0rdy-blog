@@ -33,7 +33,7 @@ The server validation part hints that the server must be able to generate the sa
 
 My further observations of my new "toy" brought even more discoveries:
 
-- if I turn it off and then off, usually I can see the same code as before
+- if I turn it off and then on, usually I can see the same code as before
 - however, occasionally, it changes
 
 The only logic explanation I could come up with is that these codes have a certain lifetime. I'd like to tell a story of me trying to count the duration of it in "1-2-3-...-N" fashion, but it won't be true: I got a big hint from the apps like Authy and Co, where I saw the 30 seconds TTL. Good find, let's add this to the list of the known facts.
