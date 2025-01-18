@@ -75,7 +75,6 @@ P.S. Something obvious, but need to mention it nevertheless: I'm not affiliated 
 
 P.P.S. I hope you liked this style of short-ish (still working on the "short" part) posts. If you don't want to miss the future ones:
 
-- [subscribe to my newsletter](https://mail.n0rdy.foo/subscription/form) to receive an email once I publish a new post
 - follow me on [Bluesky](https://bsky.app/profile/n0rdy.foo), [Mastodon](https://mastodon.social/@n0rdy), or [Twitter](https://x.com/_n0rdy_)
 
  
