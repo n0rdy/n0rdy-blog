@@ -46,7 +46,7 @@ I've mentioned above that I've been using `robbyrussell` (from [here](https://gi
 
 Isn't that cool? I haven't found the `robbyrussell` theme there though, maybe it has a different name now?
 
-One more thing that amazed me was the embedded dev tool, which uses the same key shortcut as Firefox and Chrome DevTools: ``⌥ + `⌘ + I`:
+One more thing that amazed me was the embedded dev tool, which uses the same key shortcut as Firefox and Chrome DevTools: `⌥ + ⌘ + I` :
 
 ![image](/images/screenshots/20250118-0003.png)
 
@@ -74,6 +74,7 @@ Have fun! =)
 P.S. Something obvious, but need to mention it nevertheless: I'm not affiliated with Ghostty anyhow, and nobody asked me to test or review it, that's my honest opinion of the tool which I found worth sharing with the community. 
 
 P.P.S. I hope you liked this style of short-ish (still working on the "short" part) posts. If you don't want to miss the future ones:
+
 
 - follow me on [Bluesky](https://bsky.app/profile/n0rdy.foo), [Mastodon](https://mastodon.social/@n0rdy), or [Twitter](https://x.com/_n0rdy_)
 
