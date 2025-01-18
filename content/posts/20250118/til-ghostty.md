@@ -46,7 +46,7 @@ I've mentioned above that I've been using `robbyrussell` (from [here](https://gi
 
 Isn't that cool? I haven't found the `robbyrussell` theme there though, maybe it has a different name now?
 
-One more thing that amazed me was the embedded dev tool, which uses the same key shortcut as Firefox and Chrome DevTools: `Option Command I`:
+One more thing that amazed me was the embedded dev tool, which uses the same key shortcut as Firefox and Chrome DevTools: ``⌥ + `⌘ + I`:
 
 ![image](/images/screenshots/20250118-0003.png)
 
