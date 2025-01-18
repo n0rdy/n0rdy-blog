@@ -6,20 +6,34 @@
     <description>Recent content in Tags on n0rdy personal blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Dec 2024 17:30:00 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 18 Jan 2025 22:30:00 +0200</lastBuildDate>
     <atom:link href="https://n0rdy.foo/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Tech</title>
+      <link>https://n0rdy.foo/tags/tech/</link>
+      <pubDate>Sat, 18 Jan 2025 22:30:00 +0200</pubDate>
+      <guid>https://n0rdy.foo/tags/tech/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Til</title>
+      <link>https://n0rdy.foo/tags/til/</link>
+      <pubDate>Sat, 18 Jan 2025 22:30:00 +0200</pubDate>
+      <guid>https://n0rdy.foo/tags/til/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Tools</title>
+      <link>https://n0rdy.foo/tags/tools/</link>
+      <pubDate>Sat, 18 Jan 2025 22:30:00 +0200</pubDate>
+      <guid>https://n0rdy.foo/tags/tools/</guid>
+      <description></description>
+    </item>
     <item>
       <title>Security</title>
       <link>https://n0rdy.foo/tags/security/</link>
       <pubDate>Tue, 10 Dec 2024 17:30:00 +0200</pubDate>
       <guid>https://n0rdy.foo/tags/security/</guid>
-      <description></description>
-    </item>
-    <item>
-      <title>Tech</title>
-      <link>https://n0rdy.foo/tags/tech/</link>
-      <pubDate>Tue, 10 Dec 2024 17:30:00 +0200</pubDate>
-      <guid>https://n0rdy.foo/tags/tech/</guid>
       <description></description>
     </item>
     <item>

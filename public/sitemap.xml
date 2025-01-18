@@ -2,22 +2,31 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://n0rdy.foo/</loc>
+    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/posts/</loc>
+    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/</loc>
+    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/tech/</loc>
+    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/til/</loc>
+    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/posts/20250118/til-ghostty/</loc>
+    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/tools/</loc>
+    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+  </url><url>
     <loc>https://n0rdy.foo/posts/20241210/otp-offline-generation/</loc>
     <lastmod>2024-12-10T17:30:00+02:00</lastmod>
   </url><url>
-    <loc>https://n0rdy.foo/</loc>
-    <lastmod>2024-12-10T17:30:00+02:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/posts/</loc>
-    <lastmod>2024-12-10T17:30:00+02:00</lastmod>
-  </url><url>
     <loc>https://n0rdy.foo/tags/security/</loc>
-    <lastmod>2024-12-10T17:30:00+02:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/tags/</loc>
-    <lastmod>2024-12-10T17:30:00+02:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/tags/tech/</loc>
     <lastmod>2024-12-10T17:30:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/web/</loc>

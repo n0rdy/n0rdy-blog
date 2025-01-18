@@ -257,6 +257,10 @@
                 
                         
                 
+                        
+                
+                        
+                
             
         
         
@@ -281,6 +285,10 @@
                 
             
                 
+                
+                        
+                
+                        
                 
                         
                 
@@ -362,6 +370,10 @@
                 
                         
                 
+                        
+                
+                        
+                
             
         
         
@@ -385,6 +397,10 @@
                         <a href="/tags/">Tags</a>
                     </li>
                 
+                
+                        
+                
+                        
                 
                         
                 
@@ -484,7 +500,7 @@
         <p class="footnote">
 powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
     <br>
-    &copy; 2024 n0rdy personal blog. All rights reserved.
+    &copy; 2025 n0rdy personal blog. All rights reserved.
 </p>
 
   </div>
@@ -557,7 +573,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>The server validation part hints that the server must be able to generate the same code as the offline device to compare them. Hm..that can be helpful.</p>
 <p>My further observations of my new &ldquo;toy&rdquo; brought even more discoveries:</p>
 <ul>
-<li>if I turn it off and then off, usually I can see the same code as before</li>
+<li>if I turn it off and then on, usually I can see the same code as before</li>
 <li>however, occasionally, it changes</li>
 </ul>
 <p>The only logic explanation I could come up with is that these codes have a certain lifetime. I&rsquo;d like to tell a story of me trying to count the duration of it in &ldquo;1-2-3-&hellip;-N&rdquo; fashion, but it won&rsquo;t be true: I got a big hint from the apps like Authy and Co, where I saw the 30 seconds TTL. Good find, let&rsquo;s add this to the list of the known facts.</p>
@@ -912,7 +928,7 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>    binary = truncatedHash &amp; 0x7FFFFFFF    // Ensure positive number
 </span></span><span style="display:flex;"><span>    otp = binary % 1_000_000               // Reduce to desired length
 </span></span><span style="display:flex;"><span>    return otp
-</span></span></code></pre></div><p>As you can see, we got very close to that, but the original algorithm uses more advanced hashing (HMAC-SHA1 in this example), and performs some bitwise operations to normalise the output.</p>
+</span></span></code></pre></div><p>As you can see, we got very close to that, but the original algorithm uses more advanced hashing (HMAC-SHA1 in this example), and performs some bitwise operations to normalize the output.</p>
 <h2 id="security-considerations-reuse-rather-than-build-yourself">Security considerations: reuse rather than build yourself</h2>
 <p>However, there is one more thing I&rsquo;d like to cover before we call it a day: security. I&rsquo;d strongly encourage you against implementing the logic of generating OTPs on your own, as there are plenty of libraries out there that have it done for us. The room for error is huge, and it&rsquo;s a short distance to the vulnerability that will be discovered and exploited by the bad actors out there.</p>
 <p>Even if you get the generation logic right and will cover it with tests, there are other things that can go wrong. For example, how much do you think it will take to brute-force the 6-digit code? Let&rsquo;s experiment:</p>
@@ -1025,6 +1041,10 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
             <a class="previous-post" href="https://n0rdy.foo/posts/20240328/jwt-jws-jwe-and-how-to-cook-them/?ref=footer"><span style="font-weight:bold;">« Previous</span><br>JWT, JWS, JWE and how to cook them</a>
         
 	    
+            <div class="next-post">
+                <a href="https://n0rdy.foo/posts/20250118/til-ghostty/?ref=footer"><span style="font-weight:bold;">Next »</span><br>TIL: Ghostty - a new and quite promising terminal...</a>
+            </div>
+        
     
 </div>
 

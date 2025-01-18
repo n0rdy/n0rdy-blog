@@ -6,8 +6,15 @@
     <description>Recent content in Tech on n0rdy personal blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Dec 2024 17:30:00 +0200</lastBuildDate>
+    <lastBuildDate>Sat, 18 Jan 2025 22:30:00 +0200</lastBuildDate>
     <atom:link href="https://n0rdy.foo/tags/tech/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>TIL: Ghostty - a new and quite promising terminal emulator</title>
+      <link>https://n0rdy.foo/posts/20250118/til-ghostty/</link>
+      <pubDate>Sat, 18 Jan 2025 22:30:00 +0200</pubDate>
+      <guid>https://n0rdy.foo/posts/20250118/til-ghostty/</guid>
+      <description>&lt;p&gt;Hello there! If you&amp;rsquo;ve been following my blog, you might have noticed that I&amp;rsquo;m usually leaning towards longreads as the style of my posts. And while I think such posts are great in general, it takes forever to prepare, write and edit them before publishing, which ends up in the very infrequent and inconsistent blogging ratio on my end.&lt;/p&gt;&#xA;&lt;p&gt;Lately, I&amp;rsquo;ve come across the &lt;a href=&#34;https://simonwillison.net/2022/Nov/6/what-to-blog-about/&#34; target=&#34;_blank&#34;&gt;“What to blog about”&lt;/a&gt; article by Simon Willison which, alongside other things, had a great insight about the “Today I Learned” type of short posts to share small bits of recently acquired knowledge with the audience. So, this is my attempt to incorporate that approach alongside the longreads that I will keep writing (I have a few topics planned, so stay tuned and &lt;a href=&#34;https://mail.n0rdy.foo/subscription/form&#34; target=&#34;_blank&#34;&gt;subscribe to my newsletter&lt;/a&gt; to receive an email once I publish a new post). Let&amp;rsquo;s gooooooo!&lt;/p&gt;</description>
+    </item>
     <item>
       <title>Demystifying OTPs: the logic behind the offline generation of tokens</title>
       <link>https://n0rdy.foo/posts/20241210/otp-offline-generation/</link>
