@@ -72,7 +72,7 @@ func randomString(length int) string {
 }
 ```
 
-All the code samples can be found here REPLACEME!!!
+All the code samples can be found [here](https://github.com/n0rdy/n0rdy-blog-code-samples/tree/main/20250122-bcrypt-api)
 
 What this code does is:
 

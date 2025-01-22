@@ -2,14 +2,29 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://n0rdy.foo/tags/api/</loc>
+    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/bcrypt/</loc>
+    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
+  </url><url>
     <loc>https://n0rdy.foo/</loc>
-    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/opinion/</loc>
+    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/</loc>
-    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/security/</loc>
+    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/</loc>
-    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/</loc>
+    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/tech/</loc>
     <lastmod>2025-01-18T22:30:00+02:00</lastmod>
@@ -24,9 +39,6 @@
     <lastmod>2025-01-18T22:30:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20241210/otp-offline-generation/</loc>
-    <lastmod>2024-12-10T17:30:00+02:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/tags/security/</loc>
     <lastmod>2024-12-10T17:30:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/web/</loc>
@@ -51,9 +63,6 @@
     <lastmod>2023-12-26T15:25:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/</loc>
-    <lastmod>2023-12-26T15:25:00+02:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/tags/opinion/</loc>
     <lastmod>2023-12-26T15:25:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/concurrency/</loc>

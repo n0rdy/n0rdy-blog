@@ -1,26 +1,19 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Opinion on n0rdy personal blog</title>
-    <link>https://n0rdy.foo/tags/opinion/</link>
-    <description>Recent content in Opinion on n0rdy personal blog</description>
+    <title>Bcrypt on n0rdy personal blog</title>
+    <link>https://n0rdy.foo/tags/bcrypt/</link>
+    <description>Recent content in Bcrypt on n0rdy personal blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Wed, 22 Jan 2025 18:00:00 +0200</lastBuildDate>
-    <atom:link href="https://n0rdy.foo/tags/opinion/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://n0rdy.foo/tags/bcrypt/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>What Okta Bcrypt incident can teach us about designing better APIs</title>
       <link>https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/</link>
       <pubDate>Wed, 22 Jan 2025 18:00:00 +0200</pubDate>
       <guid>https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/</guid>
       <description>&lt;p&gt;Hello there! If you follow tech news, you might have heard about the &lt;a href=&#34;https://trust.okta.com/security-advisories/okta-ad-ldap-delegated-authentication-username/&#34; target=&#34;_blank&#34;&gt;Okta security incident&lt;/a&gt; that was reported at 1st of November. The TLDR of the incident was this:&lt;/p&gt;&#xA;&lt;blockquote&gt;&#xA;&lt;p&gt;The Bcrypt algorithm was used to generate the cache key where we hash a  combined string of userId + username + password. Under a specific set of conditions, listed below, this could allow users to authenticate by  providing the username with the stored cache key of a previous  successful authentication.&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>AI tools for software engineers: 5 things to be careful about/aware of</title>
-      <link>https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/</link>
-      <pubDate>Tue, 26 Dec 2023 15:25:00 +0200</pubDate>
-      <guid>https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/</guid>
-      <description>&lt;p&gt;Hello there! 2023 is about to end soon, so it&amp;rsquo;s a good time to sit and reflect on it. If we think about the tech industry, in general, it&amp;rsquo;s easy to define which topic was the hottest this year - AI. And the chances are that in 2024, this area will grow even bigger alongside the growing investments and the new astonishing scientific discoveries in this field.&lt;/p&gt;&#xA;&lt;p&gt;Unlike previous &amp;ldquo;big things&amp;rdquo; in tech, like blockchain, crypto, NFT, Web3, etc., AI is way more accessible and covers more use cases than the rest:&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
