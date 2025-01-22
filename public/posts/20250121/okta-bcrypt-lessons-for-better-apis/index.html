@@ -576,7 +576,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
   
 </div>
 
-  <p>Hello there! If you follow tech news, you might have heard about the <a href="https://trust.okta.com/security-advisories/okta-ad-ldap-delegated-authentication-username/" target="_blank">Okta security incident</a> that was reported at 1st of November. The TLDR of the incident was this:</p>
+  <p>Hello there! If you follow tech news, you might have heard about the <a href="https://trust.okta.com/security-advisories/okta-ad-ldap-delegated-authentication-username/" target="_blank">Okta security incident</a> that was reported on 1st of November. The TLDR of the incident was this:</p>
 <blockquote>
 <p>The Bcrypt algorithm was used to generate the cache key where we hash a  combined string of userId + username + password. Under a specific set of conditions, listed below, this could allow users to authenticate by  providing the username with the stored cache key of a previous  successful authentication.</p>
 </blockquote>
@@ -588,7 +588,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li><code>72 - 53 = 19</code> - user id with separators if any</li>
 <li>this way, the password will be outside the 72 chars limit, and, therefore, ignored by the Bcrypt algorithm</li>
 </ul>
-<p>However, there was one thing made me wonder: if there is a known limit of the algorithm, why is it not enforced by the crypto libraries as a form of input validation? A simple <code>if input length &gt; 72 -&gt; return error</code> will do the trick. I assumed, that they might have used some custom library for Bcrypt implementation and simply forgotten about the input validation, which can happen. So, I decided to check how other programming languages behave.</p>
+<p>However, there was one thing that made me wonder: if there is a known limit of the algorithm, why is it not enforced by the crypto libraries as a form of input validation? A simple <code>if input length &gt; 72 -&gt; return error</code> will do the trick. I assumed that they might have used some custom library for Bcrypt implementation and simply forgotten about the input validation, which can happen. So, I decided to check how other programming languages behave.</p>
 <h2 id="go-and-bcrypt">Go and Bcrypt</h2>
 <p>Let&rsquo;s start with Go, and implement the Okta incident-like case with the help of the official <code>golang.org/x/crypto/bcrypt</code> library:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
@@ -960,9 +960,9 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 <p>In my opinion, from the API perspective, the approach when the tool silently cuts the part of the input and processes the remaining one only, it is an extremely poor design choice. What makes things worse is the fact that Bcrypt is used in the domain of security and sensitive data, and, as we can see, most of the tools mentioned above, use <code>password</code> as the name of the input parameter of the hashing method. <strong>The good design should explicitly reject the invalid input</strong> with the error / exception / any other mechanism the platform uses. So, basically, exactly what Go and Patrick&rsquo;s Java library did. This way, incidents like Okta one would be impossible by design (btw, I&rsquo;m not shifting the blame away from Okta, considering the domain they operate in).</p>
 <p>It is ok, though, to offer the non-default unsafe option, that will let the users pass longer input that will be truncated if the user explicitly asks for that. A prefix/suffix like <code>unsafe</code>, <code>truncated</code>, etc. can be a good addition to the names of the method that expose these options.</p>
 <h4 id="be-predictable">Be predictable</h4>
-<p>If we take step back from the Bcrypt case, imagine other examples, if such pattern becomes common in the industry:</p>
+<p>If we take a step back from the Bcrypt case, imagine other examples, if such a pattern becomes common in the industry:</p>
 <ul>
-<li>We create a new user account in HBO to watch a new season of Rick and Morty, and there is a warning that the max size of the password should not exceed 18 chars. However, the password generator of your password manager tool uses 25 chars as a default length of the produced password. So, the password manager inserts that password while creating an account, but the server cuts the last 7 chars, hashes the rest, and saves the hash to the DB. How easy would it be for us to be able to log in to HBO next time and watch a new episode?</li>
+<li>We created a new user account on HBO to watch a new season of Rick and Morty, and there is a warning that the max size of the password should not exceed 18 chars. However, the password generator of your password manager tool uses 25 chars as a default length of the produced password. So, the password manager inserts that password while creating an account, but the server cuts the last 7 chars, hashes the rest, and saves the hash to the DB. How easy would it be for us to be able to log in to HBO next time and watch a new episode?</li>
 <li>The tech lead of the new project configured a linter tool, and set the max line length as 100 chars. While performing a check, linter removes the chars above the defined limit, and informs that the check has passed. How useful would it be?</li>
 </ul>
 <p>A good API design should remember that when it comes to tech, nobody likes surprises.</p>
@@ -975,7 +975,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 <p>It&rsquo;s not so often that the API we design is something completely new to the world. Most likely, there are other solutions like ours out there. And the chances are that they&rsquo;ve been already doing certain things the particular way. However, that doesn&rsquo;t mean that we need to follow the same path. Kudos to the Go team and Patrick&rsquo;s Java library for being brave to do things the different way as the industry does in the Bcrypt example. Let&rsquo;s learn from them.</p>
 <h4 id="reiterate">Reiterate</h4>
 <p>Regardless of the original design choices and intentions, it&rsquo;s never too late to reiterate on some of them if we see a need or have discovered new information. That&rsquo;s, actually, a place where a lot of us fail due to different reasons, with some of them listed above.</p>
-<h2 id="instead-of-conclusion">Instead of conclusion</h2>
+<h2 id="instead-of-a-conclusion">Instead of a conclusion</h2>
 <p>The Okta incident exposed large security issues out there. Our test showed, even 3 months after the incident, the industry is still vulnerable to the same outcome, so the chances are that more to come. However, we, as software engineers, can learn from that, and apply these lessons while designing APIs to make them predictable and easier to use.</p>
 <p>I hope that was useful, and triggered some thoughts. Thanks a lot for reading my post, and see you in the following ones, there are plenty of topics to discuss. Have fun! =)</p>
 
@@ -1088,7 +1088,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
         <li><a href="#thoughts-and-lessons">Thoughts and lessons</a></li>
       </ul>
     </li>
-    <li><a href="#instead-of-conclusion">Instead of conclusion</a></li>
+    <li><a href="#instead-of-a-conclusion">Instead of a conclusion</a></li>
   </ul>
 </nav>
     </div>
