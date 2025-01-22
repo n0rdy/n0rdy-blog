@@ -6,7 +6,7 @@ date: 2025-01-22T18:00:00+02:00
 tags: ["api", "security", "opinion", "bcrypt"]
 ---
 
-Hello there! If you follow tech news, you might have heard about the [Okta security incident](https://trust.okta.com/security-advisories/okta-ad-ldap-delegated-authentication-username/) that was reported at 1st of November. The TLDR of the incident was this: 
+Hello there! If you follow tech news, you might have heard about the [Okta security incident](https://trust.okta.com/security-advisories/okta-ad-ldap-delegated-authentication-username/) that was reported on 1st of November. The TLDR of the incident was this: 
 
 > The Bcrypt algorithm was used to generate the cache key where we hash a  combined string of userId + username + password. Under a specific set of conditions, listed below, this could allow users to authenticate by  providing the username with the stored cache key of a previous  successful authentication.
 
@@ -21,7 +21,7 @@ This was possible due to the nature of Bcrypt hashing algorithm that has a maxim
 - `72 - 53 = 19` - user id with separators if any
 - this way, the password will be outside the 72 chars limit, and, therefore, ignored by the Bcrypt algorithm
 
-However, there was one thing made me wonder: if there is a known limit of the algorithm, why is it not enforced by the crypto libraries as a form of input validation? A simple `if input length > 72 -> return error` will do the trick. I assumed, that they might have used some custom library for Bcrypt implementation and simply forgotten about the input validation, which can happen. So, I decided to check how other programming languages behave.
+However, there was one thing that made me wonder: if there is a known limit of the algorithm, why is it not enforced by the crypto libraries as a form of input validation? A simple `if input length > 72 -> return error` will do the trick. I assumed that they might have used some custom library for Bcrypt implementation and simply forgotten about the input validation, which can happen. So, I decided to check how other programming languages behave.
 
 ## Go and Bcrypt
 
@@ -523,9 +523,9 @@ It is ok, though, to offer the non-default unsafe option, that will let the user
 
 #### Be predictable
 
-If we take step back from the Bcrypt case, imagine other examples, if such pattern becomes common in the industry:
+If we take a step back from the Bcrypt case, imagine other examples, if such a pattern becomes common in the industry:
 
-- We create a new user account in HBO to watch a new season of Rick and Morty, and there is a warning that the max size of the password should not exceed 18 chars. However, the password generator of your password manager tool uses 25 chars as a default length of the produced password. So, the password manager inserts that password while creating an account, but the server cuts the last 7 chars, hashes the rest, and saves the hash to the DB. How easy would it be for us to be able to log in to HBO next time and watch a new episode?
+- We created a new user account on HBO to watch a new season of Rick and Morty, and there is a warning that the max size of the password should not exceed 18 chars. However, the password generator of your password manager tool uses 25 chars as a default length of the produced password. So, the password manager inserts that password while creating an account, but the server cuts the last 7 chars, hashes the rest, and saves the hash to the DB. How easy would it be for us to be able to log in to HBO next time and watch a new episode?
 - The tech lead of the new project configured a linter tool, and set the max line length as 100 chars. While performing a check, linter removes the chars above the defined limit, and informs that the check has passed. How useful would it be?
 
 A good API design should remember that when it comes to tech, nobody likes surprises.
@@ -548,7 +548,7 @@ It's not so often that the API we design is something completely new to the worl
 
 Regardless of the original design choices and intentions, it's never too late to reiterate on some of them if we see a need or have discovered new information. That's, actually, a place where a lot of us fail due to different reasons, with some of them listed above.
 
-## Instead of conclusion
+## Instead of a conclusion
 
 The Okta incident exposed large security issues out there. Our test showed, even 3 months after the incident, the industry is still vulnerable to the same outcome, so the chances are that more to come. However, we, as software engineers, can learn from that, and apply these lessons while designing APIs to make them predictable and easier to use.
 
