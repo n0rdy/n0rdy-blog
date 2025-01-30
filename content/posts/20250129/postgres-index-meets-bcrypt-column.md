@@ -2,7 +2,7 @@ Hello there! In the [previous post "What Okta Bcrypt incident can teach us about
 
 A product manager of one of the neighbouring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they'd get a dashboard with the personalized data about them. The simplified architecture looked like this:
 
-![image]() TODO FIXME
+![image]() 
 
 As you can see, the flow consists of 3 steps:
 

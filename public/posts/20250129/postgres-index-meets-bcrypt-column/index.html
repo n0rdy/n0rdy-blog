@@ -200,6 +200,10 @@
         
         
             
+                <li class="heading">
+                    <a href="https://mail.n0rdy.foo/subscription/form" target="_blank" rel="noopener noreferrer">Subscribe</a>
+                </li>
+            
 
             
                 
@@ -542,7 +546,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 
   <p>Hello there! In the <a href="https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/" target="_blank">previous post &ldquo;What Okta Bcrypt incident can teach us about designing better APIs&rdquo;</a>, we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I personally came across a few years ago while investigating a quite nasty performance issue with one of the services. Let&rsquo;s jump right into it!</p>
 <p>A product manager of one of the neighbouring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they&rsquo;d get a dashboard with the personalized data about them. The simplified architecture looked like this:</p>
-<p><img src="" alt="image"> TODO FIXME</p>
+<p><img src="" alt="image"></p>
 <p>As you can see, the flow consists of 3 steps:</p>
 <ol>
 <li>The user enters their SSN in the UI, and the UI sends it to the Internal service.</li>
