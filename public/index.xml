@@ -79,13 +79,6 @@
       <description>&lt;p&gt;Christmas season is around the corner, that&amp;rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on &lt;a href=&#34;https://github.com/n0rdy/pippin&#34; target=&#34;_blank&#34;&gt;my open-source library&lt;/a&gt; for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.&lt;/p&gt;</description>
     </item>
     <item>
-      <title></title>
-      <link>https://n0rdy.foo/posts/20250129/postgres-index-meets-bcrypt-column/</link>
-      <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-      <guid>https://n0rdy.foo/posts/20250129/postgres-index-meets-bcrypt-column/</guid>
-      <description>&lt;p&gt;Hello there! In the &lt;a href=&#34;https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/&#34; target=&#34;_blank&#34;&gt;previous post &amp;ldquo;What Okta Bcrypt incident can teach us about designing better APIs&amp;rdquo;&lt;/a&gt;, we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I personally came across a few years ago while investigating a quite nasty performance issue with one of the services. Let&amp;rsquo;s jump right into it!&lt;/p&gt;</description>
-    </item>
-    <item>
       <title>About</title>
       <link>https://n0rdy.foo/about/about/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>

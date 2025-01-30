@@ -1,8 +1,15 @@
-Hello there! In the [previous post "What Okta Bcrypt incident can teach us about designing better APIs"](https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/), we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I personally came across a few years ago while investigating a quite nasty performance issue with one of the services. Let's jump right into it!
+---
+title: "When Postgres index meets Bcrypt"
+image: "/covers/pics/20250203.jpg"
+draft: false
+date: 2025-02-03T10:00:00+02:00
+tags: ["postgres", "security", "bcrypt", "performance", "optimization", "debug"]
+---
+Hello there! In the [previous post “What Okta Bcrypt incident can teach us about designing better APIs”](https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/), we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I, personally, came across a few years ago while investigating a quite nasty performance issue with one of the services. Let's jump right into it!
 
-A product manager of one of the neighbouring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they'd get a dashboard with the personalized data about them. The simplified architecture looked like this:
+A product manager of one of the neighboring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they'd get a dashboard with the personalized data about them. The simplified architecture looked like this:
 
-![image]() 
+![image](/images/drawings/20250203-0001.png)
 
 As you can see, the flow consists of 3 steps:
 
@@ -12,27 +19,27 @@ As you can see, the flow consists of 3 steps:
 
 The nature of the user data didn't require real-time updates, so the same data was stored and used for the month, after which it was considered to be expired, and was deleted by the cronjob. A pretty straightforward system.
 
-The issue (the team was experiencing) was the fact that it took 10+ seconds to follow the 3-steps flow we discussed above, which led to a quite bad UX and a high bounce rate. That made a good sense, as the average attention span of the users nowadays is way less than 10 seconds. But why was it so slow?
+The issue (the team was experiencing) was the fact that it took 10+ seconds to follow the 3-steps flow we discussed above, which led to a terrible UX and a high bounce rate. That made a good sense, as the average attention span of the users nowadays is way less than 10 seconds. But why was it so slow?
 
 The bug issue was reproducible in the production setup, the logs/metrics were not so useful with the clues for the cause. So, I cloned the project code to my laptop and launched a Postgres instance via Docker Compose. Additionally, I started [mitmproxy](https://mitmproxy.org/) to be able to intercept and inspect HTTP requests on my machine, and created a template of the request to the Internal service API with my own SSN in Postman. My debugging setup was ready, so it was time to run and test the app.
 
 ## Running it locally
 
-To my great surprise, after sending a request from Postman, I got a response in the matter of tens of milliseconds. mitmproxy showed that there was indeed the request to the Third-party API, but the it had a minimal latency. 
+To my great surprise, after sending a request from Postman, I got a response in the matter of tens of milliseconds. mitmproxy showed that there was indeed the request to the Third-party API, but it had a minimal latency.
 
-// TODO: insert Postman screenshot
+![image](/images/screenshots/20250203-0001.png)
 
-Hm...interesting. I tried repeating the same request again, and again got a pretty quick answer, but this time without any calls to the third party API. That made a perfect sense, as my user info was present in Postgres. I tried sending same requests a few more times, but didn't have any luck with reproducing the issue.
+Hm…interesting. I tried repeating the same request again, and again got a pretty quick answer, but this time without any calls to the third-party API. That made a perfect sense, as my user info was present in Postgres. I tried sending the same requests a few more times, but didn't have any luck with reproducing the issue.
 
-Despite the failure, that gave me a good clue: it seemed like I could exclude the Third-party API from the list of suspects, or at least for now. Of course, it's important to mention that the local setup is different than the production one, so there is always a chance that something might be slowing down the egress traffic. However, for simplicity of the investigation, I decided to make sure that nothing in the app caused the issue before checking possible external factors, like cloud proxies, security filters, etc.
+Despite the failure, that gave me a good clue: it seemed like I could exclude the Third-party API from the list of suspects, or at least for now. Of course, it's important to mention that the local setup is different from the production one, so there is always a chance that something might be slowing down the egress traffic. However, for simplicity of the investigation, I decided to make sure that nothing in the app caused the issue before checking possible external factors, like cloud proxies, security filters, etc.
 
-I realised that it's time to take a look at the code. If you'd like to follow along, here are the code samples that reproduce the setup we are discussing, check the `README.md` file for how to run instructions.
+I realized that it's time to take a look at the code. If you'd like to follow along, [here](https://github.com/n0rdy/n0rdy-blog-code-samples/tree/main/20250128-postgres-seq-scan-despite-indexing) are the code samples that reproduce the setup we are discussing, check the `README.md` file for how to run instructions.
 
-*Btw, if you like my blog and don’t want to miss out on new posts, subscribe to my newsletter [here](https://mail.n0rdy.foo/subscription/form). You'll receive an email once I publish a new post.*
+*Btw, if you like my blog and don’t want to miss out on new posts, consider subscribing to my newsletter [here](https://mail.n0rdy.foo/subscription/form). You'll receive an email once I publish a new post.*
 
 ## Browsing the code
 
-You might know, that there is a saying "it's always DNS", which applies when some service is down due to no obvious reasons. From my experience, when there is a performance issue with a relatively simple app, "it's often database". So, even though, I started navigating the source code from the top to bottom (API -> DB), I didn't expect to see anything suspicious within the layers above the one that runs DB queries. And, indeed, the interesting bits of code were 2 functions of the `Repo` struct responsible for inserting a new user into DB and selecting a particular user from the DB by SSN. Here how they looked:
+You might know that there is a saying “it's always DNS”, which applies when some service is down due to no obvious reasons. From my experience, when there is a performance issue with a relatively simple app, “it's often database”. So, even though, I started navigating the source code from the top to bottom (API -> DB), I didn't expect to see anything suspicious within the layers above the one that runs DB queries. And, indeed, the interesting bits of code were 2 functions of the `Repo` struct responsible for inserting a new user into the DB and selecting a particular user from the DB by SSN. Here how they looked:
 
 ```go
 func (r *Repo) SelectUserBySsn(ssn string) (*common.User, error) {
@@ -70,13 +77,13 @@ func (r *Repo) InsertUser(user common.NewUserEntity) error {
 }
 ```
 
-The `crypt($1, ssn_hash)` and `crypt($2, gen_salt('bf')` parts immediately caught my eyes: "aha, so we are not storing plain SSNs in the DB, but hashed versions". Interesting discovery! This didn't give me any hints on the exact algorithm that was used for hashing, but a quick Google search by the `gen_salt('bf')` part helped me to discover that it's a Bcrypt one. And indeed, after I did `SELECT * FROM users` in my local setup, I saw that the `ssn_hash` column had this value `$2a$06$r4UXr0F80tz57DGzCQBf6uIpQealvM3Rb6E/TvsyFkJJaiLXt9J8W` , and the `$2a$` prefix was indeed a Bcrypt one. All right, we are into something! The chances are that some of you, who are experts in cryptography and/or databases (or, Postgres, at least), already can see the reason for the poor performance of the app (kudos to you!), but that was not the case for me, so I had to keep digging.
+The `crypt($1, ssn_hash)` and `crypt($2, gen_salt('bf')` parts immediately caught my eyes: “aha, so we are not storing plain SSNs in the DB, but hashed versions”. Interesting discovery! This didn't give me any hints on the exact algorithm that was used for hashing, but a quick Google search by the `gen_salt('bf')` part helped me to discover that it's a Bcrypt one. And indeed, after I did `SELECT * FROM users` in my local setup, I noticed that the `ssn_hash` column had this value `$2a$06$r4UXr0F80tz57DGzCQBf6uIpQealvM3Rb6E/TvsyFkJJaiLXt9J8W`, and the `$2a$` prefix was indeed a Bcrypt one. All right, we are into something! The chances are that some of you, who are experts in cryptography and/or databases (or, Postgres, at least), already can see the reason for the poor performance of the app (kudos to you!), but that was not the case for me, so I had to keep digging.
 
-I realized that DB was my best lead at the moment, so I jumped away from the source code to the Postgres console in my IntelliJ IDEA, and ran this query:  `SELECT * FROM users WHERE ssn_hash = crypt('0852285111', ssn_hash)` (`0852285111` is my fake SSN in this example). I got the result in 9 milliseconds, which was quite fast, and didn't hint any issues with the performance. 
+I realized that DB was my best lead at the moment, so I jumped away from the source code to the Postgres console in my IntelliJ IDEA, and ran this query:  `SELECT * FROM users WHERE ssn_hash = crypt('0852285111', ssn_hash)` (`0852285111` is my fake SSN in this example). I got the result in 9 milliseconds, which was quite fast, and didn't hint any issues with the performance.
 
 But then I connected to the production DB and ran the same query. It took 15 seconds to get the similar response. Wow! What's more interesting, was the fact that fetching all the existing users via `SELECT * FROM users` took only 6 milliseconds. Puzzling, isn't it?
 
-Despite being a bit puzzled, that definitely felt like a good progress, as I had a strong clue that DB was the bottleneck here. And it became clear that my failures to reproduce that locally was due to the fact that my local table had only 1 row, while production one had 5000 users as of that moment, and kept growing hour by hour. I could have kept debugging the issue within the production Postgres instance, as it was reproducible there, but doing that is not a good practice due to many reasons like degrading performance even more, or running some unsafe queries that might do some harm to the data there. So, at first I wanted to take a snapshot of the production DB and use it locally, but realized that it was not much better idea as well: taking snapshot might be costly operation for Postgres. Plus, there were privacy implications of me copying the sensitive data of the customers to my local machine. That's why I went with the third option of inserting a lot of fake data into my local DB.
+Despite being a bit puzzled, that definitely felt like good progress, as I had a strong clue that DB was the bottleneck here. And it became clear that my failures to reproduce that locally was due to the fact that my local table had only 1 row, while the production one had 5000 users as of that moment, and kept growing hour by hour. I could have kept debugging the issue within the production Postgres instance, as it was reproducible there, but doing that is not a good practice due to many reasons, like degrading performance even more, or running some unsafe queries that might do some harm to the data there. So, at first, I wanted to take a snapshot of the production DB and use it locally, but realized that it was not much better idea as well: taking a snapshot might be a costly operation for Postgres. Plus, there were privacy implications of me copying the sensitive data of the customers to my local machine. That's why I went with the third option of inserting a lot of fake data into my local DB.
 
 ## Fake it until you make it
 
@@ -167,15 +174,15 @@ func (r *Repo) InsertUsers(users []common.NewUserEntity) error {
 }
 ```
 
-It became more and more clear to me that the `crypt($%d, gen_salt('bf'))` part was to blame, but I didn't know why it was so just yet. Anyway, the intermediate goal was achieved, as at that point of time, I could reproduce the performance issue in my local setup as well, the `SELECT * FROM users WHERE ssn_hash = crypt('0852285111', ssn_hash)` query became as slow as within the production DB, even despite the fact that my SSN wasn't among the existing DB records.
+It became clearer and clearer to me that the `crypt($%d, gen_salt('bf'))` part was to blame, but I didn't understand why it was so just yet. Anyway, the intermediate goal was achieved, as at that point of time, I could reproduce the performance issue in my local setup as well, the `SELECT * FROM users WHERE ssn_hash = crypt('0852285111', ssn_hash)` query became as slow as within the production DB, even though my SSN wasn't among the existing DB records.
 
-I decided to take a pause for a moment and check the facts: 
+I decided to take a pause for a moment and check the facts:
 
 - the reasons of the slow performance were queries to the DB
-- the performance degraded with the grow of the number of the records within the DB table
+- the performance degraded with the growth of the number of the records within the DB table
 - something is fishy with the `crypt()` function for both INSERT and SELECT queries
 
-The second fact was a good hint, so I decided to check what Postgres query planner could told me about the plan for executing the query:
+The second fact was a good hint, so I decided to check what Postgres query planner could tell me about the plan for executing the query:
 
 ```sql
 EXPLAIN
@@ -191,7 +198,7 @@ Seq Scan on users  (cost=0.00..182.00 rows=25 width=138)
 "  Filter: (ssn_hash = crypt('0852285111'::text, ssn_hash))"
 ```
 
-Aha, `Seq Scan on users` gives us a hint that Postgres is about to perform a sequential scan, which means that it will go through every single row of the table to find the matching one - `O(n)` if we'd like to use the algorithmic complexity here. This could very much explain the correlation between the increase of the number of rows and performance degradation.
+Aha, `Seq Scan on users` gives us a hint that Postgres is about to perform a sequential scan, which means that it will go through every single row of the table to find the matching one - `O(n)` if we'd like to use the algorithmic complexity here. This could very much explain the correlation between the increase in the number of rows and performance degradation.
 
 Let's add `ANALYSE` keyword to actually execute the query and get more metrics:
 
@@ -212,15 +219,17 @@ Planning Time: 0.048 ms
 Execution Time: 15037.788 ms
 ```
 
-Which proves what we had just seen above. 
+Which proves what we had just seen above.
 
-So, I thought that I solved the riddle: the `ssh_hash` column lacked the index. I was almost proud of myself, but that was a very short moment, as after browsing both the DB table structure and the schema definition queries, I realized that there is actually an index there:
+So, I thought that I solved the riddle: the `ssh_hash` column lacked the index. I was almost proud of myself, but that was a very brief moment, as after browsing both the DB table structure and the schema definition queries, I realized that there is actually an index there:
 
 ```sql
 CREATE INDEX users_ssn_hashed_idx ON users (ssn_hash);
 ```
 
-But why did Postgres keep ignoring it and performing sequential scans nevertheless? And despite that fact, why it took Postgres 15 seconds to scan 5000 rows? And why selecting all the rows were very quick (5 ms)? The only difference between the two was the use of the `crypto()` function within the `WHERE` statement. That narrowed down the problem. So, I realized that it was the time to get back to basics and do some research on the nature of the Bcrypt algorithm.
+But why did Postgres keep ignoring it and performing sequential scans nevertheless? And despite that fact, why it took Postgres 15 seconds to scan 5000 rows? And why select all the rows were very quick (5 ms)? The only difference between the two was the use of the `crypto()` function within the `WHERE` statement. That narrowed down the problem. So, I realized that it was the time to get back to basics and do some research on the nature of the Bcrypt algorithm.
+
+![image](/images/drawings/20250203-0002.png)
 
 ## Bcrypt
 
@@ -246,13 +255,13 @@ If we distill it a bit, we can see that the input of the Bcrypt function is:
 - numeric cost
 - salt (typically random)
 
-If we take a look at the crypt function within the insert user statement, we'll see this `crypt($2, gen_salt('bf')`, where SSN is passed as the `$2` . So, we do have a password (SSN) and salt (`gen_salt('bf'))` The numeric cost is missing, but let's take a look at the output of the `gen_salt('bf')` function. You might need to install the `pgcrypt` extension by `CREATE EXTENSION IF NOT EXISTS pgcrypto;` if you don't have it to be able to follow along.
+If we take a look at the crypt function within the insert user statement, we'll see this `crypt($2, gen_salt('bf')`, where SSN is passed as the `$2`. So, we do have a password (SSN) and salt (`gen_salt('bf'))` The numeric cost is missing, but let's take a look at the output of the `gen_salt('bf')` function. You might need to install the `pgcrypt` extension by `CREATE EXTENSION IF NOT EXISTS pgcrypto;` if you don't have it to be able to follow along.
 
 ```sql
 SELECT gen_salt('bf');
 ```
 
-The output is `$2a$06$Qkp8j0vDoCuqNCgyOuIRxO`. If we compare with the example from the Wikipedia above, we can see that this salt includes the cost within (`06`). 
+The output is `$2a$06$Qkp8j0vDoCuqNCgyOuIRxO`. If we compare with the example from the Wikipedia above, we can see that this salt includes the cost within (`06`).
 
 Let's run the `SELECT gen_salt('bf');` again. We got `$2a$06$enmGwTijs9cvlsIv9dcQQe`, which is different from the previous result. As Wikipedia warned us
 
@@ -264,7 +273,7 @@ And what happens if we are passing random salt to the crypto function? Right, th
 SELECT crypt('0852285111', gen_salt('bf'));
 ```
 
-The first time I ran it, I got this outcome: `$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce`. The second ran got a different result (as we anticipated): `$2a$06$nbwOka/0ve5RvM71f35jEOMGA5qHaa0H1I3RtkYq/sNIXW.Z90KAm` . If we keep going, we'll keep getting different results. And this is cool, as Bcrypt was created to be used for passwords hashing, which means that even if different users have the same password, the hashed version for them will be different - pretty neat!
+The first time I ran it, I got this outcome: `$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce`. The second ran got a different result (as we anticipated): `$2a$06$nbwOka/0ve5RvM71f35jEOMGA5qHaa0H1I3RtkYq/sNIXW.Z90KAm`. If we keep going, we'll keep getting different results. And this is cool, as Bcrypt was created to be used for passwords hashing, which means that even if different users have the same password, the hashed version for them will be different - pretty neat!
 
 But if results are random, how can we check the hash in the DB corresponds to the plain text record we get as the user input? Well, as you can guess, we need to pass the same salt as the input. But where do we get the salt? Wikipedia has already given us an answer: the salt is the part of the hashed output. Let's try it out by copying the first 29 chars of the output we got above: `$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce` -> `$2a$06$DQqtgCtvY9GkT3uHpShehu` and check if that helps:
 
@@ -275,18 +284,18 @@ SELECT '$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce' = crypt('0
 The result is `true`. Perfect! But wait a minute: do we need to extract the salt and friends manually each time? Let's take a look at the query we used to select the user by SSN from DB to look for some hints:
 
 ```sql
-SELECT id, user_info FROM schema_202501.users WHERE ssn_hash = crypt($1, ssn_hash)
+SELECT id, user_info FROM users WHERE ssn_hash = crypt($1, ssn_hash)
 ```
 
-where `$1` is SSN value. This is a bit different as instead of only salt, we are passing the entire hash value into the crypt function this time. Let's try it out:
+where `$1` is the SSN value. This is a bit different as instead of only salt, we are passing the entire hash value into the crypt function this time. Let's try it out:
 
 ```sql
 SELECT '$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce' = crypt('0852285111', '$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce');
 ```
 
-Still `true`. How come? The answer is simple: since salt (with the prefix) has a defined length of 29, Postgres retrieves it for us, and drops the rest of it. 
+Still `true`. How come? The answer is simple: since salt (with the prefix) has a defined length of 29, Postgres retrieves it for us, and drops the rest of it.
 
-The beauty of Postgres (which one of my favourite tools out there) is the fact that it's open-source. So, let's take a peak and its source code to make sure that our assumptions are correct.
+The beauty of Postgres (which is one of my favorite tools out there) is the fact that it's open-source. So, let's take a peak and its source code to make sure that our assumptions are correct.
 
 ### Bcrypt in Postgres source code
 
@@ -358,9 +367,9 @@ px_crypt(const char *psw, const char *salt, char *buf, unsigned len)
 }
 ```
 
-As we see, this code navigates through the `px_crypt_list` while trying to find a match for the provided `salt` (in our case, it the entire hashed string) by comparing the `id_len` number of first characters with something called `id` . [Here is the doc](https://en.cppreference.com/w/c/string/byte/strncmp) for the `strncmp` function if you want to learn more.
+As we see, this code navigates through the `px_crypt_list` while trying to find a match for the provided `salt` (in our case, it is the entire hashed string) by comparing the `id_len` number of first characters with something called `id`. [Here is the doc](https://en.cppreference.com/w/c/string/byte/strncmp) for the `strncmp` function if you would like to learn more.
 
-Let's see how the `px_crypt_list` looks like, as it might explain us the nature of the `id_len` and `id` params.
+Let's see how the `px_crypt_list` looks like, as it might explain to us the nature of the `id_len` and `id` params.
 
 ```c
 struct px_crypt_algo
@@ -383,7 +392,7 @@ static const struct px_crypt_algo
 };
 ```
 
-Aha, so the `id` is the salt prefix that Wikipedia called `alg`  (`$2a$` in our case), and the `id_len` is the length of that prefix. That makes a lot of sense now. And the `run_crypt_bf` is the actual function that is going to be invoked in our case. Nice, let's take a look at it [here](https://github.com/postgres/postgres/blob/master/contrib/pgcrypto/px-crypt.c#L61):
+Aha, so the `id` is the salt prefix that Wikipedia called `alg`  (`$2a$` in our case), and the `id_len` is the length of that prefix. That makes a lot of sense now. And the `run_crypt_bf` is the actual function that will be invoked in our case. Nice, let's take a look at it [here](https://github.com/postgres/postgres/blob/master/contrib/pgcrypto/px-crypt.c#L61):
 
 ```c
 static char *
@@ -412,7 +421,7 @@ if (strlen(setting) < 29)
 		errmsg("invalid salt")));
 ```
 
-where `settings` is the `salt` . We can see a number 29 here, which rings a bell, doesn't it? That's exactly the length of the salt prefix we used in one of the examples above. Also, please, note that this validation only checks if the input length is not less than 29, but it doesn't care whether it's above the limit. That gives us a hint that the code below should handle it somehow:
+where `settings` is the `salt`. We can see a number 29 here, which rings a bell, doesn't it? That's precisely the length of the salt prefix we used in one of the examples above. Also, please, note that this validation only checks if the input length is not less than 29, but it doesn't care whether it's above the limit. That gives us a hint that the code below should handle it somehow:
 
 ```c
 if (setting[0] != '$' ||
@@ -447,7 +456,7 @@ Take a look at this piece: `BF_decode(data.binary.salt, &setting[7], 16)`. Do yo
 > Alg Cost      Salt                        Hash
 > ```
 
-? 
+?
 
 As we can see, the actual salt begins at the 8th char (that's why `setting[7]`), and the `&setting[7]` means that all the elements starting from 8th are sliced here. The `BF_decode` function looks like this:
 
@@ -485,7 +494,7 @@ BF_decode(BF_word *dst, const char *src, int size)
 }
 ```
 
-While there are a lot of bit manipulation logic here, which I won't dare to explain, but what's important here is that `dptr < end` will make sure that the result will be 16 bytes long. But the salt should be 22? 
+While there is a lot of bit manipulation logic here, which I won't dare to explain, but what's important here is that `dptr < end` will make sure that the result will be 16 bytes long. But the salt should be 22?
 
 In Bcrypt, while the salt is indeed encoded as 22 characters in base64 format, it actually decodes to 16 bytes of raw data. When encoding binary data to base64:
 
@@ -503,11 +512,11 @@ This way, we can see that it is safe to pass the entire hashed string as the sal
 
 ### What do we know now?
 
-Before we summarise what we know as of now, let me bring you one more quote about Bcrypt from the Wikipedia article:
+Before we summarize what we know as of now, let me bring you one more quote about Bcrypt from the Wikipedia article:
 
 > There are then a number of rounds in which the standard Blowfish keying  algorithm is applied, using alternatively the salt and the password as  the key, each round starting with the subkey state from the previous  round.  In theory, this is no stronger than the standard Blowfish key  schedule, but the number of rekeying rounds is configurable; this  **process can therefore be made arbitrarily slow**, which helps deter  brute-force attacks upon the hash or salt.
 
-So, the Bcrypt algorithm is relatively slow by design, as the protection from the brute-force attacks. 
+So, the Bcrypt algorithm is relatively slow by design, as the protection from the brute-force attacks.
 
 Let's create a list of the known facts about the Bcrypt algorithm:
 
@@ -529,10 +538,10 @@ FROM users
 WHERE ssn_hash = crypt('0852285111', ssn_hash);
 ```
 
-As we already now, it order to recompute the hash, the `crypto()` function has to receive the original salt as the input. But, as you can see, the only known thing when we run this query is the plain SSN value. This means that the only possible option that Postgres has is to do the following:
+As we already know, to recompute the hash, the `crypto()` function has to receive the original salt as the input. But, as you can see, the only known thing when we run this query is the plain SSN value. This means that the only possible option that Postgres has is to do the following:
 
 - iterate over each existing row in the `users` table
-- fetch `ssn_hash` value 
+- fetch `ssn_hash` value
 - pass the plain SSN and fetched `ssn_hash` value (as a salt) to the `crypt()` function and compute the hash
 - compare the result with the fetched `ssn_hash` value
 - if matches, we found what we are looking for, otherwise, we need to proceed to the next item, and so on
@@ -546,7 +555,7 @@ FROM users
 WHERE ssn_hash = '$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce';
 ```
 
-we can see, that this time Postgres will use the index:
+we can see that this time Postgres will use the index:
 
 ```plain
 Index Scan using users_ssn_hashed_idx on users  (cost=0.28..8.30 rows=1 width=138) (actual time=0.015..0.015 rows=0 loops=1)
@@ -555,7 +564,7 @@ Planning Time: 0.448 ms
 Execution Time: 0.033 ms
 ```
 
-Also, remember that we mentioned that Bcrypt algorithm is relatively slow? But what if we multiple slow by 5000 (number of table records we have)? That's the actual cause of the performance degradation that we have been investigating all this time! 
+Also, remember that we mentioned that Bcrypt algorithm is relatively slow? But what if we multiply slow by 5000 (number of table records we have)? That's the actual cause of the performance degradation that we have been investigating all this time!
 
 We can simply verify it by running:
 
@@ -575,7 +584,7 @@ Execution Time: 0.641 ms
 
 As you can see, even though the query iterated over all the rows, it didn't need to perform Bcrypt hashing at all, the execution time is extremely low.
 
-Ok, so we know now that Bcrypt is the one to blame for the poor performance. But does it mean that Bcrypt is just a bad algorithm performance-wise? 
+Ok, so we know now that Bcrypt is the one to blame for the poor performance. But does it mean that Bcrypt is just a bad algorithm performance-wise?
 
 ## Bcrypt: where to use and where not to use
 
@@ -609,7 +618,7 @@ func main() {
 		login := randomString(10)
 		password := randomString(20)
 
-		dbPool.Exec(context.Background(), "INSERT INTO schema_202501.user_credentials(login, password_hash) VALUES($1, crypt($2, gen_salt('bf')))", login, password)
+		dbPool.Exec(context.Background(), "INSERT INTO user_credentials(login, password_hash) VALUES($1, crypt($2, gen_salt('bf')))", login, password)
 	}
 }
 
@@ -655,17 +664,17 @@ Planning Time: 0.067 ms
 Execution Time: 4.542 ms
 ```
 
-The key difference between this scenario and the one that we had with SSNs, is that here Postgres is able to use indexing due to the `WHERE login = 'ChCpOSGOCx'` part, and then it computes Bcrypt hash only for the row returned by the index. Since, our `login` column is unique, it means that Bcrypt computation will happen only 1 time, so `O(1)` instead of `O(n)`.  
+The key difference between this scenario and the one that we had with SSNs, is that here Postgres is able to use indexing due to the `WHERE login = 'ChCpOSGOCx'` part, and then it computes Bcrypt hash only for the row returned by the index. Since, our `login` column is unique, it means that Bcrypt computation will happen only 1 time, so `O(1)` instead of `O(n)`.
 
-That's how Bcrypt is supposed to be used to benefit from its security without paying too high performance costs.
+That's how Bcrypt is supposed to be used to benefit from its security without paying too high-performance costs.
 
-Nice, but how can we fix the original problem then?
+Nice, but how can we resolve the original problem then?
 
 ## Let's fix the performance
 
 Of course, there is an obvious technical fix by switching to another faster algorithm with the predictable outcome like SHA-256, and the performance issue will be solved. But there are 2 points worth discussing:
 
-- since the input of the SHA-256 (or any other deterministic algorithm) will be SSN, which has a known format of 10 digits, it means that the hash will be easy to crack by the brute-forcing attack, as 10^10 (10 billion) possible options of the SSN is something that is easy to generate for the modern computers
+- since the input of the SHA-256 (or any other deterministic algorithm) will be SSN, which has a known format of 10 digits, it means that the hash will be easy to crack by the brute-forcing attack, as 10^10 (10 billion) possible options of the SSN are something that is easy to generate for the modern computers
 
 Here is the simple brute-force code to generate all the possible SSN hash values:
 
@@ -708,18 +717,20 @@ This brings us to another point:
 
 - why do we hash SSNs in the first place?
 
-While mentoring less experienced software engineers, I always keep saying that writing code is easy part of our job, and we should validate each problem and requirement first rather than jumping into the coding mode right away. Same here: what do we gain from hashing the SSNs? Is it a privacy requirement or just an assumption by someone that "SSNs are sensitive, so we shouldn't store the plain values for them"? Is there a chance that we already store them in other table / database in our system in a plain way? If not, what are the privacy and legal requirements for the hashed values? As we see, without the salt, SSNs are easy to brute-force, but random salt leads to poor performance. 
+While mentoring less experienced software engineers, I always keep saying that writing code is the easy part of our job, and we should validate each problem and requirement first rather than jumping into the coding mode right away. Same here: what do we gain from hashing the SSNs? Is it a privacy requirement or just an assumption by someone that “SSNs are sensitive, so we shouldn't store the plain values for them”? Is there a chance that we already store them in another table / database in our system in a plain way? If not, what are the privacy and legal requirements for the hashed values? As we see, without the salt, SSNs are easy to brute-force, but random salt leads to poor performance.
 
 In some cases, it can appear that, actually, the solution as simple as not hashing the data, if it is not considered too sensitive. In other cases, we might need to have one common salt for all the hashes, which we will store by using Gandalf's rule of thumb:
 
-// TODO: insert Gandalf keep it secret keep it safe pic
+![image](/images/pics/20250203-0001.jpg)
+
+rather than keeping open/within the hash as in our previous example.
 
 In this case, if the salt is common, we can even stay with Bcrypt, as the query with a known salt will use indexing:
 
 ```sql
 EXPLAIN ANALYZE
 SELECT *
-FROM schema_202501.users
+FROM users
 WHERE ssn_hash = crypt('0852285111', '$2a$06$DQqtgCtvY9GkT3uHpShehu');
 ```
 
@@ -732,8 +743,8 @@ Planning Time: 3.462 ms
 Execution Time: 0.118 ms
 ```
 
-Still, something faster like SHA-256, SHA-3, BLAKE2 or BLAKE3 might be better choices if a common salt is given. Of course, this needs benchmarking, consulting with your security team and checking Postgres support for your particular case before deciding.
+Still, something faster like SHA-256, SHA-3, BLAKE2 or BLAKE3 might be better choices if a common salt is given. Of course, this needs benchmarking, consulting your security team and checking Postgres support for your particular case before deciding.
 
 And that's it, the team and the users are happy, the system is healthy again. We saved the day, and learned a thing or two about the Bcrypt algorithm.
 
-That was quite a ride, so thanks a lot for reading my post. I really hope it was useful, and I'll see you in my next ones, as more to come soon. Have fun! =)
+That was quite a ride, so thanks a lot for reading my post. I truly hope it was useful, and I'll see you in my next ones, as more to come soon. Have fun! =)

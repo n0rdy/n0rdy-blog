@@ -2,19 +2,19 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://n0rdy.foo/</loc>
+    <lastmod>2025-02-03T10:00:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/posts/</loc>
+    <lastmod>2025-02-03T10:00:00+02:00</lastmod>
+  </url><url>
     <loc>https://n0rdy.foo/tags/api/</loc>
     <lastmod>2025-01-22T18:00:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/bcrypt/</loc>
     <lastmod>2025-01-22T18:00:00+02:00</lastmod>
   </url><url>
-    <loc>https://n0rdy.foo/</loc>
-    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
-  </url><url>
     <loc>https://n0rdy.foo/tags/opinion/</loc>
-    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/posts/</loc>
     <lastmod>2025-01-22T18:00:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/security/</loc>
@@ -100,8 +100,6 @@
   </url><url>
     <loc>https://n0rdy.foo/tags/goroutines/</loc>
     <lastmod>2023-12-07T22:00:00+02:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/posts/20250129/postgres-index-meets-bcrypt-column/</loc>
   </url><url>
     <loc>https://n0rdy.foo/about/</loc>
   </url><url>
