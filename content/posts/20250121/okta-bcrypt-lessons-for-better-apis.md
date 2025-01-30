@@ -2,7 +2,7 @@
 title: "What Okta Bcrypt incident can teach us about designing better APIs"
 image: "/covers/drawings/20250122.jpg"
 draft: false
-date: 2025-01-22T18:00:00+02:00
+date: 2025-01-22T18:00:00+01:00
 tags: ["api", "security", "opinion", "bcrypt"]
 ---
 

@@ -2,7 +2,7 @@
 title: "Demystifying OTPs: the logic behind the offline generation of tokens"
 image: "/covers/drawings/20241210.jpg"
 draft: false
-date: 2024-12-10T17:30:00+02:00
+date: 2024-12-10T17:30:00+01:00
 tags: ["tech", "web", "security"]
 ---
 

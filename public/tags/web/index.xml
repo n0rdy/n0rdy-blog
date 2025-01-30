@@ -6,19 +6,19 @@
     <description>Recent content in Web on n0rdy personal blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 10 Dec 2024 17:30:00 +0200</lastBuildDate>
+    <lastBuildDate>Tue, 10 Dec 2024 17:30:00 +0100</lastBuildDate>
     <atom:link href="https://n0rdy.foo/tags/web/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Demystifying OTPs: the logic behind the offline generation of tokens</title>
       <link>https://n0rdy.foo/posts/20241210/otp-offline-generation/</link>
-      <pubDate>Tue, 10 Dec 2024 17:30:00 +0200</pubDate>
+      <pubDate>Tue, 10 Dec 2024 17:30:00 +0100</pubDate>
       <guid>https://n0rdy.foo/posts/20241210/otp-offline-generation/</guid>
       <description>&lt;p&gt;Hello there! Another evening, on my way back home, I decided to check the mailbox. I don&amp;rsquo;t mean my email inbox, but the old-school actual box where the postman puts the physical letters. And to my great surprise, I found an envelope there with something inside! While opening it, I spent a few moments hoping that it&amp;rsquo;s the decades delayed letter from Hogwarts. But then I had to get back down to Earth, once I noticed that it&amp;rsquo;s a boring &amp;ldquo;grown-up&amp;rdquo; letter from the bank. I skimmed through the text and realized that my &amp;ldquo;digital-only&amp;rdquo; bank for cool kids had been acquired by the biggest player on the local market. And as a token of the new beginning, they added this to the envelope:&lt;/p&gt;</description>
     </item>
     <item>
       <title>Understanding CORS</title>
       <link>https://n0rdy.foo/posts/20240103/understanding-cors/</link>
-      <pubDate>Wed, 03 Jan 2024 17:00:00 +0200</pubDate>
+      <pubDate>Wed, 03 Jan 2024 17:00:00 +0100</pubDate>
       <guid>https://n0rdy.foo/posts/20240103/understanding-cors/</guid>
       <description>&lt;p&gt;Hello there! Happy New Year! I hope you had an opportunity to get some rest during the winter holidays and maybe even made a snowman or two =)&lt;/p&gt;&#xA;&lt;p&gt;Several days ago, I had a dialog with a friend of mine (let&amp;rsquo;s call her Eowyn) who has recently started her path in software engineering:&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Eowyn:&lt;/strong&gt; Hey, buddy! I&amp;rsquo;m building a web project that has the frontend and backend parts. Whenever I click a button on the UI (that triggers a DELETE request to the server), my browser blows with these errors:&#xA;&lt;img src=&#34;https://n0rdy.foo/images/screenshots/20240103-0001.png&#34; alt=&#34;image&#34;&gt;&#xA;I tried calling the same endpoint with the &lt;code&gt;curl&lt;/code&gt; command, and it works. I did the same via Postman, and it also works. It makes no sense! What the heck?&lt;/p&gt;</description>
     </item>

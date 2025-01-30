@@ -3,103 +3,103 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://n0rdy.foo/</loc>
-    <lastmod>2025-01-31T09:00:00+02:00</lastmod>
+    <lastmod>2025-01-31T09:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/</loc>
-    <lastmod>2025-01-31T09:00:00+02:00</lastmod>
+    <lastmod>2025-01-31T09:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/api/</loc>
-    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
+    <lastmod>2025-01-22T18:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/bcrypt/</loc>
-    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
+    <lastmod>2025-01-22T18:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/opinion/</loc>
-    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
+    <lastmod>2025-01-22T18:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/security/</loc>
-    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
+    <lastmod>2025-01-22T18:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/</loc>
-    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
+    <lastmod>2025-01-22T18:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/</loc>
-    <lastmod>2025-01-22T18:00:00+02:00</lastmod>
+    <lastmod>2025-01-22T18:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/tech/</loc>
-    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+    <lastmod>2025-01-18T22:30:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/til/</loc>
-    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+    <lastmod>2025-01-18T22:30:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20250118/til-ghostty/</loc>
-    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+    <lastmod>2025-01-18T22:30:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/tools/</loc>
-    <lastmod>2025-01-18T22:30:00+02:00</lastmod>
+    <lastmod>2025-01-18T22:30:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20241210/otp-offline-generation/</loc>
-    <lastmod>2024-12-10T17:30:00+02:00</lastmod>
+    <lastmod>2024-12-10T17:30:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/web/</loc>
-    <lastmod>2024-12-10T17:30:00+02:00</lastmod>
+    <lastmod>2024-12-10T17:30:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/beginners/</loc>
-    <lastmod>2024-03-28T20:00:00+02:00</lastmod>
+    <lastmod>2024-03-28T20:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/eli5/</loc>
-    <lastmod>2024-03-28T20:00:00+02:00</lastmod>
+    <lastmod>2024-03-28T20:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20240328/jwt-jws-jwe-and-how-to-cook-them/</loc>
-    <lastmod>2024-03-28T20:00:00+02:00</lastmod>
+    <lastmod>2024-03-28T20:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/tutorial/</loc>
-    <lastmod>2024-03-28T20:00:00+02:00</lastmod>
+    <lastmod>2024-03-28T20:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20240103/understanding-cors/</loc>
-    <lastmod>2024-01-03T17:00:00+02:00</lastmod>
+    <lastmod>2024-01-03T17:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/ai/</loc>
-    <lastmod>2023-12-26T15:25:00+02:00</lastmod>
+    <lastmod>2023-12-26T15:25:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20231226/ai-tools-for-software-engineers-limits-and-challenges/</loc>
-    <lastmod>2023-12-26T15:25:00+02:00</lastmod>
+    <lastmod>2023-12-26T15:25:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/concurrency/</loc>
-    <lastmod>2023-12-21T23:20:00+02:00</lastmod>
+    <lastmod>2023-12-21T23:20:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/go/</loc>
-    <lastmod>2023-12-21T23:20:00+02:00</lastmod>
+    <lastmod>2023-12-21T23:20:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/series/go-concurrency-simplified/</loc>
-    <lastmod>2023-12-21T23:20:00+02:00</lastmod>
+    <lastmod>2023-12-21T23:20:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20231221/go-data-pipeline/</loc>
-    <lastmod>2023-12-21T23:20:00+02:00</lastmod>
+    <lastmod>2023-12-21T23:20:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/pipeline/</loc>
-    <lastmod>2023-12-21T23:20:00+02:00</lastmod>
+    <lastmod>2023-12-21T23:20:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/series/</loc>
-    <lastmod>2023-12-21T23:20:00+02:00</lastmod>
+    <lastmod>2023-12-21T23:20:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/</loc>
-    <lastmod>2023-12-14T23:00:00+02:00</lastmod>
+    <lastmod>2023-12-14T23:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20231211/go-waitgroup/</loc>
-    <lastmod>2023-12-11T18:00:00+02:00</lastmod>
+    <lastmod>2023-12-11T18:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/waitgroup/</loc>
-    <lastmod>2023-12-11T18:00:00+02:00</lastmod>
+    <lastmod>2023-12-11T18:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/channels/</loc>
-    <lastmod>2023-12-07T22:00:00+02:00</lastmod>
+    <lastmod>2023-12-07T22:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</loc>
-    <lastmod>2023-12-07T22:00:00+02:00</lastmod>
+    <lastmod>2023-12-07T22:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/goroutines/</loc>
-    <lastmod>2023-12-07T22:00:00+02:00</lastmod>
+    <lastmod>2023-12-07T22:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/about/</loc>
   </url><url>

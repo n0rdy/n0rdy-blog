@@ -2,7 +2,7 @@
 title: "JWT, JWS, JWE and how to cook them"
 image: "/covers/drawings/20240328.jpg"
 draft: false
-date: 2024-03-28T20:00:00+02:00
+date: 2024-03-28T20:00:00+01:00
 tags: ["tutorial", "beginners", "eli5"]
 ---
 Hello there! It's been a while since I wrote here - all of a sudden, 2024 became way busier than I planned it to be. But hey, it's good to be back!

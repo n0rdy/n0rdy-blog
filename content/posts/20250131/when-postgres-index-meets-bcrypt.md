@@ -2,7 +2,7 @@
 title: "When Postgres index meets Bcrypt"
 image: "/covers/pics/20250131.jpg"
 draft: false
-date: 2025-01-31T09:00:00+02:00
+date: 2025-01-31T09:00:00+01:00
 tags: ["postgres", "security", "bcrypt", "performance", "optimization", "debug"]
 ---
 Hello there! In the [previous post “What Okta Bcrypt incident can teach us about designing better APIs”](https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/), we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I, personally, came across a few years ago while investigating a quite nasty performance issue with one of the services. Let's jump right into it!
@@ -191,7 +191,7 @@ FROM users
 WHERE ssn_hash = crypt('0852285111', ssn_hash);
 ```
 
-The keyword `EXPLAIN` in this case triggers Postgres to build the plan for query, but not run it. The results were like this:
+The keyword `EXPLAIN` in this case triggers Postgres to build the plan for the query, but not run it. The results were like this:
 
 ```plain
 Seq Scan on users  (cost=0.00..182.00 rows=25 width=138)
@@ -203,7 +203,7 @@ Aha, `Seq Scan on users` gives us a hint that Postgres is about to perform a seq
 Let's add `ANALYSE` keyword to actually execute the query and get more metrics:
 
 ```sql
-EXPLAIN ANALYZE
+EXPLAIN ANALYSE
 SELECT *
 FROM users
 WHERE ssn_hash = crypt('0852285111', ssn_hash);
@@ -549,7 +549,7 @@ As we already know, to recompute the hash, the `crypto()` function has to receiv
 Since the algorithm described need to iterate over all the existing items, it makes sense while Postgres doesn't rely on indexes at all. If we modify the query to compare the `ssn_hash` with the plain string instead of the `crypt()` function like this:
 
 ```sql
-EXPLAIN ANALYZE
+EXPLAIN ANALYSE
 SELECT *
 FROM users
 WHERE ssn_hash = '$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce';
@@ -569,7 +569,7 @@ Also, remember that we mentioned that Bcrypt algorithm is relatively slow? But w
 We can simply verify it by running:
 
 ```sql
-EXPLAIN ANALYZE
+EXPLAIN ANALYSE
 SELECT *
 FROM users;
 ```
@@ -717,7 +717,7 @@ This brings us to another point:
 
 - why do we hash SSNs in the first place?
 
-While mentoring less experienced software engineers, I always keep saying that writing code is the easy part of our job, and we should validate each problem and requirement first rather than jumping into the coding mode right away. Same here: what do we gain from hashing the SSNs? Is it a privacy requirement or just an assumption by someone that “SSNs are sensitive, so we shouldn't store the plain values for them”? Is there a chance that we already store them in another table / database in our system in a plain way? If not, what are the privacy and legal requirements for the hashed values? As we see, without the salt, SSNs are easy to brute-force, but random salt leads to poor performance.
+Whenever I mentor other software engineers, I always keep saying that writing code is the easy part of our job, and we should validate each problem and requirement first rather than jumping into the coding mode right away. Same here: what do we gain from hashing the SSNs? Is it a privacy requirement or just an assumption by someone that “SSNs are sensitive, so we shouldn't store the plain values for them”? Is there a chance that we already store them in another table / database in our system in a plain way? If not, what are the privacy and legal requirements for the hashed values? As we see, without the salt, SSNs are easy to brute-force, but random salt leads to poor performance.
 
 In some cases, it can appear that, actually, the solution as simple as not hashing the data, if it is not considered too sensitive. In other cases, we might need to have one common salt for all the hashes, which we will store by using Gandalf's rule of thumb:
 
@@ -728,7 +728,7 @@ rather than keeping open/within the hash as in our previous example.
 In this case, if the salt is common, we can even stay with Bcrypt, as the query with a known salt will use indexing:
 
 ```sql
-EXPLAIN ANALYZE
+EXPLAIN ANALYSE
 SELECT *
 FROM users
 WHERE ssn_hash = crypt('0852285111', '$2a$06$DQqtgCtvY9GkT3uHpShehu');
@@ -742,6 +742,8 @@ Index Scan using users_ssn_hashed_idx on users  (cost=0.28..8.30 rows=1 width=13
 Planning Time: 3.462 ms
 Execution Time: 0.118 ms
 ```
+
+As you might remember, we started with 15 seconds per query, and now we are down to 3 milliseconds, which is 5000 times faster — an exciting achievement.
 
 Still, something faster like SHA-256, SHA-3, BLAKE2 or BLAKE3 might be better choices if a common salt is given. Of course, this needs benchmarking, consulting your security team and checking Postgres support for your particular case before deciding.
 

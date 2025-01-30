@@ -6,19 +6,19 @@
     <description>Recent content in Eli5 on n0rdy personal blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 28 Mar 2024 20:00:00 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 28 Mar 2024 20:00:00 +0100</lastBuildDate>
     <atom:link href="https://n0rdy.foo/tags/eli5/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>JWT, JWS, JWE and how to cook them</title>
       <link>https://n0rdy.foo/posts/20240328/jwt-jws-jwe-and-how-to-cook-them/</link>
-      <pubDate>Thu, 28 Mar 2024 20:00:00 +0200</pubDate>
+      <pubDate>Thu, 28 Mar 2024 20:00:00 +0100</pubDate>
       <guid>https://n0rdy.foo/posts/20240328/jwt-jws-jwe-and-how-to-cook-them/</guid>
       <description>&lt;p&gt;Hello there! It&amp;rsquo;s been a while since I wrote here - all of a sudden, 2024 became way busier than I planned it to be. But hey, it&amp;rsquo;s good to be back!&lt;/p&gt;&#xA;&lt;p&gt;Similar to my previous post, &lt;a href=&#34;https://n0rdy.foo/posts/20240103/understanding-cors/&#34; target=&#34;_blank&#34;&gt;Understanding CORS&lt;/a&gt;, this one has the same backstory: lately, I have had to explain a few times to different people about such concepts as JSON Web Tokens (JWT), their structure, types, use cases, etc., so I realized that it would be smart to write a post about that and use it for the future reference. I hope it will be helpful for someone else out there.&lt;/p&gt;</description>
     </item>
     <item>
       <title>Understanding CORS</title>
       <link>https://n0rdy.foo/posts/20240103/understanding-cors/</link>
-      <pubDate>Wed, 03 Jan 2024 17:00:00 +0200</pubDate>
+      <pubDate>Wed, 03 Jan 2024 17:00:00 +0100</pubDate>
       <guid>https://n0rdy.foo/posts/20240103/understanding-cors/</guid>
       <description>&lt;p&gt;Hello there! Happy New Year! I hope you had an opportunity to get some rest during the winter holidays and maybe even made a snowman or two =)&lt;/p&gt;&#xA;&lt;p&gt;Several days ago, I had a dialog with a friend of mine (let&amp;rsquo;s call her Eowyn) who has recently started her path in software engineering:&lt;/p&gt;&#xA;&lt;p&gt;&lt;strong&gt;Eowyn:&lt;/strong&gt; Hey, buddy! I&amp;rsquo;m building a web project that has the frontend and backend parts. Whenever I click a button on the UI (that triggers a DELETE request to the server), my browser blows with these errors:&#xA;&lt;img src=&#34;https://n0rdy.foo/images/screenshots/20240103-0001.png&#34; alt=&#34;image&#34;&gt;&#xA;I tried calling the same endpoint with the &lt;code&gt;curl&lt;/code&gt; command, and it works. I did the same via Postman, and it also works. It makes no sense! What the heck?&lt;/p&gt;</description>
     </item>

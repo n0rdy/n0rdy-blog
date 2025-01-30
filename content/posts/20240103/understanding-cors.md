@@ -2,7 +2,7 @@
 title: "Understanding CORS"
 image: "/covers/drawings/20240103.jpg"
 draft: false
-date: 2024-01-03T17:00:00+02:00
+date: 2024-01-03T17:00:00+01:00
 tags: ["web", "tutorial", "beginners", "eli5"]
 ---
 Hello there! Happy New Year! I hope you had an opportunity to get some rest during the winter holidays and maybe even made a snowman or two =)

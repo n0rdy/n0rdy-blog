@@ -6,12 +6,12 @@
     <description>Recent content in Series on n0rdy personal blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 21 Dec 2023 23:20:00 +0200</lastBuildDate>
+    <lastBuildDate>Thu, 21 Dec 2023 23:20:00 +0100</lastBuildDate>
     <atom:link href="https://n0rdy.foo/series/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Go Concurrency Simplified</title>
       <link>https://n0rdy.foo/series/go-concurrency-simplified/</link>
-      <pubDate>Thu, 21 Dec 2023 23:20:00 +0200</pubDate>
+      <pubDate>Thu, 21 Dec 2023 23:20:00 +0100</pubDate>
       <guid>https://n0rdy.foo/series/go-concurrency-simplified/</guid>
       <description></description>
     </item>

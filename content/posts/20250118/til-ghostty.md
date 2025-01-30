@@ -2,7 +2,7 @@
 title: "TIL: Ghostty - a new and quite promising terminal emulator"
 image: "/covers/drawings/20250118.jpg"
 draft: false
-date: 2025-01-18T22:30:00+02:00
+date: 2025-01-18T22:30:00+01:00
 tags: ["til", "tech", "tools"]
 ---
 

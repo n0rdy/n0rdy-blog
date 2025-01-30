@@ -2,7 +2,7 @@
 title: "Go concurrency simplified. Part 4: Post office as a data pipeline"
 image: "/covers/drawings/20231221.png"
 draft: false
-date: 2023-12-21T23:20:00+02:00
+date: 2023-12-21T23:20:00+01:00
 tags: ["go", "concurrency", "pipeline"]
 series: "Go concurrency simplified"
 ---
