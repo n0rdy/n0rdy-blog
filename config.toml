@@ -41,7 +41,7 @@ paginate = 5
 
     github_url = "https://github.com/n0rdy"
     bluesky_url = "https://bsky.app/profile/n0rdy.foo"
-    twitter_url = "https://twitter.com/_n0rdy_"
+    x_url = "https://x.com/_n0rdy_"
     mastodon_url = "https://fosstodon.org/@n0rdy"
     email_url = "mailto://hello@n0rdy.foo"
 
