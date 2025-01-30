@@ -702,7 +702,7 @@ func generateAllPossibleSSNs(current []byte, position int) {
 }
 ```
 
-It took FIXME to run it on my MacBook Pro 2019, which is definitely an outdated machine as of 2025. If we had another use case, when we, for example, need to store hashes of API keys that are of UUID v4 type, so random, SHA-256 could be a good choice for such a scenario.
+It took 30 minutes to run it on my MacBook Pro 2019, which is definitely an outdated machine as of 2025. If we had another use case, when we, for example, need to store hashes of API keys that are of UUID v4 type, so random, SHA-256 could be a good choice for such a scenario.
 
 This brings us to another point:
 
