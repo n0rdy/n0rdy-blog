@@ -200,6 +200,66 @@
         
         
             
+                <li class="bullet">
+                    <a href="https://mail.n0rdy.foo/subscription/form" target="_blank" rel="noopener noreferrer">Subscribe</a>
+                </li>
+            
+
+            
+                
+                
+            
+                
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
 
             
                 
@@ -275,66 +335,6 @@
                 
             
             
-                
-                
-                        
-                
-            
-                
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-                        
-                
-            
-        
-        
-            
-
-            
-                
-                
-            
-                
-                
-            
-            
-                
-                    <li class="heading">
-                        <a href="/series/">Series</a>
-                    </li>
                 
                 
                         
@@ -545,7 +545,6 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </div>
 
   <p>Hello there! In the <a href="https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/" target="_blank">previous post &ldquo;What Okta Bcrypt incident can teach us about designing better APIs&rdquo;</a>, we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I personally came across a few years ago while investigating a quite nasty performance issue with one of the services. Let&rsquo;s jump right into it!</p>
-<p>TODO: add a message to subscribe to my newsletter</p>
 <p>A product manager of one of the neighbouring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they&rsquo;d get a dashboard with the personalized data about them. The simplified architecture looked like this:</p>
 <p><img src="" alt="image"> TODO FIXME</p>
 <p>As you can see, the flow consists of 3 steps:</p>
@@ -563,6 +562,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>Hm&hellip;interesting. I tried repeating the same request again, and again got a pretty quick answer, but this time without any calls to the third party API. That made a perfect sense, as my user info was present in Postgres. I tried sending same requests a few more times, but didn&rsquo;t have any luck with reproducing the issue.</p>
 <p>Despite the failure, that gave me a good clue: it seemed like I could exclude the Third-party API from the list of suspects, or at least for now. Of course, it&rsquo;s important to mention that the local setup is different than the production one, so there is always a chance that something might be slowing down the egress traffic. However, for simplicity of the investigation, I decided to make sure that nothing in the app caused the issue before checking possible external factors, like cloud proxies, security filters, etc.</p>
 <p>I realised that it&rsquo;s time to take a look at the code. If you&rsquo;d like to follow along, here are the code samples that reproduce the setup we are discussing, check the <code>README.md</code> file for how to run instructions.</p>
+<p><em>Btw, if you like my blog and don’t want to miss out on new posts, subscribe to my newsletter <a href="https://mail.n0rdy.foo/subscription/form" target="_blank">here</a>. You&rsquo;ll receive an email once I publish a new post.</em></p>
 <h2 id="browsing-the-code">Browsing the code</h2>
 <p>You might know, that there is a saying &ldquo;it&rsquo;s always DNS&rdquo;, which applies when some service is down due to no obvious reasons. From my experience, when there is a performance issue with a relatively simple app, &ldquo;it&rsquo;s often database&rdquo;. So, even though, I started navigating the source code from the top to bottom (API -&gt; DB), I didn&rsquo;t expect to see anything suspicious within the layers above the one that runs DB queries. And, indeed, the interesting bits of code were 2 functions of the <code>Repo</code> struct responsible for inserting a new user into DB and selecting a particular user from the DB by SSN. Here how they looked:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Repo</span>) <span style="color:#a6e22e">SelectUserBySsn</span>(<span style="color:#a6e22e">ssn</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">User</span>, <span style="color:#66d9ef">error</span>) {

@@ -1,7 +1,5 @@
 Hello there! In the [previous post "What Okta Bcrypt incident can teach us about designing better APIs"](https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/), we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I personally came across a few years ago while investigating a quite nasty performance issue with one of the services. Let's jump right into it!
 
-TODO: add a message to subscribe to my newsletter 
-
 A product manager of one of the neighbouring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they'd get a dashboard with the personalized data about them. The simplified architecture looked like this:
 
 ![image]() TODO FIXME
@@ -29,6 +27,8 @@ Hm...interesting. I tried repeating the same request again, and again got a pret
 Despite the failure, that gave me a good clue: it seemed like I could exclude the Third-party API from the list of suspects, or at least for now. Of course, it's important to mention that the local setup is different than the production one, so there is always a chance that something might be slowing down the egress traffic. However, for simplicity of the investigation, I decided to make sure that nothing in the app caused the issue before checking possible external factors, like cloud proxies, security filters, etc.
 
 I realised that it's time to take a look at the code. If you'd like to follow along, here are the code samples that reproduce the setup we are discussing, check the `README.md` file for how to run instructions.
+
+*Btw, if you like my blog and don’t want to miss out on new posts, subscribe to my newsletter [here](https://mail.n0rdy.foo/subscription/form). You'll receive an email once I publish a new post.*
 
 ## Browsing the code
 
