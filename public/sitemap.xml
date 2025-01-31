@@ -2,25 +2,40 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
+    <loc>https://n0rdy.foo/tags/bcrypt/</loc>
+    <lastmod>2025-01-31T08:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/debug/</loc>
+    <lastmod>2025-01-31T08:30:00+02:00</lastmod>
+  </url><url>
     <loc>https://n0rdy.foo/</loc>
-    <lastmod>2025-01-31T08:30:00+01:00</lastmod>
+    <lastmod>2025-01-31T08:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/optimization/</loc>
+    <lastmod>2025-01-31T08:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/performance/</loc>
+    <lastmod>2025-01-31T08:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/postgres/</loc>
+    <lastmod>2025-01-31T08:30:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/</loc>
-    <lastmod>2025-01-31T08:30:00+01:00</lastmod>
+    <lastmod>2025-01-31T08:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/security/</loc>
+    <lastmod>2025-01-31T08:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/tags/</loc>
+    <lastmod>2025-01-31T08:30:00+02:00</lastmod>
+  </url><url>
+    <loc>https://n0rdy.foo/posts/20250131/when-postgres-index-meets-bcrypt/</loc>
+    <lastmod>2025-01-31T08:30:00+02:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/tags/api/</loc>
     <lastmod>2025-01-22T18:00:00+01:00</lastmod>
   </url><url>
-    <loc>https://n0rdy.foo/tags/bcrypt/</loc>
-    <lastmod>2025-01-22T18:00:00+01:00</lastmod>
-  </url><url>
     <loc>https://n0rdy.foo/tags/opinion/</loc>
-    <lastmod>2025-01-22T18:00:00+01:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/tags/security/</loc>
-    <lastmod>2025-01-22T18:00:00+01:00</lastmod>
-  </url><url>
-    <loc>https://n0rdy.foo/tags/</loc>
     <lastmod>2025-01-22T18:00:00+01:00</lastmod>
   </url><url>
     <loc>https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/</loc>

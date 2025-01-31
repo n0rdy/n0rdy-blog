@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+<head>
+    
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+
+
+
+
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.145453261a7755f5042a854c4213501d215a8fbe34c08d181c40f803f1315e74.js"></script>
+
+
+
+<script defer data-domain="n0rdy.foo" src="https://plausible.n0rdy.foo/js/script.js"></script>
+
+
+
+
+    
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+    <link rel="icon" href=/favicon.ico>
+
+    
+    
+
+
+
+
+
+  
+
+
+
+
+
+  
+  
+  
+
+
+<!-- Open Graph image and Twitter Card metadata -->
+
+  
+    <meta property="og:image" content="/covers/pics/20250131.jpg" />
+    <meta name="twitter:image" content="/covers/pics/20250131.jpg"/>
+          <meta name="twitter:card" content="summary_large_image">
+        <meta property="og:image:width" content="684">
+        <meta property="og:image:height" content="356">
+      <meta property="og:image:type" content="image/jpeg">
+  
+<title itemprop="name">n0rdy - When Postgres index meets Bcrypt</title>
+<meta property="og:title" content=n0rdy&#32;-&#32;When&#32;Postgres&#32;index&#32;meets&#32;Bcrypt />
+<meta name="twitter:title" content=n0rdy&#32;-&#32;When&#32;Postgres&#32;index&#32;meets&#32;Bcrypt />
+<meta itemprop="name" content=n0rdy&#32;-&#32;When&#32;Postgres&#32;index&#32;meets&#32;Bcrypt />
+<meta name="application-name" content=n0rdy&#32;-&#32;When&#32;Postgres&#32;index&#32;meets&#32;Bcrypt />
+<meta property="og:site_name" content="n0rdy personal blog" />
+
+
+<meta name="description" content="" />
+<meta itemprop="description" content="" />
+<meta property="og:description" content="" />
+<meta name="twitter:description" content="" />
+
+
+<base href="https://n0rdy.foo/posts/20250131/when-postgres-index-meets-bcrypt/" />
+<link rel="canonical" href="https://n0rdy.foo/posts/20250131/when-postgres-index-meets-bcrypt/" itemprop="url" />
+<meta name="url" content="https://n0rdy.foo/posts/20250131/when-postgres-index-meets-bcrypt/" />
+<meta name="twitter:url" content="https://n0rdy.foo/posts/20250131/when-postgres-index-meets-bcrypt/" />
+<meta property="og:url" content="https://n0rdy.foo/posts/20250131/when-postgres-index-meets-bcrypt/" />
+
+
+<meta property="og:updated_time" content="2025-01-31T08:30:00&#43;02:00" />
+
+
+<link rel="sitemap" type="application/xml" title="Sitemap" href='https://n0rdy.foo/sitemap.xml' />
+
+<meta name="robots" content="index,follow" />
+<meta name="googlebot" content="index,follow" />
+
+
+
+  
+    <meta name="twitter:site" content="@_n0rdy_" />
+    <meta name="twitter:creator" content="@_n0rdy_" />
+
+<meta property="fb:admins" content="" />
+
+
+<meta name="apple-mobile-web-app-title" content="n0rdy personal blog" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+
+
+
+
+
+
+<meta name="generator" content="Hugo 0.135.0">
+
+
+    
+    
+
+<link type="text/css" rel="stylesheet" href="/css/bundle.min.94a339836f89f0d25f31980cb6b0631da21e20af128308747ce44e0525eb16ef.css">
+
+
+    
+    <style>
+    body {
+        --sidebar-bg-color: #202020;
+        --sidebar-img-border-color: #515151;
+        --sidebar-p-color: #909090;
+        --sidebar-h1-color: #FFF;
+        --sidebar-a-color: #FFF;
+        --sidebar-socials-color: #FFF;
+        --text-color: #222;
+        --bkg-color: #FAF9F6;
+        --post-title-color: #303030;
+        --list-color: #5a5a5a;
+        --link-color: #268bd2;
+        --date-color: #515151;
+        --table-border-color: #E5E5E5;
+        --table-stripe-color: #F9F9F9;
+        --code-color: #000;
+        --code-background-color: #E5E5E5;
+        --code-block-color: #fff;
+        --code-block-background-color: #272822;
+        --moon-sun-color: #FFF;
+        --moon-sun-background-color: #515151;
+    }
+    body.dark-theme {
+        --text-color: #eee;
+        --bkg-color: #121212;
+        --post-title-color: #DBE2E9;
+        --list-color: #9d9d9d;
+        --link-color: #268bd2;
+        --date-color: #9a9a9a;
+        --table-border-color: #515151;
+        --table-stripe-color: #202020;
+        --code-color: #fff;
+        --code-background-color: #515151;
+        --code-block-color: #fff;
+        --code-block-background-color: #272822;
+    }
+    body {
+        background-color: var(--bkg-color);
+    }
+</style>
+
+</head>
+
+    <body class="dark-theme">
+        <div class="wrapper">
+            <aside class="sidebar">
+    <div class="container sidebar-sticky">
+        <div class="light-dark" align="right">
+    <button class="btn-light-dark" title="Toggle light/dark mode">
+        <svg class="moon" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M6 .278a.768.768 0 0 1 .08.858a7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277c.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316a.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71C0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        </svg>
+        <svg class="sun" xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 16 16">
+            <path fill="currentColor" d="M8 12a4 4 0 1 0 0-8a4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+        </svg>
+    </button>
+</div>
+
+        <div class="sidebar-about">
+    <h1 class="brand">
+        
+            <a href="https://n0rdy.foo/">
+                <img src="/images/avatar.jpg" alt="brand image">
+            </a>
+        
+        
+            <a href="https://n0rdy.foo/">
+                <h1>n0rdy</h1>
+            </a>
+        
+    </h1>
+    <p class="lead">
+    Exploring software engineering and tech
+    </p>
+</div>
+
+        <nav>
+    <ul class="sidebar-nav">
+
+        
+        
+        
+        
+            
+                <li class="heading">
+                    <a href="https://mail.n0rdy.foo/subscription/form" target="_blank" rel="noopener noreferrer">Subscribe</a>
+                </li>
+            
+
+            
+                
+                
+            
+                
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+                    <li class="heading">
+                        <a href="/about/">About</a>
+                    </li>
+                    
+                
+            
+                
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+                    <li class="heading">
+                        <a href="/posts/">Posts</a>
+                    </li>
+                    
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+        
+            
+
+            
+                
+                
+            
+                
+                
+            
+            
+                
+                
+                        
+                
+            
+                
+                    <li class="heading">
+                        <a href="/tags/">Tags</a>
+                    </li>
+                
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+                        
+                
+            
+        
+
+    </ul>
+</nav>
+
+        
+    <a target="_blank" class="social" title="GitHub" href="https://github.com/n0rdy">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="-2 -2 24 24">
+            <path fill="currentColor" d="M18.88 1.099C18.147.366 17.265 0 16.233 0H3.746C2.714 0 1.832.366 1.099 1.099C.366 1.832 0 2.714 0 3.746v12.487c0 1.032.366 1.914 1.099 2.647c.733.733 1.615 1.099 2.647 1.099H6.66c.19 0 .333-.007.429-.02a.504.504 0 0 0 .286-.169c.095-.1.143-.245.143-.435l-.007-.885c-.004-.564-.006-1.01-.006-1.34l-.3.052c-.19.035-.43.05-.721.046a5.555 5.555 0 0 1-.904-.091a2.026 2.026 0 0 1-.872-.39a1.651 1.651 0 0 1-.572-.8l-.13-.3a3.25 3.25 0 0 0-.41-.663c-.186-.243-.375-.407-.566-.494l-.09-.065a.956.956 0 0 1-.17-.156a.723.723 0 0 1-.117-.182c-.026-.061-.004-.111.065-.15c.07-.04.195-.059.378-.059l.26.04c.173.034.388.138.643.311a2.1 2.1 0 0 1 .631.677c.2.355.44.626.722.813c.282.186.566.28.852.28c.286 0 .533-.022.742-.065a2.59 2.59 0 0 0 .585-.196c.078-.58.29-1.028.637-1.34a8.907 8.907 0 0 1-1.333-.234a5.314 5.314 0 0 1-1.223-.507a3.5 3.5 0 0 1-1.047-.872c-.277-.347-.505-.802-.683-1.365c-.177-.564-.266-1.215-.266-1.952c0-1.049.342-1.942 1.027-2.68c-.32-.788-.29-1.673.091-2.652c.252-.079.625-.02 1.119.175c.494.195.856.362 1.086.5c.23.14.414.257.553.352a9.233 9.233 0 0 1 2.497-.338c.859 0 1.691.113 2.498.338l.494-.312a6.997 6.997 0 0 1 1.197-.572c.46-.174.81-.221 1.054-.143c.39.98.424 1.864.103 2.653c.685.737 1.028 1.63 1.028 2.68c0 .737-.089 1.39-.267 1.957c-.177.568-.407 1.023-.689 1.366a3.65 3.65 0 0 1-1.053.865c-.42.234-.828.403-1.223.507a8.9 8.9 0 0 1-1.333.235c.45.39.676 1.005.676 1.846v3.11c0 .147.021.266.065.357a.36.36 0 0 0 .208.189c.096.034.18.056.254.064c.074.01.18.013.318.013h2.914c1.032 0 1.914-.366 2.647-1.099c.732-.732 1.099-1.615 1.099-2.647V3.746c0-1.032-.367-1.914-1.1-2.647z"/>
+        </svg>
+    </a>
+
+
+
+
+
+    <a target="_blank" class="social" title="X" href="https://x.com/_n0rdy_">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.1em" height="1.1em" viewBox="0 0 512 472.799">
+            <path fill="currentColor" d="M403.229 0h78.506L310.219 196.04 512 462.799H354.002L230.261 301.007 88.669 462.799h-78.56l183.455-209.683L0 0h161.999l111.856 147.88L403.229 0zm-27.556 415.805h43.505L138.363 44.527h-46.68l283.99 371.278z"/>
+        </svg>
+    </a>
+
+
+    <a target="_blank" class="social" title="Bluesky" href="https://bsky.app/profile/n0rdy.foo">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 568 501">
+            <path fill="currentColor" d="M123.121 33.6637C188.241 82.5526 258.281 181.681 284 234.873C309.719 181.681 379.759 82.5526 444.879 33.6637C491.866 -1.61183 568 -28.9064 568 57.9464C568 75.2916 558.055 203.659 552.222 224.501C531.947 296.954 458.067 315.434 392.347 304.249C507.222 323.8 536.444 388.56 473.333 453.32C353.473 576.312 301.061 422.461 287.631 383.039C285.169 375.812 284.017 372.431 284 375.306C283.983 372.431 282.831 375.812 280.369 383.039C266.939 422.461 214.527 576.312 94.6667 453.32C31.5556 388.56 60.7778 323.8 175.653 304.249C109.933 315.434 36.0535 296.954 15.7778 224.501C9.94525 203.659 0 75.2916 0 57.9464C0 -28.9064 76.1345 -1.61183 123.121 33.6637Z"/>
+        </svg>
+    </a>
+
+
+    <a target="_blank" class="social" rel="me" title="Mastodon" href="https://fosstodon.org/@n0rdy">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M20.94 14c-.28 1.41-2.44 2.96-4.97 3.26c-1.31.15-2.6.3-3.97.24c-2.25-.11-4-.54-4-.54v.62c.32 2.22 2.22 2.35 4.03 2.42c1.82.05 3.44-.46 3.44-.46l.08 1.65s-1.28.68-3.55.81c-1.25.07-2.81-.03-4.62-.5c-3.92-1.05-4.6-5.24-4.7-9.5l-.01-3.43c0-4.34 2.83-5.61 2.83-5.61C6.95 2.3 9.41 2 11.97 2h.06c2.56 0 5.02.3 6.47.96c0 0 2.83 1.27 2.83 5.61c0 0 .04 3.21-.39 5.43M18 8.91c0-1.08-.3-1.91-.85-2.56c-.56-.63-1.3-.96-2.23-.96c-1.06 0-1.87.41-2.42 1.23l-.5.88l-.5-.88c-.56-.82-1.36-1.23-2.43-1.23c-.92 0-1.66.33-2.23.96C6.29 7 6 7.83 6 8.91v5.26h2.1V9.06c0-1.06.45-1.62 1.36-1.62c1 0 1.5.65 1.5 1.93v2.79h2.07V9.37c0-1.28.5-1.93 1.51-1.93c.9 0 1.35.56 1.35 1.62v5.11H18V8.91Z"/>
+        </svg>
+    </a>
+
+
+
+
+
+
+
+
+
+
+
+    <a target="_blank" class="social" title="RSS Feed" href="/posts/index.xml">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 1280.000000 1280.000000">
+            <g transform="translate(0.000000,1280.000000) scale(0.100000,-0.100000)" fill="currentColor">
+                <path d="M2295 11929 c-284 -12 -642 -45 -707 -65 -17 -5 -18 -63 -18 -1039 0 -569 4 -1036 8 -1039 5 -3 74 6 153 19 510 86 1168 95 1789 25 1348 -153 2602 -677 3670 -1531 385 -308 820 -744 1126 -1129 842 -1060 1362 -2313 1514 -3650 70 -621 61 -1279 -25 -1789 -13 -79 -22 -148 -19 -153 3 -4 471 -8 1039 -8 l1035 0 5 23 c51 225 85 942 67 1419 -23 605 -77 1044 -198 1617 -294 1400 -927 2734 -1823 3846 -1043 1295 -2364 2259 -3909 2854 -1158 447 -2451 656 -3707 600z"/>
+                <path d="M2255 7845 c-269 -25 -620 -81 -667 -106 -17 -9 -18 -55 -18 -899 0 -706 3 -890 13 -890 6 0 66 18 132 41 130 44 288 79 467 105 154 21 577 30 749 15 1207 -107 2267 -823 2814 -1902 166 -327 268 -637 330 -1001 38 -227 48 -384 42 -662 -8 -348 -44 -590 -126 -831 -23 -66 -41 -126 -41 -132 0 -10 184 -13 890 -13 844 0 890 1 899 18 27 50 88 452 110 725 14 162 14 624 1 782 -59 703 -233 1323 -545 1945 -481 956 -1313 1788 -2270 2268 -620 310 -1239 483 -1940 542 -165 14 -669 10 -840 -5z"/>
+                <path d="M2519 3815 c-391 -66 -725 -336 -868 -703 -79 -201 -96 -462 -45 -677 83 -344 338 -641 666 -774 116 -47 205 -69 330 -80 412 -39 811 153 1040 500 193 292 240 648 128 981 -135 403 -492 699 -914 757 -100 14 -241 12 -337 -4z"/>
+            </g>
+        </svg>
+    </a>
+
+
+    <a target="_blank" class="social" title="Email" href="mailto://hello@n0rdy.foo">
+       <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 485.211 485.211">
+            <path fill="currentColor" d="M301.393,241.631L464.866,424.56H20.332l163.474-182.928l58.801,51.443L301.393,241.631z M462.174,60.651H23.027 l219.579,192.142L462.174,60.651z M324.225,221.67l160.986,180.151V80.792L324.225,221.67z M0,80.792v321.029L160.972,221.64 L0,80.792z"/>
+       </svg>
+    </a>
+
+
+
+
+        <p class="footnote">
+powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
+    <br>
+    &copy; 2025 n0rdy personal blog. All rights reserved.
+</p>
+
+  </div>
+</aside>
+
+            <main class="content container">
+                <div class="post">
+  <div class="info">
+  <h1 class="post-title">
+    <a href="https://n0rdy.foo/posts/20250131/when-postgres-index-meets-bcrypt/">When Postgres index meets Bcrypt</a>
+  </h1>
+
+  <div class="headline">
+    <div>
+      
+      
+      <time datetime=" 2025-01-31T08:30:00&#43;0200" class="post-date">
+        January 31, 2025
+      </time>
+      
+      <span> - </span>
+      <span class="reading-time">
+        
+          
+        
+
+        <span>25 mins read</span>
+      </span>
+    </div>
+
+    
+    <ul class="tags">
+      
+      <li class="tag-postgres">
+        <a href="https://n0rdy.foo/tags/postgres">postgres</a>
+      </li>
+      
+      <li class="tag-security">
+        <a href="https://n0rdy.foo/tags/security">security</a>
+      </li>
+      
+      <li class="tag-bcrypt">
+        <a href="https://n0rdy.foo/tags/bcrypt">bcrypt</a>
+      </li>
+      
+      <li class="tag-performance">
+        <a href="https://n0rdy.foo/tags/performance">performance</a>
+      </li>
+      
+      <li class="tag-optimization">
+        <a href="https://n0rdy.foo/tags/optimization">optimization</a>
+      </li>
+      
+      <li class="tag-debug">
+        <a href="https://n0rdy.foo/tags/debug">debug</a>
+      </li>
+      
+    </ul>
+    
+  </div>
+
+  
+  
+
+  
+</div>
+
+  <p>Hello there! In the <a href="https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/" target="_blank">previous post “What Okta Bcrypt incident can teach us about designing better APIs”</a>, we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I, personally, came across a few years ago while investigating a quite nasty performance issue with one of the services. Let&rsquo;s jump right into it!</p>
+<p>A product manager of one of the neighboring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they&rsquo;d get a dashboard with the personalized data about them. The simplified architecture looked like this:</p>
+<p><img src="/images/drawings/20250131-0001.png" alt="image"></p>
+<p>As you can see, the flow consists of 3 steps:</p>
+<ol>
+<li>The user enters their SSN in the UI, and the UI sends it to the Internal service.</li>
+<li>Internal service checks whether the data for the user with such SSN is already present in the DB (Postgres): if yes, that data is returned to the UI</li>
+<li>Otherwise, the request is made to the Third-party API to fetch the desired data, then it&rsquo;s being processed, saved into the DB, and returned to the user</li>
+</ol>
+<p>The nature of the user data didn&rsquo;t require real-time updates, so the same data was stored and used for the month, after which it was considered to be expired, and was deleted by the cronjob. A pretty straightforward system.</p>
+<p>The issue (the team was experiencing) was the fact that it took 10+ seconds to follow the 3-steps flow we discussed above, which led to a terrible UX and a high bounce rate. That made a good sense, as the average attention span of the users nowadays is way less than 10 seconds. But why was it so slow?</p>
+<p>The bug issue was reproducible in the production setup, the logs/metrics were not so useful with the clues for the cause. So, I cloned the project code to my laptop and launched a Postgres instance via Docker Compose. Additionally, I started <a href="https://mitmproxy.org/" target="_blank">mitmproxy</a> to be able to intercept and inspect HTTP requests on my machine, and created a template of the request to the Internal service API with my own SSN in Postman. My debugging setup was ready, so it was time to run and test the app.</p>
+<h2 id="running-it-locally">Running it locally</h2>
+<p>To my great surprise, after sending a request from Postman, I got a response in the matter of tens of milliseconds. mitmproxy showed that there was indeed the request to the Third-party API, but it had a minimal latency.</p>
+<p><img src="/images/screenshots/20250131-0001.png" alt="image"></p>
+<p>Hm…interesting. I tried repeating the same request again, and again got a pretty quick answer, but this time without any calls to the third-party API. That made a perfect sense, as my user info was present in Postgres. I tried sending the same requests a few more times, but didn&rsquo;t have any luck with reproducing the issue.</p>
+<p>Despite the failure, that gave me a good clue: it seemed like I could exclude the Third-party API from the list of suspects, or at least for now. Of course, it&rsquo;s important to mention that the local setup is different from the production one, so there is always a chance that something might be slowing down the egress traffic. However, for simplicity of the investigation, I decided to make sure that nothing in the app caused the issue before checking possible external factors, like cloud proxies, security filters, etc.</p>
+<p>I realized that it&rsquo;s time to take a look at the code. If you&rsquo;d like to follow along, <a href="https://github.com/n0rdy/n0rdy-blog-code-samples/tree/main/20250128-postgres-seq-scan-despite-indexing" target="_blank">here</a> are the code samples that reproduce the setup we are discussing, check the <code>README.md</code> file for how to run instructions.</p>
+<p><em>Btw, if you like my blog and don’t want to miss out on new posts, consider subscribing to my newsletter <a href="https://mail.n0rdy.foo/subscription/form" target="_blank">here</a>. You&rsquo;ll receive an email once I publish a new post.</em></p>
+<h2 id="browsing-the-code">Browsing the code</h2>
+<p>You might know that there is a saying “it&rsquo;s always DNS”, which applies when some service is down due to no obvious reasons. From my experience, when there is a performance issue with a relatively simple app, “it&rsquo;s often database”. So, even though, I started navigating the source code from the top to bottom (API -&gt; DB), I didn&rsquo;t expect to see anything suspicious within the layers above the one that runs DB queries. And, indeed, the interesting bits of code were 2 functions of the <code>Repo</code> struct responsible for inserting a new user into the DB and selecting a particular user from the DB by SSN. Here how they looked:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Repo</span>) <span style="color:#a6e22e">SelectUserBySsn</span>(<span style="color:#a6e22e">ssn</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">User</span>, <span style="color:#66d9ef">error</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">now</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">user</span> <span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">User</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">dbPool</span>.<span style="color:#a6e22e">QueryRow</span>(
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(),
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;SELECT id, user_info FROM users WHERE ssn_hash = crypt($1, ssn_hash)&#34;</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ssn</span>,
+</span></span><span style="display:flex;"><span>	).<span style="color:#a6e22e">Scan</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">Id</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">UserInfo</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">Is</span>(<span style="color:#a6e22e">err</span>, <span style="color:#a6e22e">pgx</span>.<span style="color:#a6e22e">ErrNoRows</span>) {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Time taken to get user:&#34;</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Since</span>(<span style="color:#a6e22e">now</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">user</span>, <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Repo</span>) <span style="color:#a6e22e">InsertUser</span>(<span style="color:#a6e22e">user</span> <span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">NewUserEntity</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">dbPool</span>.<span style="color:#a6e22e">Exec</span>(
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(),
+</span></span><span style="display:flex;"><span>		<span style="color:#e6db74">&#34;INSERT INTO users (id, ssn_hash, user_info) VALUES ($1, crypt($2, gen_salt(&#39;bf&#39;)), $3)&#34;</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">Id</span>, <span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">Ssn</span>, <span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">UserInfo</span>,
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The <code>crypt($1, ssn_hash)</code> and <code>crypt($2, gen_salt('bf')</code> parts immediately caught my eyes: “aha, so we are not storing plain SSNs in the DB, but hashed versions”. Interesting discovery! This didn&rsquo;t give me any hints on the exact algorithm that was used for hashing, but a quick Google search by the <code>gen_salt('bf')</code> part helped me to discover that it&rsquo;s a Bcrypt one. And indeed, after I did <code>SELECT * FROM users</code> in my local setup, I noticed that the <code>ssn_hash</code> column had this value <code>$2a$06$r4UXr0F80tz57DGzCQBf6uIpQealvM3Rb6E/TvsyFkJJaiLXt9J8W</code>, and the <code>$2a$</code> prefix was indeed a Bcrypt one. All right, we are into something! The chances are that some of you, who are experts in cryptography and/or databases (or, Postgres, at least), already can see the reason for the poor performance of the app (kudos to you!), but that was not the case for me, so I had to keep digging.</p>
+<p>I realized that DB was my best lead at the moment, so I jumped away from the source code to the Postgres console in my IntelliJ IDEA, and ran this query:  <code>SELECT * FROM users WHERE ssn_hash = crypt('0852285111', ssn_hash)</code> (<code>0852285111</code> is my fake SSN in this example). I got the result in 9 milliseconds, which was quite fast, and didn&rsquo;t hint any issues with the performance.</p>
+<p>But then I connected to the production DB and ran the same query. It took 15 seconds to get the similar response. Wow! What&rsquo;s more interesting, was the fact that fetching all the existing users via <code>SELECT * FROM users</code> took only 6 milliseconds. Puzzling, isn&rsquo;t it?</p>
+<p>Despite being a bit puzzled, that definitely felt like good progress, as I had a strong clue that DB was the bottleneck here. And it became clear that my failures to reproduce that locally was due to the fact that my local table had only 1 row, while the production one had 5000 users as of that moment, and kept growing hour by hour. I could have kept debugging the issue within the production Postgres instance, as it was reproducible there, but doing that is not a good practice due to many reasons, like degrading performance even more, or running some unsafe queries that might do some harm to the data there. So, at first, I wanted to take a snapshot of the production DB and use it locally, but realized that it was not much better idea as well: taking a snapshot might be a costly operation for Postgres. Plus, there were privacy implications of me copying the sensitive data of the customers to my local machine. That&rsquo;s why I went with the third option of inserting a lot of fake data into my local DB.</p>
+<h2 id="fake-it-until-you-make-it">Fake it until you make it</h2>
+<p>The fact that our table was so simple and consisted of 3 columns only, made the task very simple. So, I ended up writing this fake data generation code:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GenRandomUsers</span>(<span style="color:#a6e22e">num</span> <span style="color:#66d9ef">int</span>) []<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">NewUserEntity</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">users</span> <span style="color:#f92672">:=</span> make([]<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">NewUserEntity</span>, <span style="color:#a6e22e">num</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">num</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">users</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">GenRandomUser</span>()
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">users</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GenRandomUser</span>() <span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">NewUserEntity</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ssn</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">genRandomSsn</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Generated SSN:&#34;</span>, <span style="color:#a6e22e">ssn</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">NewUserEntity</span>{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Id</span>:       <span style="color:#a6e22e">uuid</span>.<span style="color:#a6e22e">New</span>().<span style="color:#a6e22e">String</span>(),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Ssn</span>:      <span style="color:#a6e22e">ssn</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">UserInfo</span>: <span style="color:#a6e22e">GenRandomUserInfo</span>(),
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GenRandomUserInfo</span>() <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;Some info %s %s&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">FormatInt</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixMilli</span>(), <span style="color:#ae81ff">10</span>), <span style="color:#a6e22e">uuid</span>.<span style="color:#a6e22e">New</span>().<span style="color:#a6e22e">String</span>())
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">genRandomSsn</span>() <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ssn</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">10</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ssn</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">IntN</span>(<span style="color:#ae81ff">10</span>))
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ssn</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And made a use of it within the <code>fillDb</code> function that I triggered on the app start up:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fillDb</span>(<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">Repo</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">users</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">SelectUsers</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">users</span>) &gt; <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;users already exist, skipping db fill&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;generating random users...&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">newUsers</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">utils</span>.<span style="color:#a6e22e">GenRandomUsers</span>(<span style="color:#ae81ff">5000</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;inserting random users...&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">InsertUsers</span>(<span style="color:#a6e22e">newUsers</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;inserted random users&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>Once I ran the app, it took more than 15 seconds to finish inserting the users, which I found weird, as the <code>InsertUsers</code> code made only 1 call to DB:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Repo</span>) <span style="color:#a6e22e">InsertUsers</span>(<span style="color:#a6e22e">users</span> []<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">NewUserEntity</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">now</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">query</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;INSERT INTO users (id, ssn_hash, user_info) VALUES &#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">args</span> []<span style="color:#66d9ef">interface</span>{}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">user</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">users</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">query</span> <span style="color:#f92672">+=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;($%d, crypt($%d, gen_salt(&#39;bf&#39;)), $%d),&#34;</span>, <span style="color:#a6e22e">i</span><span style="color:#f92672">*</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>, <span style="color:#a6e22e">i</span><span style="color:#f92672">*</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">2</span>, <span style="color:#a6e22e">i</span><span style="color:#f92672">*</span><span style="color:#ae81ff">3</span><span style="color:#f92672">+</span><span style="color:#ae81ff">3</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">args</span> = append(<span style="color:#a6e22e">args</span>, <span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">Id</span>, <span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">Ssn</span>, <span style="color:#a6e22e">user</span>.<span style="color:#a6e22e">UserInfo</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">query</span> = <span style="color:#a6e22e">query</span>[:len(<span style="color:#a6e22e">query</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>] <span style="color:#75715e">// remove the trailing comma
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">r</span>.<span style="color:#a6e22e">dbPool</span>.<span style="color:#a6e22e">Exec</span>(
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">query</span>,
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">args</span><span style="color:#f92672">...</span>,
+</span></span><span style="display:flex;"><span>	)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Time taken to insert users:&#34;</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Since</span>(<span style="color:#a6e22e">now</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It became clearer and clearer to me that the <code>crypt($%d, gen_salt('bf'))</code> part was to blame, but I didn&rsquo;t understand why it was so just yet. Anyway, the intermediate goal was achieved, as at that point of time, I could reproduce the performance issue in my local setup as well, the <code>SELECT * FROM users WHERE ssn_hash = crypt('0852285111', ssn_hash)</code> query became as slow as within the production DB, even though my SSN wasn&rsquo;t among the existing DB records.</p>
+<p>I decided to take a pause for a moment and check the facts:</p>
+<ul>
+<li>the reasons of the slow performance were queries to the DB</li>
+<li>the performance degraded with the growth of the number of the records within the DB table</li>
+<li>something is fishy with the <code>crypt()</code> function for both INSERT and SELECT queries</li>
+</ul>
+<p>The second fact was a good hint, so I decided to check what Postgres query planner could tell me about the plan for executing the query:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, ssn_hash);
+</span></span></code></pre></div><p>The keyword <code>EXPLAIN</code> in this case triggers Postgres to build the plan for the query, but not run it. The results were like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Seq Scan on users  (cost=0.00..182.00 rows=25 width=138)
+</span></span><span style="display:flex;"><span>&#34;  Filter: (ssn_hash = crypt(&#39;0852285111&#39;::text, ssn_hash))&#34;
+</span></span></code></pre></div><p>Aha, <code>Seq Scan on users</code> gives us a hint that Postgres is about to perform a sequential scan, which means that it will go through every single row of the table to find the matching one - <code>O(n)</code> if we&rsquo;d like to use the algorithmic complexity here. This could very much explain the correlation between the increase in the number of rows and performance degradation.</p>
+<p>Let&rsquo;s add <code>ANALYSE</code> keyword to actually execute the query and get more metrics:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, ssn_hash);
+</span></span></code></pre></div><p>The output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Seq Scan on users  (cost=0.00..182.00 rows=25 width=138) (actual time=15037.772..15037.774 rows=1 loops=1)
+</span></span><span style="display:flex;"><span>&#34;  Filter: (ssn_hash = crypt(&#39;0852285111&#39;::text, ssn_hash))&#34;
+</span></span><span style="display:flex;"><span>  Rows Removed by Filter: 5000
+</span></span><span style="display:flex;"><span>Planning Time: 0.048 ms
+</span></span><span style="display:flex;"><span>Execution Time: 15037.788 ms
+</span></span></code></pre></div><p>Which proves what we had just seen above.</p>
+<p>So, I thought that I solved the riddle: the <code>ssh_hash</code> column lacked the index. I was almost proud of myself, but that was a very brief moment, as after browsing both the DB table structure and the schema definition queries, I realized that there is actually an index there:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> users_ssn_hashed_idx <span style="color:#66d9ef">ON</span> users (ssn_hash);
+</span></span></code></pre></div><p>But why did Postgres keep ignoring it and performing sequential scans nevertheless? And despite that fact, why it took Postgres 15 seconds to scan 5000 rows? And why select all the rows were very quick (5 ms)? The only difference between the two was the use of the <code>crypto()</code> function within the <code>WHERE</code> statement. That narrowed down the problem. So, I realized that it was the time to get back to basics and do some research on the nature of the Bcrypt algorithm.</p>
+<p><img src="/images/drawings/20250131-0002.png" alt="image"></p>
+<h2 id="bcrypt">Bcrypt</h2>
+<p>Here is what <a href="https://en.wikipedia.org/wiki/Bcrypt" target="_blank">Wikipedia</a> specifies about Bcrypt:</p>
+<blockquote>
+<p>The input to the bcrypt function is the password string (up to 72  bytes), a numeric cost, and a 16-byte (128-bit) salt value.  The salt is typically a random value.  The bcrypt function uses these inputs to  compute a 24-byte (192-bit) hash.  The final output of the bcrypt  function is a string of the form:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>$2&lt;a/b/x/y&gt;$[cost]$[22 character salt][31 character hash]
+</span></span></code></pre></div><p>For example, with input password <code>abc123xyz</code>, cost <code>12</code>, and a random salt, the output of bcrypt is the string</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>$2a$12$R9h/cIPz0gi.URNNX3kh2OPST9/PgBkqquzi.Ss7KIUgO2t0jWMUW
+</span></span><span style="display:flex;"><span>\__/\/ \____________________/\_____________________________/
+</span></span><span style="display:flex;"><span>Alg Cost      Salt                        Hash
+</span></span></code></pre></div></blockquote>
+<p>If we distill it a bit, we can see that the input of the Bcrypt function is:</p>
+<ul>
+<li>password</li>
+<li>numeric cost</li>
+<li>salt (typically random)</li>
+</ul>
+<p>If we take a look at the crypt function within the insert user statement, we&rsquo;ll see this <code>crypt($2, gen_salt('bf')</code>, where SSN is passed as the <code>$2</code>. So, we do have a password (SSN) and salt (<code>gen_salt('bf'))</code> The numeric cost is missing, but let&rsquo;s take a look at the output of the <code>gen_salt('bf')</code> function. You might need to install the <code>pgcrypt</code> extension by <code>CREATE EXTENSION IF NOT EXISTS pgcrypto;</code> if you don&rsquo;t have it to be able to follow along.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> gen_salt(<span style="color:#e6db74">&#39;bf&#39;</span>);
+</span></span></code></pre></div><p>The output is <code>$2a$06$Qkp8j0vDoCuqNCgyOuIRxO</code>. If we compare with the example from the Wikipedia above, we can see that this salt includes the cost within (<code>06</code>).</p>
+<p>Let&rsquo;s run the <code>SELECT gen_salt('bf');</code> again. We got <code>$2a$06$enmGwTijs9cvlsIv9dcQQe</code>, which is different from the previous result. As Wikipedia warned us</p>
+<blockquote>
+<p>The salt is typically a random value.</p>
+</blockquote>
+<p>And what happens if we are passing random salt to the crypto function? Right, the result will be random as well. Let&rsquo;s double-check:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, gen_salt(<span style="color:#e6db74">&#39;bf&#39;</span>));
+</span></span></code></pre></div><p>The first time I ran it, I got this outcome: <code>$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce</code>. The second ran got a different result (as we anticipated): <code>$2a$06$nbwOka/0ve5RvM71f35jEOMGA5qHaa0H1I3RtkYq/sNIXW.Z90KAm</code>. If we keep going, we&rsquo;ll keep getting different results. And this is cool, as Bcrypt was created to be used for passwords hashing, which means that even if different users have the same password, the hashed version for them will be different - pretty neat!</p>
+<p>But if results are random, how can we check the hash in the DB corresponds to the plain text record we get as the user input? Well, as you can guess, we need to pass the same salt as the input. But where do we get the salt? Wikipedia has already given us an answer: the salt is the part of the hashed output. Let&rsquo;s try it out by copying the first 29 chars of the output we got above: <code>$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce</code> -&gt; <code>$2a$06$DQqtgCtvY9GkT3uHpShehu</code> and check if that helps:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;</span> <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehu&#39;</span>);
+</span></span></code></pre></div><p>The result is <code>true</code>. Perfect! But wait a minute: do we need to extract the salt and friends manually each time? Let&rsquo;s take a look at the query we used to select the user by SSN from DB to look for some hints:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, user_info <span style="color:#66d9ef">FROM</span> users <span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> crypt(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">1</span>, ssn_hash)
+</span></span></code></pre></div><p>where <code>$1</code> is the SSN value. This is a bit different as instead of only salt, we are passing the entire hash value into the crypt function this time. Let&rsquo;s try it out:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;</span> <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;</span>);
+</span></span></code></pre></div><p>Still <code>true</code>. How come? The answer is simple: since salt (with the prefix) has a defined length of 29, Postgres retrieves it for us, and drops the rest of it.</p>
+<p>The beauty of Postgres (which is one of my favorite tools out there) is the fact that it&rsquo;s open-source. So, let&rsquo;s take a peak and its source code to make sure that our assumptions are correct.</p>
+<h3 id="bcrypt-in-postgres-source-code">Bcrypt in Postgres source code</h3>
+<p>Here is <a href="https://github.com/postgres/postgres" target="_blank">the mirror</a> of the official PostgreSQL GIT repository. Let&rsquo;s find the <code>pgcrypto</code> file which corresponds to the extension we installed to be able to run crypto functions. <a href="https://github.com/postgres/postgres/blob/master/contrib/pgcrypto/pgcrypto.c" target="_blank">Here</a> is it is. This piece of code is triggered when we do <code>crypt(...)</code> via SQL:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/* SQL function: pg_crypt(psw:text, salt:text) returns text */</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">PG_FUNCTION_INFO_V1</span>(pg_crypt);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>Datum
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">pg_crypt</span>(PG_FUNCTION_ARGS)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	text	   <span style="color:#f92672">*</span>arg0 <span style="color:#f92672">=</span> <span style="color:#a6e22e">PG_GETARG_TEXT_PP</span>(<span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>	text	   <span style="color:#f92672">*</span>arg1 <span style="color:#f92672">=</span> <span style="color:#a6e22e">PG_GETARG_TEXT_PP</span>(<span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">char</span>	   <span style="color:#f92672">*</span>buf0,
+</span></span><span style="display:flex;"><span>			   <span style="color:#f92672">*</span>buf1,
+</span></span><span style="display:flex;"><span>			   <span style="color:#f92672">*</span>cres,
+</span></span><span style="display:flex;"><span>			   <span style="color:#f92672">*</span>resbuf;
+</span></span><span style="display:flex;"><span>	text	   <span style="color:#f92672">*</span>res;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	buf0 <span style="color:#f92672">=</span> <span style="color:#a6e22e">text_to_cstring</span>(arg0);
+</span></span><span style="display:flex;"><span>	buf1 <span style="color:#f92672">=</span> <span style="color:#a6e22e">text_to_cstring</span>(arg1);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	resbuf <span style="color:#f92672">=</span> <span style="color:#a6e22e">palloc0</span>(PX_MAX_CRYPT);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	cres <span style="color:#f92672">=</span> <span style="color:#a6e22e">px_crypt</span>(buf0, buf1, resbuf, PX_MAX_CRYPT);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pfree</span>(buf0);
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pfree</span>(buf1);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (cres <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ereport</span>(ERROR,
+</span></span><span style="display:flex;"><span>				(<span style="color:#a6e22e">errcode</span>(ERRCODE_EXTERNAL_ROUTINE_INVOCATION_EXCEPTION),
+</span></span><span style="display:flex;"><span>				 <span style="color:#a6e22e">errmsg</span>(<span style="color:#e6db74">&#34;crypt(3) returned NULL&#34;</span>)));
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	res <span style="color:#f92672">=</span> <span style="color:#a6e22e">cstring_to_text</span>(cres);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pfree</span>(resbuf);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">PG_FREE_IF_COPY</span>(arg0, <span style="color:#ae81ff">0</span>);
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">PG_FREE_IF_COPY</span>(arg1, <span style="color:#ae81ff">1</span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">PG_RETURN_TEXT_P</span>(res);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>If we jump into <code>pg_crypt</code> in this line <code>cres = px_crypt(buf0, buf1, resbuf, PX_MAX_CRYPT);</code>, we&rsquo;ll end up inside the <code>px-crypt.c</code> file <a href="https://github.com/postgres/postgres/blob/master/contrib/pgcrypto/px-crypt.c#L90" target="_blank">here</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">px_crypt</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>psw, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>salt, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">unsigned</span> len)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> px_crypt_algo <span style="color:#f92672">*</span>c;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">CheckBuiltinCryptoMode</span>();
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> (c <span style="color:#f92672">=</span> px_crypt_list; c<span style="color:#f92672">-&gt;</span>id; c<span style="color:#f92672">++</span>)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (<span style="color:#f92672">!</span>c<span style="color:#f92672">-&gt;</span>id_len)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">strncmp</span>(salt, c<span style="color:#f92672">-&gt;</span>id, c<span style="color:#f92672">-&gt;</span>id_len) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (c<span style="color:#f92672">-&gt;</span>crypt <span style="color:#f92672">==</span> NULL)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> NULL;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> c<span style="color:#f92672">-&gt;</span><span style="color:#a6e22e">crypt</span>(psw, salt, buf, len);
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>As we see, this code navigates through the <code>px_crypt_list</code> while trying to find a match for the provided <code>salt</code> (in our case, it is the entire hashed string) by comparing the <code>id_len</code> number of first characters with something called <code>id</code>. <a href="https://en.cppreference.com/w/c/string/byte/strncmp" target="_blank">Here is the doc</a> for the <code>strncmp</code> function if you would like to learn more.</p>
+<p>Let&rsquo;s see how the <code>px_crypt_list</code> looks like, as it might explain to us the nature of the <code>id_len</code> and <code>id</code> params.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> px_crypt_algo
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">char</span>	   <span style="color:#f92672">*</span>id;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">unsigned</span>	id_len;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">char</span>	   <span style="color:#f92672">*</span>(<span style="color:#f92672">*</span>crypt) (<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>psw, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>salt,
+</span></span><span style="display:flex;"><span>						  <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">unsigned</span> len);
+</span></span><span style="display:flex;"><span>};
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> px_crypt_algo
+</span></span><span style="display:flex;"><span>			px_crypt_list[] <span style="color:#f92672">=</span> {
+</span></span><span style="display:flex;"><span>	{<span style="color:#e6db74">&#34;$2a$&#34;</span>, <span style="color:#ae81ff">4</span>, run_crypt_bf},
+</span></span><span style="display:flex;"><span>	{<span style="color:#e6db74">&#34;$2x$&#34;</span>, <span style="color:#ae81ff">4</span>, run_crypt_bf},
+</span></span><span style="display:flex;"><span>	{<span style="color:#e6db74">&#34;$2$&#34;</span>, <span style="color:#ae81ff">3</span>, NULL},			<span style="color:#75715e">/* N/A */</span>
+</span></span><span style="display:flex;"><span>	{<span style="color:#e6db74">&#34;$1$&#34;</span>, <span style="color:#ae81ff">3</span>, run_crypt_md5},
+</span></span><span style="display:flex;"><span>	{<span style="color:#e6db74">&#34;_&#34;</span>, <span style="color:#ae81ff">1</span>, run_crypt_des},
+</span></span><span style="display:flex;"><span>	{<span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#ae81ff">0</span>, run_crypt_des},
+</span></span><span style="display:flex;"><span>	{NULL, <span style="color:#ae81ff">0</span>, NULL}
+</span></span><span style="display:flex;"><span>};
+</span></span></code></pre></div><p>Aha, so the <code>id</code> is the salt prefix that Wikipedia called <code>alg</code>  (<code>$2a$</code> in our case), and the <code>id_len</code> is the length of that prefix. That makes a lot of sense now. And the <code>run_crypt_bf</code> is the actual function that will be invoked in our case. Nice, let&rsquo;s take a look at it <a href="https://github.com/postgres/postgres/blob/master/contrib/pgcrypto/px-crypt.c#L61" target="_blank">here</a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">run_crypt_bf</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>psw, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>salt,
+</span></span><span style="display:flex;"><span>			 <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">unsigned</span> len)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">char</span>	   <span style="color:#f92672">*</span>res;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	res <span style="color:#f92672">=</span> <span style="color:#a6e22e">_crypt_blowfish_rn</span>(psw, salt, buf, len);
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> res;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>And let&rsquo;s follow along by jumping into the <code>_crypt_blowfish_rn</code> which leads us to <a href="https://github.com/postgres/postgres/blob/master/contrib/pgcrypto/crypt-blowfish.c#L582" target="_blank">a new file</a> - <code>crypt-blowfish.c</code>. I will not post the entire body of that function here, as it is around 200 lines long. However, this is an interesting part for us:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Blowfish salt value must be formatted as follows: &#34;$2a$&#34; or &#34;$2x$&#34;, a
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * two digit cost parameter, &#34;$&#34;, and 22 digits from the alphabet
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * &#34;./0-9A-Za-z&#34;. -- from the PHP crypt docs. Apparently we enforce a few
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * more restrictions on the count in the salt as well.
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"> */</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">strlen</span>(setting) <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">29</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ereport</span>(ERROR,
+</span></span><span style="display:flex;"><span>		(<span style="color:#a6e22e">errcode</span>(ERRCODE_INVALID_PARAMETER_VALUE),
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">errmsg</span>(<span style="color:#e6db74">&#34;invalid salt&#34;</span>)));
+</span></span></code></pre></div><p>where <code>settings</code> is the <code>salt</code>. We can see a number 29 here, which rings a bell, doesn&rsquo;t it? That&rsquo;s precisely the length of the salt prefix we used in one of the examples above. Also, please, note that this validation only checks if the input length is not less than 29, but it doesn&rsquo;t care whether it&rsquo;s above the limit. That gives us a hint that the code below should handle it somehow:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (setting[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;$&#39;</span> <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>		setting[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;2&#39;</span> <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>		(setting[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#f92672">&amp;&amp;</span> setting[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;x&#39;</span>) <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>		setting[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;$&#39;</span> <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>		setting[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">&lt;</span> <span style="color:#e6db74">&#39;0&#39;</span> <span style="color:#f92672">||</span> setting[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">&gt;</span> <span style="color:#e6db74">&#39;3&#39;</span> <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>		setting[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">&lt;</span> <span style="color:#e6db74">&#39;0&#39;</span> <span style="color:#f92672">||</span> setting[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">&gt;</span> <span style="color:#e6db74">&#39;9&#39;</span> <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>		(setting[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">==</span> <span style="color:#e6db74">&#39;3&#39;</span> <span style="color:#f92672">&amp;&amp;</span> setting[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">&gt;</span> <span style="color:#e6db74">&#39;1&#39;</span>) <span style="color:#f92672">||</span>
+</span></span><span style="display:flex;"><span>		setting[<span style="color:#ae81ff">6</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;$&#39;</span>)
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ereport</span>(ERROR,
+</span></span><span style="display:flex;"><span>				(<span style="color:#a6e22e">errcode</span>(ERRCODE_INVALID_PARAMETER_VALUE),
+</span></span><span style="display:flex;"><span>				 <span style="color:#a6e22e">errmsg</span>(<span style="color:#e6db74">&#34;invalid salt&#34;</span>)));
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	count <span style="color:#f92672">=</span> (BF_word) <span style="color:#ae81ff">1</span> <span style="color:#f92672">&lt;&lt;</span> ((setting[<span style="color:#ae81ff">4</span>] <span style="color:#f92672">-</span> <span style="color:#e6db74">&#39;0&#39;</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">+</span> (setting[<span style="color:#ae81ff">5</span>] <span style="color:#f92672">-</span> <span style="color:#e6db74">&#39;0&#39;</span>));
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> (count <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">16</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">BF_decode</span>(data.binary.salt, <span style="color:#f92672">&amp;</span>setting[<span style="color:#ae81ff">7</span>], <span style="color:#ae81ff">16</span>))
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">px_memset</span>(data.binary.salt, <span style="color:#ae81ff">0</span>, <span style="color:#66d9ef">sizeof</span>(data.binary.salt));
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">ereport</span>(ERROR,
+</span></span><span style="display:flex;"><span>				(<span style="color:#a6e22e">errcode</span>(ERRCODE_INVALID_PARAMETER_VALUE),
+</span></span><span style="display:flex;"><span>				 <span style="color:#a6e22e">errmsg</span>(<span style="color:#e6db74">&#34;invalid salt&#34;</span>)));
+</span></span><span style="display:flex;"><span>	}
+</span></span></code></pre></div><p>Take a look at this piece: <code>BF_decode(data.binary.salt, &amp;setting[7], 16)</code>. Do you remember the example from Wikipedia:</p>
+<blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>$2a$12$R9h/cIPz0gi.URNNX3kh2OPST9/PgBkqquzi.Ss7KIUgO2t0jWMUW
+</span></span><span style="display:flex;"><span>\__/\/ \____________________/\_____________________________/
+</span></span><span style="display:flex;"><span>Alg Cost      Salt                        Hash
+</span></span></code></pre></div></blockquote>
+<p>?</p>
+<p>As we can see, the actual salt begins at the 8th char (that&rsquo;s why <code>setting[7]</code>), and the <code>&amp;setting[7]</code> means that all the elements starting from 8th are sliced here. The <code>BF_decode</code> function looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">BF_decode</span>(BF_word <span style="color:#f92672">*</span>dst, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>src, <span style="color:#66d9ef">int</span> size)
+</span></span><span style="display:flex;"><span>{
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>dptr <span style="color:#f92672">=</span> (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) dst;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>end <span style="color:#f92672">=</span> dptr <span style="color:#f92672">+</span> size;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>sptr <span style="color:#f92672">=</span> (<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) src;
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">int</span> tmp,
+</span></span><span style="display:flex;"><span>				c1,
+</span></span><span style="display:flex;"><span>				c2,
+</span></span><span style="display:flex;"><span>				c3,
+</span></span><span style="display:flex;"><span>				c4;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>	{
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">BF_safe_atoi64</span>(c1, <span style="color:#f92672">*</span>sptr<span style="color:#f92672">++</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">BF_safe_atoi64</span>(c2, <span style="color:#f92672">*</span>sptr<span style="color:#f92672">++</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">*</span>dptr<span style="color:#f92672">++</span> <span style="color:#f92672">=</span> (c1 <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">2</span>) <span style="color:#f92672">|</span> ((c2 <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x30</span>) <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">4</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (dptr <span style="color:#f92672">&gt;=</span> end)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">BF_safe_atoi64</span>(c3, <span style="color:#f92672">*</span>sptr<span style="color:#f92672">++</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">*</span>dptr<span style="color:#f92672">++</span> <span style="color:#f92672">=</span> ((c2 <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x0F</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">4</span>) <span style="color:#f92672">|</span> ((c3 <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x3C</span>) <span style="color:#f92672">&gt;&gt;</span> <span style="color:#ae81ff">2</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> (dptr <span style="color:#f92672">&gt;=</span> end)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span>;
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">BF_safe_atoi64</span>(c4, <span style="color:#f92672">*</span>sptr<span style="color:#f92672">++</span>);
+</span></span><span style="display:flex;"><span>		<span style="color:#f92672">*</span>dptr<span style="color:#f92672">++</span> <span style="color:#f92672">=</span> ((c3 <span style="color:#f92672">&amp;</span> <span style="color:#ae81ff">0x03</span>) <span style="color:#f92672">&lt;&lt;</span> <span style="color:#ae81ff">6</span>) <span style="color:#f92672">|</span> c4;
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">while</span> (dptr <span style="color:#f92672">&lt;</span> end);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#ae81ff">0</span>;
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>While there is a lot of bit manipulation logic here, which I won&rsquo;t dare to explain, but what&rsquo;s important here is that <code>dptr &lt; end</code> will make sure that the result will be 16 bytes long. But the salt should be 22?</p>
+<p>In Bcrypt, while the salt is indeed encoded as 22 characters in base64 format, it actually decodes to 16 bytes of raw data. When encoding binary data to base64:</p>
+<ul>
+<li>every 3 bytes of binary data becomes 4 characters in base64</li>
+<li>this is because each Base64 character represents 6 bits (2^6 = 64 possibilities)</li>
+<li>so 3 bytes (24 bits) of binary data maps to 4 base64 chars (4 * 6 = 24 bits)</li>
+</ul>
+<p>For the Bcrypt salt:</p>
+<ul>
+<li>16 bytes of raw data = 128 bits</li>
+<li>when encoded in base64: ⌈(16 * 8) / 6⌉ = ⌈128/6⌉ = 22 characters</li>
+<li>the ceiling function is used because we need to round up to the next complete base64 character</li>
+</ul>
+<p>This way, we can see that it is safe to pass the entire hashed string as the salt input of the Postgres <code>crypt()</code> function. All right, that was fun, but let&rsquo;s get back to our Bcrypt discussion.</p>
+<h3 id="what-do-we-know-now">What do we know now?</h3>
+<p>Before we summarize what we know as of now, let me bring you one more quote about Bcrypt from the Wikipedia article:</p>
+<blockquote>
+<p>There are then a number of rounds in which the standard Blowfish keying  algorithm is applied, using alternatively the salt and the password as  the key, each round starting with the subkey state from the previous  round.  In theory, this is no stronger than the standard Blowfish key  schedule, but the number of rekeying rounds is configurable; this  <strong>process can therefore be made arbitrarily slow</strong>, which helps deter  brute-force attacks upon the hash or salt.</p>
+</blockquote>
+<p>So, the Bcrypt algorithm is relatively slow by design, as the protection from the brute-force attacks.</p>
+<p>Let&rsquo;s create a list of the known facts about the Bcrypt algorithm:</p>
+<ul>
+<li>requires a salt to generate the hash</li>
+<li>ideally, the salt should be random</li>
+<li>random salt leads to the different results for the same input to hash</li>
+<li>to compare the existing hashed string with the plain one, the original salt should be passed as the input of the crypto function</li>
+<li>Postgres allows passing the hashed string as a salt, and takes care of extracting the salt part of it to perform hashing</li>
+</ul>
+<p>With all of this information, let&rsquo;s finally try to solve the riddle of the poor performance of the query to fetch the user by SSN.</p>
+<h2 id="postgres-index-and-bcrypt">Postgres index and Bcrypt</h2>
+<p>So, why does Postgres keep performing sequential scans despite the index for that column? Let&rsquo;s take another look at the query we are trying to perform:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, ssn_hash);
+</span></span></code></pre></div><p>As we already know, to recompute the hash, the <code>crypto()</code> function has to receive the original salt as the input. But, as you can see, the only known thing when we run this query is the plain SSN value. This means that the only possible option that Postgres has is to do the following:</p>
+<ul>
+<li>iterate over each existing row in the <code>users</code> table</li>
+<li>fetch <code>ssn_hash</code> value</li>
+<li>pass the plain SSN and fetched <code>ssn_hash</code> value (as a salt) to the <code>crypt()</code> function and compute the hash</li>
+<li>compare the result with the fetched <code>ssn_hash</code> value</li>
+<li>if matches, we found what we are looking for, otherwise, we need to proceed to the next item, and so on</li>
+</ul>
+<p>Since the algorithm described need to iterate over all the existing items, it makes sense while Postgres doesn&rsquo;t rely on indexes at all. If we modify the query to compare the <code>ssn_hash</code> with the plain string instead of the <code>crypt()</code> function like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;</span>;
+</span></span></code></pre></div><p>we can see that this time Postgres will use the index:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Index Scan using users_ssn_hashed_idx on users  (cost=0.28..8.30 rows=1 width=138) (actual time=0.015..0.015 rows=0 loops=1)
+</span></span><span style="display:flex;"><span>  Index Cond: (ssn_hash = &#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;::text)
+</span></span><span style="display:flex;"><span>Planning Time: 0.448 ms
+</span></span><span style="display:flex;"><span>Execution Time: 0.033 ms
+</span></span></code></pre></div><p>Also, remember that we mentioned that Bcrypt algorithm is relatively slow? But what if we multiply slow by 5000 (number of table records we have)? That&rsquo;s the actual cause of the performance degradation that we have been investigating all this time!</p>
+<p>We can simply verify it by running:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users;
+</span></span></code></pre></div><p>The output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Seq Scan on users  (cost=0.00..157.00 rows=5000 width=138) (actual time=0.009..0.441 rows=5001 loops=1)
+</span></span><span style="display:flex;"><span>Planning Time: 0.094 ms
+</span></span><span style="display:flex;"><span>Execution Time: 0.641 ms
+</span></span></code></pre></div><p>As you can see, even though the query iterated over all the rows, it didn&rsquo;t need to perform Bcrypt hashing at all, the execution time is extremely low.</p>
+<p>Ok, so we know now that Bcrypt is the one to blame for the poor performance. But does it mean that Bcrypt is just a bad algorithm performance-wise?</p>
+<h2 id="bcrypt-where-to-use-and-where-not-to-use">Bcrypt: where to use and where not to use</h2>
+<p>Similar to any other tool, Bcrypt has its use case: hashing passwords. This means that the expected use case for it is different from the one we have above, as we shouldn&rsquo;t search by it. Let me demonstrate the scenario where Bcrypt can be used:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> user_credentials
+</span></span><span style="display:flex;"><span>(
+</span></span><span style="display:flex;"><span>    id            UUID <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> <span style="color:#66d9ef">DEFAULT</span> gen_random_uuid(),
+</span></span><span style="display:flex;"><span>    login         TEXT <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">UNIQUE</span>,
+</span></span><span style="display:flex;"><span>    password_hash TEXT <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span>
+</span></span><span style="display:flex;"><span>);
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> user_credentials_login_idx <span style="color:#66d9ef">ON</span> user_credentials (login);
+</span></span></code></pre></div><p>And let&rsquo;s insert a few items:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">dbUrl</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;postgres://adminU:adminP@localhost:5432/n0rdyblog&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">dbPool</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pgxpool</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">dbUrl</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">dbPool</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">numOfUsers</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">5000</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">numOfUsers</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">login</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">randomString</span>(<span style="color:#ae81ff">10</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">password</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">randomString</span>(<span style="color:#ae81ff">20</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">dbPool</span>.<span style="color:#a6e22e">Exec</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#e6db74">&#34;INSERT INTO user_credentials(login, password_hash) VALUES($1, crypt($2, gen_salt(&#39;bf&#39;)))&#34;</span>, <span style="color:#a6e22e">login</span>, <span style="color:#a6e22e">password</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">randomString</span>(<span style="color:#a6e22e">length</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">bytes</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">length</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Read</span>(<span style="color:#a6e22e">bytes</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">URLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>(<span style="color:#a6e22e">bytes</span>)[:<span style="color:#a6e22e">length</span>]
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>The way we are supposed to run queries now is this:</p>
+<ul>
+<li>when the user tries to log in, they are passing us their credentials: login and password</li>
+<li>here is the query we run to verify the provided credentials are correct:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> user_credentials
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> login <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ChCpOSGOCx&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">AND</span> password_hash <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;ygEUnWIFIBoJ7ZQQqQ3j&#39;</span>, password_hash);
+</span></span></code></pre></div><p>Even though the <code>user_credentials</code> table has 5000 items, this query is very fast, let&rsquo;s see how fast:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> user_credentials
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> login <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ChCpOSGOCx&#39;</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">AND</span> password_hash <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;ygEUnWIFIBoJ7ZQQqQ3j&#39;</span>, password_hash);
+</span></span></code></pre></div><p>The results:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Index Scan using user_credentials_login_idx on user_credentials  (cost=0.28..8.31 rows=1 width=88) (actual time=4.502..4.513 rows=1 loops=1)
+</span></span><span style="display:flex;"><span>  Index Cond: (login = &#39;ChCpOSGOCx&#39;::text)
+</span></span><span style="display:flex;"><span>&#34;  Filter: (password_hash = crypt(&#39;ygEUnWIFIBoJ7ZQQqQ3j&#39;::text, password_hash))&#34;
+</span></span><span style="display:flex;"><span>Planning Time: 0.067 ms
+</span></span><span style="display:flex;"><span>Execution Time: 4.542 ms
+</span></span></code></pre></div><p>The key difference between this scenario and the one that we had with SSNs, is that here Postgres is able to use indexing due to the <code>WHERE login = 'ChCpOSGOCx'</code> part, and then it computes Bcrypt hash only for the row returned by the index. Since, our <code>login</code> column is unique, it means that Bcrypt computation will happen only 1 time, so <code>O(1)</code> instead of <code>O(n)</code>.</p>
+<p>That&rsquo;s how Bcrypt is supposed to be used to benefit from its security without paying too high-performance costs.</p>
+<p>Nice, but how can we resolve the original problem then?</p>
+<h2 id="lets-fix-the-performance">Let&rsquo;s fix the performance</h2>
+<p>Of course, there is an obvious technical fix by switching to another faster algorithm with the predictable outcome like SHA-256, and the performance issue will be solved. But there are 2 points worth discussing:</p>
+<ul>
+<li>since the input of the SHA-256 (or any other deterministic algorithm) will be SSN, which has a known format of 10 digits, it means that the hash will be easy to crack by the brute-forcing attack, as 10^10 (10 billion) possible options of the SSN are something that is easy to generate for the modern computers</li>
+</ul>
+<p>Here is the simple brute-force code to generate all the possible SSN hash values:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ssnLength</span> = <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">start</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// initializes the buffer with ASCII zeros
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">ssnLength</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// generates all possible combinations
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">generateAllPossibleSSNs</span>(<span style="color:#a6e22e">current</span>, <span style="color:#ae81ff">0</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">duration</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Since</span>(<span style="color:#a6e22e">start</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Completed in %v\n&#34;</span>, <span style="color:#a6e22e">duration</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// generateAllPossibleSSNs generates all possible SSNs and hashes them
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">generateAllPossibleSSNs</span>(<span style="color:#a6e22e">current</span> []<span style="color:#66d9ef">byte</span>, <span style="color:#a6e22e">position</span> <span style="color:#66d9ef">int</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">position</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">ssnLength</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">Sum256</span>(<span style="color:#a6e22e">current</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// converts 0-9 directly to ASCII bytes (&#39;0&#39; = 48 in ASCII)
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> byte(<span style="color:#ae81ff">48</span>); <span style="color:#a6e22e">i</span> &lt; byte(<span style="color:#ae81ff">58</span>); <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">current</span>[<span style="color:#a6e22e">position</span>] = <span style="color:#a6e22e">i</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">generateAllPossibleSSNs</span>(<span style="color:#a6e22e">current</span>, <span style="color:#a6e22e">position</span><span style="color:#f92672">+</span><span style="color:#ae81ff">1</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>It took 30 minutes to run it on my MacBook Pro 2019, which is definitely an outdated machine as of 2025. If we had another use case, when we, for example, need to store hashes of API keys that are of UUID v4 type, so random, SHA-256 could be a good choice for such a scenario.</p>
+<p>This brings us to another point:</p>
+<ul>
+<li>why do we hash SSNs in the first place?</li>
+</ul>
+<p>Whenever I mentor other software engineers, I always keep saying that writing code is the easy part of our job, and we should validate each problem and requirement first rather than jumping into the coding mode right away. Same here: what do we gain from hashing the SSNs? Is it a privacy requirement or just an assumption by someone that “SSNs are sensitive, so we shouldn&rsquo;t store the plain values for them”? Is there a chance that we already store them in another table / database in our system in a plain way? If not, what are the privacy and legal requirements for the hashed values? As we see, without the salt, SSNs are easy to brute-force, but random salt leads to poor performance.</p>
+<p>In some cases, it can appear that, actually, the solution as simple as not hashing the data, if it is not considered too sensitive. In other cases, we might need to have one common salt for all the hashes, which we will store by using Gandalf&rsquo;s rule of thumb:</p>
+<p><img src="/images/pics/20250131-0001.jpg" alt="image"></p>
+<p>rather than keeping open/within the hash as in our previous example.</p>
+<p>In this case, if the salt is common, we can even stay with Bcrypt, as the query with a known salt will use indexing:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehu&#39;</span>);
+</span></span></code></pre></div><p>The result is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Index Scan using users_ssn_hashed_idx on users  (cost=0.28..8.30 rows=1 width=138) (actual time=0.038..0.038 rows=0 loops=1)
+</span></span><span style="display:flex;"><span>  Index Cond: (ssn_hash = &#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;::text)
+</span></span><span style="display:flex;"><span>Planning Time: 3.462 ms
+</span></span><span style="display:flex;"><span>Execution Time: 0.118 ms
+</span></span></code></pre></div><p>As you might remember, we started with 15 seconds per query, and now we are down to 3 milliseconds, which is 5000 times faster — an exciting achievement.</p>
+<p>Still, something faster like SHA-256, SHA-3, BLAKE2 or BLAKE3 might be better choices if a common salt is given. Of course, this needs benchmarking, consulting your security team and checking Postgres support for your particular case before deciding.</p>
+<p>And that&rsquo;s it, the team and the users are happy, the system is healthy again. We saved the day, and learned a thing or two about the Bcrypt algorithm.</p>
+<p>That was quite a ride, so thanks a lot for reading my post. I truly hope it was useful, and I&rsquo;ll see you in my next ones, as more to come soon. Have fun! =)</p>
+
+  
+    <hr>
+<div class="newsletters">
+    <div class="help-block-for-success"></div>
+    <div class="help-block-for-error"></div>
+    <form id="email-subscription-form">
+        <label for="email-subscription-input">Receive an email once a new post is published</label>
+        <input type="email" id="email-subscription-input" name="email-subscription-input" placeholder="Email address" />
+        <button type="submit">Subscribe</button>
+    </form>
+
+    <script>
+      const listmonkHost = "https://mail.n0rdy.foo";
+      const listmonkSubscriptionSuccessMessage = "Almost there! =) Please, check your email to confirm subscription. Check your spam folder if you didn't get the email.";
+      const listmonkSubscriptionErrorMessage = "Something went wrong =( Please, try again later.";
+
+      const form = document.getElementById("email-subscription-form");
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = form.querySelector("#email-subscription-input").value;
+        const data = {
+          email: email,
+          list_uuids: [
+            "3ba79b71-880f-417d-9587-d388b62e0986"
+          ]
+      };
+        fetch(`${listmonkHost}/api/public/subscription`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }).then((response) => {
+          if (response.status === 200) {
+            const successBlock = document.getElementsByClassName('help-block-for-success')[0];
+            successBlock.classList.add('help-block-show');
+            successBlock.textContent = listmonkSubscriptionSuccessMessage;
+            document.getElementById('email-subscription-form').classList.add('email-subscription-form-hide');
+          } else {
+            const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
+            errorBlock.classList.add('help-block-show');
+            errorBlock.textContent = listmonkSubscriptionErrorMessage;
+          }
+        }).catch(() => {
+          const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
+          errorBlock.classList.add('help-block-show');
+          errorBlock.textContent = listmonkSubscriptionErrorMessage;
+        });
+      })
+    </script>
+</div>
+  
+  <hr>
+<div class="footer">
+    
+	    
+            <a class="previous-post" href="https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/?ref=footer"><span style="font-weight:bold;">« Previous</span><br>What Okta Bcrypt incident can teach us about...</a>
+        
+	    
+    
+</div>
+
+  
+    <div class="comments">
+    
+        <div id="remark42"></div>
+        <script>
+            themeFromLS = localStorage.getItem("theme")
+            themeFromHugo = document.body.classList.contains("dark-theme") ? "dark" : "light"
+            currentTheme = themeFromLS ? themeFromLS : themeFromHugo;
+
+            var remark_config = {
+                host: "https://www.remark42.n0rdy.foo",
+                site_id: "remark42.n0rdy.foo",
+                theme: currentTheme,
+                max_shown_comments: 100,
+            }
+        </script>
+        <script>!function(e,n){for(var o=0;o<e.length;o++){var r=n.createElement("script"),c=".js",d=n.head||n.body;"noModule"in r?(r.type="module",c=".mjs"):r.async=!0,r.defer=!0,r.src=remark_config.host+"/web/"+e[o]+c,d.appendChild(r)}}(remark_config.components||["embed"],document);</script>
+    
+</div>
+
+  
+</div>
+            </main>
+            
+  
+    <div class="article-toc ">
+    <div class="toc-wrapper">
+      <h4 id="contents"></h4>
+      <nav id="TableOfContents">
+  <ul>
+    <li><a href="#running-it-locally">Running it locally</a></li>
+    <li><a href="#browsing-the-code">Browsing the code</a></li>
+    <li><a href="#fake-it-until-you-make-it">Fake it until you make it</a></li>
+    <li><a href="#bcrypt">Bcrypt</a>
+      <ul>
+        <li><a href="#bcrypt-in-postgres-source-code">Bcrypt in Postgres source code</a></li>
+        <li><a href="#what-do-we-know-now">What do we know now?</a></li>
+      </ul>
+    </li>
+    <li><a href="#postgres-index-and-bcrypt">Postgres index and Bcrypt</a></li>
+    <li><a href="#bcrypt-where-to-use-and-where-not-to-use">Bcrypt: where to use and where not to use</a></li>
+    <li><a href="#lets-fix-the-performance">Let&rsquo;s fix the performance</a></li>
+  </ul>
+</nav>
+    </div>
+</div>
+
+  
+
+        </div>
+    </body>
+</html>

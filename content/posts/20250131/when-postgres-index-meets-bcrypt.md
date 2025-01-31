@@ -2,7 +2,7 @@
 title: "When Postgres index meets Bcrypt"
 image: "/covers/pics/20250131.jpg"
 draft: false
-date: 2025-01-31T08:30:00+01:00
+date: 2025-01-31T08:30:00+02:00
 tags: ["postgres", "security", "bcrypt", "performance", "optimization", "debug"]
 ---
 Hello there! In the [previous post “What Okta Bcrypt incident can teach us about designing better APIs”](https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/), we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I, personally, came across a few years ago while investigating a quite nasty performance issue with one of the services. Let's jump right into it!

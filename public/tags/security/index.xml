@@ -6,8 +6,15 @@
     <description>Recent content in Security on n0rdy personal blog</description>
     <generator>Hugo</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 22 Jan 2025 18:00:00 +0100</lastBuildDate>
+    <lastBuildDate>Fri, 31 Jan 2025 08:30:00 +0200</lastBuildDate>
     <atom:link href="https://n0rdy.foo/tags/security/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>When Postgres index meets Bcrypt</title>
+      <link>https://n0rdy.foo/posts/20250131/when-postgres-index-meets-bcrypt/</link>
+      <pubDate>Fri, 31 Jan 2025 08:30:00 +0200</pubDate>
+      <guid>https://n0rdy.foo/posts/20250131/when-postgres-index-meets-bcrypt/</guid>
+      <description>&lt;p&gt;Hello there! In the &lt;a href=&#34;https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/&#34; target=&#34;_blank&#34;&gt;previous post “What Okta Bcrypt incident can teach us about designing better APIs”&lt;/a&gt;, we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I, personally, came across a few years ago while investigating a quite nasty performance issue with one of the services. Let&amp;rsquo;s jump right into it!&lt;/p&gt;</description>
+    </item>
     <item>
       <title>What Okta Bcrypt incident can teach us about designing better APIs</title>
       <link>https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/</link>
