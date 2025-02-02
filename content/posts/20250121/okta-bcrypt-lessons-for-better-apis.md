@@ -105,6 +105,8 @@ Perfect! At this point, I became even more suspicious about the tool Okta used, 
 
 Let's proceed with Java.
 
+*Btw, if you like my blog and don’t want to miss out on new posts, consider subscribing to my newsletter [here](https://mail.n0rdy.foo/subscription/form). You'll receive an email once I publish a new post.*
+
 ## Java and Bcrypt
 
 Java doesn't support Bcrypt from its core API, but my simple Google search showed that Spring Security library has implemented it. For those who are not into Java ecosystem, Spring is the most used and battle-tested frameworks out there, that has libraries for almost anything: Web, DBs, Cloud, Security, AI, etc. Pretty powerful tool, that I've used a lot in the past, and still sometimes use for my side projects.
