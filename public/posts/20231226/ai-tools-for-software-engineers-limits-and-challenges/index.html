@@ -59,12 +59,12 @@
 <!-- Open Graph image and Twitter Card metadata -->
 
   
-    <meta property="og:image" content="/covers/drawings/20231226.jpg" />
-    <meta name="twitter:image" content="/covers/drawings/20231226.jpg"/>
+    <meta property="og:image" content="/covers/drawings/20231226.webp" />
+    <meta name="twitter:image" content="/covers/drawings/20231226.webp"/>
           <meta name="twitter:card" content="summary_large_image">
         <meta property="og:image:width" content="2386">
         <meta property="og:image:height" content="1491">
-      <meta property="og:image:type" content="image/jpeg">
+      <meta property="og:image:type" content="image/webp">
   
 <title itemprop="name">n0rdy - AI tools for software engineers: 5 things to be careful about/aware of</title>
 <meta property="og:title" content=n0rdy&#32;-&#32;AI&#32;tools&#32;for&#32;software&#32;engineers:&#32;5&#32;things&#32;to&#32;be&#32;careful&#32;about/aware&#32;of />
@@ -616,7 +616,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>A short disclaimer: the message of this post is not &ldquo;don&rsquo;t use the AI tools,&rdquo; but instead &ldquo;use the AI tools mindfully.&rdquo; - the author is not one of the <a href="https://en.wikipedia.org/wiki/Luddite" target="_blank">Luddites</a>, I can assure you =)</p>
 <h2 id="contextless-advises">Contextless advises</h2>
 <p>Let me introduce you to Dave. Dave is a friendly and very talkative guy, the social bee, if you will. But you should know this about him: Dave likes to share his opinions and, even more, give his advice regarding whether he has been asked to or not. Usually, he doesn&rsquo;t bother diving deep into your situation, but instead, he prefers to share his thoughts right away: &ldquo;Do you want to buy a car? Buy Tesla!&rdquo;, &ldquo;Are you considering upgrading your laptop? MacBook Pro is all you need, I assure you!&rdquo;. Here is him:</p>
-<p><img src="/images/drawings/20231226-0001.jpg" alt="image" title="Dave"></p>
+<p><img src="/images/drawings/20231226-0001.webp" alt="image" title="Dave"></p>
 <p>Do you have any Dave-s in your life? I wouldn&rsquo;t be surprised if you do.</p>
 <p>As you can see from Dave&rsquo;s answers, he is not a bad guy, he really wants to help, and his advice is not dumb, but it&rsquo;s not something we should rely upon, at least at the very beginning of the conversation.</p>
 <p>Why did I mention Dave at all? The post was supposed to be about AI tools. Well, let me tell you that GitHub Copilot is one of the &ldquo;Dave-s&rdquo;, especially once you have created a new project. It&rsquo;s easy to reproduce this behavior as of the day of writing this post:</p>
@@ -627,9 +627,9 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>open it and start typing &ldquo;My name is &quot;</li>
 </ul>
 <p>Not sure about you, but in my case, I got this suggestion from GitHub Copilot:</p>
-<p><img src="/images/screenshots/20231226-0001.png" alt="image"></p>
+<p><img src="/images/screenshots/20231226-0001.webp" alt="image"></p>
 <p>Ok, let&rsquo;s accept the suggestion and add <code>and I'm from </code> - I got this:</p>
-<p><img src="/images/screenshots/20231226-0002.png" alt="image"></p>
+<p><img src="/images/screenshots/20231226-0002.webp" alt="image"></p>
 <p>Hey, wait, but it&rsquo;s not a code! I hear you, let&rsquo;s try the same with a code:</p>
 <ul>
 <li>create a <code>main.go</code> file in the root of your project</li>
@@ -637,17 +637,17 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>type/copy-paste this <code>func pickLast() string {</code> and wait for the suggestion</li>
 </ul>
 <p>I got this on my machine:</p>
-<p><img src="/images/screenshots/20231226-0003.png" alt="image"></p>
+<p><img src="/images/screenshots/20231226-0003.webp" alt="image"></p>
 <p>It&rsquo;s a fair suggestion, and it compiles, but is this something you, as a software engineer, would suggest? Would you suggest anything at this moment of project development if, let&rsquo;s say, you are assisting your colleague via the pair programming session, but you knew nothing about this project before now? It&rsquo;s a rhetorical question.</p>
 <h3 id="what-should-we-do-about-it">What should we do about it?</h3>
 <p>Well, the same as with Dave, we should be aware of this way of working with GitHub Copilot and be careful with the suggestions it provides at the very early stage of the project or before its model has enough time and data to learn about your project.</p>
 <p>Also, I&rsquo;d recommend enabling native IDE suggestions alongside the GitHub Copilot ones to get the best of the 2 worlds: AI-based and docs/code-based, meaning that the latter doesn&rsquo;t suffer from <a href="https://en.wikipedia.org/wiki/Hallucination_%28artificial_intelligence%29" target="_blank">hallucinations</a>. You can do that:</p>
 <ul>
 <li>in JetBrains IDEs by: <code>Settings</code> -&gt; <code>Languages &amp; Frameworks</code> -&gt; <code>GitHub Copilot</code> -&gt; enable <code>Show IDE completions side-by-side</code> option under the <code>Editor</code> settings chapter
-<img src="/images/screenshots/20231226-0004.png" alt="image"></li>
+<img src="/images/screenshots/20231226-0004.webp" alt="image"></li>
 </ul>
 <p>Once enabled, it works like this:</p>
-<p><img src="/images/screenshots/20231226-0005.png" alt="image"></p>
+<p><img src="/images/screenshots/20231226-0005.webp" alt="image"></p>
 <p>I&rsquo;m not a heavy VS Code/Vim/Neovim user, that&rsquo;s why I&rsquo;m not sure how to achieve the same there - if you know, please, let me and others know in the comments section - <a href="https://en.wikipedia.org/wiki/Pay_it_forward" target="_blank">pay it forward</a> =)</p>
 <h2 id="xy-problem">XY problem</h2>
 <p>Have you ever heard of XY problem? If not, here is how <a href="https://en.wikipedia.org/wiki/XY_problem" target="_blank">Wikipedia</a> defines it:</p>
@@ -671,7 +671,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>do specific manipulations within the <code>package.json</code> of each repo</li>
 </ul>
 <p>And I used ChatGPT to be my buddy in that process. I provided a high-level context for the tool and said that I&rsquo;m considering writing a script that will clone each of these repositories, read the content of the <code>package.json</code> file via the IO operation, make the desired change, and write the modified context back to the file. My AI friend replied that it was a good idea and explained how to do that with some pseudocode. However, I felt that I was reinventing the wheel with all of that, so I decided to double-check:</p>
-<p><img src="/images/screenshots/20231226-0006.png" alt="image"></p>
+<p><img src="/images/screenshots/20231226-0006.webp" alt="image"></p>
 <p>and then ChatGPT suggested a list of alternative approaches, one of which was to use the existing <code>GET /repos/:owner/:repo/contents/:path</code> endpoint of the GitHub API. That was good advice and exactly the way I went forward (successfully if you are wondering). But would I have gotten it if I hadn&rsquo;t explicitly asked about more elegant ways of achieving the desired result? Nope.</p>
 <h3 id="what-should-we-do-about-it-1">What should we do about it?</h3>
 <p>That&rsquo;s something that I&rsquo;d like you to be aware of while using tools like ChatGPT: they are falling (still?) into the XY problem, so be mindful and explicitly double-check whether the way you are going right now is the best one and whether there are any better alternatives.</p>
@@ -771,7 +771,7 @@ You are watching a movie, and after 30 minutes you realize it’s not what you e
 <p>This is the most boring and overlooked (by us engineers) challenge AI tools introduce: privacy and legal compliance. I remember that as soon as GitHub Copilot was released (in Beta?) for individual users, some of my friends and colleagues got access to it and started using it both for their pet projects and at work. It&rsquo;s only another tool, right? Well, it&rsquo;s not that simple.</p>
 <p>There is <a href="https://github.com/orgs/community/discussions/7163" target="_blank">an interesting discussion about &ldquo;Is Github Copilot safe privacy wise?&rdquo; on GitHub</a>. The short conclusion is that it&rsquo;s not, meaning that you should not use your individual license with a code that belongs to the company, as the tool collects metrics, telemetry, and, probably, some code/suggestions/prompts as well. I can see that the same conclusion came from the privacy and legal teams of the different tech companies out there, so the company started the enterprise agreements&rsquo; negotiations with GitHub to obtain the business licenses instead, which are more privacy-friendly.</p>
 <p>For example, here is what GitHub states in the <a href="https://docs.github.com/en/enterprise-cloud@latest/copilot/overview-of-github-copilot/about-github-copilot-individual#understanding-the-differences-between-copilot-individual-and-copilot-business" target="_blank">&ldquo;About GitHub Copilot Individual&rdquo; article</a>:</p>
-<p><img src="/images/screenshots/20231226-0007.png" alt="image"></p>
+<p><img src="/images/screenshots/20231226-0007.webp" alt="image"></p>
 <p>As you can see, they are pretty transparent about the telemetry they collect from the individual users, but not for the business ones.</p>
 <p><a href="https://www.businessinsider.com/chatgpt-companies-issued-bans-restrictions-openai-ai-amazon-apple-2023-7" target="_blank">Many companies</a> applied similar restrictions for the use of ChatGPT. The same approach goes for the other AI tools out there.</p>
 <h3 id="what-should-we-do-about-it-4">What should we do about it?</h3>

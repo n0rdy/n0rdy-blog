@@ -59,12 +59,12 @@
 <!-- Open Graph image and Twitter Card metadata -->
 
   
-    <meta property="og:image" content="/covers/drawings/20240103.jpg" />
-    <meta name="twitter:image" content="/covers/drawings/20240103.jpg"/>
+    <meta property="og:image" content="/covers/drawings/20240103.webp" />
+    <meta name="twitter:image" content="/covers/drawings/20240103.webp"/>
           <meta name="twitter:card" content="summary_large_image">
         <meta property="og:image:width" content="1801">
         <meta property="og:image:height" content="1210">
-      <meta property="og:image:type" content="image/jpeg">
+      <meta property="og:image:type" content="image/webp">
   
 <title itemprop="name">n0rdy - Understanding CORS</title>
 <meta property="og:title" content=n0rdy&#32;-&#32;Understanding&#32;CORS />
@@ -611,7 +611,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
   <p>Hello there! Happy New Year! I hope you had an opportunity to get some rest during the winter holidays and maybe even made a snowman or two =)</p>
 <p>Several days ago, I had a dialog with a friend of mine (let&rsquo;s call her Eowyn) who has recently started her path in software engineering:</p>
 <p><strong>Eowyn:</strong> Hey, buddy! I&rsquo;m building a web project that has the frontend and backend parts. Whenever I click a button on the UI (that triggers a DELETE request to the server), my browser blows with these errors:
-<img src="/images/screenshots/20240103-0001.png" alt="image">
+<img src="/images/screenshots/20240103-0001.webp" alt="image">
 I tried calling the same endpoint with the <code>curl</code> command, and it works. I did the same via Postman, and it also works. It makes no sense! What the heck?</p>
 <p><strong>Me:</strong> Hehe, congrats, this is a historical moment in your career - the day you discovered CORS! =)</p>
 <p>To her credit, she didn&rsquo;t want my help in fixing the issue, she wanted to understand it. That&rsquo;s why I spent the next half an hour explaining the topic of CORS. And since that was not the first time I had to do that, I realized that it is an excellent opportunity to write a post on this subject and, next time, share the link to it instead of explaining it once again.</p>
@@ -622,22 +622,22 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 <ul>
 <li>once somebody calls Geralt&rsquo;s office, Bob picks up the phone, gathers the info about the call (who, why, and where they are calling from), and asks them to wait</li>
 </ul>
-<p><img src="/images/drawings/20240103-0001.jpg" alt="image"></p>
+<p><img src="/images/drawings/20240103-0001.webp" alt="image"></p>
 <ul>
 <li>Bob calls Geralt, shares the info about the caller, and asks whether Geralt is willing to talk to them</li>
 </ul>
-<p><img src="/images/drawings/20240103-0002.jpg" alt="image"></p>
+<p><img src="/images/drawings/20240103-0002.webp" alt="image"></p>
 <p>As we can see, Geralt replied that if, during the next 2 hours, people were calling from the place called Ingenheim about hunting, Bob should connect them with him right away.</p>
 <ul>
 <li>Bob gets back to the caller and connects them with Geralt</li>
 </ul>
-<p><img src="/images/drawings/20240103-0003.jpg" alt="image"></p>
+<p><img src="/images/drawings/20240103-0003.webp" alt="image"></p>
 <ul>
 <li>once there is another call within the next 2 hours coming from a different place than Ingenheim, Bob rejects the request to connect them with Geralt:</li>
 </ul>
-<p><img src="/images/drawings/20240103-0004.jpg" alt="image"></p>
+<p><img src="/images/drawings/20240103-0004.webp" alt="image"></p>
 <p>However, if there is someone (like the witcher&rsquo;s buddy Yarpen) who knows Geralt&rsquo;s direct phone number, they can still call him regardless of the place and reason for making a call:</p>
-<p><img src="/images/drawings/20240103-0005.jpg" alt="image"></p>
+<p><img src="/images/drawings/20240103-0005.webp" alt="image"></p>
 <p>I think this should make perfect sense. But how come is it related to the CORS?</p>
 <h2 id="from-the-real-life-to-software-engineering">From the real life to software engineering</h2>
 <p>If we try to map the real-life example we used to the software engineering concepts, it will look like this:</p>
@@ -903,18 +903,18 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>If we run the Go code, it will serve the HTML page to http://localhost:3333`</p>
 <p>Based on my drawings, you might have already noticed that I have an exceptional talent in design that&rsquo;s the UI is another masterpiece of mine:</p>
-<p><img src="/images/screenshots/20240103-0002.png" alt="image"></p>
+<p><img src="/images/screenshots/20240103-0002.webp" alt="image"></p>
 <p>Let&rsquo;s test what we have now.</p>
 <h3 id="testing-time">Testing time</h3>
 <p>Navigate to http://localhost:3333/ in your browser, and open a DevTools there: it&rsquo;s <code>Option+Command+I</code> on MacOS or <code>View -&gt; Developer -&gt; Developer Tools</code> . Ideally, we should be able to see the <code>Network</code> tab and the <code>Console</code> like this:</p>
-<p><img src="/images/screenshots/20240103-0003.png" alt="image"></p>
+<p><img src="/images/screenshots/20240103-0003.webp" alt="image"></p>
 <p>Let&rsquo;s try to add a new book - &ldquo;Harry Potter&rdquo;, and click &ldquo;Add&rdquo;. Boom!</p>
-<p><img src="/images/screenshots/20240103-0004.png" alt="image"></p>
+<p><img src="/images/screenshots/20240103-0004.webp" alt="image"></p>
 <p>The error looks somewhat familiar, doesn&rsquo;t it? It&rsquo;s not exactly the same as at the beginning of this post, but it&rsquo;s very similar. Let&rsquo;s try to understand what it actually means.</p>
 <p>You might have noticed that our backend code doesn&rsquo;t mention CORS at all. It is indeed true, we haven&rsquo;t implemented any CORS configs as of now. But that doesn&rsquo;t matter for the browser: it tried to make a preflight request anyway</p>
-<p><img src="/images/screenshots/20240103-0005.png" alt="image"></p>
+<p><img src="/images/screenshots/20240103-0005.webp" alt="image"></p>
 <p>If we click on it, it will expand some details, and we can see that the browser tried to make an OPTIONS request to the same path as the add book endpoint, and received a <code>405 Method Not Allowed</code> response, which makes sense as we haven&rsquo;t defined the OPTIONS endpoint in our backend.</p>
-<p><img src="/images/screenshots/20240103-0006.png" alt="image"></p>
+<p><img src="/images/screenshots/20240103-0006.webp" alt="image"></p>
 <p>If we get back to our real-life example for a moment, what happened here is the following:</p>
 <ul>
 <li>somebody calls Geralt&rsquo;s office, so Bob picks up the phone, gathers the info about the call (who, why, and where they are calling from), asks them to wait, and calls Geralt to double-check</li>
@@ -1076,7 +1076,7 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s run this code to see whether it works. It should - if you experience any issues, try to restart both frontend and backend apps, and even access http://localhost:3333 via incognito mode, as there might be some issues due to browser caching.</p>
 <p>If you click all the buttons a few times by trying to add some books and get/delete all of them, you&rsquo;ll see that it works as expected. Even more, if we take a look at the <code>Network</code> tab, we&rsquo;ll see that there is only 1 preflight request in total:</p>
-<p><img src="/images/screenshots/20240103-0007.png" alt="image"></p>
+<p><img src="/images/screenshots/20240103-0007.webp" alt="image"></p>
 <p>Of course, we are not surprised about that, as we have just configured the <code>Access-Control-Max-Age</code> header for those purposes.</p>
 <p>I believe you should already have a good understanding of CORS. But let&rsquo;s take a final step and try to mess with CORS configs to see how it breaks the flow again.</p>
 <h3 id="breaking-purposely-time">Breaking (purposely) time</h3>
@@ -1097,11 +1097,11 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s restart the apps and see what will happen if we try to use them.</p>
-<p><img src="/images/screenshots/20240103-0008.png" alt="image"></p>
+<p><img src="/images/screenshots/20240103-0008.webp" alt="image"></p>
 <p>Well, the outcome is as expected: only <code>http://example.com</code> is allowed to call the API. What&rsquo;s even more interesting is the fact that if we put the localhost value there but with a different port, we&rsquo;ll still get an error:</p>
-<p><img src="/images/screenshots/20240103-0009.png" alt="image"></p>
+<p><img src="/images/screenshots/20240103-0009.webp" alt="image"></p>
 <p>The same applies for <code>http</code> vs <code>https</code> - CORS is very strict:</p>
-<p><img src="/images/screenshots/20240103-0010.png" alt="image"></p>
+<p><img src="/images/screenshots/20240103-0010.webp" alt="image"></p>
 <p>There is a possibility, though, of allowing anyone to call your API - by using <code>*</code> as a value for the <code>Access-Control-Allow-Origin</code> header:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">enableCors</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API
@@ -1135,7 +1135,7 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Once we restart both apps, we&rsquo;ll see that there are no issues with getting the books or adding a new one, but trying to delete them fires an error.</p>
-<p><img src="/images/screenshots/20240103-0011.png" alt="image"></p>
+<p><img src="/images/screenshots/20240103-0011.webp" alt="image"></p>
 <p>If the flow works for you with no issues, it is the browser caching (<a href="https://martinfowler.com/bliki/TwoHardThings.html" target="_blank">the 2nd hardest thing</a> in the computer science) who spoils the fun. To fix that, try either:</p>
 <ul>
 <li>ticking <code>Disable cache</code> box under the <code>Network</code> tab</li>
@@ -1159,7 +1159,7 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>If we click all the buttons we have, we&rsquo;ll see that getting and deleting books work, but adding a new one fails as expected:</p>
-<p><img src="/images/screenshots/20240103-0012.png" alt="image"></p>
+<p><img src="/images/screenshots/20240103-0012.webp" alt="image"></p>
 <p><code>Request header field content-type is not allowed by Access-Control-Allow-Headers in preflight response.</code> makes sense.</p>
 <p>Production applications use way more headers, that&rsquo;s why review them carefully in order to configure CORS properly.</p>
 <p>Time to revert the changes and proceed to the last header in out list.</p>
@@ -1179,7 +1179,7 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//w.Header().Set(&#34;Access-Control-Max-Age&#34;, strconv.Itoa(60*60*2))
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
 </span></span></code></pre></div><p>Observe the <code>Network</code> tab after restarting the app:</p>
-<p><img src="/images/screenshots/20240103-0013.png" alt="image"></p>
+<p><img src="/images/screenshots/20240103-0013.webp" alt="image"></p>
 <p>No cache policy forces browser to make a preflight request each time there is a POST or DELETE call (there are no preflight requests for GET calls - it&rsquo;s a rule). It&rsquo;s acceptable while doing testing, but it leads to the undesired load to your servers if there is no <code>Access-Control-Max-Age</code> header provided, that&rsquo;s why the rule of thumb is to have it. There is no ideal value for it though, it depends on your situation and requirements.</p>
 <p>And that&rsquo;s basically all I wanted to show you today. I&rsquo;m sure you have a good understanding about CORS now, and can dive deeper on your own to learn even more on that topic.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>

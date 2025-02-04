@@ -59,12 +59,12 @@
 <!-- Open Graph image and Twitter Card metadata -->
 
   
-    <meta property="og:image" content="/covers/drawings/20241210.jpg" />
-    <meta name="twitter:image" content="/covers/drawings/20241210.jpg"/>
+    <meta property="og:image" content="/covers/drawings/20241210.webp" />
+    <meta name="twitter:image" content="/covers/drawings/20241210.webp"/>
           <meta name="twitter:card" content="summary_large_image">
         <meta property="og:image:width" content="2154">
         <meta property="og:image:height" content="1668">
-      <meta property="og:image:type" content="image/jpeg">
+      <meta property="og:image:type" content="image/webp">
   
 <title itemprop="name">n0rdy - Demystifying OTPs: the logic behind the offline generation of tokens</title>
 <meta property="og:title" content=n0rdy&#32;-&#32;Demystifying&#32;OTPs:&#32;the&#32;logic&#32;behind&#32;the&#32;offline&#32;generation&#32;of&#32;tokens />
@@ -605,7 +605,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </div>
 
   <p>Hello there! Another evening, on my way back home, I decided to check the mailbox. I don&rsquo;t mean my email inbox, but the old-school actual box where the postman puts the physical letters. And to my great surprise, I found an envelope there with something inside! While opening it, I spent a few moments hoping that it&rsquo;s the decades delayed letter from Hogwarts. But then I had to get back down to Earth, once I noticed that it&rsquo;s a boring &ldquo;grown-up&rdquo; letter from the bank. I skimmed through the text and realized that my &ldquo;digital-only&rdquo; bank for cool kids had been acquired by the biggest player on the local market. And as a token of the new beginning, they added this to the envelope:</p>
-<p><img src="/images/drawings/20241210-0001.jpg" alt="image"></p>
+<p><img src="/images/drawings/20241210-0001.webp" alt="image"></p>
 <p>Alongside the instructions on how to use it.</p>
 <p>If you are like me, and have never come across such a piece of the tech innovation, let me share what I learned from the letter: new owners decided to enforce the security policies from their company, which means that all the user accounts from now on will have the <a href="https://en.wikipedia.org/wiki/Multi-factor_authentication" target="_blank">MFA</a> enabled (kudos for that, btw). And the device you could see above generates one-time tokens 6-digits long that are used as a second factor while logging in to your bank account. Basically, the same way as apps like Authy, Google Authenticator or 2FAS work, but in a physical shape.</p>
 <p>So, I gave it a try, and the login process went smoothly: the device showed me a 6-digits code, I entered it in my banking app, and this got me in. Hooray! But then something struck me: how does this thing work? There is no way it is connected to the internet somehow, but it manages to generate correct codes that are accepted by my bank server. Hm&hellip; Could it have a SIM-card or something similar inside? No way!</p>

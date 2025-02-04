@@ -59,12 +59,12 @@
 <!-- Open Graph image and Twitter Card metadata -->
 
   
-    <meta property="og:image" content="/covers/drawings/20231221.png" />
-    <meta name="twitter:image" content="/covers/drawings/20231221.png"/>
+    <meta property="og:image" content="/covers/drawings/20231221.webp" />
+    <meta name="twitter:image" content="/covers/drawings/20231221.webp"/>
           <meta name="twitter:card" content="summary_large_image">
         <meta property="og:image:width" content="4558">
         <meta property="og:image:height" content="2055">
-      <meta property="og:image:type" content="image/png">
+      <meta property="og:image:type" content="image/webp">
   
 <title itemprop="name">n0rdy - Go concurrency simplified. Part 4: Post office as a data pipeline</title>
 <meta property="og:title" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;4:&#32;Post&#32;office&#32;as&#32;a&#32;data&#32;pipeline />
@@ -611,7 +611,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
   <p>Hello there! The main part of my moving to a new place adventures seems to be behind. Since I&rsquo;m still waiting for a furniture delivery, I&rsquo;m writing this post while lying on the floor using my foam camping mat as a sofa. It&rsquo;s not the most ideal setup, but it works. Anyway, I feel like today is the right time to start working on Part 4 of the <a href="https://n0rdy.foo/series/go-concurrency-simplified" target="_blank">&ldquo;Go concurrency simplified&rdquo; series</a>. So far, we have learned and explored the key Go concurrency concepts, such as goroutines, channels, and the ways to synchronize and manage them. And today, we are going to combine all of our knowledge to make this world a better place to live (not really) or at least to help the post office (and our good old friend postman Bob) by making the queue handling process more effective. In the meantime, let&rsquo;s briefly recap where we stopped in Part 3 (if you missed it, <a href="https://n0rdy.foo/posts/20231214/go-concurrency-with-for-and-select/" target="_blank">here is the link</a>).</p>
 <h2 id="recap">Recap</h2>
 <p>The queue situation is still alarming, to say the least. On top of that, the management decided to assign a new responsibility to a postman in addition to handling the queue - answering the phone calls from the customers. Here is what it looks like:</p>
-<p><img src="/images/drawings/20231214-0001.png" alt="image" title="A new post office setup with a phone"></p>
+<p><img src="/images/drawings/20231214-0001.webp" alt="image" title="A new post office setup with a phone"></p>
 <p>This is the code that backs this setup:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Customer</span> <span style="color:#66d9ef">struct</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
@@ -776,11 +776,11 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>It&rsquo;s clear to us that the main problem here is that it takes a lot of time for the postman to process a parcel, and the customers have to wait in the meantime. Luckily, the same is clear to Triss - a post office manager. She understands that the postman Bob needs help. And since this post office branch is very important, it is possible to reallocate some workers from the other places here, so  Oda, Robert, and Martha will join. However, instead of opening 3 new desks to serve customers, Triss came up with something more innovative: the idea is to split the tasks in a way that Bob will still handle the customers, but instead of performing all the parcel clearance routines, from now on he is going to check the ID of the customers, take the parcel from them and pass it forward. The customer can leave right away, so the next in the queue can proceed. In the meantime, either of the 3 new employees takes the parcel and performs the rest of the actions with it.</p>
 <p>If you have ever taken the algorithms classes, you might have heard of the <a href="https://en.wikipedia.org/wiki/Divide-and-conquer_algorithm" target="_blank">&ldquo;divide and conquer&rdquo; approach</a> to solving problems, where the large task is divided into smaller subtasks that are easier to solve. Triss studied management at the university, so she didn&rsquo;t have the algorithms in her curriculum - nevertheless, that&rsquo;s exactly the approach she took here.</p>
 <p>Let&rsquo;s see what the new setup will look like:</p>
-<p><img src="/images/drawings/20231221-0001.png" alt="image" title="A new post office setup with 3 new employees"></p>
+<p><img src="/images/drawings/20231221-0001.webp" alt="image" title="A new post office setup with 3 new employees"></p>
 <p>Once Bob receives the parcel from the customer, he passes it forward right away:</p>
-<p><img src="/images/drawings/20231221-0002.png" alt="image" title="A new post office setup with 3 new employees: step 1"></p>
+<p><img src="/images/drawings/20231221-0002.webp" alt="image" title="A new post office setup with 3 new employees: step 1"></p>
 <p>One of the new colleagues picks it up right away. At the same time, the customer can leave, so the queue is moving:</p>
-<p><img src="/images/drawings/20231221-0003.png" alt="image" title="A new post office setup with 3 new employees: step 2"></p>
+<p><img src="/images/drawings/20231221-0003.webp" alt="image" title="A new post office setup with 3 new employees: step 2"></p>
 <p>This is quite an efficient process, as customers won&rsquo;t need to wait for the entire parcel clearance process to finish. Let&rsquo;s think about how we can code this.</p>
 <h3 id="a-new-way-of-working-as-a-code">A new way of working as a code</h3>
 <p>Until now, we had only one type of worker responsible for everything post-office-related. That&rsquo;s why we have 1 struct that defines this type of employee:</p>
@@ -1115,7 +1115,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>in +-10 seconds, the flow resumed</li>
 </ul>
 <p>Well, nothing unexpected has happened, as there are only 3 back-office employees for 5 customers. This makes Triss think: &ldquo;OK, if I push hard enough during the next meeting with the executives, I&rsquo;ll make them allocate 2 more employees to this branch&rdquo;. And since she is an extremely good negotiator, Carl and Luna joined the post office crew in no time.</p>
-<p><img src="/images/drawings/20231221-0004.png" alt="image" title="A new post office setup with 5 new employees"></p>
+<p><img src="/images/drawings/20231221-0004.webp" alt="image" title="A new post office setup with 5 new employees"></p>
 <p>Let&rsquo;s change our code to represent this:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">start</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
@@ -1303,7 +1303,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </ul>
 <p>Regardless of the example, the idea I&rsquo;m describing is the situation when there is a way to have an unlimited number of back-office workers spawned once there is a new parcel and released once it&rsquo;s processed. It&rsquo;s hard to imagine this in real life, as it&rsquo;s nearly impossible to have an unlimited number of employees due to such constraints as money and space. Unlike real life, it&rsquo;s different in software engineering: we can easily spawn a massive amount of goroutines even on a local machine because <a href="https://blog.nindalf.com/posts/how-goroutines-work/" target="_blank">goroutines are cheap</a>. And if we have a super powerful machine, their maximum number can be almost indefinite.</p>
 <p>Let&rsquo;s use this knowledge to modify our code. As a big fan of fantasy, I&rsquo;ll go with the wizard scenario.</p>
-<p><img src="/images/drawings/20231221-0005.png" alt="image" title="A new post office setup with a wizard"></p>
+<p><img src="/images/drawings/20231221-0005.webp" alt="image" title="A new post office setup with a wizard"></p>
 <p>We need to replace the existing back-office worker with a wizard one. Let&rsquo;s start by renaming <code>BackOfficeWorker</code> to <code>WizardBackOfficeWorker</code>:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">WizardBackOfficeWorker</span> <span style="color:#66d9ef">struct</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
@@ -1634,7 +1634,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>we have an end of the working day that gracefully shuts down the execution by allowing already started work to finish</li>
 </ul>
 <p>And this is exactly how the data pipelines look like out there: if we drop the technical part, what is left at the end of the day is the data flow pipeline, where we can see a data transformation happening on each step with a clear <a href="https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem" target="_blank">producer-consumer pattern</a>:</p>
-<p><img src="/images/drawings/20231221-0006.png" alt="image" title="A post office as a data pipeline"></p>
+<p><img src="/images/drawings/20231221-0006.webp" alt="image" title="A post office as a data pipeline"></p>
 <p>Good job, my friend! Triss is happy, so should we be, as we can officially claim that we have just solved the inefficient post office queue handling issue we&rsquo;ve been discussing since <a href="https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/" target="_blank">Part 1</a>.</p>
 <h2 id="where-to-go-from-here">Where to go from here</h2>
 <p>Before wrapping the <a href="https://n0rdy.foo/series/go-concurrency-simplified" target="_blank">&ldquo;Go concurrency simplified&rdquo; series</a> up, let me give you some hints on where you can go from here:</p>

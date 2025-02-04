@@ -1,6 +1,6 @@
 ---
 title: "Go concurrency simplified. Part 3: Managing channels with for loops and select statements"
-image: "/covers/drawings/20231214.png"
+image: "/covers/drawings/20231214.webp"
 draft: false
 date: 2023-12-14T23:00:00+01:00
 tags: ["go", "concurrency"]
@@ -264,7 +264,7 @@ So, are we done with the Go concurrency? Have we already learned all we need? I 
 
 Our good old friend postman Bob has just received a call from his manager, Triss. She has a new business idea that should increase customer satisfaction - install a phone so the customers can call it when they have questions. This means that Ben will have a new responsibility on top of handling the parcels that clients bring. This is the new setup:
 
-![image](/images/drawings/20231214-0001.png "A new post office setup with a phone")
+![image](/images/drawings/20231214-0001.webp "A new post office setup with a phone")
 
 Hmm...it means that Bob needs to handle 2 tasks instead of 1 from now on. But what is he supposed to do once there are both customers and a phone call? Well, he is free to choose which one to handle - "We have a lot of freedom at work," as Triss likes to say.
 

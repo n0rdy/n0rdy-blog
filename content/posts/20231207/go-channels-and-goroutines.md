@@ -1,6 +1,6 @@
 ---
 title: "Go concurrency simplified. Part 1: Channels and goroutines"
-image: "/covers/drawings/20231207.png"
+image: "/covers/drawings/20231207.webp"
 draft: false
 date: 2023-12-07T22:00:00+01:00
 tags: ["go", "concurrency", "goroutines", "channels"]
@@ -9,7 +9,7 @@ series: "Go concurrency simplified"
 
 Christmas season is around the corner, that's why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on [my open-source library](https://github.com/n0rdy/pippin) for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels. 
 
-![image](/images/drawings/20231207-0001.png "A queue")
+![image](/images/drawings/20231207-0001.webp "A queue")
 
 Suppose we imagine the post office as an application. In that case, it becomes clear that we are dealing with the classical "consumer-producer" problem, where customers like me are producers (because we bring boxes, letters, etc.), and the postman is a consumer of all these. And it's pretty easy to see that the system bottleneck is that there is only one consumer for N producers. 
 
@@ -178,7 +178,7 @@ I hope the challenge we have is crystal clear as of now. How can we solve it?
 
 In an ideal world, the solution will be super simple: to have 1 worker per 1 customer. Then, in our scenario, if the average processing time is 1 minute, it will take exactly 1 minute to handle the entire queue. Impressive, right? 
 
-![image](/images/drawings/20231207-0002.png "An ideal world solution")
+![image](/images/drawings/20231207-0002.webp "An ideal world solution")
 
 Well, it's pretty doable with 5 customers, like in our example, but what if the queue is 10 people long? What about 50? 100? It's obvious that in the real world, there are limits: money, time, space, etc., that's why the post office (or any other business, for that matter) won't hire that many employees to have a 1-1 ratio with the customers. What are the alternatives?
 
@@ -468,11 +468,11 @@ As expected, `3` is printed into the console.
 
 But how does this code work? To answer this question, let me take a step aside for the moment and go back to the post-office example to explain this. I hope you remember my drawing (or should I say a masterpiece) from there:
 
-![image](/images/drawings/20231207-0001.png "A queue")
+![image](/images/drawings/20231207-0001.webp "A queue")
 
 Such a beauty! But let me get back to business: we are interested now in the rightmost side of it, where the customer puts a basketball onto the post office desk, and the post worker takes it from there. This is a good representation of the channels, and here is the same part of the picture but close with the arrows and some text descriptions:
 
-![image](/images/drawings/20231207-0003.png "A post-office desk like a Go channel")
+![image](/images/drawings/20231207-0003.webp "A post-office desk like a Go channel")
 
 While this is a straightforward transaction, there are some important concepts behind it:
 
@@ -596,7 +596,7 @@ By the way, kudos to Go that its compiler detects deadlocks and fails on them ra
 
 To understand the concept of the buffered channels, let's get back to our post-office example again and take a look at this picture:
 
-![image](/images/drawings/20231207-0004.png "A post-office desk like a Go buffered channel")
+![image](/images/drawings/20231207-0004.webp "A post-office desk like a Go buffered channel")
 
 As you can see, the post office desk has become larger and has room for 3 items simultaneously. It means 3 customers can put their stuff onto the desk and leave, so the next ones in the queue can proceed. However, there is still only 1 post office worker, so that they will take the items one by one in the first-in-first-out (FIFO) order. 
 

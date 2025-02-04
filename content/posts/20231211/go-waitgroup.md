@@ -1,6 +1,6 @@
 ---
 title: "Go concurrency simplified. Part 2: Syncing goroutines with sync.WaitGroup"
-image: "/covers/drawings/20231211.png"
+image: "/covers/drawings/20231211.webp"
 draft: false
 date: 2023-12-11T18:00:00+01:00
 tags: ["go", "concurrency", "waitgroup"]
@@ -15,7 +15,7 @@ Last time, we discussed the very basic concepts of Go concurrency: goroutines an
 
 Have you already forgotten about it? My silly drawing will help you to remember:
 
-![image](/images/drawings/20231207-0001.png "A queue")
+![image](/images/drawings/20231207-0001.webp "A queue")
 
 Also, while discussing channels, we realized that there are the following associations with the Go language here:
 
@@ -26,7 +26,7 @@ Also, while discussing channels, we realized that there are the following associ
 
 Here is the summary of that with another beautiful drawing authored by me:
 
-![image](/images/drawings/20231207-0003.png "A post office like a Go channel")
+![image](/images/drawings/20231207-0003.webp "A post office like a Go channel")
 
 We seem to have a good theoretical foundation of the goroutines and channels. But our post office code still relies on the sequential approach with a for-loop and synchronous processing within. Here is the recap of how it looks:
 
@@ -221,7 +221,7 @@ So, now our code uses a channel, so can we call it concurrent and add "Go concur
 
 While steps 2 and 3 are pretty straightforward, let's focus on the 1st one. How come and why should the postman listen constantly to the service desk? Since we have already allowed ourselves to apply a lot of simplifications to the post office way of working, let's agree that the only responsibility of the postman there is to stand at the desk the whole day and serve the customers, if any. If there are no customers, the working day looks like this:
 
-![image](/images/drawings/20231211-0001.png "A working day with no customers")
+![image](/images/drawings/20231211-0001.webp "A working day with no customers")
 
 And we have already seen the drawings of the working day with the queue of clients. 
 

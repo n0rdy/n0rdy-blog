@@ -59,12 +59,12 @@
 <!-- Open Graph image and Twitter Card metadata -->
 
   
-    <meta property="og:image" content="/covers/drawings/20231211.png" />
-    <meta name="twitter:image" content="/covers/drawings/20231211.png"/>
+    <meta property="og:image" content="/covers/drawings/20231211.webp" />
+    <meta name="twitter:image" content="/covers/drawings/20231211.webp"/>
           <meta name="twitter:card" content="summary_large_image">
         <meta property="og:image:width" content="2370">
         <meta property="og:image:height" content="1293">
-      <meta property="og:image:type" content="image/png">
+      <meta property="og:image:type" content="image/webp">
   
 <title itemprop="name">n0rdy - Go concurrency simplified. Part 2: Syncing goroutines with sync.WaitGroup</title>
 <meta property="og:title" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;2:&#32;Syncing&#32;goroutines&#32;with&#32;sync.WaitGroup />
@@ -612,7 +612,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>Last time, we discussed the very basic concepts of Go concurrency: goroutines and channels. If you missed that post, please check it out <a href="https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/" target="_blank">here</a>, it has some cool drawings =) Today, we&rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will help us get rid of some hacky workarounds we have used so far.</p>
 <h2 id="recap">Recap</h2>
 <p>Have you already forgotten about it? My silly drawing will help you to remember:</p>
-<p><img src="/images/drawings/20231207-0001.png" alt="image" title="A queue"></p>
+<p><img src="/images/drawings/20231207-0001.webp" alt="image" title="A queue"></p>
 <p>Also, while discussing channels, we realized that there are the following associations with the Go language here:</p>
 <ul>
 <li>a post office desk -&gt; Go channel</li>
@@ -621,7 +621,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>a postman -&gt; a code that reads from the channel</li>
 </ul>
 <p>Here is the summary of that with another beautiful drawing authored by me:</p>
-<p><img src="/images/drawings/20231207-0003.png" alt="image" title="A post office like a Go channel"></p>
+<p><img src="/images/drawings/20231207-0003.webp" alt="image" title="A post office like a Go channel"></p>
 <p>We seem to have a good theoretical foundation of the goroutines and channels. But our post office code still relies on the sequential approach with a for-loop and synchronous processing within. Here is the recap of how it looks:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Customer</span> <span style="color:#66d9ef">struct</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
@@ -774,7 +774,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>since we are introducing a new goroutine, we can create a channel with the default capacity, as we are safe from the deadlock from now on</li>
 </ul>
 <p>While steps 2 and 3 are pretty straightforward, let&rsquo;s focus on the 1st one. How come and why should the postman listen constantly to the service desk? Since we have already allowed ourselves to apply a lot of simplifications to the post office way of working, let&rsquo;s agree that the only responsibility of the postman there is to stand at the desk the whole day and serve the customers, if any. If there are no customers, the working day looks like this:</p>
-<p><img src="/images/drawings/20231211-0001.png" alt="image" title="A working day with no customers"></p>
+<p><img src="/images/drawings/20231211-0001.webp" alt="image" title="A working day with no customers"></p>
 <p>And we have already seen the drawings of the working day with the queue of clients.</p>
 <p>Since we have established the responsibilities for the postman, let&rsquo;s add a new function <code>StartWorkingDay</code> to the <code>Worker</code> struct that receives a desk channel and constantly listens to it:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {

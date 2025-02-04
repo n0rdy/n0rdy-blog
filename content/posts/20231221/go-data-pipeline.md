@@ -1,6 +1,6 @@
 ---
 title: "Go concurrency simplified. Part 4: Post office as a data pipeline"
-image: "/covers/drawings/20231221.png"
+image: "/covers/drawings/20231221.webp"
 draft: false
 date: 2023-12-21T23:20:00+01:00
 tags: ["go", "concurrency", "pipeline"]
@@ -13,7 +13,7 @@ Hello there! The main part of my moving to a new place adventures seems to be be
 
 The queue situation is still alarming, to say the least. On top of that, the management decided to assign a new responsibility to a postman in addition to handling the queue - answering the phone calls from the customers. Here is what it looks like:
 
-![image](/images/drawings/20231214-0001.png "A new post office setup with a phone")
+![image](/images/drawings/20231214-0001.webp "A new post office setup with a phone")
 
 This is the code that backs this setup:
 
@@ -206,15 +206,15 @@ If you have ever taken the algorithms classes, you might have heard of the ["div
 
 Let's see what the new setup will look like:
 
-![image](/images/drawings/20231221-0001.png "A new post office setup with 3 new employees")
+![image](/images/drawings/20231221-0001.webp "A new post office setup with 3 new employees")
 
 Once Bob receives the parcel from the customer, he passes it forward right away:
 
-![image](/images/drawings/20231221-0002.png "A new post office setup with 3 new employees: step 1")
+![image](/images/drawings/20231221-0002.webp "A new post office setup with 3 new employees: step 1")
 
 One of the new colleagues picks it up right away. At the same time, the customer can leave, so the queue is moving:
 
-![image](/images/drawings/20231221-0003.png "A new post office setup with 3 new employees: step 2")
+![image](/images/drawings/20231221-0003.webp "A new post office setup with 3 new employees: step 2")
 
 This is quite an efficient process, as customers won't need to wait for the entire parcel clearance process to finish. Let's think about how we can code this.
 
@@ -614,7 +614,7 @@ Triss is impressed with such results. But she is still able to see the room for 
 
 Well, nothing unexpected has happened, as there are only 3 back-office employees for 5 customers. This makes Triss think: "OK, if I push hard enough during the next meeting with the executives, I'll make them allocate 2 more employees to this branch". And since she is an extremely good negotiator, Carl and Luna joined the post office crew in no time. 
 
-![image](/images/drawings/20231221-0004.png "A new post office setup with 5 new employees")
+![image](/images/drawings/20231221-0004.webp "A new post office setup with 5 new employees")
 
 Let's change our code to represent this:
 
@@ -821,7 +821,7 @@ Regardless of the example, the idea I'm describing is the situation when there i
 
 Let's use this knowledge to modify our code. As a big fan of fantasy, I'll go with the wizard scenario.
 
-![image](/images/drawings/20231221-0005.png "A new post office setup with a wizard")
+![image](/images/drawings/20231221-0005.webp "A new post office setup with a wizard")
 
 We need to replace the existing back-office worker with a wizard one. Let's start by renaming `BackOfficeWorker` to `WizardBackOfficeWorker`:
 
@@ -1213,7 +1213,7 @@ This is a perfect post office implementation:
 
 And this is exactly how the data pipelines look like out there: if we drop the technical part, what is left at the end of the day is the data flow pipeline, where we can see a data transformation happening on each step with a clear [producer-consumer pattern](https://en.wikipedia.org/wiki/Producer%E2%80%93consumer_problem):
 
-![image](/images/drawings/20231221-0006.png "A post office as a data pipeline")
+![image](/images/drawings/20231221-0006.webp "A post office as a data pipeline")
 
 Good job, my friend! Triss is happy, so should we be, as we can officially claim that we have just solved the inefficient post office queue handling issue we've been discussing since [Part 1](https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/). 
 

@@ -59,12 +59,12 @@
 <!-- Open Graph image and Twitter Card metadata -->
 
   
-    <meta property="og:image" content="/covers/pics/20250131.jpg" />
-    <meta name="twitter:image" content="/covers/pics/20250131.jpg"/>
+    <meta property="og:image" content="/covers/pics/20250131.webp" />
+    <meta name="twitter:image" content="/covers/pics/20250131.webp"/>
           <meta name="twitter:card" content="summary_large_image">
         <meta property="og:image:width" content="684">
         <meta property="og:image:height" content="356">
-      <meta property="og:image:type" content="image/jpeg">
+      <meta property="og:image:type" content="image/webp">
   
 <title itemprop="name">n0rdy - When Postgres index meets Bcrypt</title>
 <meta property="og:title" content=n0rdy&#32;-&#32;When&#32;Postgres&#32;index&#32;meets&#32;Bcrypt />
@@ -618,7 +618,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 
   <p>Hello there! In the <a href="https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/" target="_blank">previous post “What Okta Bcrypt incident can teach us about designing better APIs”</a>, we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I, personally, came across a few years ago while investigating a quite nasty performance issue with one of the services. Let&rsquo;s jump right into it!</p>
 <p>A product manager of one of the neighboring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they&rsquo;d get a dashboard with the personalized data about them. The simplified architecture looked like this:</p>
-<p><img src="/images/drawings/20250131-0001.png" alt="image"></p>
+<p><img src="/images/drawings/20250131-0001.webp" alt="image"></p>
 <p>As you can see, the flow consists of 3 steps:</p>
 <ol>
 <li>The user enters their SSN in the UI, and the UI sends it to the Internal service.</li>
@@ -630,7 +630,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>The bug issue was reproducible in the production setup, the logs/metrics were not so useful with the clues for the cause. So, I cloned the project code to my laptop and launched a Postgres instance via Docker Compose. Additionally, I started <a href="https://mitmproxy.org/" target="_blank">mitmproxy</a> to be able to intercept and inspect HTTP requests on my machine, and created a template of the request to the Internal service API with my own SSN in Postman. My debugging setup was ready, so it was time to run and test the app.</p>
 <h2 id="running-it-locally">Running it locally</h2>
 <p>To my great surprise, after sending a request from Postman, I got a response in the matter of tens of milliseconds. mitmproxy showed that there was indeed the request to the Third-party API, but it had a minimal latency.</p>
-<p><img src="/images/screenshots/20250131-0001.png" alt="image"></p>
+<p><img src="/images/screenshots/20250131-0001.webp" alt="image"></p>
 <p>Hm…interesting. I tried repeating the same request again, and again got a pretty quick answer, but this time without any calls to the third-party API. That made a perfect sense, as my user info was present in Postgres. I tried sending the same requests a few more times, but didn&rsquo;t have any luck with reproducing the issue.</p>
 <p>Despite the failure, that gave me a good clue: it seemed like I could exclude the Third-party API from the list of suspects, or at least for now. Of course, it&rsquo;s important to mention that the local setup is different from the production one, so there is always a chance that something might be slowing down the egress traffic. However, for simplicity of the investigation, I decided to make sure that nothing in the app caused the issue before checking possible external factors, like cloud proxies, security filters, etc.</p>
 <p>I realized that it&rsquo;s time to take a look at the code. If you&rsquo;d like to follow along, <a href="https://github.com/n0rdy/n0rdy-blog-code-samples/tree/main/20250128-postgres-seq-scan-despite-indexing" target="_blank">here</a> are the code samples that reproduce the setup we are discussing, check the <code>README.md</code> file for how to run instructions.</p>
@@ -781,7 +781,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>So, I thought that I solved the riddle: the <code>ssh_hash</code> column lacked the index. I was almost proud of myself, but that was a very brief moment, as after browsing both the DB table structure and the schema definition queries, I realized that there is actually an index there:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> users_ssn_hashed_idx <span style="color:#66d9ef">ON</span> users (ssn_hash);
 </span></span></code></pre></div><p>But why did Postgres keep ignoring it and performing sequential scans nevertheless? And despite that fact, why it took Postgres 15 seconds to scan 5000 rows? And why select all the rows were very quick (5 ms)? The only difference between the two was the use of the <code>crypto()</code> function within the <code>WHERE</code> statement. That narrowed down the problem. So, I realized that it was the time to get back to basics and do some research on the nature of the Bcrypt algorithm.</p>
-<p><img src="/images/drawings/20250131-0002.png" alt="image"></p>
+<p><img src="/images/drawings/20250131-0002.webp" alt="image"></p>
 <h2 id="bcrypt">Bcrypt</h2>
 <p>Here is what <a href="https://en.wikipedia.org/wiki/Bcrypt" target="_blank">Wikipedia</a> specifies about Bcrypt:</p>
 <blockquote>
@@ -1147,7 +1147,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </ul>
 <p>Whenever I mentor other software engineers, I always keep saying that writing code is the easy part of our job, and we should validate each problem and requirement first rather than jumping into the coding mode right away. Same here: what do we gain from hashing the SSNs? Is it a privacy requirement or just an assumption by someone that “SSNs are sensitive, so we shouldn&rsquo;t store the plain values for them”? Is there a chance that we already store them in another table / database in our system in a plain way? If not, what are the privacy and legal requirements for the hashed values? As we see, without the salt, SSNs are easy to brute-force, but random salt leads to poor performance.</p>
 <p>In some cases, it can appear that, actually, the solution as simple as not hashing the data, if it is not considered too sensitive. In other cases, we might need to have one common salt for all the hashes, which we will store by using Gandalf&rsquo;s rule of thumb:</p>
-<p><img src="/images/pics/20250131-0001.jpg" alt="image"></p>
+<p><img src="/images/pics/20250131-0001.webp" alt="image"></p>
 <p>rather than keeping open/within the hash as in our previous example.</p>
 <p>In this case, if the salt is common, we can even stay with Bcrypt, as the query with a known salt will use indexing:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>

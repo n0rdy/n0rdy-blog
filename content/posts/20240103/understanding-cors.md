@@ -1,6 +1,6 @@
 ---
 title: "Understanding CORS"
-image: "/covers/drawings/20240103.jpg"
+image: "/covers/drawings/20240103.webp"
 draft: false
 date: 2024-01-03T17:00:00+01:00
 tags: ["web", "tutorial", "beginners", "eli5"]
@@ -10,7 +10,7 @@ Hello there! Happy New Year! I hope you had an opportunity to get some rest duri
 Several days ago, I had a dialog with a friend of mine (let's call her Eowyn) who has recently started her path in software engineering:
 
 **Eowyn:** Hey, buddy! I'm building a web project that has the frontend and backend parts. Whenever I click a button on the UI (that triggers a DELETE request to the server), my browser blows with these errors:
-![image](/images/screenshots/20240103-0001.png)
+![image](/images/screenshots/20240103-0001.webp)
 I tried calling the same endpoint with the `curl` command, and it works. I did the same via Postman, and it also works. It makes no sense! What the heck?
 
 **Me:** Hehe, congrats, this is a historical moment in your career - the day you discovered CORS! =)
@@ -27,25 +27,25 @@ Let me introduce you to Geralt, a witcher, one of the best in his craft. Due to 
 
 - once somebody calls Geralt's office, Bob picks up the phone, gathers the info about the call (who, why, and where they are calling from), and asks them to wait
 
-![image](/images/drawings/20240103-0001.jpg)
+![image](/images/drawings/20240103-0001.webp)
 
 - Bob calls Geralt, shares the info about the caller, and asks whether Geralt is willing to talk to them
 
-![image](/images/drawings/20240103-0002.jpg)
+![image](/images/drawings/20240103-0002.webp)
 
 As we can see, Geralt replied that if, during the next 2 hours, people were calling from the place called Ingenheim about hunting, Bob should connect them with him right away.
 
 - Bob gets back to the caller and connects them with Geralt
 
-![image](/images/drawings/20240103-0003.jpg)
+![image](/images/drawings/20240103-0003.webp)
 
 - once there is another call within the next 2 hours coming from a different place than Ingenheim, Bob rejects the request to connect them with Geralt:
 
-![image](/images/drawings/20240103-0004.jpg)
+![image](/images/drawings/20240103-0004.webp)
 
 However, if there is someone (like the witcher's buddy Yarpen) who knows Geralt's direct phone number, they can still call him regardless of the place and reason for making a call:
 
-![image](/images/drawings/20240103-0005.jpg)
+![image](/images/drawings/20240103-0005.webp)
 
 I think this should make perfect sense. But how come is it related to the CORS?
 
@@ -343,7 +343,7 @@ If we run the Go code, it will serve the HTML page to http://localhost:3333`
 
 Based on my drawings, you might have already noticed that I have an exceptional talent in design that's the UI is another masterpiece of mine:
 
-![image](/images/screenshots/20240103-0002.png)
+![image](/images/screenshots/20240103-0002.webp)
 
 Let's test what we have now.
 
@@ -351,21 +351,21 @@ Let's test what we have now.
 
 Navigate to http://localhost:3333/ in your browser, and open a DevTools there: it's `Option+Command+I` on MacOS or `View -> Developer -> Developer Tools` . Ideally, we should be able to see the `Network` tab and the `Console` like this:
 
-![image](/images/screenshots/20240103-0003.png)
+![image](/images/screenshots/20240103-0003.webp)
 
 Let's try to add a new book - "Harry Potter", and click "Add". Boom!
 
-![image](/images/screenshots/20240103-0004.png)
+![image](/images/screenshots/20240103-0004.webp)
 
 The error looks somewhat familiar, doesn't it? It's not exactly the same as at the beginning of this post, but it's very similar. Let's try to understand what it actually means.
 
 You might have noticed that our backend code doesn't mention CORS at all. It is indeed true, we haven't implemented any CORS configs as of now. But that doesn't matter for the browser: it tried to make a preflight request anyway
 
-![image](/images/screenshots/20240103-0005.png)
+![image](/images/screenshots/20240103-0005.webp)
 
 If we click on it, it will expand some details, and we can see that the browser tried to make an OPTIONS request to the same path as the add book endpoint, and received a `405 Method Not Allowed` response, which makes sense as we haven't defined the OPTIONS endpoint in our backend.
 
-![image](/images/screenshots/20240103-0006.png)
+![image](/images/screenshots/20240103-0006.webp)
 
 If we get back to our real-life example for a moment, what happened here is the following:
 
@@ -545,7 +545,7 @@ Let's run this code to see whether it works. It should - if you experience any i
 
 If you click all the buttons a few times by trying to add some books and get/delete all of them, you'll see that it works as expected. Even more, if we take a look at the `Network` tab, we'll see that there is only 1 preflight request in total:
 
-![image](/images/screenshots/20240103-0007.png)
+![image](/images/screenshots/20240103-0007.webp)
 
 Of course, we are not surprised about that, as we have just configured the `Access-Control-Max-Age` header for those purposes.
 
@@ -577,15 +577,15 @@ func enableCors(w http.ResponseWriter) {
 
 Let's restart the apps and see what will happen if we try to use them.
 
-![image](/images/screenshots/20240103-0008.png)
+![image](/images/screenshots/20240103-0008.webp)
 
 Well, the outcome is as expected: only `http://example.com` is allowed to call the API. What's even more interesting is the fact that if we put the localhost value there but with a different port, we'll still get an error:
 
-![image](/images/screenshots/20240103-0009.png)
+![image](/images/screenshots/20240103-0009.webp)
 
 The same applies for `http` vs `https` - CORS is very strict:
 
-![image](/images/screenshots/20240103-0010.png)
+![image](/images/screenshots/20240103-0010.webp)
 
 There is a possibility, though, of allowing anyone to call your API - by using `*` as a value for the `Access-Control-Allow-Origin` header:
 
@@ -633,7 +633,7 @@ func enableCors(w http.ResponseWriter) {
 
 Once we restart both apps, we'll see that there are no issues with getting the books or adding a new one, but trying to delete them fires an error.
 
-![image](/images/screenshots/20240103-0011.png)
+![image](/images/screenshots/20240103-0011.webp)
 
 If the flow works for you with no issues, it is the browser caching ([the 2nd hardest thing](https://martinfowler.com/bliki/TwoHardThings.html) in the computer science) who spoils the fun. To fix that, try either:
 
@@ -666,7 +666,7 @@ func enableCors(w http.ResponseWriter) {
 
 If we click all the buttons we have, we'll see that getting and deleting books work, but adding a new one fails as expected:
 
-![image](/images/screenshots/20240103-0012.png)
+![image](/images/screenshots/20240103-0012.webp)
 
 `Request header field content-type is not allowed by Access-Control-Allow-Headers in preflight response.` makes sense.
 
@@ -696,7 +696,7 @@ func enableCors(w http.ResponseWriter) {
 
 Observe the `Network` tab after restarting the app:
 
-![image](/images/screenshots/20240103-0013.png)
+![image](/images/screenshots/20240103-0013.webp)
 
 No cache policy forces browser to make a preflight request each time there is a POST or DELETE call (there are no preflight requests for GET calls - it's a rule). It's acceptable while doing testing, but it leads to the undesired load to your servers if there is no `Access-Control-Max-Age` header provided, that's why the rule of thumb is to have it. There is no ideal value for it though, it depends on your situation and requirements.
 

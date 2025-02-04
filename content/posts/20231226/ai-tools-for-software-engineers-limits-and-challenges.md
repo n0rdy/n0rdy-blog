@@ -1,6 +1,6 @@
 ---
 title: "AI tools for software engineers: 5 things to be careful about/aware of"
-image: "/covers/drawings/20231226.jpg"
+image: "/covers/drawings/20231226.webp"
 draft: false
 date: 2023-12-26T15:25:00+01:00
 tags: ["ai", "tech", "opinion"]
@@ -24,7 +24,7 @@ A short disclaimer: the message of this post is not "don't use the AI tools," bu
 
 Let me introduce you to Dave. Dave is a friendly and very talkative guy, the social bee, if you will. But you should know this about him: Dave likes to share his opinions and, even more, give his advice regarding whether he has been asked to or not. Usually, he doesn't bother diving deep into your situation, but instead, he prefers to share his thoughts right away: "Do you want to buy a car? Buy Tesla!", "Are you considering upgrading your laptop? MacBook Pro is all you need, I assure you!". Here is him:
 
-![image](/images/drawings/20231226-0001.jpg "Dave")
+![image](/images/drawings/20231226-0001.webp "Dave")
 
 Do you have any Dave-s in your life? I wouldn't be surprised if you do. 
 
@@ -39,11 +39,11 @@ Why did I mention Dave at all? The post was supposed to be about AI tools. Well,
 
 Not sure about you, but in my case, I got this suggestion from GitHub Copilot:
 
-![image](/images/screenshots/20231226-0001.png)
+![image](/images/screenshots/20231226-0001.webp)
 
 Ok, let's accept the suggestion and add `and I'm from ` - I got this:
 
-![image](/images/screenshots/20231226-0002.png)
+![image](/images/screenshots/20231226-0002.webp)
 
 Hey, wait, but it's not a code! I hear you, let's try the same with a code:
 
@@ -53,7 +53,7 @@ Hey, wait, but it's not a code! I hear you, let's try the same with a code:
 
 I got this on my machine:
 
-![image](/images/screenshots/20231226-0003.png)
+![image](/images/screenshots/20231226-0003.webp)
 
 It's a fair suggestion, and it compiles, but is this something you, as a software engineer, would suggest? Would you suggest anything at this moment of project development if, let's say, you are assisting your colleague via the pair programming session, but you knew nothing about this project before now? It's a rhetorical question.
 
@@ -64,11 +64,11 @@ Well, the same as with Dave, we should be aware of this way of working with GitH
 Also, I'd recommend enabling native IDE suggestions alongside the GitHub Copilot ones to get the best of the 2 worlds: AI-based and docs/code-based, meaning that the latter doesn't suffer from [hallucinations](https://en.wikipedia.org/wiki/Hallucination_(artificial_intelligence)). You can do that:
 
 - in JetBrains IDEs by: `Settings` -> `Languages & Frameworks` -> `GitHub Copilot` -> enable `Show IDE completions side-by-side` option under the `Editor` settings chapter
-  ![image](/images/screenshots/20231226-0004.png)
+  ![image](/images/screenshots/20231226-0004.webp)
 
 Once enabled, it works like this:
 
-![image](/images/screenshots/20231226-0005.png)
+![image](/images/screenshots/20231226-0005.webp)
 
 I'm not a heavy VS Code/Vim/Neovim user, that's why I'm not sure how to achieve the same there - if you know, please, let me and others know in the comments section - [pay it forward](https://en.wikipedia.org/wiki/Pay_it_forward) =)
 
@@ -102,7 +102,7 @@ What about our AI friends? Lately, I have been brainstorming an idea for creatin
 
 And I used ChatGPT to be my buddy in that process. I provided a high-level context for the tool and said that I'm considering writing a script that will clone each of these repositories, read the content of the `package.json` file via the IO operation, make the desired change, and write the modified context back to the file. My AI friend replied that it was a good idea and explained how to do that with some pseudocode. However, I felt that I was reinventing the wheel with all of that, so I decided to double-check:
 
-![image](/images/screenshots/20231226-0006.png)
+![image](/images/screenshots/20231226-0006.webp)
 
 and then ChatGPT suggested a list of alternative approaches, one of which was to use the existing `GET /repos/:owner/:repo/contents/:path` endpoint of the GitHub API. That was good advice and exactly the way I went forward (successfully if you are wondering). But would I have gotten it if I hadn't explicitly asked about more elegant ways of achieving the desired result? Nope. 
 
@@ -247,7 +247,7 @@ There is [an interesting discussion about "Is Github Copilot safe privacy wise?"
 
 For example, here is what GitHub states in the ["About GitHub Copilot Individual" article](https://docs.github.com/en/enterprise-cloud@latest/copilot/overview-of-github-copilot/about-github-copilot-individual#understanding-the-differences-between-copilot-individual-and-copilot-business): 
 
-![image](/images/screenshots/20231226-0007.png)
+![image](/images/screenshots/20231226-0007.webp)
 
 As you can see, they are pretty transparent about the telemetry they collect from the individual users, but not for the business ones.
 

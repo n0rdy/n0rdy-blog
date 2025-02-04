@@ -59,12 +59,12 @@
 <!-- Open Graph image and Twitter Card metadata -->
 
   
-    <meta property="og:image" content="/covers/drawings/20250118.jpg" />
-    <meta name="twitter:image" content="/covers/drawings/20250118.jpg"/>
+    <meta property="og:image" content="/covers/drawings/20250118.webp" />
+    <meta name="twitter:image" content="/covers/drawings/20250118.webp"/>
           <meta name="twitter:card" content="summary_large_image">
         <meta property="og:image:width" content="1659">
         <meta property="og:image:height" content="1160">
-      <meta property="og:image:type" content="image/jpeg">
+      <meta property="og:image:type" content="image/webp">
   
 <title itemprop="name">n0rdy - TIL: Ghostty - a new and quite promising terminal emulator</title>
 <meta property="og:title" content=n0rdy&#32;-&#32;TIL:&#32;Ghostty&#32;-&#32;a&#32;new&#32;and&#32;quite&#32;promising&#32;terminal&#32;emulator />
@@ -613,9 +613,9 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>I remember that <a href="https://jvns.ca/" target="_blank">Julia Evans</a>, whose blog I follow, mentioned a few time that she uses <a href="https://fishshell.com/" target="_blank">Fish</a>. Also, some days ago I came across <a href="https://fishshell.com/blog/rustport/" target="_blank">this post</a> about Fish rewrite to Rust from C++, which sounds like a cool thing to do. However, I tried it some time ago, and while pretty neat, I wasn&rsquo;t convinced to switch to it completely.</p>
 <p>At the same time, in the internal Slack of the company I work for, my colleague asked the security team whether we have any policies about the apps, as they&rsquo;d like to start using <a href="https://ghostty.org/" target="_blank">Ghostty</a> as their terminal emulator. I took a look at it, and it immediately caught my attention: a fresh look, a zero-config setup, platform-native UI (discovered in details in the “<a href="https://gpanders.com/blog/ghostty-is-native-so-what/" target="_blank">Ghostty Is Native—So What?</a>” post by Gregory Anders) and GPU acceleration, and FOSS with very permissive MIT license (<a href="https://github.com/ghostty-org/ghostty" target="_blank">here is the GitHub repo</a>). I googled the author (<a href="https://mitchellh.com/" target="_blank">Mitchell Hashimoto</a>), and discovered that he is a co-founder of HashiCorp, that brought Terraform, Vargant, Consult, Vault, and others to the world. That&rsquo;s quite a list. And, last but not the least, <a href="https://ziglang.org/" target="_blank">Zig</a> as the main programming language was an interesting factor as well.</p>
 <p>So, I ran <code>brew install --cask ghostty</code> (the command is from <a href="https://ghostty.org/docs/install/binary#homebrew" target="_blank">here</a>), and gave it a try.</p>
-<p><img src="/images/drawings/20250118-0001.jpg" alt="image"></p>
+<p><img src="/images/drawings/20250118-0001.webp" alt="image"></p>
 <p>The first thing that I obviously saw was the design, and it looked minimalistic, distraction-free, and, somewhat, fresh. I had to increase a font size a bit to match my comfort level, though.</p>
-<p><img src="/images/screenshots/20250118-0001.png" alt="image"></p>
+<p><img src="/images/screenshots/20250118-0001.webp" alt="image"></p>
 <p>While design is an important part to some degree, there is something more that I&rsquo;ve become observing and, therefore, liking lately: the reasonable default configs of the apps, which mean that the majority of the users will never need to mess with configs at all. Here is <a href="https://arne.me/blog/we-need-more-zero-config-tools" target="_blank">a great post</a> by Arne about this trend which lists such tools like Fish (mentioned above), <a href="https://helix-editor.com/" target="_blank">Helix</a>, <a href="https://github.com/jesseduffield/lazygit" target="_blank">Lazygit</a>, <a href="https://zellij.dev/" target="_blank">Zellij</a>, <a href="https://k9scli.io/" target="_blank">k9s</a>, etc. And that a very user-friendly approach: install and use right away! I believe that Ghostty would be a good addition to the list. For example:</p>
 <ul>
 <li>all of my aliases and environment vars configured within the <code>~/.zshrc</code> were available right away, as Ghostty appears to be able to load them. So, I can keep typing <code>k</code> if I need to use <code>kubectl</code>, or <code>r</code> for <code>ranger</code>, and dozens of others more complex ones. That&rsquo;s very-very cool, as no copy-pasting required to make it work.</li>
@@ -629,7 +629,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p><img src="/images/screenshots/20250118-0002.gif" alt="image"></p>
 <p>Isn&rsquo;t that cool? I haven&rsquo;t found the <code>robbyrussell</code> theme there though, maybe it has a different name now?</p>
 <p>One more thing that amazed me was the embedded dev tool, which uses the same key shortcut as Firefox and Chrome DevTools: <code>⌥ + ⌘ + I</code> :</p>
-<p><img src="/images/screenshots/20250118-0003.png" alt="image"></p>
+<p><img src="/images/screenshots/20250118-0003.webp" alt="image"></p>
 <p>Honestly, I haven&rsquo;t come up with the use case for this feature in my daily terminal use, but it shows the level of attention to the small details Ghostty has to offer.</p>
 <p>Ghostty seems to become a hyped thing lately (well-deserved, imho), as I see more and more content about it. Most of the people appreciate its performance, which I didn&rsquo;t have an opportunity to test properly yet, rather than trying to insert the text of this post into terminal to see how fast it renders it:</p>
 <p><img src="/images/screenshots/20250118-0004.gif" alt="image"></p>

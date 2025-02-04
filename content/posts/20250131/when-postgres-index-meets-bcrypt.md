@@ -1,6 +1,6 @@
 ---
 title: "When Postgres index meets Bcrypt"
-image: "/covers/pics/20250131.jpg"
+image: "/covers/pics/20250131.webp"
 draft: false
 date: 2025-01-31T08:30:00+02:00
 tags: ["postgres", "security", "bcrypt", "performance", "optimization", "debug"]
@@ -9,7 +9,7 @@ Hello there! In the [previous post “What Okta Bcrypt incident can teach us abo
 
 A product manager of one of the neighboring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they'd get a dashboard with the personalized data about them. The simplified architecture looked like this:
 
-![image](/images/drawings/20250131-0001.png)
+![image](/images/drawings/20250131-0001.webp)
 
 As you can see, the flow consists of 3 steps:
 
@@ -27,7 +27,7 @@ The bug issue was reproducible in the production setup, the logs/metrics were no
 
 To my great surprise, after sending a request from Postman, I got a response in the matter of tens of milliseconds. mitmproxy showed that there was indeed the request to the Third-party API, but it had a minimal latency.
 
-![image](/images/screenshots/20250131-0001.png)
+![image](/images/screenshots/20250131-0001.webp)
 
 Hm…interesting. I tried repeating the same request again, and again got a pretty quick answer, but this time without any calls to the third-party API. That made a perfect sense, as my user info was present in Postgres. I tried sending the same requests a few more times, but didn't have any luck with reproducing the issue.
 
@@ -229,7 +229,7 @@ CREATE INDEX users_ssn_hashed_idx ON users (ssn_hash);
 
 But why did Postgres keep ignoring it and performing sequential scans nevertheless? And despite that fact, why it took Postgres 15 seconds to scan 5000 rows? And why select all the rows were very quick (5 ms)? The only difference between the two was the use of the `crypto()` function within the `WHERE` statement. That narrowed down the problem. So, I realized that it was the time to get back to basics and do some research on the nature of the Bcrypt algorithm.
 
-![image](/images/drawings/20250131-0002.png)
+![image](/images/drawings/20250131-0002.webp)
 
 ## Bcrypt
 
@@ -721,7 +721,7 @@ Whenever I mentor other software engineers, I always keep saying that writing co
 
 In some cases, it can appear that, actually, the solution as simple as not hashing the data, if it is not considered too sensitive. In other cases, we might need to have one common salt for all the hashes, which we will store by using Gandalf's rule of thumb:
 
-![image](/images/pics/20250131-0001.jpg)
+![image](/images/pics/20250131-0001.webp)
 
 rather than keeping open/within the hash as in our previous example.
 

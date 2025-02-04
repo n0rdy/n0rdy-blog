@@ -1,6 +1,6 @@
 ---
 title: "TIL: Ghostty - a new and quite promising terminal emulator"
-image: "/covers/drawings/20250118.jpg"
+image: "/covers/drawings/20250118.webp"
 draft: false
 date: 2025-01-18T22:30:00+01:00
 tags: ["til", "tech", "tools"]
@@ -24,11 +24,11 @@ At the same time, in the internal Slack of the company I work for, my colleague 
 
 So, I ran `brew install --cask ghostty` (the command is from [here](https://ghostty.org/docs/install/binary#homebrew)), and gave it a try. 
 
-![image](/images/drawings/20250118-0001.jpg)
+![image](/images/drawings/20250118-0001.webp)
 
 The first thing that I obviously saw was the design, and it looked minimalistic, distraction-free, and, somewhat, fresh. I had to increase a font size a bit to match my comfort level, though.
 
-![image](/images/screenshots/20250118-0001.png)
+![image](/images/screenshots/20250118-0001.webp)
 
 While design is an important part to some degree, there is something more that I've become observing and, therefore, liking lately: the reasonable default configs of the apps, which mean that the majority of the users will never need to mess with configs at all. Here is [a great post](https://arne.me/blog/we-need-more-zero-config-tools) by Arne about this trend which lists such tools like Fish (mentioned above), [Helix](https://helix-editor.com/), [Lazygit](https://github.com/jesseduffield/lazygit), [Zellij](https://zellij.dev/), [k9s](https://k9scli.io/), etc. And that a very user-friendly approach: install and use right away! I believe that Ghostty would be a good addition to the list. For example:
 
@@ -48,7 +48,7 @@ Isn't that cool? I haven't found the `robbyrussell` theme there though, maybe it
 
 One more thing that amazed me was the embedded dev tool, which uses the same key shortcut as Firefox and Chrome DevTools: `⌥ + ⌘ + I` :
 
-![image](/images/screenshots/20250118-0003.png)
+![image](/images/screenshots/20250118-0003.webp)
 
 Honestly, I haven't come up with the use case for this feature in my daily terminal use, but it shows the level of attention to the small details Ghostty has to offer.
 

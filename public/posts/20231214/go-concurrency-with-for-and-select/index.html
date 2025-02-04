@@ -59,12 +59,12 @@
 <!-- Open Graph image and Twitter Card metadata -->
 
   
-    <meta property="og:image" content="/covers/drawings/20231214.png" />
-    <meta name="twitter:image" content="/covers/drawings/20231214.png"/>
+    <meta property="og:image" content="/covers/drawings/20231214.webp" />
+    <meta name="twitter:image" content="/covers/drawings/20231214.webp"/>
           <meta name="twitter:card" content="summary_large_image">
         <meta property="og:image:width" content="2838">
         <meta property="og:image:height" content="1307">
-      <meta property="og:image:type" content="image/png">
+      <meta property="og:image:type" content="image/webp">
   
 <title itemprop="name">n0rdy - Go concurrency simplified. Part 3: Managing channels with for loops and select statements</title>
 <meta property="og:title" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;3:&#32;Managing&#32;channels&#32;with&#32;for&#32;loops&#32;and&#32;select&#32;statements />
@@ -815,7 +815,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>So, are we done with the Go concurrency? Have we already learned all we need? I wish! Let&rsquo;s leave the space for now and get back to the post office, as we have a situation there.</p>
 <h3 id="back-to-the-post-office">Back to the post office</h3>
 <p>Our good old friend postman Bob has just received a call from his manager, Triss. She has a new business idea that should increase customer satisfaction - install a phone so the customers can call it when they have questions. This means that Ben will have a new responsibility on top of handling the parcels that clients bring. This is the new setup:</p>
-<p><img src="/images/drawings/20231214-0001.png" alt="image" title="A new post office setup with a phone"></p>
+<p><img src="/images/drawings/20231214-0001.webp" alt="image" title="A new post office setup with a phone"></p>
 <p>Hmm&hellip;it means that Bob needs to handle 2 tasks instead of 1 from now on. But what is he supposed to do once there are both customers and a phone call? Well, he is free to choose which one to handle - &ldquo;We have a lot of freedom at work,&rdquo; as Triss likes to say.</p>
 <p>But how should we represent the phone with the code? It wouldn&rsquo;t be surprising that you already know the answer - another channel.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {

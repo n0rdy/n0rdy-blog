@@ -59,12 +59,12 @@
 <!-- Open Graph image and Twitter Card metadata -->
 
   
-    <meta property="og:image" content="/covers/drawings/20231207.png" />
-    <meta name="twitter:image" content="/covers/drawings/20231207.png"/>
+    <meta property="og:image" content="/covers/drawings/20231207.webp" />
+    <meta name="twitter:image" content="/covers/drawings/20231207.webp"/>
           <meta name="twitter:card" content="summary_large_image">
         <meta property="og:image:width" content="2370">
         <meta property="og:image:height" content="1293">
-      <meta property="og:image:type" content="image/png">
+      <meta property="og:image:type" content="image/webp">
   
 <title itemprop="name">n0rdy - Go concurrency simplified. Part 1: Channels and goroutines</title>
 <meta property="og:title" content=n0rdy&#32;-&#32;Go&#32;concurrency&#32;simplified.&#32;Part&#32;1:&#32;Channels&#32;and&#32;goroutines />
@@ -613,7 +613,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </div>
 
   <p>Christmas season is around the corner, that&rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on <a href="https://github.com/n0rdy/pippin" target="_blank">my open-source library</a> for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.</p>
-<p><img src="/images/drawings/20231207-0001.png" alt="image" title="A queue"></p>
+<p><img src="/images/drawings/20231207-0001.webp" alt="image" title="A queue"></p>
 <p>Suppose we imagine the post office as an application. In that case, it becomes clear that we are dealing with the classical &ldquo;consumer-producer&rdquo; problem, where customers like me are producers (because we bring boxes, letters, etc.), and the postman is a consumer of all these. And it&rsquo;s pretty easy to see that the system bottleneck is that there is only one consumer for N producers.</p>
 <p>So, how can we improve this? Shall we increase the amount of consumers? Or should we open more postal windows? A little bit of both? And how can we map this into the application and code after all? These are good questions, so let&rsquo;s try to answer them in this series of blog posts.</p>
 <h2 id="a-step-aside">A step aside</h2>
@@ -740,7 +740,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>I hope the challenge we have is crystal clear as of now. How can we solve it?</p>
 <h2 id="possible-solutions">Possible solutions</h2>
 <p>In an ideal world, the solution will be super simple: to have 1 worker per 1 customer. Then, in our scenario, if the average processing time is 1 minute, it will take exactly 1 minute to handle the entire queue. Impressive, right?</p>
-<p><img src="/images/drawings/20231207-0002.png" alt="image" title="An ideal world solution"></p>
+<p><img src="/images/drawings/20231207-0002.webp" alt="image" title="An ideal world solution"></p>
 <p>Well, it&rsquo;s pretty doable with 5 customers, like in our example, but what if the queue is 10 people long? What about 50? 100? It&rsquo;s obvious that in the real world, there are limits: money, time, space, etc., that&rsquo;s why the post office (or any other business, for that matter) won&rsquo;t hire that many employees to have a 1-1 ratio with the customers. What are the alternatives?</p>
 <p>If we are limited by the number of workers, let&rsquo;s consider improving the quality of work. What if we try to reduce the amount of work the worker needs to do with the customer by doing the rest of the work later or by delegating to colleagues? Let&rsquo;s imagine that all the worker has to do is scan the QR code on the parcel, compare the photo from the system with the person standing in front, and pass the parcel to the other colleague - the customer can leave right away, as the rest of the activities will be done without their presence. Cool!</p>
 <p>If you have an experience in programming, I bet you have already recognized this pattern - asynchronous execution. The beauty of such an approach is that the resources (the customer in our case) can be released fast, as the processing happens in a background fashion.</p>
@@ -944,9 +944,9 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>As expected, <code>3</code> is printed into the console.</p>
 <p>But how does this code work? To answer this question, let me take a step aside for the moment and go back to the post-office example to explain this. I hope you remember my drawing (or should I say a masterpiece) from there:</p>
-<p><img src="/images/drawings/20231207-0001.png" alt="image" title="A queue"></p>
+<p><img src="/images/drawings/20231207-0001.webp" alt="image" title="A queue"></p>
 <p>Such a beauty! But let me get back to business: we are interested now in the rightmost side of it, where the customer puts a basketball onto the post office desk, and the post worker takes it from there. This is a good representation of the channels, and here is the same part of the picture but close with the arrows and some text descriptions:</p>
-<p><img src="/images/drawings/20231207-0003.png" alt="image" title="A post-office desk like a Go channel"></p>
+<p><img src="/images/drawings/20231207-0003.webp" alt="image" title="A post-office desk like a Go channel"></p>
 <p>While this is a straightforward transaction, there are some important concepts behind it:</p>
 <ul>
 <li>if there is nothing on the post office desk, the postman has nothing to take from it, so they just wait</li>
@@ -1034,7 +1034,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span></code></pre></div><p>By the way, kudos to Go that its compiler detects deadlocks and fails on them rather than silently keeping the code in the blocked state forever.</p>
 <p><code>fatal error: all goroutines are asleep - deadlock!</code> means exactly what we have predicted: <code>ch &lt;- 2</code> tries to write to the channel that is already full -&gt; the code waits -&gt; the goroutine falls asleep -&gt; since we have only 1 goroutine (main), it means that all the goroutines are asleep -&gt; deadlock</p>
 <p>To understand the concept of the buffered channels, let&rsquo;s get back to our post-office example again and take a look at this picture:</p>
-<p><img src="/images/drawings/20231207-0004.png" alt="image" title="A post-office desk like a Go buffered channel"></p>
+<p><img src="/images/drawings/20231207-0004.webp" alt="image" title="A post-office desk like a Go buffered channel"></p>
 <p>As you can see, the post office desk has become larger and has room for 3 items simultaneously. It means 3 customers can put their stuff onto the desk and leave, so the next ones in the queue can proceed. However, there is still only 1 post office worker, so that they will take the items one by one in the first-in-first-out (FIFO) order.</p>
 <p>The similar rules apply here as for the channel with the default capacity:</p>
 <ul>

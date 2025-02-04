@@ -1,6 +1,6 @@
 ---
 title: "JWT, JWS, JWE and how to cook them"
-image: "/covers/drawings/20240328.jpg"
+image: "/covers/drawings/20240328.webp"
 draft: false
 date: 2024-03-28T20:00:00+01:00
 tags: ["tutorial", "beginners", "eli5"]
@@ -28,7 +28,7 @@ Weird, right? How come is the mumbo jumbo above "Hello world!"? And why bother? 
 
 Ok, the "why" is clear now, but the "how", or, to be more specific, the "what the hell is that text?" question remains. That's the exact question Eric asked himself each time he passed the piece of paper between Craig and Clyde as his curiosity grew day by day. 
 
-![image](/images/drawings/20240328-0001.jpg)
+![image](/images/drawings/20240328-0001.webp)
 
 Soon, he understood that there was no way he could solve the mystery on his own, so he went to the place where other nerdy folks hang out - the internet! Some "good" people out there, after shaming him for asking such simple questions, gave him a hint that this piece of text is nothing more than a Base64URL-encoded string, and there are plenty of online tools to decode it.
 
@@ -792,7 +792,7 @@ There is a set of supported algorithms: to name a few, AES-CBC and AES-GCM are s
 
 Remember we talked about the usage scenarios for JWT? The info exchange one is the primary use case for JWE, while it's not that common to use them for authorization (it still happens sometimes, though). Here is one of the possible ways of exchanging the data between the actors through the UI app with the use of the JWE:
 
-![image](/images/drawings/20240328-0002.png)
+![image](/images/drawings/20240328-0002.webp)
 
 Since it doesn't mean that step 4 will be invoked right away after step 3, the UI might need to store the sensitive data within the browser storage, which leaves the data easily accessible by the browser users and the UI app in general. That's why using the JWE can be a good solution here, as the Data consumer can decrypt the JWE and retrieve the data.
 

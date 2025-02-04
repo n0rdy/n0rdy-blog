@@ -1,6 +1,6 @@
 ---
 title: "What Okta Bcrypt incident can teach us about designing better APIs"
-image: "/covers/drawings/20250122.jpg"
+image: "/covers/drawings/20250122.webp"
 draft: false
 date: 2025-01-22T18:00:00+01:00
 tags: ["api", "security", "opinion", "bcrypt"]
@@ -14,7 +14,7 @@ This means that if the user had a username above 52 chars, any password would su
 
 On the other hand, such long usernames are not very usual, which I agree with. However, some companies like using the entire name of the employee as the email address. So, let's say, Albus Percival Wulfric Brian Dumbledore, a headmaster of Hogwarts, should be concerned, as `albus.percival.wulfric.brian.dumbledore@hogwarts.school` is 55 chars. Ooops!
 
-![image](/images/drawings/20250122-0001.jpg)
+![image](/images/drawings/20250122-0001.webp)
 
 This was possible due to the nature of Bcrypt hashing algorithm that has a maximum supported input length of 72 characters (read more [here](https://en.wikipedia.org/wiki/Bcrypt#Maximum_password_length)), so in Okta case the characters above the limit were ignored while computing the hash, and therefore, not used in the comparison operation. We can reverse engineer that:
 
@@ -490,11 +490,11 @@ will make sure that no chars over the limit (72) will end up being processed.
 
 Git blame shows that the `if (key_len > 72)` line is 11 years old
 
-![image](/images/screenshots/20250122-0001.png)
+![image](/images/screenshots/20250122-0001.webp)
 
 while the `if (j >= databytes) j = 0;` is 28 years old (what were you busy with in 1997, ah?) 
 
-![image](/images/screenshots/20250122-0002.png)
+![image](/images/screenshots/20250122-0002.webp)
 
 So, it's been a while since the API has been reiterated.
 
