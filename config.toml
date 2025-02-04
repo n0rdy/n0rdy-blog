@@ -9,7 +9,7 @@ paginate = 5
 
 [params]
     brand = "n0rdy"
-    brand_image = "/images/avatar.jpg"
+    brand_image = "/images/avatar.webp"
     description = "Exploring software engineering and tech"
     dark_mode = true
     favicon = "/favicon.ico"
