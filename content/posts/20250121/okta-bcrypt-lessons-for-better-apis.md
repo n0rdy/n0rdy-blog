@@ -170,7 +170,7 @@ if ((minor != 'a' && minor != 'x' && minor != 'y' && minor != 'b') || salt.charA
 
 I didn't see any validation of the input that will be hashed. Hm...
 
-I decided to check other Google results, and the next Java library in the list was `bcrypt` from Patrick Favre ([link to GitHub repo](https://github.com/patrickfav/bcrypt)) with 513 starts and the last release version 0.10.2 (so, not stable) from 12th of February 2023 (almost 2 years old). This suggested that I'd not use it in production, but why not to run our tests.
+I decided to check other Google results, and the next Java library in the list was `bcrypt` from Patrick Favre ([link to GitHub repo](https://github.com/patrickfav/bcrypt)) with 513 stars and the last release version 0.10.2 (so, not stable) from 12th of February 2023 (almost 2 years old). This suggested that I'd not use it in production, but why not to run our tests.
 
 ### Bcrypt from Patrick Favre
 
