@@ -745,9 +745,9 @@ Execution Time: 0.118 ms
 
 As you might remember, we started with 15 seconds per query, and now we are down to 3 milliseconds, which is 5000 times faster — an exciting achievement.
 
-However, as we discussed above, Bcrypt keeps the salt within its hashing result, so this way our common salt is exposed, which breaks the Gandalf's rule of thumb. So, despite the performance bump, Bcrypt is not an appropriate algorithm for this particular scenario.
+However, as we discussed above, Bcrypt keeps the salt within its hashing result, so this way our common salt is exposed, which breaks the Gandalf's rule of thumb. So, despite the performance bump, **Bcrypt is not an appropriate algorithm for this particular scenario**.
 
-Still, something faster like SHA-256, SHA-3, BLAKE2/3 are better choices if a common salt is given. Of course, this needs benchmarking, consulting your security team and checking Postgres support for your particular case before deciding.
+Something faster like SHA-256, SHA-3, BLAKE2/3 are better choices if a common salt is given. Of course, this needs benchmarking, consulting your security team and checking Postgres support for your particular case before deciding.
 
 And that's it, the team and the users are happy, the system is healthy again. We saved the day, and learned a thing or two about the Bcrypt algorithm.
 
