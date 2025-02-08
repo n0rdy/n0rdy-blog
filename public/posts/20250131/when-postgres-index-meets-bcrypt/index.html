@@ -575,7 +575,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
           
         
 
-        <span>25 mins read</span>
+        <span>26 mins read</span>
       </span>
     </div>
 
@@ -1149,7 +1149,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>In some cases, it can appear that, actually, the solution as simple as not hashing the data, if it is not considered too sensitive. In other cases, we might need to have one common salt for all the hashes, which we will store by using Gandalf&rsquo;s rule of thumb:</p>
 <p><img src="/images/pics/20250131-0001.webp" alt="image"></p>
 <p>rather than keeping open/within the hash as in our previous example.</p>
-<p>In this case, if the salt is common, we can even stay with Bcrypt, as the query with a known salt will use indexing:</p>
+<p>The common salt fixes the performance issue with the  Bcrypt column, as the query with a known salt will use indexing:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users
@@ -1160,9 +1160,11 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>Planning Time: 3.462 ms
 </span></span><span style="display:flex;"><span>Execution Time: 0.118 ms
 </span></span></code></pre></div><p>As you might remember, we started with 15 seconds per query, and now we are down to 3 milliseconds, which is 5000 times faster — an exciting achievement.</p>
-<p>Still, something faster like SHA-256, SHA-3, BLAKE2 or BLAKE3 might be better choices if a common salt is given. Of course, this needs benchmarking, consulting your security team and checking Postgres support for your particular case before deciding.</p>
+<p>However, as we discussed above, Bcrypt keeps the salt within its hashing result, so this way our common salt is exposed, which breaks the Gandalf&rsquo;s rule of thumb. So, despite the performance bump, Bcrypt is not an appropriate algorithm for this particular scenario.</p>
+<p>Still, something faster like SHA-256, SHA-3, BLAKE2/3 are better choices if a common salt is given. Of course, this needs benchmarking, consulting your security team and checking Postgres support for your particular case before deciding.</p>
 <p>And that&rsquo;s it, the team and the users are happy, the system is healthy again. We saved the day, and learned a thing or two about the Bcrypt algorithm.</p>
 <p>That was quite a ride, so thanks a lot for reading my post. I truly hope it was useful, and I&rsquo;ll see you in my next ones, as more to come soon. Have fun! =)</p>
+<p><strong>Edit (8th of February 2025):</strong> The earlier version of the post said that Bcrypt is an appropriate choice with the common salt, which is a wrong claim to make, and a big blunder on my side, apologies for that. The issue was discovered and mentioned in <a href="https://www.reddit.com/r/programming/comments/1iie34g/comment/mbbzwfl/?utm_source=share&amp;utm_medium=web3x&amp;utm_name=web3xcss&amp;utm_term=1&amp;utm_content=share_button" target="_blank">the Reddit discussion</a>, so all credit goes to <code>u/KrakenOfLakeZurich</code></p>
 
   
     <hr>

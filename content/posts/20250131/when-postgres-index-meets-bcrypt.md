@@ -725,7 +725,7 @@ In some cases, it can appear that, actually, the solution as simple as not hashi
 
 rather than keeping open/within the hash as in our previous example.
 
-In this case, if the salt is common, we can even stay with Bcrypt, as the query with a known salt will use indexing:
+The common salt fixes the performance issue with the  Bcrypt column, as the query with a known salt will use indexing:
 
 ```sql
 EXPLAIN ANALYSE
@@ -745,8 +745,12 @@ Execution Time: 0.118 ms
 
 As you might remember, we started with 15 seconds per query, and now we are down to 3 milliseconds, which is 5000 times faster — an exciting achievement.
 
-Still, something faster like SHA-256, SHA-3, BLAKE2 or BLAKE3 might be better choices if a common salt is given. Of course, this needs benchmarking, consulting your security team and checking Postgres support for your particular case before deciding.
+However, as we discussed above, Bcrypt keeps the salt within its hashing result, so this way our common salt is exposed, which breaks the Gandalf's rule of thumb. So, despite the performance bump, Bcrypt is not an appropriate algorithm for this particular scenario.
+
+Still, something faster like SHA-256, SHA-3, BLAKE2/3 are better choices if a common salt is given. Of course, this needs benchmarking, consulting your security team and checking Postgres support for your particular case before deciding.
 
 And that's it, the team and the users are happy, the system is healthy again. We saved the day, and learned a thing or two about the Bcrypt algorithm.
 
 That was quite a ride, so thanks a lot for reading my post. I truly hope it was useful, and I'll see you in my next ones, as more to come soon. Have fun! =)
+
+**Edit (8th of February 2025):** The earlier version of the post said that Bcrypt is an appropriate choice with the common salt, which is a wrong claim to make, and a big blunder on my side, apologies for that. The issue was discovered and mentioned in [the Reddit discussion](https://www.reddit.com/r/programming/comments/1iie34g/comment/mbbzwfl/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button), so all credit goes to `u/KrakenOfLakeZurich`
