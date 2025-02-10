@@ -617,11 +617,11 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </div>
 
   <p>Hello there! In the <a href="https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/" target="_blank">previous post “What Okta Bcrypt incident can teach us about designing better APIs”</a>, we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I, personally, came across a few years ago while investigating a quite nasty performance issue with one of the services. Let&rsquo;s jump right into it!</p>
-<p>A product manager of one of the neighboring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they&rsquo;d get a dashboard with the personalized data about them. The simplified architecture looked like this:</p>
+<p>A product manager of one of the neighboring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they&rsquo;d get a dashboard with the personalized data about them. The oversimplified architecture looked like this:</p>
 <p><img src="/images/drawings/20250131-0001.webp" alt="image"></p>
 <p>As you can see, the flow consists of 3 steps:</p>
 <ol>
-<li>The user enters their SSN in the UI, and the UI sends it to the Internal service.</li>
+<li>The user enters their SSN in the UI, and the UI sends it to the Internal service (actually, SSN was fetched securely via the national electronic identification system, but that&rsquo;s not important for the story)</li>
 <li>Internal service checks whether the data for the user with such SSN is already present in the DB (Postgres): if yes, that data is returned to the UI</li>
 <li>Otherwise, the request is made to the Third-party API to fetch the desired data, then it&rsquo;s being processed, saved into the DB, and returned to the user</li>
 </ol>
@@ -1165,6 +1165,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>And that&rsquo;s it, the team and the users are happy, the system is healthy again. We saved the day, and learned a thing or two about the Bcrypt algorithm.</p>
 <p>That was quite a ride, so thanks a lot for reading my post. I truly hope it was useful, and I&rsquo;ll see you in my next ones, as more to come soon. Have fun! =)</p>
 <p><strong>Edit (8th of February 2025):</strong> The earlier version of the post said that Bcrypt is an appropriate choice with the common salt, which is a wrong claim to make, and a big blunder on my side, apologies for that. The issue was discovered and mentioned in <a href="https://www.reddit.com/r/programming/comments/1iie34g/comment/mbbzwfl/?utm_source=share&amp;utm_medium=web3x&amp;utm_name=web3xcss&amp;utm_term=1&amp;utm_content=share_button" target="_blank">the Reddit discussion</a>, so all credit goes to <code>u/KrakenOfLakeZurich</code></p>
+<p><strong>Edit (10th of February 2025)</strong> The earlier version mentioned that SSN was provided via UI form, which is an oversimplification for the sake of the story. Added an explicit elaboration about that.</p>
 
   
     <hr>

@@ -7,13 +7,13 @@ tags: ["postgres", "security", "bcrypt", "performance", "optimization", "debug"]
 ---
 Hello there! In the [previous post “What Okta Bcrypt incident can teach us about designing better APIs”](https://n0rdy.foo/posts/20250121/okta-bcrypt-lessons-for-better-apis/), we discussed the 72-chars limit of the input value of the Bcrypt hashing algorithm that caused quite a big security incident in the industry. That reminded me about another example of Bcrypt misuse that I, personally, came across a few years ago while investigating a quite nasty performance issue with one of the services. Let's jump right into it!
 
-A product manager of one of the neighboring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they'd get a dashboard with the personalized data about them. The simplified architecture looked like this:
+A product manager of one of the neighboring teams approached me and asked if I could help them with the performance degradation that had been experienced lately with their newest feature, when the users were prompted to enter their SSN (social security number), and they'd get a dashboard with the personalized data about them. The oversimplified architecture looked like this:
 
 ![image](/images/drawings/20250131-0001.webp)
 
 As you can see, the flow consists of 3 steps:
 
-1. The user enters their SSN in the UI, and the UI sends it to the Internal service.
+1. The user enters their SSN in the UI, and the UI sends it to the Internal service (actually, SSN was fetched securely via the national electronic identification system, but that's not important for the story)
 2. Internal service checks whether the data for the user with such SSN is already present in the DB (Postgres): if yes, that data is returned to the UI
 3. Otherwise, the request is made to the Third-party API to fetch the desired data, then it's being processed, saved into the DB, and returned to the user
 
@@ -754,3 +754,5 @@ And that's it, the team and the users are happy, the system is healthy again. We
 That was quite a ride, so thanks a lot for reading my post. I truly hope it was useful, and I'll see you in my next ones, as more to come soon. Have fun! =)
 
 **Edit (8th of February 2025):** The earlier version of the post said that Bcrypt is an appropriate choice with the common salt, which is a wrong claim to make, and a big blunder on my side, apologies for that. The issue was discovered and mentioned in [the Reddit discussion](https://www.reddit.com/r/programming/comments/1iie34g/comment/mbbzwfl/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button), so all credit goes to `u/KrakenOfLakeZurich`
+
+**Edit (10th of February 2025)** The earlier version mentioned that SSN was provided via UI form, which is an oversimplification for the sake of the story. Added an explicit elaboration about that.
