@@ -755,4 +755,4 @@ That was quite a ride, so thanks a lot for reading my post. I truly hope it was 
 
 **Edit (8th of February 2025):** The earlier version of the post said that Bcrypt is an appropriate choice with the common salt, which is a wrong claim to make, and a big blunder on my side, apologies for that. The issue was discovered and mentioned in [the Reddit discussion](https://www.reddit.com/r/programming/comments/1iie34g/comment/mbbzwfl/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button), so all credit goes to `u/KrakenOfLakeZurich`
 
-**Edit (10th of February 2025)** The earlier version mentioned that SSN was provided via UI form, which is an oversimplification for the sake of the story. Added an explicit elaboration about that.
+**Edit (10th of February 2025):** The earlier version mentioned that SSN was provided via UI form, which is an oversimplification for the sake of the story. Added an explicit elaboration about that.
