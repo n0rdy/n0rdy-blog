@@ -506,7 +506,7 @@ Let me start with a short disclaimer: I have a huge respect for people who spend
 
 My initial goal was to create issues for each of the mentioned library, but I noticed that this behavior has been already reported to each of them:
 
-- https://github.com/spring-projects/spring-security/issues/15725
+- ~~https://github.com/spring-projects/spring-security/issues/15725~~ (the previously mentioned issue has been removed for some reasons, so here is an alternative one: https://github.com/spring-projects/spring-security/issues/2354)
 - https://github.com/dcodeIO/bcrypt.js/issues/102
 - https://github.com/pyca/bcrypt/issues/691
 - https://github.com/Keats/rust-bcrypt/issues/87
