@@ -20,7 +20,7 @@
 
 
 
-<script defer language="javascript" type="text/javascript" src="/js/bundle.min.145453261a7755f5042a854c4213501d215a8fbe34c08d181c40f803f1315e74.js"></script>
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.5991d603939a6d188be342b278a4555db90f163903158c623d2c39fde3d82cb3.js"></script>
 
 
 
@@ -113,7 +113,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.135.0">
+<meta name="generator" content="Hugo 0.145.0">
 
 
     
@@ -645,8 +645,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>If you don&rsquo;t know what Base64URL encoding is, let me give you a brief explanation: it is a technique for transforming any text (or binary data) into a sequence of characters. A set of 64 unique characters is used for the resulting text. It means that regardless of whether the input is Latin, Cyrillic, Arabic, Chinese, etc. chars, the output is always generated with the same 64 characters. That&rsquo;s where the &ldquo;64&rdquo; name part comes from. The important moment to highlight is that <em><strong>the text can be easily encoded and decoded back and forth by anyone, as Base64 doesn&rsquo;t imply any security for the original input</strong></em>. Check the corresponding <a href="https://en.wikipedia.org/wiki/Base64#URL_applications" target="_blank">Wikipedia page</a> for more details about Base64 and its Base64URL subtype.</p>
 <p>As you can see, I highlighted the</p>
 <blockquote>
-<p>the text can be easily encoded and decoded back and forth by anyone, as Base64 doesn&rsquo;t imply any security for the original input</p>
-</blockquote>
+<p>the text can be easily encoded and decoded back and forth by anyone, as Base64 doesn&rsquo;t imply any security for the original input</p></blockquote>
 <p>part. As soon as Eric learned this, he immediately saw the opportunity for a cool evil prank there.</p>
 <h3 id="the-prank">The prank</h3>
 <p>The idea behind the prank was both simple and easy: since now Eric knows how they encode their messages, nothing stops him from decoding the original input, modifying the <code>message</code> field value in some evil way, decoding it back, writing to a piece of paper and passing it forward to the desired destination. Guys don&rsquo;t suspect he knows their secret, so he has an advantage.</p>
@@ -745,8 +744,8 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>As you can already guess, that&rsquo;s exactly the measure that Craig and Clyde took against Eric&rsquo;s prank, and that&rsquo;s how they noticed when he replaced the original message with the fake one.</p>
 <p>Let&rsquo;s see how they achieve that by code. The secret phrase part was easy as they agreed on it before the lesson, so they both knew it.</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">secretPhase</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;goToHellEric&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">secretPhase</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;goToHellEric&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">part1</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">`{
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">  &#34;typ&#34;:&#34;JWT&#34;,
@@ -767,8 +766,8 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>, <span style="color:#e6db74">&#34;.&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>, <span style="color:#e6db74">&#34;.&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receiverSignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sign</span>(<span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">0</span>], <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">1</span>], <span style="color:#a6e22e">secretPhase</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">senderSignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">2</span>]
@@ -815,8 +814,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>If you have read the post all the way to this very point and began wondering why there is nothing about JWT/JWS/JWE yet, I have to say that it&rsquo;s a valid concern. But, hey, let me tell you this: with the things we have discussed above, you have learned almost everything I wanted to share about JWT and JWS. How come? Let me try to explain.</p>
 <p>The (probably) most famous web resource about JWT - <a href="https://jwt.io" target="_blank">https://jwt.io</a> - provides such a definition of JSON Web Tokens:</p>
 <blockquote>
-<p>JSON Web Token (JWT) is an open standard (<a href="https://tools.ietf.org/html/rfc7519" target="_blank">RFC 7519</a>) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be  verified and trusted because it is digitally signed. JWTs can be signed  using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.</p>
-</blockquote>
+<p>JSON Web Token (JWT) is an open standard (<a href="https://tools.ietf.org/html/rfc7519" target="_blank">RFC 7519</a>) that defines a compact and self-contained way for securely transmitting information between parties as a JSON object. This information can be  verified and trusted because it is digitally signed. JWTs can be signed  using a secret (with the HMAC algorithm) or a public/private key pair using RSA or ECDSA.</p></blockquote>
 <p>If we use <a href="https://en.wikipedia.org/wiki/JSON_Web_Token" target="_blank">a Wikipedia article about the JWT</a> as a reference, we&rsquo;ll notice that it specifies the following structure of JWTs:</p>
 <ul>
 <li>header</li>
@@ -899,8 +897,8 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </ul>
 <p>Let&rsquo;s see how it looks in the code:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">privateKey</span>, <span style="color:#a6e22e">_</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">GenerateKey</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Reader</span>, <span style="color:#ae81ff">2048</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">publicKey</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">privateKey</span>.<span style="color:#a6e22e">PublicKey</span>
@@ -924,8 +922,8 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>, <span style="color:#e6db74">&#34;.&#34;</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">senderSignature</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">2</span>]
@@ -1038,8 +1036,8 @@ It looks something like this (the example is generated by ChatGPT):</p>
 <p>At first, Craig and Clyde wanted to encrypt headers as well, but then they realized that it was not the best idea, as otherwise, they wouldn&rsquo;t be able to tell each other about the algorithm they used for the encryption.</p>
 <p>The same additional step applies to the message receiver flow: they need to decrypt the payload first and only then decode it. Here is how the sender and receiver flow looks on a code level:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signingSecretPhase</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;goToHellEric&#34;</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encryptionSecretPhase</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;keepItSecretKeepItSafe&#34;</span>
@@ -1065,8 +1063,8 @@ It looks something like this (the example is generated by ChatGPT):</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">encodedMessageWithSignature</span>, <span style="color:#e6db74">&#34;.&#34;</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">headersReceived</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">parts</span>[<span style="color:#ae81ff">0</span>]
@@ -1121,16 +1119,16 @@ It looks something like this (the example is generated by ChatGPT):</p>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ciphertext</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">gcm</span>.<span style="color:#a6e22e">Seal</span>(<span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">nonce</span>, []byte(<span style="color:#a6e22e">payload</span>), <span style="color:#66d9ef">nil</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encodedCiphertext</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base64</span>.<span style="color:#a6e22e">RawURLEncoding</span>.<span style="color:#a6e22e">EncodeToString</span>(<span style="color:#a6e22e">ciphertext</span>)
 </span></span><span style="display:flex;"><span>  
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// The encrypted payload includes the IV and the ciphertext, separated by a dot.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%s.%s&#34;</span>, <span style="color:#a6e22e">encodedNonce</span>, <span style="color:#a6e22e">encodedCiphertext</span>), <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// The encrypted payload includes the IV and the ciphertext, separated by a dot.</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%s.%s&#34;</span>, <span style="color:#a6e22e">encodedNonce</span>, <span style="color:#a6e22e">encodedCiphertext</span>), <span style="color:#66d9ef">nil</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">decrypt</span>(<span style="color:#a6e22e">encryptedPayload</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">secretPhrase</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hash</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">Sum256</span>([]byte(<span style="color:#a6e22e">secretPhrase</span>))
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">secretKey</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hash</span>[:]
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// The encryptedPayload includes the IV and the ciphertext, separated by a dot.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">encryptedPayload</span>, <span style="color:#e6db74">&#34;.&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// The encryptedPayload includes the IV and the ciphertext, separated by a dot.</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">parts</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">encryptedPayload</span>, <span style="color:#e6db74">&#34;.&#34;</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">parts</span>) <span style="color:#f92672">!=</span> <span style="color:#ae81ff">2</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;invalid encrypted payload format&#34;</span>)
 </span></span><span style="display:flex;"><span>	}
@@ -1254,13 +1252,13 @@ It looks something like this (the example is generated by ChatGPT):</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signingSecretPhase</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;goToHellEric&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to make sure the secret is 256 bits long
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#75715e">// it&#39;s better to use 256 bits long string instead of doing this
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">hasher</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to make sure the secret is 256 bits long</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// it&#39;s better to use 256 bits long string instead of doing this</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hasher</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hasher</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#a6e22e">signingSecretPhase</span>))
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signingSecret</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hasher</span>.<span style="color:#a6e22e">Sum</span>(<span style="color:#66d9ef">nil</span>)
 </span></span><span style="display:flex;"><span>
@@ -1287,8 +1285,8 @@ It looks something like this (the example is generated by ChatGPT):</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">signedJwt</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receiverJws</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ParseSigned</span>(<span style="color:#a6e22e">signedJwt</span>, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">SignatureAlgorithm</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">HS256</span>})
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
@@ -1327,8 +1325,8 @@ It looks something like this (the example is generated by ChatGPT):</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">privateKey</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">GenerateKey</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Reader</span>, <span style="color:#ae81ff">2048</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
@@ -1358,8 +1356,8 @@ It looks something like this (the example is generated by ChatGPT):</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">signedJwt</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receiverJws</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ParseSigned</span>(<span style="color:#a6e22e">signedJwt</span>, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">SignatureAlgorithm</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">RS256</span>})
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
@@ -1399,12 +1397,12 @@ It looks something like this (the example is generated by ChatGPT):</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encryptionSecretPhase</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;goToHellEric&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to make sure the secret is 256 bits long
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">hasher</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to make sure the secret is 256 bits long</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hasher</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">sha256</span>.<span style="color:#a6e22e">New</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hasher</span>.<span style="color:#a6e22e">Write</span>([]byte(<span style="color:#a6e22e">encryptionSecretPhase</span>))
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encryptionSecret</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hasher</span>.<span style="color:#a6e22e">Sum</span>(<span style="color:#66d9ef">nil</span>)
 </span></span><span style="display:flex;"><span>
@@ -1428,8 +1426,8 @@ It looks something like this (the example is generated by ChatGPT):</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">issuedJwe</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receiverJwe</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ParseEncrypted</span>(<span style="color:#a6e22e">issuedJwe</span>, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">KeyAlgorithm</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">A256GCMKW</span>}, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ContentEncryption</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">A256GCM</span>})
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
@@ -1468,8 +1466,8 @@ It looks something like this (the example is generated by ChatGPT):</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">encryptionKey</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">GenerateKey</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Reader</span>, <span style="color:#ae81ff">2048</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
@@ -1496,8 +1494,8 @@ It looks something like this (the example is generated by ChatGPT):</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">issuedJwe</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">receiverJwe</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ParseEncrypted</span>(<span style="color:#a6e22e">issuedJwe</span>, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">KeyAlgorithm</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">RSA_OAEP</span>}, []<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">ContentEncryption</span>{<span style="color:#a6e22e">jose</span>.<span style="color:#a6e22e">A256GCM</span>})
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
@@ -1537,8 +1535,8 @@ It looks something like this (the example is generated by ChatGPT):</p>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// sender part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sender part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">signaturePrivateKey</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rsa</span>.<span style="color:#a6e22e">GenerateKey</span>(<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Reader</span>, <span style="color:#ae81ff">2048</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
@@ -1554,8 +1552,8 @@ It looks something like this (the example is generated by ChatGPT):</p>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">encryptedJwe</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// receiver part:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;\nReceiver part:&#34;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">decryptedJwe</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">decryptJwe</span>(<span style="color:#a6e22e">encryptionPrivateKey</span>, <span style="color:#a6e22e">encryptedJwe</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">verifyJws</span>(<span style="color:#a6e22e">decryptedJwe</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">signaturePrivateKey</span>.<span style="color:#a6e22e">PublicKey</span>)

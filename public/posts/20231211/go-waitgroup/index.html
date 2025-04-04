@@ -20,7 +20,7 @@
 
 
 
-<script defer language="javascript" type="text/javascript" src="/js/bundle.min.145453261a7755f5042a854c4213501d215a8fbe34c08d181c40f803f1315e74.js"></script>
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.5991d603939a6d188be342b278a4555db90f163903158c623d2c39fde3d82cb3.js"></script>
 
 
 
@@ -113,7 +113,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.135.0">
+<meta name="generator" content="Hugo 0.145.0">
 
 
     
@@ -643,9 +643,9 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s started processing %s...\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// UPDATED: switched from 1 minute to 1 second to reduce the execution time
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// to simulate long processing
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// UPDATED: switched from 1 minute to 1 second to reduce the execution time</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to simulate long processing</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s processed %s\n\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>}
@@ -788,8 +788,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>One problem with this code, though: this for loop will never finish, and <code>the desk is closed - time to go home</code> part will never be printed. This means that our postman&rsquo;s working day will last forever 😱</p>
 <p>Let&rsquo;s try to help the poor guy, as I bet he definitely has something else to do outside the working hours. But how can we do that? Hmm&hellip;what do we know about the closed channels so far? In the previous part of the series, we mentioned this:</p>
 <blockquote>
-<p>if the channel is closed, it is impossible to write into it (<code>panic: send on closed channel</code>), but the reader can <a href="https://go.dev/ref/spec#Receive_operator" target="_blank">get the existing value from the channel</a>. If the reader keeps reading from the channel, it will receive the default values (e.g. <code>0</code> for <code>int</code>)</p>
-</blockquote>
+<p>if the channel is closed, it is impossible to write into it (<code>panic: send on closed channel</code>), but the reader can <a href="https://go.dev/ref/spec#Receive_operator" target="_blank">get the existing value from the channel</a>. If the reader keeps reading from the channel, it will receive the default values (e.g. <code>0</code> for <code>int</code>)</p></blockquote>
 <p><code>If the reader keeps reading from the channel, it will receive the default values</code> is something that can be pretty useful for our use case. Empty string (<code>&quot;&quot;</code>) is a default value for the <code>string</code> data type. What if we add a simple check there: if the received item is an empty string, can we assume that the desk channel is closed? This is what it&rsquo;s going to look like:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
@@ -869,8 +868,8 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;Hello there.&#34;</span>, <span style="color:#ae81ff">5</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;General Kenobi. You are a bold one.&#34;</span>, <span style="color:#ae81ff">5</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to prevent the program from exiting before goroutine finishes
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to prevent the program from exiting before goroutine finishes</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>If you have a feeling deep within that the <code>time.Sleep(1 * time.Second)</code> way of fixing this issue is somewhat a dirty hack - good intuition, my friend! But let&rsquo;s use it anyway to make sure it solves the issue, but increase the waiting to 2 seconds, so it is enough:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
@@ -893,8 +892,8 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	close(<span style="color:#a6e22e">deskChan</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to make sure that the worker has finished processing the last item
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to make sure that the worker has finished processing the last item</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">2</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>The result looks as expected now:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Lisa gives away basketball
@@ -987,8 +986,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>So, what kind of creature is <code>sync.WaitGroup</code>? Here is what the <a href="https://pkg.go.dev/sync#WaitGroup" target="_blank">official Go docs</a> say about it:</p>
 <blockquote>
 <p>A WaitGroup waits for a collection of goroutines to finish. The main goroutine calls Add to set the number of goroutines to wait for. Then each of the goroutines runs and calls Done when finished. At the same time, Wait can be used to block until all goroutines have finished.
-A WaitGroup must not be copied after first use.</p>
-</blockquote>
+A WaitGroup must not be copied after first use.</p></blockquote>
 <p>If we split it into the step-by-step instructions, it will look like this:</p>
 <ul>
 <li>create a new wait group <code>wg</code> in the main goroutine</li>
@@ -1003,8 +1001,8 @@ A WaitGroup must not be copied after first use.</p>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;Hello there.&#34;</span>, <span style="color:#ae81ff">5</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;General Kenobi. You are a bold one.&#34;</span>, <span style="color:#ae81ff">5</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to prevent the program from exiting before goroutine finishes
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to prevent the program from exiting before goroutine finishes</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Sleep</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Second</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printNTimes</span>(<span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>) {
@@ -1020,8 +1018,8 @@ A WaitGroup must not be copied after first use.</p>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">go</span> <span style="color:#a6e22e">printNTimesAsync</span>(<span style="color:#e6db74">&#34;Hello there.&#34;</span>, <span style="color:#ae81ff">5</span>, <span style="color:#a6e22e">wg</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;General Kenobi. You are a bold one.&#34;</span>, <span style="color:#ae81ff">5</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to prevent the program from exiting before goroutine finishes
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to prevent the program from exiting before goroutine finishes</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printNTimes</span>(<span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>) {
@@ -1060,8 +1058,8 @@ A WaitGroup must not be copied after first use.</p>
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">printNTimes</span>(<span style="color:#e6db74">&#34;General Kenobi. You are a bold one.&#34;</span>, <span style="color:#ae81ff">5</span>)
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to prevent the program from exiting before goroutine finishes
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to prevent the program from exiting before goroutine finishes</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printNTimes</span>(<span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>) {

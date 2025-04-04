@@ -20,7 +20,7 @@
 
 
 
-<script defer language="javascript" type="text/javascript" src="/js/bundle.min.145453261a7755f5042a854c4213501d215a8fbe34c08d181c40f803f1315e74.js"></script>
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.5991d603939a6d188be342b278a4555db90f163903158c623d2c39fde3d82cb3.js"></script>
 
 
 
@@ -113,7 +113,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.135.0">
+<meta name="generator" content="Hugo 0.145.0">
 
 
     
@@ -928,17 +928,17 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 <li>introduce a new function to enable CORS:</li>
 </ul>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">enableCors</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;http://localhost:3333&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;http://localhost:3333&#34;</span>)
 </span></span><span style="display:flex;"><span>	
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// specifies which methods are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;GET, POST, DELETE&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// specifies which methods are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;GET, POST, DELETE&#34;</span>)
 </span></span><span style="display:flex;"><span>	
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// specifies which headers are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Accept, Content-Type&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// specifies which headers are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Accept, Content-Type&#34;</span>)
 </span></span><span style="display:flex;"><span>	
-</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>  <span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>As you can see, we have introduced 4 CORS settings:</p>
 <ul>
@@ -1062,17 +1062,17 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">enableCors</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;http://localhost:3333&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;http://localhost:3333&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which methods are allowed to access this API (GET is allowed by default)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;POST, DELETE&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which methods are allowed to access this API (GET is allowed by default)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;POST, DELETE&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which headers are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Content-Type&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which headers are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Content-Type&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s run this code to see whether it works. It should - if you experience any issues, try to restart both frontend and backend apps, and even access http://localhost:3333 via incognito mode, as there might be some issues due to browser caching.</p>
 <p>If you click all the buttons a few times by trying to add some books and get/delete all of them, you&rsquo;ll see that it works as expected. Even more, if we take a look at the <code>Network</code> tab, we&rsquo;ll see that there is only 1 preflight request in total:</p>
@@ -1084,17 +1084,17 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 <h4 id="access-control-allow-origin">Access-Control-Allow-Origin</h4>
 <p>Our frontend app runs on <code>http://localhost:3333</code>, and that&rsquo;s exactly the value we have within the <code>Access-Control-Allow-Origin</code> header. Let&rsquo;s change it to something else:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">enableCors</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;http://example.com&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;http://example.com&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which methods are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;GET, POST, DELETE&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which methods are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;GET, POST, DELETE&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which headers are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Accept, Content-Type&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which headers are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Accept, Content-Type&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s restart the apps and see what will happen if we try to use them.</p>
 <p><img src="/images/screenshots/20240103-0008.webp" alt="image"></p>
@@ -1104,17 +1104,17 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 <p><img src="/images/screenshots/20240103-0010.webp" alt="image"></p>
 <p>There is a possibility, though, of allowing anyone to call your API - by using <code>*</code> as a value for the <code>Access-Control-Allow-Origin</code> header:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">enableCors</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;*&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;*&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which methods are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;GET, POST, DELETE&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which methods are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;GET, POST, DELETE&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which headers are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Accept, Content-Type&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which headers are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Accept, Content-Type&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Even if we try to run our frontend app on different ports, it will pass the CORS step successfully. Use this only if you know what you are doing!</p>
 <p>Ok, let&rsquo;s change the <code>Access-Control-Allow-Origin</code> to the original one and jump to the next one.</p>
@@ -1122,17 +1122,17 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 <p>Before started playing with this header, let me share an important gotcha with you: GET and POST methods are allowed by default regardless the settings. It means that <code>w.Header().Set(&quot;Access-Control-Allow-Methods&quot;, &quot;GET, POST, DELETE&quot;)</code> has the same effect as <code>w.Header().Set(&quot;Access-Control-Allow-Methods&quot;, &quot;DELETE&quot;)</code></p>
 <p>That&rsquo;s why there is no need to delete them and wonder why the application still works. However, let&rsquo;s try to get rid of the <code>DELETE</code> one:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">enableCors</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;http://localhost:3333&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;http://localhost:3333&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which methods are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;GET, POST&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which methods are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;GET, POST&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which headers are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Accept, Content-Type&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which headers are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Accept, Content-Type&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Once we restart both apps, we&rsquo;ll see that there are no issues with getting the books or adding a new one, but trying to delete them fires an error.</p>
 <p><img src="/images/screenshots/20240103-0011.webp" alt="image"></p>
@@ -1146,17 +1146,17 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 <h4 id="access-control-allow-headers">Access-Control-Allow-Headers</h4>
 <p>We don&rsquo;t explicitly use <code>Accept</code> header in our code, that&rsquo;s why let&rsquo;s keep it there. But we do use the <code>Content-Type</code> one when we make a POST request. You know what to do with it =)</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">enableCors</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;http://localhost:3333&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;http://localhost:3333&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which methods are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;GET, POST, DELETE&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which methods are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;GET, POST, DELETE&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which headers are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Accept&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which headers are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Accept&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Max-Age&#34;</span>, <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">60</span><span style="color:#f92672">*</span><span style="color:#ae81ff">2</span>))
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>If we click all the buttons we have, we&rsquo;ll see that getting and deleting books work, but adding a new one fails as expected:</p>
 <p><img src="/images/screenshots/20240103-0012.webp" alt="image"></p>
@@ -1166,18 +1166,18 @@ I tried calling the same endpoint with the <code>curl</code> command, and it wor
 <h4 id="access-control-max-age">Access-Control-Max-Age</h4>
 <p>If not set, the default value is <code>0</code> which means that browser shouldn&rsquo;t cache the prefligh request data at all. Let&rsquo;s comment the header out and see what happens next:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">enableCors</span>(<span style="color:#a6e22e">w</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">ResponseWriter</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;http://localhost:3333&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which domains are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Origin&#34;</span>, <span style="color:#e6db74">&#34;http://localhost:3333&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which methods are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;GET, POST, DELETE&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which methods are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Methods&#34;</span>, <span style="color:#e6db74">&#34;GET, POST, DELETE&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which headers are allowed to access this API
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Accept, Content-Type&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies which headers are allowed to access this API</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Header</span>().<span style="color:#a6e22e">Set</span>(<span style="color:#e6db74">&#34;Access-Control-Allow-Headers&#34;</span>, <span style="color:#e6db74">&#34;Accept, Content-Type&#34;</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">//w.Header().Set(&#34;Access-Control-Max-Age&#34;, strconv.Itoa(60*60*2))
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// specifies for how long the browser can cache the results of a preflight request (in seconds)</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">//w.Header().Set(&#34;Access-Control-Max-Age&#34;, strconv.Itoa(60*60*2))</span>
+</span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Observe the <code>Network</code> tab after restarting the app:</p>
 <p><img src="/images/screenshots/20240103-0013.webp" alt="image"></p>
 <p>No cache policy forces browser to make a preflight request each time there is a POST or DELETE call (there are no preflight requests for GET calls - it&rsquo;s a rule). It&rsquo;s acceptable while doing testing, but it leads to the undesired load to your servers if there is no <code>Access-Control-Max-Age</code> header provided, that&rsquo;s why the rule of thumb is to have it. There is no ideal value for it though, it depends on your situation and requirements.</p>

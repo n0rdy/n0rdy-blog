@@ -20,7 +20,7 @@
 
 
 
-<script defer language="javascript" type="text/javascript" src="/js/bundle.min.145453261a7755f5042a854c4213501d215a8fbe34c08d181c40f803f1315e74.js"></script>
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.5991d603939a6d188be342b278a4555db90f163903158c623d2c39fde3d82cb3.js"></script>
 
 
 
@@ -113,7 +113,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.135.0">
+<meta name="generator" content="Hugo 0.145.0">
 
 
     
@@ -640,8 +640,7 @@ Birds, beasts, trees, flowers;
 Gnaws iron, bites steel;
 Grinds hard stones to meal;
 Slays king, ruins town,
-And beats high mountain down.</p>
-</blockquote>
+And beats high mountain down.</p></blockquote>
 <p>Spoiler alert, but Mr. Baggins got lucky and came up with the correct answer accidentally - &ldquo;Time!&rdquo;. Believe it or not, but this is exactly the answer to our riddle as well: any 2 (or more) apps have access to the same time as long as they have an embedded clock within. The latter is not a problem these days, and the device in question is big enough to fit it. Look around, and the chances are that the time on your hand watch, mobile phone, TV, oven, and clock on the wall is the same. We are into something here, it seems like we have found the base for the OTP (one-time password) computing!</p>
 <h3 id="challenges">Challenges</h3>
 <p>Relying on time has its own set of challenges:</p>
@@ -656,22 +655,21 @@ And beats high mountain down.</p>
 </ul>
 <h2 id="implementation">Implementation</h2>
 <p>Ok, this is settled, so let&rsquo;s try to implement the very first version of our algorithm using time as the basis. Since we are interested in a 6 digits result, it sounds like a smart choice to rely on a timestamp rather than the human-readable date. Let&rsquo;s start from there:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gets current timestamp:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gets current timestamp:</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Current timestamp: &#34;</span>, <span style="color:#a6e22e">current</span>)
 </span></span></code></pre></div><p>According to the Go docs, the <code>.Unix()</code> returns</p>
 <blockquote>
-<p>the number of seconds elapsed since January 1, 1970 UTC.</p>
-</blockquote>
+<p>the number of seconds elapsed since January 1, 1970 UTC.</p></blockquote>
 <p>This is what printed to the terminal:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733691162
 </span></span></code></pre></div><p>That&rsquo;s a good start, but if we rerun that code, the timestamp value will change, while we&rsquo;d like to keep it stable for 30 seconds. Well, piece of cake, let&rsquo;s divide it by 30 and use that value as a base:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gets current timestamp
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gets current timestamp</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Current timestamp: &#34;</span>, <span style="color:#a6e22e">current</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// gets a number that is stable within 30 seconds
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// gets a number that is stable within 30 seconds</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Base: &#34;</span>, <span style="color:#a6e22e">base</span>)
 </span></span></code></pre></div><p>Let&rsquo;s run it:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733691545
@@ -692,19 +690,19 @@ And beats high mountain down.</p>
 </ul>
 <p>I hope it makes more sense now.</p>
 <p>However, not all the requirements are satisfied yet, as we need a 6 digits result, while current base has 8 digits as of today, but at some point of time in the future it might reach 9 digits point, and so on. Well, let&rsquo;s use another simple math trick: let divide the base by 1 000 000, and get the remainder, which will always have exactly 6 digits, as the reminder can be any number from 0 to 999 999, but never larger:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gets current timestamp:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gets current timestamp:</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Current timestamp: &#34;</span>, <span style="color:#a6e22e">current</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// gets a number that is stable within 30 seconds:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// gets a number that is stable within 30 seconds:</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Base: &#34;</span>, <span style="color:#a6e22e">base</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// makes sure it has only 6 digits:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1_000_000</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// makes sure it has only 6 digits:</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1_000_000</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// adds leading zeros if necessary:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">formattedCode</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">code</span>)
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// adds leading zeros if necessary:</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">formattedCode</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">code</span>)
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Code: &#34;</span>, <span style="color:#a6e22e">formattedCode</span>)
 </span></span></code></pre></div><p>The <code>fmt.Sprintf(&quot;%06d&quot;, code)</code> part appends leading zeros in case if our code value has less than 6 digits. For example, <code>1234</code> will be converted into <code>001234</code>.
 The entire code for this post can be found <a href="https://github.com/n0rdy/n0rdy-blog-code-samples/tree/main/20241210-otp-offline-generation" target="_blank">here</a>.</p>
@@ -736,8 +734,8 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">r</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// generates random number from 1 000 000 to 999 999 999
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">randomPrivateKey</span>() <span style="color:#66d9ef">int</span> {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// generates random number from 1 000 000 to 999 999 999</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">randomPrivateKey</span>() <span style="color:#66d9ef">int</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Intn</span>(<span style="color:#ae81ff">999_999_999</span><span style="color:#f92672">-</span><span style="color:#ae81ff">1_000_000</span>) <span style="color:#f92672">+</span> <span style="color:#ae81ff">1_000_000</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>We are using <code>pkDb</code> map as a way to prevent duplicates among private keys, and if the duplicate has been detected, we run the generation logic once more until we get a unique result.</p>
@@ -745,19 +743,19 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Private key for user:  115537846
 </span></span></code></pre></div><p>Let&rsquo;s make a use of this private key within our code generation logic to make sure we are getting different results per private key. Since our private key is of integer type, the simplest thing we can do is to add it to the base value, and keep the remaining algorithm as it is:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">int64</span>) <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets current timestamp:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets current timestamp:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Current timestamp: &#34;</span>, <span style="color:#a6e22e">current</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets a number that is stable within 30 seconds:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">pk</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets a number that is stable within 30 seconds:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">pk</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Base: &#34;</span>, <span style="color:#a6e22e">base</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// makes sure it has only 6 digits:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1_000_000</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// makes sure it has only 6 digits:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1_000_000</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// adds leading zeros if necessary:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">code</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// adds leading zeros if necessary:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">code</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s make sure it produces different results for different private keys:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pkForUser1</span> <span style="color:#66d9ef">int64</span> = <span style="color:#ae81ff">115537846</span>
@@ -787,8 +785,8 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 <p>Let&rsquo;s start with a simple approach: our code won&rsquo;t compile, because of this line:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span><span style="color:#f92672">/</span><span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">pk</span>
 </span></span></code></pre></div><p>as <code>pk</code> is of type <code>string</code> from now on. So why don&rsquo;t we convert it into integer? While there are way more elegant and performant ways to do that, here is the simplest thing I came up with:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// converts the string pk to a number
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int64</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// converts the string pk to a number</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int64</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">num</span> <span style="color:#66d9ef">int64</span> = <span style="color:#ae81ff">0</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">char</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">pk</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">num</span> = <span style="color:#ae81ff">31</span><span style="color:#f92672">*</span><span style="color:#a6e22e">num</span> <span style="color:#f92672">+</span> int64(<span style="color:#a6e22e">char</span>)
@@ -811,19 +809,19 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">int64</span>) <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets current timestamp:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets current timestamp:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Current timestamp: &#34;</span>, <span style="color:#a6e22e">current</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets a number that is stable within 30 seconds:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">pk</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets a number that is stable within 30 seconds:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">pk</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Base: &#34;</span>, <span style="color:#a6e22e">base</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// makes sure it has only 6 digits:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1_000_000</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// makes sure it has only 6 digits:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1_000_000</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// adds leading zeros if necessary:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">code</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// adds leading zeros if necessary:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">code</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Here is the terminal output:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733771953
@@ -852,8 +850,8 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// converts base and pk into a number
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span> <span style="color:#66d9ef">int64</span>, <span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int64</span> {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// converts base and pk into a number</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span> <span style="color:#66d9ef">int64</span>, <span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int64</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">num</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">char</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">pk</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">num</span> = <span style="color:#ae81ff">31</span><span style="color:#f92672">*</span><span style="color:#a6e22e">num</span> <span style="color:#f92672">+</span> int64(<span style="color:#a6e22e">char</span>)
@@ -871,26 +869,26 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets current timestamp:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets current timestamp:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Current timestamp: &#34;</span>, <span style="color:#a6e22e">current</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets a number that is stable within 30 seconds:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets a number that is stable within 30 seconds:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// combines the base with the private key to get a number unique to the user:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">baseWithPk</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span>, <span style="color:#a6e22e">pk</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// combines the base with the private key to get a number unique to the user:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">baseWithPk</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span>, <span style="color:#a6e22e">pk</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Base: &#34;</span>, <span style="color:#a6e22e">baseWithPk</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// makes sure it has only 6 digits:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">baseWithPk</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1_000_000</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// makes sure it has only 6 digits:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">baseWithPk</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1_000_000</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// adds leading zeros if necessary:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">code</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// adds leading zeros if necessary:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">code</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// converts base and pk into a number
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span> <span style="color:#66d9ef">int64</span>, <span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int64</span> {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// converts base and pk into a number</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span> <span style="color:#66d9ef">int64</span>, <span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int64</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">num</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">char</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">pk</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">num</span> = <span style="color:#ae81ff">31</span><span style="color:#f92672">*</span><span style="color:#a6e22e">num</span> <span style="color:#f92672">+</span> int64(<span style="color:#a6e22e">char</span>)
@@ -904,11 +902,11 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>Base:  -1073062424175310899
 </span></span><span style="display:flex;"><span>Code:  -310899
 </span></span></code></pre></div><p>Boom! How come did we get the minus value here? Well, it seems like we ran out of the <code>int64</code> ranges, so it capped the values to the minus and started over - my Java fellows are familiar with this from the <code>hashCode()</code> behavior.  The fix is simple: let&rsquo;s take the absolute value from the result, so then the minus sign is ignored:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// combines the base with the private key to get a number unique to the user:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">baseWithPk</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span>, <span style="color:#a6e22e">pk</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// combines the base with the private key to get a number unique to the user:</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">baseWithPk</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span>, <span style="color:#a6e22e">pk</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// makes sure it is positive:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">absBaseWithPk</span> <span style="color:#f92672">:=</span> int64(<span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">Abs</span>(float64(<span style="color:#a6e22e">baseWithPk</span>)))
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// makes sure it is positive:</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">absBaseWithPk</span> <span style="color:#f92672">:=</span> int64(<span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">Abs</span>(float64(<span style="color:#a6e22e">baseWithPk</span>)))
 </span></span></code></pre></div><p>Here is entire code sample with the fix:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pk</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;JBSWY3DPEB2GQZLSMUQQ&#34;</span>
@@ -918,29 +916,29 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets current timestamp:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets current timestamp:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Current timestamp: &#34;</span>, <span style="color:#a6e22e">current</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets a number that is stable within 30 seconds:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets a number that is stable within 30 seconds:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// combines the base with the private key to get a number unique to the user:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">baseWithPk</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span>, <span style="color:#a6e22e">pk</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// combines the base with the private key to get a number unique to the user:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">baseWithPk</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span>, <span style="color:#a6e22e">pk</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// makes sure it is positive:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">absBaseWithPk</span> <span style="color:#f92672">:=</span> int64(<span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">Abs</span>(float64(<span style="color:#a6e22e">baseWithPk</span>)))
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// makes sure it is positive:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">absBaseWithPk</span> <span style="color:#f92672">:=</span> int64(<span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">Abs</span>(float64(<span style="color:#a6e22e">baseWithPk</span>)))
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Base: &#34;</span>, <span style="color:#a6e22e">absBaseWithPk</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// makes sure it has only 6 digits:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">absBaseWithPk</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1_000_000</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// makes sure it has only 6 digits:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">absBaseWithPk</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1_000_000</span>
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// adds leading zeros if necessary:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">code</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// adds leading zeros if necessary:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">code</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// converts base and pk into a number
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span> <span style="color:#66d9ef">int64</span>, <span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int64</span> {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// converts base and pk into a number</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span> <span style="color:#66d9ef">int64</span>, <span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int64</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">num</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">base</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">char</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">pk</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">num</span> = <span style="color:#ae81ff">31</span><span style="color:#f92672">*</span><span style="color:#a6e22e">num</span> <span style="color:#f92672">+</span> int64(<span style="color:#a6e22e">char</span>)
@@ -986,8 +984,8 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pk</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Code: &#34;</span>, <span style="color:#a6e22e">code</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// brute forces the OTP and measures the time it takes to find it in milliseconds:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">start</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// brute forces the OTP and measures the time it takes to find it in milliseconds:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">start</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">1_000_000</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">i</span>) <span style="color:#f92672">==</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">FormatInt</span>(<span style="color:#a6e22e">code</span>, <span style="color:#ae81ff">10</span>) {
 </span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Found: &#34;</span>, <span style="color:#a6e22e">i</span>)
@@ -999,18 +997,18 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int64</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets current timestamp:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets current timestamp:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets a number that is stable within 30 seconds:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span><span style="color:#f92672">/</span><span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">pk</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets a number that is stable within 30 seconds:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span><span style="color:#f92672">/</span><span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">pk</span>)
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// makes sure it has only 6 digits:
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">base</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1_000_000</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// makes sure it has only 6 digits:</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">base</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">1_000_000</span>
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// converts the string pk to a number
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int64</span> {
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// converts the string pk to a number</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int64</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">num</span> <span style="color:#66d9ef">int64</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">pk</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">num</span> <span style="color:#f92672">+=</span> int64(<span style="color:#a6e22e">c</span>)

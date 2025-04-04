@@ -20,7 +20,7 @@
 
 
 
-<script defer language="javascript" type="text/javascript" src="/js/bundle.min.145453261a7755f5042a854c4213501d215a8fbe34c08d181c40f803f1315e74.js"></script>
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.5991d603939a6d188be342b278a4555db90f163903158c623d2c39fde3d82cb3.js"></script>
 
 
 
@@ -113,7 +113,7 @@
 
 
 
-<meta name="generator" content="Hugo 0.135.0">
+<meta name="generator" content="Hugo 0.145.0">
 
 
     
@@ -610,8 +610,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 
   <p>Hello there! If you follow tech news, you might have heard about the <a href="https://trust.okta.com/security-advisories/okta-ad-ldap-delegated-authentication-username/" target="_blank">Okta security incident</a> that was reported on 1st of November. The TLDR of the incident was this:</p>
 <blockquote>
-<p>The Bcrypt algorithm was used to generate the cache key where we hash a  combined string of userId + username + password. Under a specific set of conditions, listed below, this could allow users to authenticate by  providing the username with the stored cache key of a previous  successful authentication.</p>
-</blockquote>
+<p>The Bcrypt algorithm was used to generate the cache key where we hash a  combined string of userId + username + password. Under a specific set of conditions, listed below, this could allow users to authenticate by  providing the username with the stored cache key of a previous  successful authentication.</p></blockquote>
 <p>This means that if the user had a username above 52 chars, any password would suffice to log in. Also, if the username is, let&rsquo;s say, 50 chars long, it means that the bad actor needs to guess only 3 first chars to get in, which is quite a trivial task for the computers these days. Too bad, isn&rsquo;t it?</p>
 <p>On the other hand, such long usernames are not very usual, which I agree with. However, some companies like using the entire name of the employee as the email address. So, let&rsquo;s say, Albus Percival Wulfric Brian Dumbledore, a headmaster of Hogwarts, should be concerned, as <code>albus.percival.wulfric.brian.dumbledore@hogwarts.school</code> is 55 chars. Ooops!</p>
 <p><img src="/images/drawings/20250122-0001.webp" alt="image"></p>
@@ -633,8 +632,8 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 18 + 55 + 1 = 74, so above 72 characters&#39; limit of BCrypt
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">userId</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">randomString</span>(<span style="color:#ae81ff">18</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 18 + 55 + 1 = 74, so above 72 characters&#39; limit of BCrypt</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">userId</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">randomString</span>(<span style="color:#ae81ff">18</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">username</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">randomString</span>(<span style="color:#ae81ff">55</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">password</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;super-duper-secure-password&#34;</span>
 </span></span><span style="display:flex;"><span>
@@ -645,8 +644,8 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// let&#39;s try to break it
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">wrongPassword</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;wrong-password&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// let&#39;s try to break it</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wrongPassword</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;wrong-password&#34;</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wrongCombinedString</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%s:%s:%s&#34;</span>, <span style="color:#a6e22e">userId</span>, <span style="color:#a6e22e">username</span>, <span style="color:#a6e22e">wrongPassword</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">bcrypt</span>.<span style="color:#a6e22e">CompareHashAndPassword</span>(<span style="color:#a6e22e">combinedHash</span>, []byte(<span style="color:#a6e22e">wrongCombinedString</span>))
@@ -734,7 +733,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 }
 ...
 </code></pre><p>I didn&rsquo;t see any validation of the input that will be hashed. Hm&hellip;</p>
-<p>I decided to check other Google results, and the next Java library in the list was <code>bcrypt</code> from Patrick Favre (<a href="https://github.com/patrickfav/bcrypt" target="_blank">link to GitHub repo</a>) with 513 starts and the last release version 0.10.2 (so, not stable) from 12th of February 2023 (almost 2 years old). This suggested that I&rsquo;d not use it in production, but why not to run our tests.</p>
+<p>I decided to check other Google results, and the next Java library in the list was <code>bcrypt</code> from Patrick Favre (<a href="https://github.com/patrickfav/bcrypt" target="_blank">link to GitHub repo</a>) with 513 stars and the last release version 0.10.2 (so, not stable) from 12th of February 2023 (almost 2 years old). This suggested that I&rsquo;d not use it in production, but why not to run our tests.</p>
 <h3 id="bcrypt-from-patrick-favre">Bcrypt from Patrick Favre</h3>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> at.favre.lib.crypto.bcrypt.BCrypt;
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.apache.commons.lang3.RandomStringUtils;
@@ -935,8 +934,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </span></span></code></pre></div><h2 id="why">Why?</h2>
 <p>That was my first question after seeing that the majority of the tools follow the pattern that leads to the vulnerability. <a href="https://en.wikipedia.org/wiki/Bcrypt" target="_blank">Wikipedia article about Bcrypt</a> gave a hint:</p>
 <blockquote>
-<p>Many implementations of bcrypt truncate the password to the first 72 bytes, following the OpenBSD implementation</p>
-</blockquote>
+<p>Many implementations of bcrypt truncate the password to the first 72 bytes, following the OpenBSD implementation</p></blockquote>
 <p>Interesting! Let&rsquo;s check the OpenBSD implementation of this algorithm, and <a href="https://github.com/openbsd/src/blob/master/lib/libc/crypt/bcrypt.c" target="_blank">here is the link</a> to it. The first point of interest lies here:</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/* strlen() returns a size_t, but the function calls
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * below result in implicit casts to a narrower integer

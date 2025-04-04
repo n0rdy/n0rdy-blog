@@ -5,7 +5,9 @@ theme = "poison"
 
 enableRobotsTXT = true
 pluralizelisttitles = false
-paginate = 5
+
+[pagination]
+    pagerSize = 5
 
 [params]
     brand = "n0rdy"
