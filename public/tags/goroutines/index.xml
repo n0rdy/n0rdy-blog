@@ -13,7 +13,7 @@
       <link>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</link>
       <pubDate>Thu, 07 Dec 2023 22:00:00 +0100</pubDate>
       <guid>https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/</guid>
-      <description>&lt;p&gt;Christmas season is around the corner, that&amp;rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on &lt;a href=&#34;https://github.com/n0rdy/pippin&#34; target=&#34;_blank&#34;&gt;my open-source library&lt;/a&gt; for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.&lt;/p&gt;</description>
+      <description>&lt;p&gt;Christmas season is around the corner, that&amp;rsquo;s why another evening I was standing in a long queue at the post office with some Xmas presents packed inside the box. The line moved pretty slowly, as there was only one postman for the whole crowd of customers. The guy was running back and forth, and I felt really sorry for him. Not sure why, either out of boredom or because of several long evenings I spent working on &lt;a href=&#34;https://github.com/n0rdy/pippin&#34; target=&#34;_blank&#34; rel=&#34;nofollow&#34;&gt;my open-source library&lt;/a&gt; for managing asynchronous pipelines, but my brain turned engineering mode on and tried to optimize the process of handling parcels.&lt;/p&gt;</description>
     </item>
   </channel>
 </rss>
