@@ -49,16 +49,20 @@
 
 
 
+  
+  
+  
+
 
 
 
 <!-- Open Graph image and Twitter Card metadata -->
 
-<title itemprop="name">n0rdy personal blog</title>
-<meta property="og:title" content=n0rdy&#32;personal&#32;blog />
-<meta name="twitter:title" content=n0rdy&#32;personal&#32;blog />
-<meta itemprop="name" content=n0rdy&#32;personal&#32;blog />
-<meta name="application-name" content=n0rdy&#32;personal&#32;blog />
+<title itemprop="name">n0rdy - My Products</title>
+<meta property="og:title" content=n0rdy&#32;-&#32;My&#32;Products />
+<meta name="twitter:title" content=n0rdy&#32;-&#32;My&#32;Products />
+<meta itemprop="name" content=n0rdy&#32;-&#32;My&#32;Products />
+<meta name="application-name" content=n0rdy&#32;-&#32;My&#32;Products />
 <meta property="og:site_name" content="n0rdy personal blog" />
 
 
@@ -68,18 +72,18 @@
 <meta name="twitter:description" content="" />
 
 
-<base href="https://n0rdy.foo/tags/optimization/" />
-<link rel="canonical" href="https://n0rdy.foo/tags/optimization/" itemprop="url" />
-<meta name="url" content="https://n0rdy.foo/tags/optimization/" />
-<meta name="twitter:url" content="https://n0rdy.foo/tags/optimization/" />
-<meta property="og:url" content="https://n0rdy.foo/tags/optimization/" />
+<base href="https://n0rdy.foo/my-products/" />
+<link rel="canonical" href="https://n0rdy.foo/my-products/" itemprop="url" />
+<meta name="url" content="https://n0rdy.foo/my-products/" />
+<meta name="twitter:url" content="https://n0rdy.foo/my-products/" />
+<meta property="og:url" content="https://n0rdy.foo/my-products/" />
 
 
-<meta property="og:updated_time" content="2025-01-31T08:30:00&#43;02:00" />
+<meta property="og:updated_time" content="0001-01-01T00:00:00Z" />
 
 
 <link rel="sitemap" type="application/xml" title="Sitemap" href='https://n0rdy.foo/sitemap.xml' />
-<link href="https://n0rdy.foo/tags/optimization/index.xml" rel="alternate" type="application/rss+xml" title="n0rdy personal blog" />
+<link href="https://n0rdy.foo/my-products/index.xml" rel="alternate" type="application/rss+xml" title="n0rdy personal blog" />
 
 <meta name="robots" content="index,follow" />
 <meta name="googlebot" content="index,follow" />
@@ -616,22 +620,78 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </aside>
 
             <main class="content container">
-                <h1 class="title">Optimization</h1>
-<ul class="entries">
+                
+<div class="post">
+    <h1 class="post-title">My Products</h1>
+    <p>Welcome to my products page! 🚀</p>
+<p>Here you&rsquo;ll find a collection of products I&rsquo;ve built. Each product is crafted with care and attention to detail, aiming to solve real problems and provide value to the community.</p>
+<h2 id="featured-products">Featured Products</h2>
+<h3 id="talk-to-locals">Talk To Locals</h3>
+<p>A two-way voice translator that turns your phone into a speaking interpreter.</p>
+<p>Talk To Locals is the only voice-to-voice translator that lets you have natural conversations: no typing, no screen-passing, no awkward pauses. Just place your phone between you and anyone speaking 40+ languages, and it translates both voices in real-time.</p>
+<p>Perfect for ordering in local restaurants, meeting your partner&rsquo;s family, settling in as an expat/nomad, or discovering stories only locals know. First 10 minutes free, then pay only for what you use, no subscriptions.</p>
+<p><a href="https://talktolocals.ai" target="_blank">Visit Talk To Locals</a></p>
+<h2 id="my-friends-products">My Friends&rsquo; Products</h2>
+<h3 id="bare-knit">Bare Knit</h3>
+<p>A knitting blog &amp; podcast by my wife.</p>
+<p>This is a cozy corner of the internet where she posts her knitting podcasts, tutorials, and knitting-related life hacks.</p>
+<p><a href="https://bareknit.com" target="_blank">Visit Bare Knit</a></p>
+<hr>
+<p><em>More products coming soon! Stay tuned for updates by subscribing to my newsletter.</em></p>
+
     
-        <h3 style="text-align: center;">2025</h3>
-        
-            <li>
-                <span class="title">
-                    <a href="/posts/20250131/when-postgres-index-meets-bcrypt/">When Postgres index meets Bcrypt</a>
-                </span>
-                <span class="published">
-                    <time class="pull-right post-list">January 31, 2025</time>
-                </span>
-            </li>
-        
+        <hr>
+<div class="newsletters">
+    <div class="help-block-for-success"></div>
+    <div class="help-block-for-error"></div>
+    <form id="email-subscription-form">
+        <label for="email-subscription-input">Receive an email once a new post is published</label>
+        <input type="email" id="email-subscription-input" name="email-subscription-input" placeholder="Email address" />
+        <button type="submit">Subscribe</button>
+    </form>
+
+    <script>
+      const listmonkHost = "https://mail.n0rdy.foo";
+      const listmonkSubscriptionSuccessMessage = "Almost there! =) Please, check your email to confirm subscription. Check your spam folder if you didn't get the email.";
+      const listmonkSubscriptionErrorMessage = "Something went wrong =( Please, try again later.";
+
+      const form = document.getElementById("email-subscription-form");
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const email = form.querySelector("#email-subscription-input").value;
+        const data = {
+          email: email,
+          list_uuids: [
+            "3ba79b71-880f-417d-9587-d388b62e0986"
+          ]
+      };
+        fetch(`${listmonkHost}/api/public/subscription`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data),
+        }).then((response) => {
+          if (response.status === 200) {
+            const successBlock = document.getElementsByClassName('help-block-for-success')[0];
+            successBlock.classList.add('help-block-show');
+            successBlock.textContent = listmonkSubscriptionSuccessMessage;
+            document.getElementById('email-subscription-form').classList.add('email-subscription-form-hide');
+          } else {
+            const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
+            errorBlock.classList.add('help-block-show');
+            errorBlock.textContent = listmonkSubscriptionErrorMessage;
+          }
+        }).catch(() => {
+          const errorBlock = document.getElementsByClassName('help-block-for-error')[0];
+          errorBlock.classList.add('help-block-show');
+          errorBlock.textContent = listmonkSubscriptionErrorMessage;
+        });
+      })
+    </script>
+</div>
     
-</ul>
+</div>
 
             </main>
             

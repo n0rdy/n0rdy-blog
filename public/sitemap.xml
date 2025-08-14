@@ -119,5 +119,7 @@
     <loc>https://n0rdy.foo/about/</loc>
   </url><url>
     <loc>https://n0rdy.foo/about/about/</loc>
+  </url><url>
+    <loc>https://n0rdy.foo/my-products/</loc>
   </url>
 </urlset>

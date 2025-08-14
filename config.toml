@@ -21,6 +21,7 @@ pluralizelisttitles = false
         {Name = "About", URL = "/about/", HasChildren = false},
         {Name = "Posts", URL = "/posts/", Pre = "Recent", HasChildren = false},
         {Name = "Tags", URL = "/tags/", HasChildren = false},
+        {Name = "My Products", URL = "/my-products/", HasChildren = false},
     ]
 
     # Remark42
@@ -42,9 +43,7 @@ pluralizelisttitles = false
     listmonk_subcription_error_message = "Something went wrong =( Please, try again later."
 
     github_url = "https://github.com/n0rdy"
-    bluesky_url = "https://bsky.app/profile/n0rdy.foo"
     x_url = "https://x.com/_n0rdy_"
-    mastodon_url = "https://fosstodon.org/@n0rdy"
     email_url = "mailto:hello@n0rdy.foo"
 
     rss_icon = true
