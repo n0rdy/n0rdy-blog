@@ -5,9 +5,7 @@ omitDate: true
 dofollow: true
 ---
 
-Welcome to my products page! 🚀
-
-Here you'll find a collection of products I've built. Each product is crafted with care and attention to detail, aiming to solve real problems and provide value to the community.
+Here you'll find a collection of products I've built 🚀 Each product is crafted with care and attention to detail, aiming to solve real problems and provide value to the community.
 
 ## Featured Products
 
