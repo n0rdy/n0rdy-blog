@@ -44,7 +44,7 @@ pluralizelisttitles = false
 
     github_url = "https://github.com/n0rdy"
     x_url = "https://x.com/_n0rdy_"
-    email_url = "mailto:hello@n0rdy.foo"
+    email_url = "mailto:myko.nordy@pm.me"
 
     rss_icon = true
     rss_section = "posts"
