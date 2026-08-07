@@ -20,7 +20,7 @@
 
 
 
-<script defer language="javascript" type="text/javascript" src="/js/bundle.min.5991d603939a6d188be342b278a4555db90f163903158c623d2c39fde3d82cb3.js"></script>
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.d451ff92e80abc2a828eb9bb262e4db374bd4e954642f9245c54eec84bf690f3.js"></script>
 
 
 
@@ -113,13 +113,13 @@
 
 
 
-<meta name="generator" content="Hugo 0.145.0">
+<meta name="generator" content="Hugo 0.155.2">
 
 
     
     
 
-<link type="text/css" rel="stylesheet" href="/css/bundle.min.94a339836f89f0d25f31980cb6b0631da21e20af128308747ce44e0525eb16ef.css">
+<link type="text/css" rel="stylesheet" href="/css/bundle.min.607435cac0c3b4b44373c5634a7dd4f3b5b8f756061890d922e60e385c6d551f.css">
 
 
     
@@ -608,7 +608,7 @@
     </a>
 
 
-    <a target="_blank" class="social" title="Email" href="mailto:hello@n0rdy.foo" rel="nofollow">
+    <a target="_blank" class="social" title="Email" href="mailto:myko.nordy@pm.me" rel="nofollow">
        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 485.211 485.211">
             <path fill="currentColor" d="M301.393,241.631L464.866,424.56H20.332l163.474-182.928l58.801,51.443L301.393,241.631z M462.174,60.651H23.027 l219.579,192.142L462.174,60.651z M324.225,221.67l160.986,180.151V80.792L324.225,221.67z M0,80.792v321.029L160.972,221.64 L0,80.792z"/>
        </svg>
@@ -620,7 +620,7 @@
         <p class="footnote">
 powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
     <br>
-    &copy; 2025 n0rdy personal blog. All rights reserved.
+    &copy; 2026 n0rdy personal blog. All rights reserved.
 </p>
 
   </div>
@@ -682,7 +682,8 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 
   <p>Hello there! If you follow tech news, you might have heard about the <a href="https://trust.okta.com/security-advisories/okta-ad-ldap-delegated-authentication-username/" target="_blank" rel="nofollow">Okta security incident</a> that was reported on 1st of November. The TLDR of the incident was this:</p>
 <blockquote>
-<p>The Bcrypt algorithm was used to generate the cache key where we hash a  combined string of userId + username + password. Under a specific set of conditions, listed below, this could allow users to authenticate by  providing the username with the stored cache key of a previous  successful authentication.</p></blockquote>
+<p>The Bcrypt algorithm was used to generate the cache key where we hash a  combined string of userId + username + password. Under a specific set of conditions, listed below, this could allow users to authenticate by  providing the username with the stored cache key of a previous  successful authentication.</p>
+</blockquote>
 <p>This means that if the user had a username above 52 chars, any password would suffice to log in. Also, if the username is, let&rsquo;s say, 50 chars long, it means that the bad actor needs to guess only 3 first chars to get in, which is quite a trivial task for the computers these days. Too bad, isn&rsquo;t it?</p>
 <p>On the other hand, such long usernames are not very usual, which I agree with. However, some companies like using the entire name of the employee as the email address. So, let&rsquo;s say, Albus Percival Wulfric Brian Dumbledore, a headmaster of Hogwarts, should be concerned, as <code>albus.percival.wulfric.brian.dumbledore@hogwarts.school</code> is 55 chars. Ooops!</p>
 <p><img src="/images/drawings/20250122-0001.webp" alt="image"></p>
@@ -694,7 +695,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>However, there was one thing that made me wonder: if there is a known limit of the algorithm, why is it not enforced by the crypto libraries as a form of input validation? A simple <code>if input length &gt; 72 -&gt; return error</code> will do the trick. I assumed that they might have used some custom library for Bcrypt implementation and simply forgotten about the input validation, which can happen. So, I decided to check how other programming languages behave.</p>
 <h2 id="go-and-bcrypt">Go and Bcrypt</h2>
 <p>Let&rsquo;s start with Go, and implement the Okta incident-like case with the help of the official <code>golang.org/x/crypto/bcrypt</code> library:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
 </span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;crypto/rand&#34;</span>
@@ -747,13 +748,13 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>uses bcrypt API to compare whether the 2nd concatenated string matches the hash of the 1st one</li>
 </ul>
 <p>Let&rsquo;s run the code and see the result:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>panic: bcrypt: password length exceeds 72 bytes
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>panic: bcrypt: password length exceeds 72 bytes
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>goroutine 1 [running]:
 </span></span><span style="display:flex;"><span>main.main()
 </span></span><span style="display:flex;"><span>	/n0rdy-blog-code-samples/20250121-bcrypt-api/01-bcrypt-in-go/main.go:20 +0x2d1
 </span></span></code></pre></div><p>Good job, Go! If we check the source code of the <code>bcrypt.GenerateFromPassword(...)</code> function, we&rsquo;ll see this piece of code at the very beginning:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">password</span>) &gt; <span style="color:#ae81ff">72</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">password</span>) &gt; <span style="color:#ae81ff">72</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>, <span style="color:#a6e22e">ErrPasswordTooLong</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Perfect! At this point, I became even more suspicious about the tool Okta used, as it seemed like the industry figured that out based on this example. Spoiler alert: it&rsquo;s not that simple.</p>
@@ -763,7 +764,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>Java doesn&rsquo;t support Bcrypt from its core API, but my simple Google search showed that Spring Security library has implemented it. For those who are not into Java ecosystem, Spring is the most used and battle-tested frameworks out there, that has libraries for almost anything: Web, DBs, Cloud, Security, AI, etc. Pretty powerful tool, that I&rsquo;ve used a lot in the past, and still sometimes use for my side projects.</p>
 <h3 id="spring-security">Spring Security</h3>
 <p>So, I added the latest version of Spring Security to the project and reproduced the same scenario, as in Go example above:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> org.apache.commons.lang3.RandomStringUtils;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> org.apache.commons.lang3.RandomStringUtils;
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.springframework.security.crypto.bcrypt.BCrypt;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BcriptSpringSecurity</span> {
@@ -789,7 +790,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>I ran the code, and to my great surprise, saw this outcome:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Password is correct
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Password is correct
 </span></span></code></pre></div><p>I took a peak at the implementation code, and was disappointed: even though there are a bunch of checks on salt:</p>
 <pre tabindex="0"><code>if (saltLength &lt; 28) {
 	throw new IllegalArgumentException(&#34;Invalid salt&#34;);
@@ -807,7 +808,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </code></pre><p>I didn&rsquo;t see any validation of the input that will be hashed. Hm&hellip;</p>
 <p>I decided to check other Google results, and the next Java library in the list was <code>bcrypt</code> from Patrick Favre (<a href="https://github.com/patrickfav/bcrypt" target="_blank" rel="nofollow">link to GitHub repo</a>) with 513 stars and the last release version 0.10.2 (so, not stable) from 12th of February 2023 (almost 2 years old). This suggested that I&rsquo;d not use it in production, but why not to run our tests.</p>
 <h3 id="bcrypt-from-patrick-favre">Bcrypt from Patrick Favre</h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> at.favre.lib.crypto.bcrypt.BCrypt;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#f92672">import</span> at.favre.lib.crypto.bcrypt.BCrypt;
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> org.apache.commons.lang3.RandomStringUtils;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">BcryptAtFavre</span> {
@@ -835,7 +836,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s run it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Exception in thread &#34;main&#34; java.lang.IllegalArgumentException: password must not be longer than 72 bytes plus null terminator encoded in utf-8, was 102
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Exception in thread &#34;main&#34; java.lang.IllegalArgumentException: password must not be longer than 72 bytes plus null terminator encoded in utf-8, was 102
 </span></span><span style="display:flex;"><span>	at at.favre.lib.crypto.bcrypt.LongPasswordStrategy$StrictMaxPasswordLengthStrategy.innerDerive(LongPasswordStrategy.java:50)
 </span></span><span style="display:flex;"><span>	at at.favre.lib.crypto.bcrypt.LongPasswordStrategy$BaseLongPasswordStrategy.derive(LongPasswordStrategy.java:34)
 </span></span><span style="display:flex;"><span>	at at.favre.lib.crypto.bcrypt.BCrypt$Hasher.hashRaw(BCrypt.java:303)
@@ -845,7 +846,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </span></span><span style="display:flex;"><span>	at BcryptAtFavre.main(BcryptAtFavre.java:14)
 </span></span></code></pre></div><p>Nice, good job, Patrick, you saved the day for Java!</p>
 <p>After checking the source code, I found this piece:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#a6e22e">@Override</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> <span style="color:#a6e22e">derive</span>(<span style="color:#66d9ef">byte</span><span style="color:#f92672">[]</span> rawPassword) {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> (rawPassword.<span style="color:#a6e22e">length</span> <span style="color:#f92672">&gt;=</span> maxLength) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> innerDerive(rawPassword);
@@ -853,7 +854,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> rawPassword;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>and the strict strategy that threw the exception we&rsquo;ve seen:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StrictMaxPasswordLengthStrategy</span> <span style="color:#66d9ef">extends</span> BaseLongPasswordStrategy {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">final</span> <span style="color:#66d9ef">class</span> <span style="color:#a6e22e">StrictMaxPasswordLengthStrategy</span> <span style="color:#66d9ef">extends</span> BaseLongPasswordStrategy {
 </span></span><span style="display:flex;"><span>    StrictMaxPasswordLengthStrategy(<span style="color:#66d9ef">int</span> maxLength) {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">super</span>(maxLength);
 </span></span><span style="display:flex;"><span>    }
@@ -864,14 +865,14 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>We can see that this strict strategy is used as a part of the default configs:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Hasher <span style="color:#a6e22e">withDefaults</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-java" data-lang="java"><span style="display:flex;"><span><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">static</span> Hasher <span style="color:#a6e22e">withDefaults</span>() {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">new</span> Hasher(Version.<span style="color:#a6e22e">VERSION_2A</span>, <span style="color:#66d9ef">new</span> SecureRandom(), LongPasswordStrategies.<span style="color:#a6e22e">strict</span>(Version.<span style="color:#a6e22e">VERSION_2A</span>));
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Cool!</p>
 <p>Let&rsquo;s switch to JavaScript.</p>
 <h2 id="javascript-and-bcrypt">JavaScript and Bcrypt</h2>
 <p>Here I used the <a href="https://www.npmjs.com/package/bcryptjs" target="_blank" rel="nofollow">bcryptjs</a> which has over 2 million weekly downloads based on the NPM stats.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bcrypt</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;bcryptjs&#39;</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">bcrypt</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">require</span>(<span style="color:#e6db74">&#39;bcryptjs&#39;</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">randomString</span> (<span style="color:#a6e22e">length</span>) {
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">chars</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ&#39;</span>
@@ -884,7 +885,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">function</span> <span style="color:#a6e22e">runTest</span> () {
 </span></span><span style="display:flex;"><span>  <span style="color:#75715e">// 18 + 55 + 1 = 74, so above 72 characters&#39; limit of BCrypt
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">userId</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">randomString</span>(<span style="color:#ae81ff">18</span>)
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">userId</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">randomString</span>(<span style="color:#ae81ff">18</span>)
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">username</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">randomString</span>(<span style="color:#ae81ff">55</span>)
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">password</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;super-duper-secure-password&#39;</span>
 </span></span><span style="display:flex;"><span>
@@ -893,7 +894,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">combinedHash</span> <span style="color:#f92672">=</span> <span style="color:#a6e22e">bcrypt</span>.<span style="color:#a6e22e">hashSync</span>(<span style="color:#a6e22e">combinedString</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#75715e">// let&#39;s try to break it
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">wrongPassword</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;wrong-password&#39;</span>
+</span></span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">wrongPassword</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;wrong-password&#39;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">const</span> <span style="color:#a6e22e">wrongCombinedString</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">`</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">userId</span><span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">username</span><span style="color:#e6db74">}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">${</span><span style="color:#a6e22e">wrongPassword</span><span style="color:#e6db74">}</span><span style="color:#e6db74">`</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">bcrypt</span>.<span style="color:#a6e22e">compareSync</span>(<span style="color:#a6e22e">wrongCombinedString</span>, <span style="color:#a6e22e">combinedHash</span>)) {
@@ -905,9 +906,9 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">runTest</span>()
 </span></span></code></pre></div><p>The output is:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Password is correct
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Password is correct
 </span></span></code></pre></div><p>Not great. The source code reveals that similar to Spring Security, the library validates the salt</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">salt</span>.<span style="color:#a6e22e">charAt</span>(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#39;$&#39;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">salt</span>.<span style="color:#a6e22e">charAt</span>(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#39;2&#39;</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-javascript" data-lang="javascript"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">salt</span>.<span style="color:#a6e22e">charAt</span>(<span style="color:#ae81ff">0</span>) <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#39;$&#39;</span> <span style="color:#f92672">||</span> <span style="color:#a6e22e">salt</span>.<span style="color:#a6e22e">charAt</span>(<span style="color:#ae81ff">1</span>) <span style="color:#f92672">!==</span> <span style="color:#e6db74">&#39;2&#39;</span>) {
 </span></span><span style="display:flex;"><span>     <span style="color:#a6e22e">err</span> <span style="color:#f92672">=</span> Error(<span style="color:#e6db74">&#34;Invalid salt version: &#34;</span><span style="color:#f92672">+</span><span style="color:#a6e22e">salt</span>.<span style="color:#a6e22e">substring</span>(<span style="color:#ae81ff">0</span>,<span style="color:#ae81ff">2</span>));
 </span></span><span style="display:flex;"><span>     <span style="color:#66d9ef">if</span> (<span style="color:#a6e22e">callback</span>) {
 </span></span><span style="display:flex;"><span>         <span style="color:#a6e22e">nextTick</span>(<span style="color:#a6e22e">callback</span>.<span style="color:#a6e22e">bind</span>(<span style="color:#66d9ef">this</span>, <span style="color:#a6e22e">err</span>));
@@ -921,7 +922,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 <p>Let&rsquo;s try if Python can do any better.</p>
 <h2 id="python-and-bcrypt">Python and Bcrypt</h2>
 <p>Using <a href="https://github.com/pyca/bcrypt" target="_blank" rel="nofollow">bcrypt</a> library with 1.3k starts and the latest release in November.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> random
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-python" data-lang="python"><span style="display:flex;"><span><span style="color:#f92672">import</span> random
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> string
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> bcrypt
@@ -948,52 +949,52 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>:
 </span></span><span style="display:flex;"><span>        print(<span style="color:#e6db74">&#34;Password is incorrect&#34;</span>)
 </span></span></code></pre></div><p>The result is same as we observed for most of our test subjects:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Password is correct
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Password is correct
 </span></span></code></pre></div><p>All right, but what about some newer and more safety-oriented language - let&rsquo;s try Rust.</p>
 <h2 id="rust-and-bcrypt">Rust and Bcrypt</h2>
 <p>Here I need to be honest: since I&rsquo;m not a Rust expert at all, I used a help of a Claude AI to write this code. So, if you see any issues there, please, let me know in the comments section, so I can fix that.</p>
 <p>As a library, I used <a href="https://github.com/Keats/rust-bcrypt" target="_blank" rel="nofollow">rust-bcrypt</a> based on my AI friend advice.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">use</span> rand::RngCore;
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">use</span> rand::RngCore;
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> base64::{Engine <span style="color:#66d9ef">as</span> _, engine::general_purpose::<span style="color:#66d9ef">URL_SAFE</span>};
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">use</span> std::error::Error;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">random_string</span>(length: <span style="color:#66d9ef">usize</span>) -&gt; String {
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> bytes <span style="color:#f92672">=</span> vec![<span style="color:#ae81ff">0</span><span style="color:#66d9ef">u8</span>; length];
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> <span style="color:#66d9ef">mut</span> bytes <span style="color:#f92672">=</span> <span style="color:#a6e22e">vec!</span>[<span style="color:#ae81ff">0</span><span style="color:#66d9ef">u8</span>; length];
 </span></span><span style="display:flex;"><span>    rand::thread_rng().fill_bytes(<span style="color:#f92672">&amp;</span><span style="color:#66d9ef">mut</span> bytes);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">URL_SAFE</span>.encode(<span style="color:#f92672">&amp;</span>bytes)[<span style="color:#f92672">..</span>length].to_string()
 </span></span><span style="display:flex;"><span>}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">fn</span> <span style="color:#a6e22e">main</span>() -&gt; Result<span style="color:#f92672">&lt;</span>(), Box<span style="color:#f92672">&lt;</span><span style="color:#66d9ef">dyn</span> Error<span style="color:#f92672">&gt;&gt;</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 18 + 55 + 1 = 74, so above 72 characters&#39; limit of BCrypt
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> user_id <span style="color:#f92672">=</span> random_string(<span style="color:#ae81ff">18</span>);
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> user_id <span style="color:#f92672">=</span> random_string(<span style="color:#ae81ff">18</span>);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> username <span style="color:#f92672">=</span> random_string(<span style="color:#ae81ff">55</span>);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;super-duper-secure-password&#34;</span>;
 </span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> combined_string <span style="color:#f92672">=</span> format!(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span>, user_id, username, password);
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> combined_string <span style="color:#f92672">=</span> <span style="color:#a6e22e">format!</span>(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span>, user_id, username, password);
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> combined_hash <span style="color:#f92672">=</span> bcrypt::hash(combined_string.as_bytes(), bcrypt::<span style="color:#66d9ef">DEFAULT_COST</span>)<span style="color:#f92672">?</span>;
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// let&#39;s try to break it
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#66d9ef">let</span> wrong_password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;wrong-password&#34;</span>;
-</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> wrong_combined_string <span style="color:#f92672">=</span> format!(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span>, user_id, username, wrong_password);
+</span></span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> wrong_password <span style="color:#f92672">=</span> <span style="color:#e6db74">&#34;wrong-password&#34;</span>;
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">let</span> wrong_combined_string <span style="color:#f92672">=</span> <span style="color:#a6e22e">format!</span>(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">:</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span>, user_id, username, wrong_password);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">match</span> bcrypt::verify(wrong_combined_string.as_bytes(), <span style="color:#f92672">&amp;</span>combined_hash) {
-</span></span><span style="display:flex;"><span>        Ok(<span style="color:#66d9ef">true</span>) <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;Password is correct&#34;</span>),
-</span></span><span style="display:flex;"><span>        Ok(<span style="color:#66d9ef">false</span>) <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;Password is incorrect&#34;</span>),
-</span></span><span style="display:flex;"><span>        Err(e) <span style="color:#f92672">=&gt;</span> println!(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span>, e),
+</span></span><span style="display:flex;"><span>        Ok(<span style="color:#66d9ef">true</span>) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">println!</span>(<span style="color:#e6db74">&#34;Password is correct&#34;</span>),
+</span></span><span style="display:flex;"><span>        Ok(<span style="color:#66d9ef">false</span>) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">println!</span>(<span style="color:#e6db74">&#34;Password is incorrect&#34;</span>),
+</span></span><span style="display:flex;"><span>        Err(e) <span style="color:#f92672">=&gt;</span> <span style="color:#a6e22e">println!</span>(<span style="color:#e6db74">&#34;</span><span style="color:#e6db74">{}</span><span style="color:#e6db74">&#34;</span>, e),
 </span></span><span style="display:flex;"><span>    }
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>    Ok(())
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>The output is:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Password is correct
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Password is correct
 </span></span></code></pre></div><p>I can see the validation of the cost:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">!</span>(<span style="color:#66d9ef">MIN_COST</span><span style="color:#f92672">..=</span><span style="color:#66d9ef">MAX_COST</span>).contains(<span style="color:#f92672">&amp;</span>cost) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#f92672">!</span>(<span style="color:#66d9ef">MIN_COST</span><span style="color:#f92672">..=</span><span style="color:#66d9ef">MAX_COST</span>).contains(<span style="color:#f92672">&amp;</span>cost) {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">return</span> Err(BcryptError::CostNotAllowed(cost));
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>but not of the input. And here is the place where the explicit truncation of 72 chars happens (the comment is from the library source code):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// We only consider the first 72 chars; truncate if necessary.
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-rust" data-lang="rust"><span style="display:flex;"><span><span style="color:#75715e">// We only consider the first 72 chars; truncate if necessary.
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e">// `bcrypt` below will panic if len &gt; 72
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">let</span> truncated <span style="color:#f92672">=</span> <span style="color:#66d9ef">if</span> vec.len() <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">72</span> {
+</span></span></span><span style="display:flex;"><span><span style="color:#66d9ef">let</span> truncated <span style="color:#f92672">=</span> <span style="color:#66d9ef">if</span> vec.len() <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">72</span> {
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> err_on_truncation {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> Err(BcryptError::Truncation(vec.len()));
 </span></span><span style="display:flex;"><span>    }
@@ -1006,9 +1007,10 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </span></span></code></pre></div><h2 id="why">Why?</h2>
 <p>That was my first question after seeing that the majority of the tools follow the pattern that leads to the vulnerability. <a href="https://en.wikipedia.org/wiki/Bcrypt" target="_blank" rel="nofollow">Wikipedia article about Bcrypt</a> gave a hint:</p>
 <blockquote>
-<p>Many implementations of bcrypt truncate the password to the first 72 bytes, following the OpenBSD implementation</p></blockquote>
+<p>Many implementations of bcrypt truncate the password to the first 72 bytes, following the OpenBSD implementation</p>
+</blockquote>
 <p>Interesting! Let&rsquo;s check the OpenBSD implementation of this algorithm, and <a href="https://github.com/openbsd/src/blob/master/lib/libc/crypt/bcrypt.c" target="_blank" rel="nofollow">here is the link</a> to it. The first point of interest lies here:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/* strlen() returns a size_t, but the function calls
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/* strlen() returns a size_t, but the function calls
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * below result in implicit casts to a narrower integer
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * type, so cap key_len at the actual maximum supported
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * length here to avoid integer wraparound */</span>
@@ -1017,7 +1019,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </span></span><span style="display:flex;"><span>	 key_len <span style="color:#f92672">=</span> <span style="color:#ae81ff">72</span>;
 </span></span><span style="display:flex;"><span>key_len<span style="color:#f92672">++</span>;
 </span></span></code></pre></div><p>And from that moment on, <code>key_len</code> is used as a limit to iterate over the input string within, for example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">u_int32_t</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">u_int32_t</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">Blowfish_stream2word</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">u_int8_t</span> <span style="color:#f92672">*</span>data, <span style="color:#66d9ef">u_int16_t</span> databytes,
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">u_int16_t</span> <span style="color:#f92672">*</span>current)
 </span></span><span style="display:flex;"><span>{
@@ -1038,7 +1040,7 @@ if ((minor != &#39;a&#39; &amp;&amp; minor != &#39;x&#39; &amp;&amp; minor != &#
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> temp;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Where <code>key_length</code> is passed as a <code>databytes</code> parameter. So this piece of code:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (j <span style="color:#f92672">&gt;=</span> databytes)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (j <span style="color:#f92672">&gt;=</span> databytes)
 </span></span><span style="display:flex;"><span>	j <span style="color:#f92672">=</span> <span style="color:#ae81ff">0</span>;
 </span></span></code></pre></div><p>will make sure that no chars over the limit (72) will end up being processed.</p>
 <p>Git blame shows that the <code>if (key_len &gt; 72)</code> line is 11 years old</p>

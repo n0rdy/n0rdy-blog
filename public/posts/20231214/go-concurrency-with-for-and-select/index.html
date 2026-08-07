@@ -20,7 +20,7 @@
 
 
 
-<script defer language="javascript" type="text/javascript" src="/js/bundle.min.5991d603939a6d188be342b278a4555db90f163903158c623d2c39fde3d82cb3.js"></script>
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.d451ff92e80abc2a828eb9bb262e4db374bd4e954642f9245c54eec84bf690f3.js"></script>
 
 
 
@@ -113,13 +113,13 @@
 
 
 
-<meta name="generator" content="Hugo 0.145.0">
+<meta name="generator" content="Hugo 0.155.2">
 
 
     
     
 
-<link type="text/css" rel="stylesheet" href="/css/bundle.min.94a339836f89f0d25f31980cb6b0631da21e20af128308747ce44e0525eb16ef.css">
+<link type="text/css" rel="stylesheet" href="/css/bundle.min.607435cac0c3b4b44373c5634a7dd4f3b5b8f756061890d922e60e385c6d551f.css">
 
 
     
@@ -608,7 +608,7 @@
     </a>
 
 
-    <a target="_blank" class="social" title="Email" href="mailto:hello@n0rdy.foo" rel="nofollow">
+    <a target="_blank" class="social" title="Email" href="mailto:myko.nordy@pm.me" rel="nofollow">
        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 485.211 485.211">
             <path fill="currentColor" d="M301.393,241.631L464.866,424.56H20.332l163.474-182.928l58.801,51.443L301.393,241.631z M462.174,60.651H23.027 l219.579,192.142L462.174,60.651z M324.225,221.67l160.986,180.151V80.792L324.225,221.67z M0,80.792v321.029L160.972,221.64 L0,80.792z"/>
        </svg>
@@ -620,7 +620,7 @@
         <p class="footnote">
 powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
     <br>
-    &copy; 2025 n0rdy personal blog. All rights reserved.
+    &copy; 2026 n0rdy personal blog. All rights reserved.
 </p>
 
   </div>
@@ -679,7 +679,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
   <p>Hello there! I feel like I got my covid under control and will be back to daily life soon. In the meantime, I&rsquo;m sitting at my desk in a nearly empty apartment (I&rsquo;m moving soon) and wondering whether it&rsquo;s possible to produce an echo if I scream loud enough 🤔 Anyway, I feel like it&rsquo;s the right time to start working on Part 3 of the &ldquo;Go concurrency simplified&rdquo; series. Today, we&rsquo;ll move on and explore the ways Go offers us to sync goroutines - it will get us closer to solving the queue situation in the post office we discussed last time. But let&rsquo;s start with a short recap of where we stopped in the previous post (if you missed it, <a href="https://n0rdy.foo/posts/20231211/go-waitgroup/" target="_blank" rel="nofollow">here is the link</a>).</p>
 <h2 id="recap">Recap</h2>
 <p>Last time, we refactored our post office code by replacing the ugly <code>time.Sleep()</code> workaround with a <code>sync.WaitGroup</code> approach. Here is the entire code for that:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Customer</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Customer</span> <span style="color:#66d9ef">struct</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Item</span> <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>}
@@ -746,7 +746,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>If we take a closer look at this code using the experience of the refactoring we did in Part 2, it becomes clear that there is one part that looks hacky - I mean this one:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">item</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">deskChan</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">ok</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">break</span>
@@ -761,12 +761,12 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>if the channel is closed, finishes the execution</li>
 </ul>
 <p>And that&rsquo;s the exact description of how <code>for</code> loop works with the channel. Let me show you how we can rewrite the piece of code above:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">deskChan</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">deskChan</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>And that&rsquo;s it - as simple as that. The line <code>for item := range deskChan</code> blocks the execution until there is a new item in the channel or until the channel is closed.</p>
 <p>Let&rsquo;s apply this change to the <code>StartWorkingDay</code> function:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">deskChan</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>	}
@@ -775,7 +775,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>You can find the code samples for the post in this <a href="https://github.com/n0rdy/n0rdy-blog-code-samples/tree/main/20231214-go-concurrency-with-for-and-select" target="_blank" rel="nofollow">GitHub repo</a>.</p>
 <p>And run the code:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Lisa</span> <span style="color:#a6e22e">gives</span> <span style="color:#a6e22e">away</span> <span style="color:#a6e22e">basketball</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Lisa</span> <span style="color:#a6e22e">gives</span> <span style="color:#a6e22e">away</span> <span style="color:#a6e22e">basketball</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">Eric</span> <span style="color:#a6e22e">gives</span> <span style="color:#a6e22e">away</span> <span style="color:#a6e22e">teddy</span> <span style="color:#a6e22e">bear</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">received</span> <span style="color:#a6e22e">basketball</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">Worker</span> <span style="color:#a6e22e">Bob</span> <span style="color:#a6e22e">started</span> <span style="color:#a6e22e">processing</span> <span style="color:#a6e22e">basketball</span><span style="color:#f92672">...</span>
@@ -810,7 +810,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </ul>
 <h3 id="lets-help-nasa">Let&rsquo;s help NASA</h3>
 <p>This might sound like a challenging task, but since we&rsquo;ll mock the business logic of processing data and focus on the data pipeline part only, you&rsquo;ll see the beauty and the simplicity of Go here:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">import</span> (
 </span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;math/rand&#34;</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strconv&#34;</span>
@@ -874,7 +874,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </details>
 <br/>
 <p>If you run this code, it will be printing data like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Mars rover: gathering metrics...
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Mars rover: gathering metrics...
 </span></span><span style="display:flex;"><span>ISS: enriching metrics [7508100157780980863]...
 </span></span><span style="display:flex;"><span>ISS: enriching metrics [8542411963209765260]...
 </span></span><span style="display:flex;"><span>Mars rover: gathering metrics...
@@ -890,7 +890,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p><img src="/images/drawings/20231214-0001.webp" alt="image" title="A new post office setup with a phone"></p>
 <p>Hmm&hellip;it means that Bob needs to handle 2 tasks instead of 1 from now on. But what is he supposed to do once there are both customers and a phone call? Well, he is free to choose which one to handle - &ldquo;We have a lot of freedom at work,&rdquo; as Triss likes to say.</p>
 <p>But how should we represent the phone with the code? It wouldn&rsquo;t be surprising that you already know the answer - another channel.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">phoneChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75715e">// listen to the phone calls:</span>
@@ -905,9 +905,9 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	close(<span style="color:#a6e22e">phoneChan</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>The output is:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Got a call: Yo! What&#39;s up?
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Got a call: Yo! What&#39;s up?
 </span></span></code></pre></div><p>Let&rsquo;s take another look at the code that we wrote to represent the working day of the postman:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">deskChan</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>	}
@@ -918,7 +918,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <h2 id="managing-multiple-channels-with-select-statements">Managing multiple channels with <code>select</code> statements</h2>
 <p>As we see now, the <code>for</code> loop is a handy construction when we need to query only 1 channel. And this might cover a lot of cases that you are going to face sooner or later. However, once this limit is reached, it&rsquo;s time to onboard the <code>select</code> statement.</p>
 <p>The syntax for this construct is pretty straightforward and (my guess) inspired by the <code>switch</code> statement:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">select</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">select</span> {
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#a6e22e">f</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">firstChan</span>:
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">handleFirst</span>(<span style="color:#a6e22e">f</span>)
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">case</span> <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">secondChan</span>:
@@ -928,7 +928,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p><code>f := &lt;-firstChan</code> is exactly the same syntax we used to fetch data from the channel once we first met the concept of channels at all. This means it is possible to do <code>f, ok := &lt;-firstChan</code> as well if we&rsquo;d like to know whether the <code>firstChan</code> is opened.</p>
 <p>Let&rsquo;s replace our <code>for</code> loop with the <code>select</code> statement and see how it works:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">phoneChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">phoneChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">select</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">deskChan</span>:
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
@@ -939,7 +939,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;the desk is closed - time to go home&#34;</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>We also need to apply changes to the <code>main</code> function to setup the phone and add the code to make calls to it with a provided interval:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">phoneChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>{}
@@ -976,7 +976,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s run the code and see whether it works or not:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Lisa gives away basketball
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Lisa gives away basketball
 </span></span><span style="display:flex;"><span>Worker Bob received a call: Has my package arrived?
 </span></span><span style="display:flex;"><span>the desk is closed - time to go home
 </span></span><span style="display:flex;"><span>fatal error: all goroutines are asleep - deadlock!
@@ -991,7 +991,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>        /n0rdy-blog-code-samples/20231214-go-concurrency-with-for-and-select/04-select-without-loop/select.go:67 +0x25f
 </span></span></code></pre></div><p>Wait a minute, that&rsquo;s not the output we were supposed to get! How come there is a deadlock? And why the <code>the desk is closed - time to go home</code> message</p>
 <p>Actually, there is a tiny detail that I have entirely forgotten to mention - unlike <code>for</code> loops, the <code>select</code> statements are not loops but rather 1-time actions, the same as the <code>switch</code> operator. That&rsquo;s why this part</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#66d9ef">select</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#66d9ef">select</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">deskChan</span>:
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">call</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">phoneChan</span>:
@@ -999,7 +999,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	}
 </span></span></code></pre></div><p>was executed once, and then the code proceeded to the <code>fmt.Println(&quot;the desk is closed - time to go home&quot;)</code> line, so Bob called it a day and went home. Since the queue of customers was still there, and there was nobody to handle them, we ended up in a deadlock situation. A nasty issue to have!</p>
 <p>I think it&rsquo;s clear that we need to make our <code>select</code> statement run as a loop somehow. Without playing hide and seek, let me tell you that the Go-idiomatic way of solving this is wrapping it with a <code>for</code> loop on top like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> {
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">select</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">deskChan</span>:
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
@@ -1014,7 +1014,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>In the <code>main</code> function, create a new channel that will be notified once the <code>select</code> statement has to finish its execution. Pass this channel to the method with the <code>select</code> statement and introduce a new <code>case</code> for it. If there is an input to that channel, break the loop. A real-life representation of this approach is like setting a timer/an alarm: once it rings, the postman knows it&rsquo;s time to call it a day.</li>
 </ol>
 <p>The 1st approach (the boolean flag one) looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">phoneChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">phoneChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">keepRunning</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">true</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">keepRunning</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">select</span> {
@@ -1036,7 +1036,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;the desk is closed - time to go home&#34;</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>If we run our application now, we&rsquo;ll see that the deadlock issue is gone, and the output is the way it should be:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Lisa gives away basketball
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Lisa gives away basketball
 </span></span><span style="display:flex;"><span>Worker Bob received a call: Has my package arrived?
 </span></span><span style="display:flex;"><span>Worker Bob received basketball
 </span></span><span style="display:flex;"><span>Worker Bob started processing basketball...
@@ -1065,7 +1065,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>the desk is closed - time to go home
 </span></span></code></pre></div><p>The 2nd approach (a new channel) will look a bit different code-wise:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">phoneChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">shutdownChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">phoneChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">shutdownChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}) {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">select</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">deskChan</span>:
@@ -1079,7 +1079,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>We also need to introduce <code>shutdownChan</code> in the <code>main</code> function and send a signal to it at some point:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">phoneChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">shutdownChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{})

@@ -20,7 +20,7 @@
 
 
 
-<script defer language="javascript" type="text/javascript" src="/js/bundle.min.5991d603939a6d188be342b278a4555db90f163903158c623d2c39fde3d82cb3.js"></script>
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.d451ff92e80abc2a828eb9bb262e4db374bd4e954642f9245c54eec84bf690f3.js"></script>
 
 
 
@@ -113,13 +113,13 @@
 
 
 
-<meta name="generator" content="Hugo 0.145.0">
+<meta name="generator" content="Hugo 0.155.2">
 
 
     
     
 
-<link type="text/css" rel="stylesheet" href="/css/bundle.min.94a339836f89f0d25f31980cb6b0631da21e20af128308747ce44e0525eb16ef.css">
+<link type="text/css" rel="stylesheet" href="/css/bundle.min.607435cac0c3b4b44373c5634a7dd4f3b5b8f756061890d922e60e385c6d551f.css">
 
 
     
@@ -608,7 +608,7 @@
     </a>
 
 
-    <a target="_blank" class="social" title="Email" href="mailto:hello@n0rdy.foo" rel="nofollow">
+    <a target="_blank" class="social" title="Email" href="mailto:myko.nordy@pm.me" rel="nofollow">
        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 485.211 485.211">
             <path fill="currentColor" d="M301.393,241.631L464.866,424.56H20.332l163.474-182.928l58.801,51.443L301.393,241.631z M462.174,60.651H23.027 l219.579,192.142L462.174,60.651z M324.225,221.67l160.986,180.151V80.792L324.225,221.67z M0,80.792v321.029L160.972,221.64 L0,80.792z"/>
        </svg>
@@ -620,7 +620,7 @@
         <p class="footnote">
 powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
     <br>
-    &copy; 2025 n0rdy personal blog. All rights reserved.
+    &copy; 2026 n0rdy personal blog. All rights reserved.
 </p>
 
   </div>
@@ -725,9 +725,10 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>Have you ever heard of XY problem? If not, here is how <a href="https://en.wikipedia.org/wiki/XY_problem" target="_blank" rel="nofollow">Wikipedia</a> defines it:</p>
 <blockquote>
 <p>The XY problem is a communication problem encountered in help desk, technical support, software engineering, or customer service situations where the question is about an end user&rsquo;s attempted solution (X) rather than the root problem itself (Y or Why?).</p>
-<p>The XY problem obscures the real issues and may even introduce secondary problems that lead to miscommunication, resource mismanagement, and sub-par solutions. The solution for the support personnel is to ask probing questions as to why the information is needed in order to identify the root problem Y and redirect the end user away from an unproductive path of inquiry.</p></blockquote>
+<p>The XY problem obscures the real issues and may even introduce secondary problems that lead to miscommunication, resource mismanagement, and sub-par solutions. The solution for the support personnel is to ask probing questions as to why the information is needed in order to identify the root problem Y and redirect the end user away from an unproductive path of inquiry.</p>
+</blockquote>
 <p>If that doesn&rsquo;t make sense, here is a good example from <a href="https://xyproblem.info/" target="_blank" rel="nofollow">&ldquo;The XY Problem&rdquo; website</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>&lt;bob&gt; How can I echo the last three characters in a filename?
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>&lt;bob&gt; How can I echo the last three characters in a filename?
 </span></span><span style="display:flex;"><span>&lt;feline&gt; If they&#39;re in a variable: echo ${foo: -3}
 </span></span><span style="display:flex;"><span>&lt;feline&gt; Why 3 characters? What do you REALLY want?
 </span></span><span style="display:flex;"><span>&lt;feline&gt; Do you want the extension?
@@ -748,7 +749,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>That&rsquo;s something that I&rsquo;d like you to be aware of while using tools like ChatGPT: they are falling (still?) into the XY problem, so be mindful and explicitly double-check whether the way you are going right now is the best one and whether there are any better alternatives.</p>
 <h2 id="the-code-that-looks-damn-realistic-but-has-some-hard-to-notice-issues">The code that looks damn realistic but has some hard-to-notice issues</h2>
 <p>Some time ago, I was working on my simple terminal reminder app <a href="https://github.com/n0rdy/remindme" target="_blank" rel="nofollow">remindme</a> (btw, check it out, it&rsquo;s pretty good and might be useful for you, and it&rsquo;s <a href="https://en.wikipedia.org/wiki/Free_and_open-source_software" target="_blank" rel="nofollow">FOSS</a>), and it was one of the first times when I could feel the power of the GitHub Copilot assistance: it basically wrote all of the SQL-related code in my project. And I have to say that the queries were pretty good: here is what one of the functions looked like:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sqliteReminderRepo</span>) <span style="color:#a6e22e">List</span>() ([]<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">Reminder</span>, <span style="color:#66d9ef">error</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sqliteReminderRepo</span>) <span style="color:#a6e22e">List</span>() ([]<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">Reminder</span>, <span style="color:#66d9ef">error</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rows</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">Query</span>(<span style="color:#e6db74">`
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">		SELECT id, message, remind_at FROM reminders;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	`</span>)
@@ -776,7 +777,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">reminders</span>, <span style="color:#66d9ef">nil</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>It&rsquo;s a decent code, but there is one catch that is easy to miss while doing a code review, especially if the pull request is quite big: a <code>rows</code> variable created in line 2 of the code is of type <code>*sql.Rows</code>. And <a href="https://github.com/golang/go/issues/46863" target="_blank" rel="nofollow">it should be closed</a> to release the resources once the processing is completed, that&rsquo;s why we need to add <code>defer rows.Close()</code> after the 1st <code>if err != nil { ... }</code> statement like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sqliteReminderRepo</span>) <span style="color:#a6e22e">List</span>() ([]<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">Reminder</span>, <span style="color:#66d9ef">error</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">sqliteReminderRepo</span>) <span style="color:#a6e22e">List</span>() ([]<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">Reminder</span>, <span style="color:#66d9ef">error</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rows</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">Query</span>(<span style="color:#e6db74">`
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">		SELECT id, message, remind_at FROM reminders;
 </span></span></span><span style="display:flex;"><span><span style="color:#e6db74">	`</span>)
@@ -822,11 +823,12 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <blockquote>
 <p>The sunk cost fallacy is the tendency for people to continue an endeavor or course of action even when abandoning it would be more beneficial. Because we have invested our time, energy, or other resources, we feel that it would all have been for nothing if we quit.</p>
 <p>Sunk cost fallacy example
-You are watching a movie, and after 30 minutes you realize it’s not what you expected. Instead of finding another movie, you convince yourself to continue. You think to yourself that you have already invested half an hour and the whole movie is just an hour and a half. If you quit now, you will have wasted your time, so you decide to stick it out.</p></blockquote>
+You are watching a movie, and after 30 minutes you realize it’s not what you expected. Instead of finding another movie, you convince yourself to continue. You think to yourself that you have already invested half an hour and the whole movie is just an hour and a half. If you quit now, you will have wasted your time, so you decide to stick it out.</p>
+</blockquote>
 <p>I&rsquo;m not sure about you, but it&rsquo;s something that has happened to me. Here is one of the examples in the scope of the AI tools.</p>
 <p>These days, whenever I have time, I work on my new FOSS pet project: a service to ping your APIs/websites that is configurable via a simple YAML file and should support various queries/selectors (CSS, jq, etc.) and different protocols (HTTP(S), TCP, UDP, GRPS, GraphQL, etc.). One of the most challenging (and boring, IMHO) parts was to define the structure of the YAML config file, as it feels like creating a new DSL, so it&rsquo;s essential to keep it simple, extendable, and as short as possible. For that reason, I postponed the YAML part until the stage when I created a skeleton for the business logic and implemented a happy path for one of the protocols (HTTP). Once the time came, I decided to create a YAML config example with all the possible options before making the specifications and schema.</p>
 <p>I started with the first lines like these (<code>pingheim</code> is the name of the tool):</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">pingheim</span>: <span style="color:#ae81ff">0.0.1</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-yaml" data-lang="yaml"><span style="display:flex;"><span><span style="color:#f92672">pingheim</span>: <span style="color:#ae81ff">0.0.1</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">description</span>: <span style="color:#ae81ff">A sample of a full YAML file</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">pings</span>:

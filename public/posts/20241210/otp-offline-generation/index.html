@@ -20,7 +20,7 @@
 
 
 
-<script defer language="javascript" type="text/javascript" src="/js/bundle.min.5991d603939a6d188be342b278a4555db90f163903158c623d2c39fde3d82cb3.js"></script>
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.d451ff92e80abc2a828eb9bb262e4db374bd4e954642f9245c54eec84bf690f3.js"></script>
 
 
 
@@ -113,13 +113,13 @@
 
 
 
-<meta name="generator" content="Hugo 0.145.0">
+<meta name="generator" content="Hugo 0.155.2">
 
 
     
     
 
-<link type="text/css" rel="stylesheet" href="/css/bundle.min.94a339836f89f0d25f31980cb6b0631da21e20af128308747ce44e0525eb16ef.css">
+<link type="text/css" rel="stylesheet" href="/css/bundle.min.607435cac0c3b4b44373c5634a7dd4f3b5b8f756061890d922e60e385c6d551f.css">
 
 
     
@@ -608,7 +608,7 @@
     </a>
 
 
-    <a target="_blank" class="social" title="Email" href="mailto:hello@n0rdy.foo" rel="nofollow">
+    <a target="_blank" class="social" title="Email" href="mailto:myko.nordy@pm.me" rel="nofollow">
        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 485.211 485.211">
             <path fill="currentColor" d="M301.393,241.631L464.866,424.56H20.332l163.474-182.928l58.801,51.443L301.393,241.631z M462.174,60.651H23.027 l219.579,192.142L462.174,60.651z M324.225,221.67l160.986,180.151V80.792L324.225,221.67z M0,80.792v321.029L160.972,221.64 L0,80.792z"/>
        </svg>
@@ -620,7 +620,7 @@
         <p class="footnote">
 powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
     <br>
-    &copy; 2025 n0rdy personal blog. All rights reserved.
+    &copy; 2026 n0rdy personal blog. All rights reserved.
 </p>
 
   </div>
@@ -712,7 +712,8 @@ Birds, beasts, trees, flowers;
 Gnaws iron, bites steel;
 Grinds hard stones to meal;
 Slays king, ruins town,
-And beats high mountain down.</p></blockquote>
+And beats high mountain down.</p>
+</blockquote>
 <p>Spoiler alert, but Mr. Baggins got lucky and came up with the correct answer accidentally - &ldquo;Time!&rdquo;. Believe it or not, but this is exactly the answer to our riddle as well: any 2 (or more) apps have access to the same time as long as they have an embedded clock within. The latter is not a problem these days, and the device in question is big enough to fit it. Look around, and the chances are that the time on your hand watch, mobile phone, TV, oven, and clock on the wall is the same. We are into something here, it seems like we have found the base for the OTP (one-time password) computing!</p>
 <h3 id="challenges">Challenges</h3>
 <p>Relying on time has its own set of challenges:</p>
@@ -727,16 +728,17 @@ And beats high mountain down.</p></blockquote>
 </ul>
 <h2 id="implementation">Implementation</h2>
 <p>Ok, this is settled, so let&rsquo;s try to implement the very first version of our algorithm using time as the basis. Since we are interested in a 6 digits result, it sounds like a smart choice to rely on a timestamp rather than the human-readable date. Let&rsquo;s start from there:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gets current timestamp:</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gets current timestamp:</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Current timestamp: &#34;</span>, <span style="color:#a6e22e">current</span>)
 </span></span></code></pre></div><p>According to the Go docs, the <code>.Unix()</code> returns</p>
 <blockquote>
-<p>the number of seconds elapsed since January 1, 1970 UTC.</p></blockquote>
+<p>the number of seconds elapsed since January 1, 1970 UTC.</p>
+</blockquote>
 <p>This is what printed to the terminal:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733691162
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733691162
 </span></span></code></pre></div><p>That&rsquo;s a good start, but if we rerun that code, the timestamp value will change, while we&rsquo;d like to keep it stable for 30 seconds. Well, piece of cake, let&rsquo;s divide it by 30 and use that value as a base:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gets current timestamp</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gets current timestamp</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Current timestamp: &#34;</span>, <span style="color:#a6e22e">current</span>)
 </span></span><span style="display:flex;"><span>
@@ -744,13 +746,13 @@ And beats high mountain down.</p></blockquote>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Base: &#34;</span>, <span style="color:#a6e22e">base</span>)
 </span></span></code></pre></div><p>Let&rsquo;s run it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733691545
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733691545
 </span></span><span style="display:flex;"><span>Base:  57789718
 </span></span></code></pre></div><p>And again:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733691552
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733691552
 </span></span><span style="display:flex;"><span>Base:  57789718
 </span></span></code></pre></div><p>The base value remains the same. Let&rsquo;s wait for a bit, and run it again:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733691571
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733691571
 </span></span><span style="display:flex;"><span>Base:  57789719
 </span></span></code></pre></div><p>The base value has changed, as the 30 seconds window has passed - good job!</p>
 <p>If the &ldquo;divide by 30&rdquo; logic doesn&rsquo;t make sense, let me explain it with a simple example:</p>
@@ -762,7 +764,7 @@ And beats high mountain down.</p></blockquote>
 </ul>
 <p>I hope it makes more sense now.</p>
 <p>However, not all the requirements are satisfied yet, as we need a 6 digits result, while current base has 8 digits as of today, but at some point of time in the future it might reach 9 digits point, and so on. Well, let&rsquo;s use another simple math trick: let divide the base by 1 000 000, and get the remainder, which will always have exactly 6 digits, as the reminder can be any number from 0 to 999 999, but never larger:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gets current timestamp:</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// gets current timestamp:</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Current timestamp: &#34;</span>, <span style="color:#a6e22e">current</span>)
 </span></span><span style="display:flex;"><span>
@@ -779,7 +781,7 @@ And beats high mountain down.</p></blockquote>
 </span></span></code></pre></div><p>The <code>fmt.Sprintf(&quot;%06d&quot;, code)</code> part appends leading zeros in case if our code value has less than 6 digits. For example, <code>1234</code> will be converted into <code>001234</code>.
 The entire code for this post can be found <a href="https://github.com/n0rdy/n0rdy-blog-code-samples/tree/main/20241210-otp-offline-generation" target="_blank" rel="nofollow">here</a>.</p>
 <p>Let&rsquo;s run this code:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733692423
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733692423
 </span></span><span style="display:flex;"><span>Base:  57789747
 </span></span><span style="display:flex;"><span>Code:  789747
 </span></span></code></pre></div><p>All right, we get our 6-digits code, hooray! But something doesn&rsquo;t feel right here, does it? If I give you this code, and you will run it at the same time as I do, you&rsquo;ll get the same code, as I. This doesn&rsquo;t make it a secure one-time password, right? Here comes a new requirement:</p>
@@ -790,7 +792,7 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 <p>I don&rsquo;t think any clever mathematical tricks will help us here on their own: if we need separate results per user, we need a user-specific state to make it happen. As engineers and, at the same time, users of many services, we know that to grant access to their APIs, services rely on private keys, which are unique per user. Let&rsquo;s introduce a private key for our use case as well to distinguish between the users.</p>
 <h3 id="private-key">Private key</h3>
 <p>A simple logic for generating private keys as integers between 1 000 000 and 999 999 999:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pkDb</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">int</span>]<span style="color:#66d9ef">bool</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pkDb</span> = make(<span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">int</span>]<span style="color:#66d9ef">bool</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">prForUser</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">nextPrivateKey</span>()
@@ -812,9 +814,9 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>We are using <code>pkDb</code> map as a way to prevent duplicates among private keys, and if the duplicate has been detected, we run the generation logic once more until we get a unique result.</p>
 <p>Let&rsquo;s run this code to get the private key sample:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Private key for user:  115537846
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Private key for user:  115537846
 </span></span></code></pre></div><p>Let&rsquo;s make a use of this private key within our code generation logic to make sure we are getting different results per private key. Since our private key is of integer type, the simplest thing we can do is to add it to the base value, and keep the remaining algorithm as it is:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">int64</span>) <span style="color:#66d9ef">string</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">int64</span>) <span style="color:#66d9ef">string</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#75715e">// gets current timestamp:</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">current</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Unix</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Current timestamp: &#34;</span>, <span style="color:#a6e22e">current</span>)
@@ -830,7 +832,7 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">code</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s make sure it produces different results for different private keys:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pkForUser1</span> <span style="color:#66d9ef">int64</span> = <span style="color:#ae81ff">115537846</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pkForUser1</span> <span style="color:#66d9ef">int64</span> = <span style="color:#ae81ff">115537846</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pkForUser2</span> <span style="color:#66d9ef">int64</span> = <span style="color:#ae81ff">715488689</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">codeForUser1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pkForUser1</span>)
@@ -841,7 +843,7 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">codeForUser2</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pkForUser2</span>)
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Code for user 2: &#34;</span>, <span style="color:#a6e22e">codeForUser2</span>)
 </span></span></code></pre></div><p>The outcome looks as we wanted and expected:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733695429
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733695429
 </span></span><span style="display:flex;"><span>Base:  173327693
 </span></span><span style="display:flex;"><span>Code for user 1:  327693
 </span></span><span style="display:flex;"><span>
@@ -851,13 +853,13 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span></code></pre></div><p>Works like charm! This means that the private key should be injected into the device that generates codes before it is sent to the users like me: that should not be a problem at all for the banks.</p>
 <p>Are we done now? Well, only if we are satisfied with the artificial scenario we used. If you have ever enabled the MFA for any services / websites you have account on, you might have noticed that the web resource asks you to scan the QR code with your second-factor app of choice (Authy, Google Authenticator, 2FAS, etc.) that will input the secret code into your app and start generating 6-digits code from that moment on. Alternatively, it is possible to enter the code manually.</p>
 <p>I&rsquo;m bringing this up to mention that it is possible to take a peek at the format of the real private keys used in the industry. They are usually 16-32 characters long Base32-encoded strings that look like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>JBSWY3DPEB2GQZLSMUQQ
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>JBSWY3DPEB2GQZLSMUQQ
 </span></span></code></pre></div><p>As you can see, this is quite different from the integer private keys we used, and the current implementation of our algorithm won&rsquo;t work if we are to switch to this format. How can we adjust our logic?</p>
 <h3 id="private-key-as-a-string">Private key as a string</h3>
 <p>Let&rsquo;s start with a simple approach: our code won&rsquo;t compile, because of this line:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span><span style="color:#f92672">/</span><span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">pk</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span><span style="color:#f92672">/</span><span style="color:#ae81ff">30</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">pk</span>
 </span></span></code></pre></div><p>as <code>pk</code> is of type <code>string</code> from now on. So why don&rsquo;t we convert it into integer? While there are way more elegant and performant ways to do that, here is the simplest thing I came up with:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// converts the string pk to a number</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// converts the string pk to a number</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">pk</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">int64</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">num</span> <span style="color:#66d9ef">int64</span> = <span style="color:#ae81ff">0</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">char</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">pk</span> {
@@ -867,7 +869,7 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>This is heavily inspired by the Java <code>hashCode()</code> implementation for the <code>String</code> data type, which makes it good-enough for our scenario.</p>
 <p>Here is the adjusted logic:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pkForUser1</span> <span style="color:#66d9ef">int64</span> = <span style="color:#ae81ff">115537846</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pkForUser2</span> <span style="color:#66d9ef">int64</span> = <span style="color:#ae81ff">715488689</span>
 </span></span><span style="display:flex;"><span>
@@ -896,15 +898,15 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;%06d&#34;</span>, <span style="color:#a6e22e">code</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Here is the terminal output:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733771953
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733771953
 </span></span><span style="display:flex;"><span>Base:  9056767456302232090
 </span></span><span style="display:flex;"><span>Code:  232090
 </span></span></code></pre></div><p>Nice, 6-digits code is there, good job. Let&rsquo;s wait to get to the next time window and run it again:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733771973
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733771973
 </span></span><span style="display:flex;"><span>Base:  9056767456302232091
 </span></span><span style="display:flex;"><span>Code:  232091
 </span></span></code></pre></div><p>Hm&hellip;it works, but the code is, basically the increment of the previous value, which is not good, as this way OTPs are predictable, and having its value and knowing what time it belongs to, it is very simple to start generating the same values without the need of knowing the private key. Here is the simple pseudocode for this hack:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>now = currentTimestamp()
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>now = currentTimestamp()
 </span></span><span style="display:flex;"><span>diff = now - oldOtpTimestamp
 </span></span><span style="display:flex;"><span>numOfOtpsIssuedSinceThen = diff / 30
 </span></span><span style="display:flex;"><span>currentOtp = keepWithinSixDigits(oldOtp + numOfOtpsIssuedSinceThen)
@@ -918,7 +920,7 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 <p>We need to transform <code>current / 30</code> into something to make the change of its value more noticeable.</p>
 <h3 id="distributed-otp-values">Distributed OTP values</h3>
 <p>There are multiple ways to achieve that, and some cool math tricks exist out there, but for the educational purposes let&rsquo;s prioritize the readability of the solution we&rsquo;ll go with: let&rsquo;s extract <code>current / 30</code> into a separate variable <code>base</code> and include it into the hash computation logic:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">...</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">...</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">base</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">current</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">30</span>
 </span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
 </span></span><span style="display:flex;"><span>
@@ -933,7 +935,7 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>This way, even though the base will change with 1 every 30 seconds, after being used within the <code>hash()</code> function logic, the weight of the diff will increase due to the series of performed multiplications.</p>
 <p>Here is the updated code example:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pk</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;JBSWY3DPEB2GQZLSMUQQ&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">codeForUser1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pk</span>)
@@ -969,18 +971,18 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">num</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s run it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733773490
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733773490
 </span></span><span style="display:flex;"><span>Hash:  -1073062424175310899
 </span></span><span style="display:flex;"><span>Base:  -1073062424175310899
 </span></span><span style="display:flex;"><span>Code:  -310899
 </span></span></code></pre></div><p>Boom! How come did we get the minus value here? Well, it seems like we ran out of the <code>int64</code> ranges, so it capped the values to the minus and started over - my Java fellows are familiar with this from the <code>hashCode()</code> behavior.  The fix is simple: let&rsquo;s take the absolute value from the result, so then the minus sign is ignored:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// combines the base with the private key to get a number unique to the user:</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// combines the base with the private key to get a number unique to the user:</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">baseWithPk</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">hash</span>(<span style="color:#a6e22e">base</span>, <span style="color:#a6e22e">pk</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">// makes sure it is positive:</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">absBaseWithPk</span> <span style="color:#f92672">:=</span> int64(<span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">Abs</span>(float64(<span style="color:#a6e22e">baseWithPk</span>)))
 </span></span></code></pre></div><p>Here is entire code sample with the fix:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pk</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;JBSWY3DPEB2GQZLSMUQQ&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">codeForUser1</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pk</span>)
@@ -1019,12 +1021,12 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">num</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s run it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733774391
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733774391
 </span></span><span style="display:flex;"><span>Hash:  3581577654419246315
 </span></span><span style="display:flex;"><span>Base:  3581577654419246080
 </span></span><span style="display:flex;"><span>Code:  246080
 </span></span></code></pre></div><p>Let&rsquo;s run it again to make sure that the OTP values are distributed now:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733774402
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Current timestamp:  1733774402
 </span></span><span style="display:flex;"><span>Hash:  4351623792829383276
 </span></span><span style="display:flex;"><span>Base:  4351623792829383168
 </span></span><span style="display:flex;"><span>Code:  383168
@@ -1037,7 +1039,7 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 <li><a href="https://datatracker.ietf.org/doc/html/rfc6238" target="_blank" rel="nofollow">TOTP: Time-Based One-Time Password Algorithm</a></li>
 </ul>
 <p>And here is the pseudocode implementation that will work the intended way based on the RFCs above:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>function generateTOTP(secretKey):
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>function generateTOTP(secretKey):
 </span></span><span style="display:flex;"><span>    current = time.now().unix()
 </span></span><span style="display:flex;"><span>    counter = floor(currentTime / 30)
 </span></span><span style="display:flex;"><span>    hmac = HMAC-SHA1(secretKey, counter)
@@ -1050,7 +1052,7 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 <h2 id="security-considerations-reuse-rather-than-build-yourself">Security considerations: reuse rather than build yourself</h2>
 <p>However, there is one more thing I&rsquo;d like to cover before we call it a day: security. I&rsquo;d strongly encourage you against implementing the logic of generating OTPs on your own, as there are plenty of libraries out there that have it done for us. The room for error is huge, and it&rsquo;s a short distance to the vulnerability that will be discovered and exploited by the bad actors out there.</p>
 <p>Even if you get the generation logic right and will cover it with tests, there are other things that can go wrong. For example, how much do you think it will take to brute-force the 6-digit code? Let&rsquo;s experiment:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">pk</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;JBSWY3DPEB2GQZLSMUQQ&#34;</span>
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">code</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">generateCode</span>(<span style="color:#a6e22e">pk</span>)
@@ -1088,11 +1090,11 @@ The entire code for this post can be found <a href="https://github.com/n0rdy/n0r
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">num</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s run this code:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Code:  661504
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Code:  661504
 </span></span><span style="display:flex;"><span>Found:  661504
 </span></span><span style="display:flex;"><span>Time:  75 ms
 </span></span></code></pre></div><p>And once more:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Code:  524928
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Code:  524928
 </span></span><span style="display:flex;"><span>Found:  524928
 </span></span><span style="display:flex;"><span>Time:  67 ms
 </span></span></code></pre></div><p>As you can see, it takes around 70 ms to guess the code via simple brute-forcing for-loop. That&rsquo;s 400+ times faster than the lifetime of the OTP! The server of the app/website using OTP mechanism needs to prevent that by, for example, not accepting new codes for the next 5 or 10 seconds after 3 failed attempts. This way the attacker gets only 18 or 9 attempts correspondingly within the 30 seconds window, which is not enough for the pool of 1 million possible values.</p>

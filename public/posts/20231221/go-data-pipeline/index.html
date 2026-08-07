@@ -20,7 +20,7 @@
 
 
 
-<script defer language="javascript" type="text/javascript" src="/js/bundle.min.5991d603939a6d188be342b278a4555db90f163903158c623d2c39fde3d82cb3.js"></script>
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.d451ff92e80abc2a828eb9bb262e4db374bd4e954642f9245c54eec84bf690f3.js"></script>
 
 
 
@@ -113,13 +113,13 @@
 
 
 
-<meta name="generator" content="Hugo 0.145.0">
+<meta name="generator" content="Hugo 0.155.2">
 
 
     
     
 
-<link type="text/css" rel="stylesheet" href="/css/bundle.min.94a339836f89f0d25f31980cb6b0631da21e20af128308747ce44e0525eb16ef.css">
+<link type="text/css" rel="stylesheet" href="/css/bundle.min.607435cac0c3b4b44373c5634a7dd4f3b5b8f756061890d922e60e385c6d551f.css">
 
 
     
@@ -608,7 +608,7 @@
     </a>
 
 
-    <a target="_blank" class="social" title="Email" href="mailto:hello@n0rdy.foo" rel="nofollow">
+    <a target="_blank" class="social" title="Email" href="mailto:myko.nordy@pm.me" rel="nofollow">
        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 485.211 485.211">
             <path fill="currentColor" d="M301.393,241.631L464.866,424.56H20.332l163.474-182.928l58.801,51.443L301.393,241.631z M462.174,60.651H23.027 l219.579,192.142L462.174,60.651z M324.225,221.67l160.986,180.151V80.792L324.225,221.67z M0,80.792v321.029L160.972,221.64 L0,80.792z"/>
        </svg>
@@ -620,7 +620,7 @@
         <p class="footnote">
 powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
     <br>
-    &copy; 2025 n0rdy personal blog. All rights reserved.
+    &copy; 2026 n0rdy personal blog. All rights reserved.
 </p>
 
   </div>
@@ -685,7 +685,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>The queue situation is still alarming, to say the least. On top of that, the management decided to assign a new responsibility to a postman in addition to handling the queue - answering the phone calls from the customers. Here is what it looks like:</p>
 <p><img src="/images/drawings/20231214-0001.webp" alt="image" title="A new post office setup with a phone"></p>
 <p>This is the code that backs this setup:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Customer</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Customer</span> <span style="color:#66d9ef">struct</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Item</span> <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>}
@@ -766,7 +766,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Wait</span>()
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>This is a decent solution for the tutorial, but I&rsquo;d not deploy it to the actual production server. Why? Let me ask you first: How much time would it take for this program to complete? Feel free to ignore the phone calls for now. The approximate answer is at least 5 seconds. But why 5? Well, we have 5 customers in the queue, and we have this piece of code that runs for each customer:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s started processing %s...\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>
@@ -776,7 +776,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s processed %s\n\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Did you notice the <code>time.Sleep(1 * time.Second)</code> part? This is our bottleneck, as each customer will need to wait for at least this amount of time. Let&rsquo;s add a simple timer to see whether our estimate is correct:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">start</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
@@ -830,10 +830,10 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>we subtract one from another, convert the result to milliseconds, and print it to see the total execution time</li>
 </ul>
 <p>Here is what I can see on my machine:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>=====================================
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>=====================================
 </span></span><span style="display:flex;"><span>Execution time in milliseconds: 5002
 </span></span></code></pre></div><p>So, our estimate of 5 seconds was entirely accurate. But is 1 second per customer a realistic number? If you have ever been to the post office, you know that it takes way more than 1 second to send the parcel: depending on where you live, it can take 1 to 10+ minutes to fix that. That&rsquo;s why if we apply the 10 seconds timing (still too little, but tolerable to wait while running the program) to our code like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">w</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Worker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s received %s\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Worker %s started processing %s...\n&#34;</span>, <span style="color:#a6e22e">w</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>
@@ -856,7 +856,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>This is quite an efficient process, as customers won&rsquo;t need to wait for the entire parcel clearance process to finish. Let&rsquo;s think about how we can code this.</p>
 <h3 id="a-new-way-of-working-as-a-code">A new way of working as a code</h3>
 <p>Until now, we had only one type of worker responsible for everything post-office-related. That&rsquo;s why we have 1 struct that defines this type of employee:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Worker</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Worker</span> <span style="color:#66d9ef">struct</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>From now on, we have 2 types of workers:</p>
@@ -865,7 +865,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>the ones who are in the back and handle the parcels once Bob passes them - our 3 new colleagues: Oda, Robert, and Martha</li>
 </ul>
 <p>Let&rsquo;s rename the existing <code>Worker</code> struct to <code>DeskWorker</code> and agree that it represents the 1st type. Also, let&rsquo;s change the <code>Process</code> function a bit to specify the activities that Bob will do:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">dw</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DeskWorker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">dw</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DeskWorker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Desk worker %s received %s\n&#34;</span>, <span style="color:#a6e22e">dw</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Desk worker %s started checking ID of the customer with the %s item...\n&#34;</span>, <span style="color:#a6e22e">dw</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>
@@ -880,11 +880,11 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>We have yet to define the logic of passing the parcel to the back office, but we&rsquo;ll get back to this soon.</p>
 <p>We need a new struct for the 2nd type -  <code>BackOfficeWorker</code> :</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">BackOfficeWorker</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">BackOfficeWorker</span> <span style="color:#66d9ef">struct</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Similar to the existing struct, <code>BackOfficeWorker</code> needs 2 functions: <code>StartWorkingDay</code> and <code>Process</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">bow</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BackOfficeWorker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">backOfficeDeskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">shutdownChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">bow</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BackOfficeWorker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">backOfficeDeskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">shutdownChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}) {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">select</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">backOfficeDeskChan</span>:
@@ -912,24 +912,24 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </ul>
 <p>These numbers are unrealistic, but the scale might be good enough for us.</p>
 <p>Let&rsquo;s define 3 new workers in the <code>main</code> function next to the Bob declaration:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">bobWorker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">DeskWorker</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">bobWorker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">DeskWorker</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>}
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">odaWorker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">BackOfficeWorker</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Oda&#34;</span>}
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">robertWorker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">BackOfficeWorker</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Robert&#34;</span>}
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">marthaWorker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">BackOfficeWorker</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Martha&#34;</span>}
 </span></span></code></pre></div><p>Since we have 2 types of employees now instead of 1, let&rsquo;s have 2 shutdown channels for each:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">deskShutdownChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{})
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">deskShutdownChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{})
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">backOfficeDeskShutdownChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{})
 </span></span></code></pre></div><p>We need to make sure we send a shutdown signal 3 times to the <code>backOfficeDeskShutdownChan</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">deskShutdownChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">struct</span>{}{}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">deskShutdownChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">struct</span>{}{}
 </span></span><span style="display:flex;"><span><span style="color:#75715e">// 3 stands for the number of back office workers</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">3</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">backOfficeDeskShutdownChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#66d9ef">struct</span>{}{}
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>The channel for the back office is missing as well:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">backOfficeDeskChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
 </span></span></code></pre></div><p>Let&rsquo;s make sure to start the working day for every back office employee the same way as for the desk worker:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#ae81ff">1</span>)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Add</span>(<span style="color:#ae81ff">1</span>)
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">bobWorker</span>.<span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">deskChan</span>, <span style="color:#a6e22e">phoneChan</span>, <span style="color:#a6e22e">deskShutdownChan</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
@@ -954,12 +954,12 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>}()
 </span></span></code></pre></div><p>We can refactor this code by introducing a private function to start the employees&rsquo; working day, but I&rsquo;ll keep it as it is for readability purposes - feel free to change the code on your own, as it&rsquo;s a good exercise!</p>
 <p>The only missing part is when Bob passes the parcels to the back office. Let&rsquo;s extend the <code>DeskWorker</code> struct with a new field for the back office channel:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">DeskWorker</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">DeskWorker</span> <span style="color:#66d9ef">struct</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span>               <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">BackOfficeDeskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>We can use this channel now to pass the parcel into it within the <code>Process</code> function:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">dw</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DeskWorker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">dw</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">DeskWorker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Desk worker %s received %s\n&#34;</span>, <span style="color:#a6e22e">dw</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Desk worker %s started checking ID of the customer with the %s item...\n&#34;</span>, <span style="color:#a6e22e">dw</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>
@@ -973,9 +973,9 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Desk worker %s passed %s to the back office\n\n&#34;</span>, <span style="color:#a6e22e">dw</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Please, don&rsquo;t forget to initialize this field in the place where we declare the <code>bobWorker</code> variable:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">bobWorker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">DeskWorker</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#a6e22e">BackOfficeDeskChan</span>: <span style="color:#a6e22e">backOfficeDeskChan</span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">bobWorker</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">DeskWorker</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#a6e22e">BackOfficeDeskChan</span>: <span style="color:#a6e22e">backOfficeDeskChan</span>}
 </span></span></code></pre></div><p>The code after all of these changes looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Customer</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Customer</span> <span style="color:#66d9ef">struct</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Item</span> <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>}
@@ -1120,7 +1120,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Execution time in milliseconds: %v\n&#34;</span>, <span style="color:#a6e22e">end</span>.<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">start</span>).<span style="color:#a6e22e">Milliseconds</span>())
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s run the code and see whether it works:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Lisa gives away basketball
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Lisa gives away basketball
 </span></span><span style="display:flex;"><span>Desk worker Bob received a call: Has my package arrived?
 </span></span><span style="display:flex;"><span>Desk worker Bob received basketball
 </span></span><span style="display:flex;"><span>Desk worker Bob started checking ID of the customer with the basketball item...
@@ -1189,7 +1189,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>Well, nothing unexpected has happened, as there are only 3 back-office employees for 5 customers. This makes Triss think: &ldquo;OK, if I push hard enough during the next meeting with the executives, I&rsquo;ll make them allocate 2 more employees to this branch&rdquo;. And since she is an extremely good negotiator, Carl and Luna joined the post office crew in no time.</p>
 <p><img src="/images/drawings/20231221-0004.webp" alt="image" title="A new post office setup with 5 new employees"></p>
 <p>Let&rsquo;s change our code to represent this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">start</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>)
@@ -1278,7 +1278,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Execution time in milliseconds: %v\n&#34;</span>, <span style="color:#a6e22e">end</span>.<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">start</span>).<span style="color:#a6e22e">Milliseconds</span>())
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s run it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Lisa gives away basketball
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Lisa gives away basketball
 </span></span><span style="display:flex;"><span>Eric gives away teddy bear
 </span></span><span style="display:flex;"><span>Desk worker Bob received basketball
 </span></span><span style="display:flex;"><span>Desk worker Bob started checking ID of the customer with the basketball item...
@@ -1354,7 +1354,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>Does it mean we have just solved the post office issue we&rsquo;ve discussed since <a href="https://n0rdy.foo/posts/20231207/go-channels-and-goroutines/" target="_blank" rel="nofollow">Part 1</a> of this series? Yes, for this setup. But there is one more thing that we can improve here to make the code more realistic to the real post office.</p>
 <h2 id="a-realistic-post-office-as-a-data-pipeline">A realistic post office as a data pipeline</h2>
 <p>While it&rsquo;s fair to be satisfied with the work we have done so far, there is 1 hardcoded thing left that prevents us from being 100% happy: currently, we have hardcoded 5 customers into a list:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">zlatan</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Zlatan&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;football&#34;</span>}
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">zlatan</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Zlatan&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;football&#34;</span>}
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">ben</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Ben&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;box&#34;</span>}
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">jenny</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Jenny&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;watermelon&#34;</span>}
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">eric</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Customer</span>{<span style="color:#a6e22e">Name</span>: <span style="color:#e6db74">&#34;Eric&#34;</span>, <span style="color:#a6e22e">Item</span>: <span style="color:#e6db74">&#34;teddy bear&#34;</span>}
@@ -1377,11 +1377,11 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>Let&rsquo;s use this knowledge to modify our code. As a big fan of fantasy, I&rsquo;ll go with the wizard scenario.</p>
 <p><img src="/images/drawings/20231221-0005.webp" alt="image" title="A new post office setup with a wizard"></p>
 <p>We need to replace the existing back-office worker with a wizard one. Let&rsquo;s start by renaming <code>BackOfficeWorker</code> to <code>WizardBackOfficeWorker</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">WizardBackOfficeWorker</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">WizardBackOfficeWorker</span> <span style="color:#66d9ef">struct</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Within the <code>StartWorkingDay</code> function the <code>BackOfficeWorker</code> (the muggle one) has this logic for handling items:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">bow</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BackOfficeWorker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">backOfficeDeskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">shutdownChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">bow</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">BackOfficeWorker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">backOfficeDeskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">shutdownChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}) {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">select</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">item</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&lt;-</span><span style="color:#a6e22e">backOfficeDeskChan</span>:
@@ -1393,7 +1393,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	}
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>This means that the workers processed the items themselves. As discussed above, the wizard won&rsquo;t do this but instead cast a spell (create a new worker) to delegate the processing process to it. On a code level, it means that we&rsquo;ll have to create a new goroutine for each item and let it do the job:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">bow</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">WizardBackOfficeWorker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">backOfficeDeskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">shutdownChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">bow</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">WizardBackOfficeWorker</span>) <span style="color:#a6e22e">StartWorkingDay</span>(<span style="color:#a6e22e">backOfficeDeskChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">shutdownChan</span> <span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{}) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">wg</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">sync</span>.<span style="color:#a6e22e">WaitGroup</span>{}
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
@@ -1418,28 +1418,28 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span></code></pre></div><p>As you see, we had to introduce an instance of the <code>sync.WaitGroup</code> here to ensure that once the shutdown signal is received, the function won&rsquo;t quit before all the goroutines (spawned by it) are completed. That&rsquo;s why we do <code>wg.Wait()</code> before the <code>return</code> part. If you are not familiar with the concept of syncing, please refer to <a href="https://n0rdy.foo/posts/20231211/go-waitgroup/" target="_blank" rel="nofollow">Part 2</a> of this series - I dedicated the entire post to this.</p>
 <p>The powerful part here is that once the new goroutine is launched by the <code>go func(item string) {</code> code, the wizard is immediately available for the next parcel - no need to be blocked for the 10 seconds (processing time) like in the previous implementation.</p>
 <p>There is one part that might be a bit confusing to you if you are new to Go:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">go</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">wg</span>.<span style="color:#a6e22e">Done</span>()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Wizard %s casted a spell to process %s\n&#34;</span>, <span style="color:#a6e22e">bow</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">bow</span>.<span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>}(<span style="color:#a6e22e">item</span>)
 </span></span></code></pre></div><p>In <a href="https://n0rdy.foo/posts/20231211/go-waitgroup/" target="_blank" rel="nofollow">Part 2</a>, we touched on a similar concept that looked like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#75715e">// do something</span>
 </span></span><span style="display:flex;"><span>}()
 </span></span></code></pre></div><p>We said that what happens here is that the <code>func(){}</code> part declares a new anonymous function while the <code>()</code> part invokes it right away.</p>
 <p>What we have here is similar, but this time, our anonymous function accepts a parameter <code>item</code> of a type <code>string</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#75715e">// do something</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>And to invoke it, we have to pass a value for this parameter - basically, the same as for the regular function, that&rsquo;s why we have the <code>(item)</code> part:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#75715e">// do something</span>
 </span></span><span style="display:flex;"><span>}(<span style="color:#a6e22e">item</span>)
 </span></span></code></pre></div><p><code>item</code> is the variable defined above in the code: <code>case item := &lt;-backOfficeDeskChan:</code></p>
 <p>But ok, let&rsquo;s get back to the original topic, as I believe you are more than equipped to understand the rest of the code there. Let&rsquo;s modify the <code>Process</code> function of the <code>WizardBackOfficeWorker</code> to specify that it is a cast who does the processing, not the wizard themselves:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">bow</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">WizardBackOfficeWorker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">bow</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">WizardBackOfficeWorker</span>) <span style="color:#a6e22e">Process</span>(<span style="color:#a6e22e">item</span> <span style="color:#66d9ef">string</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Wizard %s&#39;s spell started processing %s...\n&#34;</span>, <span style="color:#a6e22e">bow</span>.<span style="color:#a6e22e">Name</span>, <span style="color:#a6e22e">item</span>)
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#75715e">// to simulate long processing</span>
@@ -1449,7 +1449,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>As you can see, the <code>time.Sleep(10 * time.Second)</code> part still remains, as it takes the same time to do the magic parcel handling as the regular one.</p>
 <p>The next step should be to replace the <code>slice</code> with a <code>channel</code> to define the customers&rsquo; queue. But how should we get the customers to put in that channel? Another good question, you are on fire today! We need a function to generate random customers and, ideally, with random waiting to make it more realistic, as customers come to the post office at a different frequency. For that, I asked ChatGPT to generate a list of 50 random names and 50 random Xmas presents that fit into the postal package. I won&rsquo;t provide these lists here to save space, but feel free to check them out on a <a href="https://github.com/n0rdy/n0rdy-blog-code-samples/tree/main/20231221-go-data-pipeline/04-data-pipeline/generator.go" target="_blank" rel="nofollow">GitHub repo</a>. Once we have it, the rest of the generator code is trivial:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> (
 </span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">names</span> = {
 </span></span><span style="display:flex;"><span>    <span style="color:#75715e">// a list of 50 names generated by ChatGPT</span>
 </span></span><span style="display:flex;"><span>  }
@@ -1480,7 +1480,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">items</span>[<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Intn</span>(len(<span style="color:#a6e22e">items</span>))]
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Now, we have everything to start using a channel for the queue representation.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// a new channel to send a signal to once it&#39;s time to close the post office</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// a new channel to send a signal to once it&#39;s time to close the post office</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">postOfficeShutdownChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{})
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">// ...............</span>
@@ -1508,7 +1508,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">deskChan</span> <span style="color:#f92672">&lt;-</span> <span style="color:#a6e22e">customer</span>.<span style="color:#a6e22e">GiveAway</span>()
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>As you can see, inside the <code>go func()</code>, the code will generate a new customer and put it into the <code>queueChan</code> within the <code>default</code> section until there is a signal to shutdown the post office. If the shutdown signal is received, the <code>queueChan</code> will be closed immediately. A for loop below consumes items from the <code>queueChan</code> while it is open. We don&rsquo;t have the code for sending the signal to the <code>postOfficeShutdownChan</code>, so let&rsquo;s add it:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">postOfficeShutdownChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{})
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">postOfficeShutdownChan</span> <span style="color:#f92672">:=</span> make(<span style="color:#66d9ef">chan</span> <span style="color:#66d9ef">struct</span>{})
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#75715e">// to simulate a long working day</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">AfterFunc</span>(<span style="color:#ae81ff">5</span><span style="color:#f92672">*</span><span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Minute</span>, <span style="color:#66d9ef">func</span>() {
@@ -1516,7 +1516,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>})
 </span></span></code></pre></div><p><code>time.AfterFunc</code> is a new concept for us, but it&rsquo;s pretty straightforward: it accepts a time duration and a function and invokes this function after the provided duration has passed. In our case, it will send the shutdown signal to the <code>postOfficeShutdownChan</code> in 5 minutes. This way, we are going to simulate a working day - feel free to change it to 8 hours if you have such a lot of time to wait for the program completion =)</p>
 <p>Here is the entire code after our changes:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Customer</span> <span style="color:#66d9ef">struct</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Customer</span> <span style="color:#66d9ef">struct</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Name</span> <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Item</span> <span style="color:#66d9ef">string</span>
 </span></span><span style="display:flex;"><span>}
@@ -1674,7 +1674,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Execution time in milliseconds: %v\n&#34;</span>, <span style="color:#a6e22e">end</span>.<span style="color:#a6e22e">Sub</span>(<span style="color:#a6e22e">start</span>).<span style="color:#a6e22e">Milliseconds</span>())
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Let&rsquo;s run this code. It will take 5 minutes to complete, so please feel free to pour a cup of tea or coffee in the meantime. You should be able to see a lot of activity printed into the terminal that ends with something like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>............................................................................................
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>............................................................................................
 </span></span><span style="display:flex;"><span>the post office is closed - time to go home
 </span></span><span style="display:flex;"><span>Anika gives away handwritten holiday card
 </span></span><span style="display:flex;"><span>Desk worker Bob received handwritten holiday card

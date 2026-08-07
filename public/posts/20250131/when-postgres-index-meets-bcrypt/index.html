@@ -20,7 +20,7 @@
 
 
 
-<script defer language="javascript" type="text/javascript" src="/js/bundle.min.5991d603939a6d188be342b278a4555db90f163903158c623d2c39fde3d82cb3.js"></script>
+<script defer language="javascript" type="text/javascript" src="/js/bundle.min.d451ff92e80abc2a828eb9bb262e4db374bd4e954642f9245c54eec84bf690f3.js"></script>
 
 
 
@@ -113,13 +113,13 @@
 
 
 
-<meta name="generator" content="Hugo 0.145.0">
+<meta name="generator" content="Hugo 0.155.2">
 
 
     
     
 
-<link type="text/css" rel="stylesheet" href="/css/bundle.min.94a339836f89f0d25f31980cb6b0631da21e20af128308747ce44e0525eb16ef.css">
+<link type="text/css" rel="stylesheet" href="/css/bundle.min.607435cac0c3b4b44373c5634a7dd4f3b5b8f756061890d922e60e385c6d551f.css">
 
 
     
@@ -608,7 +608,7 @@
     </a>
 
 
-    <a target="_blank" class="social" title="Email" href="mailto:hello@n0rdy.foo" rel="nofollow">
+    <a target="_blank" class="social" title="Email" href="mailto:myko.nordy@pm.me" rel="nofollow">
        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1.2em" viewBox="0 0 485.211 485.211">
             <path fill="currentColor" d="M301.393,241.631L464.866,424.56H20.332l163.474-182.928l58.801,51.443L301.393,241.631z M462.174,60.651H23.027 l219.579,192.142L462.174,60.651z M324.225,221.67l160.986,180.151V80.792L324.225,221.67z M0,80.792v321.029L160.972,221.64 L0,80.792z"/>
        </svg>
@@ -620,7 +620,7 @@
         <p class="footnote">
 powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a target="_blank" href="https://github.com/lukeorth/poison">poison</a>
     <br>
-    &copy; 2025 n0rdy personal blog. All rights reserved.
+    &copy; 2026 n0rdy personal blog. All rights reserved.
 </p>
 
   </div>
@@ -709,7 +709,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p><em>Btw, if you like my blog and don’t want to miss out on new posts, consider subscribing to my newsletter <a href="https://mail.n0rdy.foo/subscription/form" target="_blank" rel="nofollow">here</a>. You&rsquo;ll receive an email once I publish a new post.</em></p>
 <h2 id="browsing-the-code">Browsing the code</h2>
 <p>You might know that there is a saying “it&rsquo;s always DNS”, which applies when some service is down due to no obvious reasons. From my experience, when there is a performance issue with a relatively simple app, “it&rsquo;s often database”. So, even though, I started navigating the source code from the top to bottom (API -&gt; DB), I didn&rsquo;t expect to see anything suspicious within the layers above the one that runs DB queries. And, indeed, the interesting bits of code were 2 functions of the <code>Repo</code> struct responsible for inserting a new user into the DB and selecting a particular user from the DB by SSN. Here how they looked:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Repo</span>) <span style="color:#a6e22e">SelectUserBySsn</span>(<span style="color:#a6e22e">ssn</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">User</span>, <span style="color:#66d9ef">error</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Repo</span>) <span style="color:#a6e22e">SelectUserBySsn</span>(<span style="color:#a6e22e">ssn</span> <span style="color:#66d9ef">string</span>) (<span style="color:#f92672">*</span><span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">User</span>, <span style="color:#66d9ef">error</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">now</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">user</span> <span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">User</span>
@@ -748,7 +748,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>Despite being a bit puzzled, that definitely felt like good progress, as I had a strong clue that DB was the bottleneck here. And it became clear that my failures to reproduce that locally was due to the fact that my local table had only 1 row, while the production one had 5000 users as of that moment, and kept growing hour by hour. I could have kept debugging the issue within the production Postgres instance, as it was reproducible there, but doing that is not a good practice due to many reasons, like degrading performance even more, or running some unsafe queries that might do some harm to the data there. So, at first, I wanted to take a snapshot of the production DB and use it locally, but realized that it was not much better idea as well: taking a snapshot might be a costly operation for Postgres. Plus, there were privacy implications of me copying the sensitive data of the customers to my local machine. That&rsquo;s why I went with the third option of inserting a lot of fake data into my local DB.</p>
 <h2 id="fake-it-until-you-make-it">Fake it until you make it</h2>
 <p>The fact that our table was so simple and consisted of 3 columns only, made the task very simple. So, I ended up writing this fake data generation code:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GenRandomUsers</span>(<span style="color:#a6e22e">num</span> <span style="color:#66d9ef">int</span>) []<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">NewUserEntity</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">GenRandomUsers</span>(<span style="color:#a6e22e">num</span> <span style="color:#66d9ef">int</span>) []<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">NewUserEntity</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">users</span> <span style="color:#f92672">:=</span> make([]<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">NewUserEntity</span>, <span style="color:#a6e22e">num</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#a6e22e">num</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">users</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">GenRandomUser</span>()
@@ -778,7 +778,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">ssn</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>And made a use of it within the <code>fillDb</code> function that I triggered on the app start up:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fillDb</span>(<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">Repo</span>) {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fillDb</span>(<span style="color:#a6e22e">repo</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">db</span>.<span style="color:#a6e22e">Repo</span>) {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">users</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">repo</span>.<span style="color:#a6e22e">SelectUsers</span>()
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
 </span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
@@ -799,7 +799,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;inserted random users&#34;</span>)
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>Once I ran the app, it took more than 15 seconds to finish inserting the users, which I found weird, as the <code>InsertUsers</code> code made only 1 call to DB:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Repo</span>) <span style="color:#a6e22e">InsertUsers</span>(<span style="color:#a6e22e">users</span> []<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">NewUserEntity</span>) <span style="color:#66d9ef">error</span> {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">r</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Repo</span>) <span style="color:#a6e22e">InsertUsers</span>(<span style="color:#a6e22e">users</span> []<span style="color:#a6e22e">common</span>.<span style="color:#a6e22e">NewUserEntity</span>) <span style="color:#66d9ef">error</span> {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">now</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>()
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">query</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;INSERT INTO users (id, ssn_hash, user_info) VALUES &#34;</span>
@@ -830,37 +830,37 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>something is fishy with the <code>crypt()</code> function for both INSERT and SELECT queries</li>
 </ul>
 <p>The second fact was a good hint, so I decided to check what Postgres query planner could tell me about the plan for executing the query:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, ssn_hash);
 </span></span></code></pre></div><p>The keyword <code>EXPLAIN</code> in this case triggers Postgres to build the plan for the query, but not run it. The results were like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Seq Scan on users  (cost=0.00..182.00 rows=25 width=138)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Seq Scan on users  (cost=0.00..182.00 rows=25 width=138)
 </span></span><span style="display:flex;"><span>&#34;  Filter: (ssn_hash = crypt(&#39;0852285111&#39;::text, ssn_hash))&#34;
 </span></span></code></pre></div><p>Aha, <code>Seq Scan on users</code> gives us a hint that Postgres is about to perform a sequential scan, which means that it will go through every single row of the table to find the matching one - <code>O(n)</code> if we&rsquo;d like to use the algorithmic complexity here. This could very much explain the correlation between the increase in the number of rows and performance degradation.</p>
 <p>Let&rsquo;s add <code>ANALYSE</code> keyword to actually execute the query and get more metrics:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, ssn_hash);
 </span></span></code></pre></div><p>The output:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Seq Scan on users  (cost=0.00..182.00 rows=25 width=138) (actual time=15037.772..15037.774 rows=1 loops=1)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Seq Scan on users  (cost=0.00..182.00 rows=25 width=138) (actual time=15037.772..15037.774 rows=1 loops=1)
 </span></span><span style="display:flex;"><span>&#34;  Filter: (ssn_hash = crypt(&#39;0852285111&#39;::text, ssn_hash))&#34;
 </span></span><span style="display:flex;"><span>  Rows Removed by Filter: 5000
 </span></span><span style="display:flex;"><span>Planning Time: 0.048 ms
 </span></span><span style="display:flex;"><span>Execution Time: 15037.788 ms
 </span></span></code></pre></div><p>Which proves what we had just seen above.</p>
 <p>So, I thought that I solved the riddle: the <code>ssh_hash</code> column lacked the index. I was almost proud of myself, but that was a very brief moment, as after browsing both the DB table structure and the schema definition queries, I realized that there is actually an index there:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> users_ssn_hashed_idx <span style="color:#66d9ef">ON</span> users (ssn_hash);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> users_ssn_hashed_idx <span style="color:#66d9ef">ON</span> users (ssn_hash);
 </span></span></code></pre></div><p>But why did Postgres keep ignoring it and performing sequential scans nevertheless? And despite that fact, why it took Postgres 15 seconds to scan 5000 rows? And why select all the rows were very quick (5 ms)? The only difference between the two was the use of the <code>crypto()</code> function within the <code>WHERE</code> statement. That narrowed down the problem. So, I realized that it was the time to get back to basics and do some research on the nature of the Bcrypt algorithm.</p>
 <p><img src="/images/drawings/20250131-0002.webp" alt="image"></p>
 <h2 id="bcrypt">Bcrypt</h2>
 <p>Here is what <a href="https://en.wikipedia.org/wiki/Bcrypt" target="_blank" rel="nofollow">Wikipedia</a> specifies about Bcrypt:</p>
 <blockquote>
 <p>The input to the bcrypt function is the password string (up to 72  bytes), a numeric cost, and a 16-byte (128-bit) salt value.  The salt is typically a random value.  The bcrypt function uses these inputs to  compute a 24-byte (192-bit) hash.  The final output of the bcrypt  function is a string of the form:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>$2&lt;a/b/x/y&gt;$[cost]$[22 character salt][31 character hash]
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>$2&lt;a/b/x/y&gt;$[cost]$[22 character salt][31 character hash]
 </span></span></code></pre></div><p>For example, with input password <code>abc123xyz</code>, cost <code>12</code>, and a random salt, the output of bcrypt is the string</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>$2a$12$R9h/cIPz0gi.URNNX3kh2OPST9/PgBkqquzi.Ss7KIUgO2t0jWMUW
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>$2a$12$R9h/cIPz0gi.URNNX3kh2OPST9/PgBkqquzi.Ss7KIUgO2t0jWMUW
 </span></span><span style="display:flex;"><span>\__/\/ \____________________/\_____________________________/
 </span></span><span style="display:flex;"><span>Alg Cost      Salt                        Hash
 </span></span></code></pre></div></blockquote>
@@ -871,25 +871,26 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>salt (typically random)</li>
 </ul>
 <p>If we take a look at the crypt function within the insert user statement, we&rsquo;ll see this <code>crypt($2, gen_salt('bf')</code>, where SSN is passed as the <code>$2</code>. So, we do have a password (SSN) and salt (<code>gen_salt('bf'))</code> The numeric cost is missing, but let&rsquo;s take a look at the output of the <code>gen_salt('bf')</code> function. You might need to install the <code>pgcrypt</code> extension by <code>CREATE EXTENSION IF NOT EXISTS pgcrypto;</code> if you don&rsquo;t have it to be able to follow along.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> gen_salt(<span style="color:#e6db74">&#39;bf&#39;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> gen_salt(<span style="color:#e6db74">&#39;bf&#39;</span>);
 </span></span></code></pre></div><p>The output is <code>$2a$06$Qkp8j0vDoCuqNCgyOuIRxO</code>. If we compare with the example from the Wikipedia above, we can see that this salt includes the cost within (<code>06</code>).</p>
 <p>Let&rsquo;s run the <code>SELECT gen_salt('bf');</code> again. We got <code>$2a$06$enmGwTijs9cvlsIv9dcQQe</code>, which is different from the previous result. As Wikipedia warned us</p>
 <blockquote>
-<p>The salt is typically a random value.</p></blockquote>
+<p>The salt is typically a random value.</p>
+</blockquote>
 <p>And what happens if we are passing random salt to the crypto function? Right, the result will be random as well. Let&rsquo;s double-check:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, gen_salt(<span style="color:#e6db74">&#39;bf&#39;</span>));
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, gen_salt(<span style="color:#e6db74">&#39;bf&#39;</span>));
 </span></span></code></pre></div><p>The first time I ran it, I got this outcome: <code>$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce</code>. The second ran got a different result (as we anticipated): <code>$2a$06$nbwOka/0ve5RvM71f35jEOMGA5qHaa0H1I3RtkYq/sNIXW.Z90KAm</code>. If we keep going, we&rsquo;ll keep getting different results. And this is cool, as Bcrypt was created to be used for passwords hashing, which means that even if different users have the same password, the hashed version for them will be different - pretty neat!</p>
 <p>But if results are random, how can we check the hash in the DB corresponds to the plain text record we get as the user input? Well, as you can guess, we need to pass the same salt as the input. But where do we get the salt? Wikipedia has already given us an answer: the salt is the part of the hashed output. Let&rsquo;s try it out by copying the first 29 chars of the output we got above: <code>$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce</code> -&gt; <code>$2a$06$DQqtgCtvY9GkT3uHpShehu</code> and check if that helps:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;</span> <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehu&#39;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;</span> <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehu&#39;</span>);
 </span></span></code></pre></div><p>The result is <code>true</code>. Perfect! But wait a minute: do we need to extract the salt and friends manually each time? Let&rsquo;s take a look at the query we used to select the user by SSN from DB to look for some hints:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, user_info <span style="color:#66d9ef">FROM</span> users <span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> crypt(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">1</span>, ssn_hash)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> id, user_info <span style="color:#66d9ef">FROM</span> users <span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> crypt(<span style="color:#960050;background-color:#1e0010">$</span><span style="color:#ae81ff">1</span>, ssn_hash)
 </span></span></code></pre></div><p>where <code>$1</code> is the SSN value. This is a bit different as instead of only salt, we are passing the entire hash value into the crypt function this time. Let&rsquo;s try it out:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;</span> <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;</span>);
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;</span> <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;</span>);
 </span></span></code></pre></div><p>Still <code>true</code>. How come? The answer is simple: since salt (with the prefix) has a defined length of 29, Postgres retrieves it for us, and drops the rest of it.</p>
 <p>The beauty of Postgres (which is one of my favorite tools out there) is the fact that it&rsquo;s open-source. So, let&rsquo;s take a peak and its source code to make sure that our assumptions are correct.</p>
 <h3 id="bcrypt-in-postgres-source-code">Bcrypt in Postgres source code</h3>
 <p>Here is <a href="https://github.com/postgres/postgres" target="_blank" rel="nofollow">the mirror</a> of the official PostgreSQL GIT repository. Let&rsquo;s find the <code>pgcrypto</code> file which corresponds to the extension we installed to be able to run crypto functions. <a href="https://github.com/postgres/postgres/blob/master/contrib/pgcrypto/pgcrypto.c" target="_blank" rel="nofollow">Here</a> is it is. This piece of code is triggered when we do <code>crypt(...)</code> via SQL:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/* SQL function: pg_crypt(psw:text, salt:text) returns text */</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/* SQL function: pg_crypt(psw:text, salt:text) returns text */</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">PG_FUNCTION_INFO_V1</span>(pg_crypt);
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span>Datum
@@ -928,7 +929,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">PG_RETURN_TEXT_P</span>(res);
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>If we jump into <code>pg_crypt</code> in this line <code>cres = px_crypt(buf0, buf1, resbuf, PX_MAX_CRYPT);</code>, we&rsquo;ll end up inside the <code>px-crypt.c</code> file <a href="https://github.com/postgres/postgres/blob/master/contrib/pgcrypto/px-crypt.c#L90" target="_blank" rel="nofollow">here</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">px_crypt</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>psw, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>salt, <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">unsigned</span> len)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">struct</span> px_crypt_algo <span style="color:#f92672">*</span>c;
@@ -950,7 +951,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>As we see, this code navigates through the <code>px_crypt_list</code> while trying to find a match for the provided <code>salt</code> (in our case, it is the entire hashed string) by comparing the <code>id_len</code> number of first characters with something called <code>id</code>. <a href="https://en.cppreference.com/w/c/string/byte/strncmp" target="_blank" rel="nofollow">Here is the doc</a> for the <code>strncmp</code> function if you would like to learn more.</p>
 <p>Let&rsquo;s see how the <code>px_crypt_list</code> looks like, as it might explain to us the nature of the <code>id_len</code> and <code>id</code> params.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> px_crypt_algo
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">struct</span> px_crypt_algo
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">char</span>	   <span style="color:#f92672">*</span>id;
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">unsigned</span>	id_len;
@@ -969,7 +970,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	{NULL, <span style="color:#ae81ff">0</span>, NULL}
 </span></span><span style="display:flex;"><span>};
 </span></span></code></pre></div><p>Aha, so the <code>id</code> is the salt prefix that Wikipedia called <code>alg</code>  (<code>$2a$</code> in our case), and the <code>id_len</code> is the length of that prefix. That makes a lot of sense now. And the <code>run_crypt_bf</code> is the actual function that will be invoked in our case. Nice, let&rsquo;s take a look at it <a href="https://github.com/postgres/postgres/blob/master/contrib/pgcrypto/px-crypt.c#L61" target="_blank" rel="nofollow">here</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">run_crypt_bf</span>(<span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>psw, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>salt,
 </span></span><span style="display:flex;"><span>			 <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>buf, <span style="color:#66d9ef">unsigned</span> len)
 </span></span><span style="display:flex;"><span>{
@@ -979,7 +980,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> res;
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><p>And let&rsquo;s follow along by jumping into the <code>_crypt_blowfish_rn</code> which leads us to <a href="https://github.com/postgres/postgres/blob/master/contrib/pgcrypto/crypt-blowfish.c#L582" target="_blank" rel="nofollow">a new file</a> - <code>crypt-blowfish.c</code>. I will not post the entire body of that function here, as it is around 200 lines long. However, this is an interesting part for us:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#75715e">/*
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * Blowfish salt value must be formatted as follows: &#34;$2a$&#34; or &#34;$2x$&#34;, a
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * two digit cost parameter, &#34;$&#34;, and 22 digits from the alphabet
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"> * &#34;./0-9A-Za-z&#34;. -- from the PHP crypt docs. Apparently we enforce a few
@@ -990,7 +991,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>		(<span style="color:#a6e22e">errcode</span>(ERRCODE_INVALID_PARAMETER_VALUE),
 </span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">errmsg</span>(<span style="color:#e6db74">&#34;invalid salt&#34;</span>)));
 </span></span></code></pre></div><p>where <code>settings</code> is the <code>salt</code>. We can see a number 29 here, which rings a bell, doesn&rsquo;t it? That&rsquo;s precisely the length of the salt prefix we used in one of the examples above. Also, please, note that this validation only checks if the input length is not less than 29, but it doesn&rsquo;t care whether it&rsquo;s above the limit. That gives us a hint that the code below should handle it somehow:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (setting[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;$&#39;</span> <span style="color:#f92672">||</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> (setting[<span style="color:#ae81ff">0</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;$&#39;</span> <span style="color:#f92672">||</span>
 </span></span><span style="display:flex;"><span>		setting[<span style="color:#ae81ff">1</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;2&#39;</span> <span style="color:#f92672">||</span>
 </span></span><span style="display:flex;"><span>		(setting[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;a&#39;</span> <span style="color:#f92672">&amp;&amp;</span> setting[<span style="color:#ae81ff">2</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;x&#39;</span>) <span style="color:#f92672">||</span>
 </span></span><span style="display:flex;"><span>		setting[<span style="color:#ae81ff">3</span>] <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#39;$&#39;</span> <span style="color:#f92672">||</span>
@@ -1014,13 +1015,13 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>	}
 </span></span></code></pre></div><p>Take a look at this piece: <code>BF_decode(data.binary.salt, &amp;setting[7], 16)</code>. Do you remember the example from Wikipedia:</p>
 <blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>$2a$12$R9h/cIPz0gi.URNNX3kh2OPST9/PgBkqquzi.Ss7KIUgO2t0jWMUW
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>$2a$12$R9h/cIPz0gi.URNNX3kh2OPST9/PgBkqquzi.Ss7KIUgO2t0jWMUW
 </span></span><span style="display:flex;"><span>\__/\/ \____________________/\_____________________________/
 </span></span><span style="display:flex;"><span>Alg Cost      Salt                        Hash
 </span></span></code></pre></div></blockquote>
 <p>?</p>
 <p>As we can see, the actual salt begins at the 8th char (that&rsquo;s why <code>setting[7]</code>), and the <code>&amp;setting[7]</code> means that all the elements starting from 8th are sliced here. The <code>BF_decode</code> function looks like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-c" data-lang="c"><span style="display:flex;"><span><span style="color:#66d9ef">static</span> <span style="color:#66d9ef">int</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">BF_decode</span>(BF_word <span style="color:#f92672">*</span>dst, <span style="color:#66d9ef">const</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>src, <span style="color:#66d9ef">int</span> size)
 </span></span><span style="display:flex;"><span>{
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>dptr <span style="color:#f92672">=</span> (<span style="color:#66d9ef">unsigned</span> <span style="color:#66d9ef">char</span> <span style="color:#f92672">*</span>) dst;
@@ -1068,7 +1069,8 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <h3 id="what-do-we-know-now">What do we know now?</h3>
 <p>Before we summarize what we know as of now, let me bring you one more quote about Bcrypt from the Wikipedia article:</p>
 <blockquote>
-<p>There are then a number of rounds in which the standard Blowfish keying  algorithm is applied, using alternatively the salt and the password as  the key, each round starting with the subkey state from the previous  round.  In theory, this is no stronger than the standard Blowfish key  schedule, but the number of rekeying rounds is configurable; this  <strong>process can therefore be made arbitrarily slow</strong>, which helps deter  brute-force attacks upon the hash or salt.</p></blockquote>
+<p>There are then a number of rounds in which the standard Blowfish keying  algorithm is applied, using alternatively the salt and the password as  the key, each round starting with the subkey state from the previous  round.  In theory, this is no stronger than the standard Blowfish key  schedule, but the number of rekeying rounds is configurable; this  <strong>process can therefore be made arbitrarily slow</strong>, which helps deter  brute-force attacks upon the hash or salt.</p>
+</blockquote>
 <p>So, the Bcrypt algorithm is relatively slow by design, as the protection from the brute-force attacks.</p>
 <p>Let&rsquo;s create a list of the known facts about the Bcrypt algorithm:</p>
 <ul>
@@ -1081,7 +1083,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p>With all of this information, let&rsquo;s finally try to solve the riddle of the poor performance of the query to fetch the user by SSN.</p>
 <h2 id="postgres-index-and-bcrypt">Postgres index and Bcrypt</h2>
 <p>So, why does Postgres keep performing sequential scans despite the index for that column? Let&rsquo;s take another look at the query we are trying to perform:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, ssn_hash);
 </span></span></code></pre></div><p>As we already know, to recompute the hash, the <code>crypto()</code> function has to receive the original salt as the input. But, as you can see, the only known thing when we run this query is the plain SSN value. This means that the only possible option that Postgres has is to do the following:</p>
@@ -1093,29 +1095,29 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>if matches, we found what we are looking for, otherwise, we need to proceed to the next item, and so on</li>
 </ul>
 <p>Since the algorithm described need to iterate over all the existing items, it makes sense while Postgres doesn&rsquo;t rely on indexes at all. If we modify the query to compare the <code>ssn_hash</code> with the plain string instead of the <code>crypt()</code> function like this:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;</span>;
 </span></span></code></pre></div><p>we can see that this time Postgres will use the index:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Index Scan using users_ssn_hashed_idx on users  (cost=0.28..8.30 rows=1 width=138) (actual time=0.015..0.015 rows=0 loops=1)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Index Scan using users_ssn_hashed_idx on users  (cost=0.28..8.30 rows=1 width=138) (actual time=0.015..0.015 rows=0 loops=1)
 </span></span><span style="display:flex;"><span>  Index Cond: (ssn_hash = &#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;::text)
 </span></span><span style="display:flex;"><span>Planning Time: 0.448 ms
 </span></span><span style="display:flex;"><span>Execution Time: 0.033 ms
 </span></span></code></pre></div><p>Also, remember that we mentioned that Bcrypt algorithm is relatively slow? But what if we multiply slow by 5000 (number of table records we have)? That&rsquo;s the actual cause of the performance degradation that we have been investigating all this time!</p>
 <p>We can simply verify it by running:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users;
 </span></span></code></pre></div><p>The output:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Seq Scan on users  (cost=0.00..157.00 rows=5000 width=138) (actual time=0.009..0.441 rows=5001 loops=1)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Seq Scan on users  (cost=0.00..157.00 rows=5000 width=138) (actual time=0.009..0.441 rows=5001 loops=1)
 </span></span><span style="display:flex;"><span>Planning Time: 0.094 ms
 </span></span><span style="display:flex;"><span>Execution Time: 0.641 ms
 </span></span></code></pre></div><p>As you can see, even though the query iterated over all the rows, it didn&rsquo;t need to perform Bcrypt hashing at all, the execution time is extremely low.</p>
 <p>Ok, so we know now that Bcrypt is the one to blame for the poor performance. But does it mean that Bcrypt is just a bad algorithm performance-wise?</p>
 <h2 id="bcrypt-where-to-use-and-where-not-to-use">Bcrypt: where to use and where not to use</h2>
 <p>Similar to any other tool, Bcrypt has its use case: hashing passwords. This means that the expected use case for it is different from the one we have above, as we shouldn&rsquo;t search by it. Let me demonstrate the scenario where Bcrypt can be used:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> user_credentials
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">TABLE</span> user_credentials
 </span></span><span style="display:flex;"><span>(
 </span></span><span style="display:flex;"><span>    id            UUID <span style="color:#66d9ef">PRIMARY</span> <span style="color:#66d9ef">KEY</span> <span style="color:#66d9ef">DEFAULT</span> gen_random_uuid(),
 </span></span><span style="display:flex;"><span>    login         TEXT <span style="color:#66d9ef">NOT</span> <span style="color:#66d9ef">NULL</span> <span style="color:#66d9ef">UNIQUE</span>,
@@ -1124,7 +1126,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 </span></span><span style="display:flex;"><span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">CREATE</span> <span style="color:#66d9ef">INDEX</span> user_credentials_login_idx <span style="color:#66d9ef">ON</span> user_credentials (login);
 </span></span></code></pre></div><p>And let&rsquo;s insert a few items:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">dbUrl</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;postgres://adminU:adminP@localhost:5432/n0rdyblog&#34;</span>
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">dbPool</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">pgxpool</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">context</span>.<span style="color:#a6e22e">Background</span>(), <span style="color:#a6e22e">dbUrl</span>)
 </span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
@@ -1155,18 +1157,18 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>when the user tries to log in, they are passing us their credentials: login and password</li>
 <li>here is the query we run to verify the provided credentials are correct:</li>
 </ul>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> user_credentials
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> login <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ChCpOSGOCx&#39;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">AND</span> password_hash <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;ygEUnWIFIBoJ7ZQQqQ3j&#39;</span>, password_hash);
 </span></span></code></pre></div><p>Even though the <code>user_credentials</code> table has 5000 items, this query is very fast, let&rsquo;s see how fast:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> user_credentials
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> login <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;ChCpOSGOCx&#39;</span>
 </span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">AND</span> password_hash <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;ygEUnWIFIBoJ7ZQQqQ3j&#39;</span>, password_hash);
 </span></span></code></pre></div><p>The results:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Index Scan using user_credentials_login_idx on user_credentials  (cost=0.28..8.31 rows=1 width=88) (actual time=4.502..4.513 rows=1 loops=1)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Index Scan using user_credentials_login_idx on user_credentials  (cost=0.28..8.31 rows=1 width=88) (actual time=4.502..4.513 rows=1 loops=1)
 </span></span><span style="display:flex;"><span>  Index Cond: (login = &#39;ChCpOSGOCx&#39;::text)
 </span></span><span style="display:flex;"><span>&#34;  Filter: (password_hash = crypt(&#39;ygEUnWIFIBoJ7ZQQqQ3j&#39;::text, password_hash))&#34;
 </span></span><span style="display:flex;"><span>Planning Time: 0.067 ms
@@ -1180,7 +1182,7 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <li>since the input of the SHA-256 (or any other deterministic algorithm) will be SSN, which has a known format of 10 digits, it means that the hash will be easy to crack by the brute-forcing attack, as 10^10 (10 billion) possible options of the SSN are something that is easy to generate for the modern computers</li>
 </ul>
 <p>Here is the simple brute-force code to generate all the possible SSN hash values:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> (
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> (
 </span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">ssnLength</span> = <span style="color:#ae81ff">10</span>
 </span></span><span style="display:flex;"><span>)
 </span></span><span style="display:flex;"><span>
@@ -1220,12 +1222,12 @@ powered by <a target="_blank" href="https://gohugo.io">Hugo</a> | themed with <a
 <p><img src="/images/pics/20250131-0001.webp" alt="image"></p>
 <p>rather than keeping open/within the hash as in our previous example.</p>
 <p>The common salt fixes the performance issue with the  Bcrypt column, as the query with a known salt will use indexing:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-sql" data-lang="sql"><span style="display:flex;"><span><span style="color:#66d9ef">EXPLAIN</span> <span style="color:#66d9ef">ANALYSE</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">SELECT</span> <span style="color:#f92672">*</span>
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">FROM</span> users
 </span></span><span style="display:flex;"><span><span style="color:#66d9ef">WHERE</span> ssn_hash <span style="color:#f92672">=</span> crypt(<span style="color:#e6db74">&#39;0852285111&#39;</span>, <span style="color:#e6db74">&#39;$2a$06$DQqtgCtvY9GkT3uHpShehu&#39;</span>);
 </span></span></code></pre></div><p>The result is:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Index Scan using users_ssn_hashed_idx on users  (cost=0.28..8.30 rows=1 width=138) (actual time=0.038..0.038 rows=0 loops=1)
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;-webkit-text-size-adjust:none;"><code class="language-plain" data-lang="plain"><span style="display:flex;"><span>Index Scan using users_ssn_hashed_idx on users  (cost=0.28..8.30 rows=1 width=138) (actual time=0.038..0.038 rows=0 loops=1)
 </span></span><span style="display:flex;"><span>  Index Cond: (ssn_hash = &#39;$2a$06$DQqtgCtvY9GkT3uHpShehuxb3eHD50H6XNxzEyoxZkuDjEt87/6Ce&#39;::text)
 </span></span><span style="display:flex;"><span>Planning Time: 3.462 ms
 </span></span><span style="display:flex;"><span>Execution Time: 0.118 ms
