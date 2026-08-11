@@ -1,5 +1,5 @@
 baseURL = "https://n0rdy.foo/"
-languageCode = "en-us"
+locale = "en-us"
 title = "n0rdy personal blog"
 theme = "poison"
 
@@ -28,11 +28,6 @@ pluralizelisttitles = false
     remark42 = true
     remark42_host = "https://www.remark42.n0rdy.foo"
     remark42_site_id = "remark42.n0rdy.foo"
-
-    # Plausible
-    plausible = true
-    plausible_domain = "n0rdy.foo"
-    plausible_script = "https://plausible.n0rdy.foo/js/script.js"
 
     # Listmonk
     listmonk = true

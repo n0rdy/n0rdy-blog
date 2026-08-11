@@ -4,8 +4,9 @@ licenselink = "https://github.com/lukeorth/poison/blob/master/LICENSE.md"
 description = "A pragmatic Hugo theme for bloggers.  Based on the classic \"Hyde\" design by mdo."
 
 # Uses the template system introduced in Hugo 0.146 (layouts/_partials,
-# layouts/_shortcodes, layouts/_markup, top-level baseof/home/list/single).
-min_version = "0.146.0"
+# layouts/_shortcodes, layouts/_markup, top-level baseof/home/list/single)
+# and .Site.Language.Locale, which replaced .Site.LanguageCode in 0.158.
+min_version = "0.158.0"
 
 # The home page of the theme, where the source can be found.
 homepage = "https://github.com/lukeorth/poison"

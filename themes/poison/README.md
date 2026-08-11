@@ -9,8 +9,6 @@
 >
 > The pre-vendoring history (this fork's commits plus all of upstream's) is
 > preserved in `poison-theme-backup-2026-08-11.bundle`, kept outside the repo.
->
-> Local changes since the fork point are documented in [CHANGES.md](CHANGES.md).
 
 ![Poison screenshot](https://raw.githubusercontent.com/lukeorth/poison/master/images/screenshot.png)
 
