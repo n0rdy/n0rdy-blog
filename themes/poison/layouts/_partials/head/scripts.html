@@ -1,0 +1,43 @@
+{{/* KaTeX is ~275KB on its own, so it is opt-in rather than shipped on every
+     page.  Enable per-page with `math: true` in front matter, or site-wide
+     with `math = true` under [params].  Note that the renderer treats a bare
+     `$` as an inline math delimiter, so leaving this off is also what keeps
+     shell snippets and hashes in prose from being parsed as math. */}}
+{{ $math := or .Params.math .Site.Params.math }}
+
+{{/* Personal/custom script for light/dark mode and tabs */}}
+{{ $js := slice
+      (resources.Get "js/light_dark.js")
+      (resources.Get "js/tabs.js") }}
+
+{{/* Personal/custom scripts for table of contents */}}
+{{ if not .Site.Params.hideToc }}
+    {{ $js = $js | append (resources.Get "js/toc.js") }}
+{{ end }}
+
+{{/* Personal/custom scripts for codeblocks */}}
+{{ $js = $js | append (resources.Get "js/codeblock.js") }}
+
+{{/* Locally hosted KaTeX, plus the custom glue that drives it.  The library
+     must precede auto-render, which must precede the glue. */}}
+{{ if $math }}
+    {{ $js = $js | append
+          (resources.Get "js/lib/katex.js")
+          (resources.Get "js/lib/auto-render.js")
+          (resources.Get "js/katex.js") }}
+{{ end }}
+
+{{/* Distinct target names: pages with and without math produce different
+     bundles, and resources.Concat keys its cache on the target path. */}}
+{{ $js_bundle := $js | resources.Concat (cond $math "js/bundle-math.js" "js/bundle.js") | minify | fingerprint }}
+
+<script defer src="{{ $js_bundle.RelPermalink }}"></script>
+
+
+{{ if .Site.Params.plausible }}
+<script defer data-domain="{{ .Site.Params.plausible_domain }}" src="{{ .Site.Params.plausible_script }}"></script>
+{{ end }}
+
+{{ if hugo.IsProduction -}}
+  {{ template "_internal/google_analytics.html" . -}}
+{{ end -}}

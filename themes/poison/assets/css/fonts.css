@@ -1,0 +1,77 @@
+/* woff2 only: supported by every browser since 2016, and every one of these
+   faces already had a woff2 source.  `font-display: swap` renders text in a
+   fallback face immediately rather than leaving it invisible while the
+   webfont downloads. */
+
+/* fira-sans-300 - latin */
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/fira-sans-v16-latin-300.woff2') format('woff2');
+}
+/* fira-sans-300italic - latin */
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: italic;
+  font-weight: 300;
+  font-display: swap;
+  src: url('/fonts/fira-sans-v16-latin-300italic.woff2') format('woff2');
+}
+/* fira-sans-regular - latin */
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/fira-sans-v16-latin-regular.woff2') format('woff2');
+}
+/* fira-sans-italic - latin */
+@font-face {
+  font-family: 'Fira Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/fira-sans-v16-latin-italic.woff2') format('woff2');
+}
+/* pt-sans-regular - latin */
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/pt-sans-v17-latin-regular.woff2') format('woff2');
+}
+/* pt-sans-italic - latin */
+@font-face {
+  font-family: 'PT Sans';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/pt-sans-v17-latin-italic.woff2') format('woff2');
+}
+/* pt-sans-700 - latin */
+@font-face {
+  font-family: 'PT Sans';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/pt-sans-v17-latin-700.woff2') format('woff2');
+}
+/* pt-sans-700italic - latin */
+@font-face {
+  font-family: 'PT Sans';
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url('/fonts/pt-sans-v17-latin-700italic.woff2') format('woff2');
+}
+/* abril-fatface-regular - latin */
+@font-face {
+  font-family: 'Abril Fatface';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('/fonts/abril-fatface-v19-latin-regular.woff2') format('woff2');
+}

@@ -1,0 +1,12 @@
+{{ define "main" -}}
+{{ if .Site.Params.light_dark }}
+    {{ partial "light_dark.html" . }}
+{{ end }}
+<div class="post">
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{ .Content }}
+    {{ if (.Site.Params.listmonk) }}
+        {{ partial "post/listmonk_email_newsletters.html" . }}
+    {{ end }}
+</div>
+{{ end }}

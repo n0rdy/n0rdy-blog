@@ -1,0 +1,2 @@
+{{ $dofollow := .Page.Params.dofollow | default false }}<a href="{{ .Destination | safeURL }}"{{ with .Title }} title="{{ . }}"{{ end }}{{ if strings.HasPrefix .Destination "http" }} target="_blank"{{ end }}{{ if not $dofollow }} rel="nofollow"{{ end }}>{{ .Text | safeHTML }}</a>
+{{- /* This comment removes trailing newlines. */ -}}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html{{ with .Site.LanguageCode }} lang="{{ . }}"{{ end }}>
+<head>
+    <!-- Content Type -->
+    <meta charset="utf-8">
+
+    <!-- Enable responsiveness on mobile devices-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- favicon -->
+    <link rel="icon" href="{{ .Site.Params.favicon | default "/favicon.png" }}">
+
+    <!-- META -->
+    {{ partial "head/meta.html" . }}
+
+    <!-- CSS stylesheets -->
+    {{ partial "head/stylesheets.html" . }}
+
+    <!-- Custom style tag for parameterized CSS -->
+    {{ partial "head/css.html" . }}
+
+    <!-- Scripts (all deferred, so they load after the stylesheets above) -->
+    {{ partial "head/scripts.html" . }}
+</head>
