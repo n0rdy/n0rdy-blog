@@ -9,14 +9,25 @@ Here you'll find a collection of products I've built 🚀 Each product is crafte
 
 ## Featured Products
 
-### Talk To Locals
-A two-way voice translator that turns your phone into a speaking interpreter.
+### reTrek
+A walking app that turns your daily steps into adventures.
 
-Talk To Locals is the only voice-to-voice translator that lets you have natural conversations: no typing, no screen-passing, no awkward pauses. Just place your phone between you and anyone speaking 40+ languages, and it translates both voices in real-time.
+<img src="/images/pics/retrek-hero-mockup.webp" alt="reTrek home screen showing walking progress along the Everest Base Camp route" width="300" height="613" loading="lazy" />
 
-Perfect for ordering in local restaurants, meeting your partner's family, settling in as an expat/nomad, or discovering stories only locals know. First 10 minutes free, then pay only for what you use, no subscriptions.
+Your steps become progress along real trails like Everest Base Camp or the Camino de Santiago, or through mystery quests where your choices shape the story. Walk solo, or team up and race your friends.
 
-[Visit Talk To Locals](https://talktolocals.ai)
+Built for those of us who spend the day at a desk and need a better reason to go outside than "steps are healthy". Free to try with one route and one quest included.
+
+[Visit reTrek](https://retrek.me)
+
+## Open Source
+
+### Forq
+A message queue powered by SQLite, for workloads that don't need Kafka.
+
+Forq is the missing middle between embedded libraries and enterprise solutions: a simple HTTP API with four endpoints, one table schema, retries with exponential backoff, and at-least-once delivery. Minimal configuration by design, with SDKs for Go, Java, and TypeScript.
+
+[Visit Forq](https://forq.sh)
 
 ## My Friends' Products
 

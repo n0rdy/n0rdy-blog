@@ -20,7 +20,6 @@ pluralizelisttitles = false
         {Name = "Subscribe", URL = "https://mail.n0rdy.foo/subscription/form", External = true, HasChildren = false},
         {Name = "About", URL = "/about/", HasChildren = false},
         {Name = "Posts", URL = "/posts/", Pre = "Recent", HasChildren = false},
-        {Name = "Tags", URL = "/tags/", HasChildren = false},
         {Name = "My Products", URL = "/my-products/", HasChildren = false},
     ]
 

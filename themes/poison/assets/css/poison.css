@@ -171,6 +171,10 @@ body > .wrapper {
     justify-content: space-between;
     align-items: center;
     align-content: center;
+    column-gap: 1.5em;
+}
+.headline > div {
+    white-space: nowrap;
 }
 .reading-time {
     color: gray;
