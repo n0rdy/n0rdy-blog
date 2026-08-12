@@ -10,7 +10,7 @@ pluralizelisttitles = false
     pagerSize = 5
 
 [params]
-    brand = "n0rdy"
+    brand = "Myko Nordy"
     brand_image = "/images/avatar.webp"
     description = "Exploring software engineering and tech"
     dark_mode = true
