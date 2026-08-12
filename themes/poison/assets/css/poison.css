@@ -277,7 +277,7 @@ tbody tr:nth-child(odd) th {
     margin-left: 1em;
 }
 .article-toc h4 {
-    margin-left: 0;
+    margin-left: 1em;
 }
 .article-toc ul {
     margin-bottom: 0;
