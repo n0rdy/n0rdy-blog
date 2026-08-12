@@ -41,4 +41,4 @@ This is a cozy corner of the internet where she posts her knitting podcasts, tut
 
 ---
 
-*More products coming soon! Stay tuned for updates by subscribing to my newsletter.*
+*Stay tuned for updates by subscribing to my newsletter.*
