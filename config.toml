@@ -32,6 +32,11 @@ pluralizelisttitles = false
     giscus_category_id = "DIC_kwDOK3ZLvc4DDNeK"
     giscus_mapping = "pathname"
 
+    # Umami
+    umami = true
+    umami_script = "https://pulse.n0rdy.foo/script.js"
+    umami_website_id = "2213b6ef-9d21-4e84-bc01-de8247bdf4b2"
+
     # Listmonk
     listmonk = true
     listmonk_host = "https://mail.n0rdy.foo"

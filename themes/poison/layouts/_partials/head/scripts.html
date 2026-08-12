@@ -34,6 +34,10 @@
 <script defer src="{{ $js_bundle.RelPermalink }}"></script>
 
 
+{{ if .Site.Params.umami }}
+<script defer src="{{ .Site.Params.umami_script }}" data-website-id="{{ .Site.Params.umami_website_id }}"></script>
+{{ end }}
+
 {{ if .Site.Params.plausible }}
 <script defer data-domain="{{ .Site.Params.plausible_domain }}" src="{{ .Site.Params.plausible_script }}"></script>
 {{ end }}
