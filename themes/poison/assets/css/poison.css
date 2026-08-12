@@ -352,3 +352,21 @@ div.highlight pre {
 .current {
     color: var(--text-color);
 }
+@media (max-width: 48em) {
+    .sidebar-about img {
+        height: 96px;
+        width: 96px;
+    }
+    .sidebar-nav {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 1.25em;
+        row-gap: 0.25em;
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+    }
+    .sidebar-nav .heading {
+        margin-top: 0;
+    }
+}

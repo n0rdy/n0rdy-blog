@@ -1,53 +1,64 @@
-# Start AI crawler block
-#
-# n0rdy does not permit unlicensed use of my content for training large language models or other
-# artificial intelligence technology. All uses, reproductions and extractions of my content for
-# such purposes require specific approval by n0rdy. I explicitly disallow text and data mining and
-# all other technical means designed to or with the effect that they enable unlicensed use,
-# reproduction or extraction of my content for training AI models.
-
-User-agent: anthropic-ai
+User-agent: YandexBot
 Disallow: /
 
-User-agent: CCBot
+User-agent: YandexImages
 Disallow: /
 
-User-agent: Google-Extended
+User-agent: YandexVideo
 Disallow: /
 
-User-agent: GPTBot
-Disallow: /
-# End AI crawler block
-
-# Start known spiders block
-
-User-agent: Baiduspider
+User-agent: YandexNews
 Disallow: /
 
-User-agent: facebookexternalhit
+User-agent: YandexBlogs
 Disallow: /
 
-User-agent: ia_archiver
+User-agent: YandexFavicons
 Disallow: /
 
-User-Agent: LinkedInBot
+User-agent: YandexWebmaster
 Disallow: /
 
-User-Agent: LinkedInBot/1.0
+User-agent: YandexPagechecker
 Disallow: /
 
-User-agent: Pinterestbot
+User-agent: YandexImageResizer
 Disallow: /
 
-User-agent: TelegramBot
+User-agent: YandexAdNet
 Disallow: /
 
-User-agent: Twitterbot
+User-agent: YandexDirect
 Disallow: /
 
-User-agent: Yandex
+User-agent: YandexCalendar
 Disallow: /
 
-# End known spiders block
+User-agent: YandexSitelinks
+Disallow: /
+
+User-agent: YandexMetrika
+Disallow: /
+
+User-agent: YandexMobileScreenShotBot
+Disallow: /
+
+User-agent: Mail.RU_Bot
+Disallow: /
+
+User-agent: StackRambler
+Disallow: /
+
+User-agent: vkShare
+Disallow: /
+
+User-agent: VK.com
+Disallow: /
+
+User-agent: OdklBot
+Disallow: /
+
+User-agent: SputnikBot
+Disallow: /
 
 Sitemap: https://n0rdy.foo/sitemap.xml
