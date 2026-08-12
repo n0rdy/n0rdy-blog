@@ -24,10 +24,13 @@ pluralizelisttitles = false
         {Name = "My Products", URL = "/my-products/", HasChildren = false},
     ]
 
-    # Remark42
-    remark42 = true
-    remark42_host = "https://www.remark42.n0rdy.foo"
-    remark42_site_id = "remark42.n0rdy.foo"
+    # Giscus
+    giscus = true
+    giscus_repo = "n0rdy/n0rdy-blog"
+    giscus_repo_id = "R_kgDOK3ZLvQ"
+    giscus_category = "Announcements"
+    giscus_category_id = "DIC_kwDOK3ZLvc4DDNeK"
+    giscus_mapping = "pathname"
 
     # Listmonk
     listmonk = true

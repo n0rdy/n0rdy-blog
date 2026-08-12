@@ -35,5 +35,14 @@ btn.addEventListener("click", function () {
             window.REMARK42.changeTheme("light");
         }
     }
+
+    const giscusFrame = document.querySelector("iframe.giscus-frame");
+    if (giscusFrame) {
+        giscusFrame.contentWindow.postMessage(
+            { giscus: { setConfig: { theme: theme } } },
+            "https://giscus.app"
+        );
+    }
+
     localStorage.setItem("theme", theme);
 });
