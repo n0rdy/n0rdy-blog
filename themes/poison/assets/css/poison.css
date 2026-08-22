@@ -159,53 +159,23 @@ body > .wrapper {
     color: gray;
     font-style: italic;
 }
-.newsletters .help-block-for-success {
-    display: none;
-    margin: 0.25rem 1rem 0.25rem 0;
-    text-align: center;
-    color: green;
-}
-.newsletters .help-block-for-error {
-    display: none;
-    margin: 0.25rem 1rem 0.25rem 0;
-    text-align: center;
-    color: #de0928;
-}
-.newsletters .help-block-show {
-    display: block;
-}
-.newsletters form {
+.newsletters {
     display: flex;
-    align-content: center;
-    justify-content: center;
     flex-flow: row wrap;
+    align-items: center;
+    justify-content: center;
 }
-.newsletters .email-subscription-form-hide {
-    display: none;
-}
-.newsletters label {
+.newsletters span {
     margin: 0.25rem 1rem 0.25rem 0;
     text-align: center;
 }
-.newsletters input {
-    margin: 0.25rem 1rem 0.25rem 0;
-    font-size: 0.75rem;
-    padding: 0.25rem 0.5rem;
-    border: 1px solid var(--text-color);
-    border-radius: 0.25rem;
-}
-.newsletters input:focus-visible {
-    outline: none;
-}
-.newsletters button {
-    background-color: transparent;
+.newsletters .subscribe-button {
     color: var(--text-color);
     padding: 0.25rem 0.5rem;
     border-radius: 0.25rem;
     border: 1px solid var(--text-color);
-    font-family: inherit;
     font-size: 0.85rem;
-    cursor: pointer;
+    text-decoration: none;
     margin: 0.25rem 0;
 }
 .tags {
