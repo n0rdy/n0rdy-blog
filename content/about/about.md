@@ -14,7 +14,7 @@ I don't believe in "the best programming language/paradigm/framework", so this b
 
 I hope you'll find something useful here, learn a thing or two, or just have a good time reading my posts ☕️
 
-When I'm not writing, I build things: the latest one is [reTrek](https://retrek.me), a walking app that turns your daily steps into adventures.
+When I'm not writing, I build things: the latest ones are [reTrek](https://retrek.me), a walking app that turns your daily steps into adventures, and [Ten Breaths](https://tenbreaths.app), a Mac app that floats a breathing guide over your screen for the nervous minutes before a meeting.
 
 My contacts are in the sidebar if you have any questions or just want to say "Hi".
 

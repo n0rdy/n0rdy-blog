@@ -20,6 +20,17 @@ Built for those of us who spend the day at a desk and need a better reason to go
 
 [Visit reTrek](https://retrek.me)
 
+### Ten Breaths
+A breathing guide that floats over your Mac screen.
+
+<img src="/images/pics/tenbreaths-icon.png" alt="Ten Breaths app icon: a white dragonfly on a blue tile" width="160" height="160" loading="lazy" />
+
+For the nervous minutes before an interview, a sales call, or a 1-1 with your manager, or in the middle of one, when a question lands and you still need to look composed on camera. A soft circle guides your breathing on top of whatever is on your screen, and nobody on the other side can see it. Three techniques, all backed by published research, and nothing leaves your Mac.
+
+Coming soon to the Mac App Store. One price, no subscription.
+
+[Visit Ten Breaths](https://tenbreaths.app)
+
 ## Open Source
 
 ### Forq
