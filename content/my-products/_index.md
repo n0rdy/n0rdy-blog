@@ -33,8 +33,19 @@ Coming soon to the Mac App Store. One price, no subscription.
 
 ## Open Source
 
+### pooml (Poor Man's Logger)
+Logs, metrics, dashboards, and alerts in one small SQLite-backed binary. Built for self-hosters, queried with plain SQL.
+
+<img src="/images/pics/pooml-logo.png" alt="pooml logo: a hand-drawn peanut" width="151" height="160" loading="lazy" />
+
+pooml skips the custom query dialect: logs and metrics live in SQLite tables, and you query them with plain SQL. Ship logs from FluentBit, push metrics over OTLP or scrape Prometheus endpoints, draw dashboards, and get alerts on your phone. It also comes with an MCP server, so your AI assistant can ask "what broke last night?" against your own instance.
+
+[Visit pooml](https://pooml.com)
+
 ### Forq
 A message queue powered by SQLite, for workloads that don't need Kafka.
+
+<img src="/images/pics/forq-logo.png" alt="Forq logo: a green fork next to the word Forq" width="240" height="126" loading="lazy" />
 
 Forq is the missing middle between embedded libraries and enterprise solutions: a simple HTTP API with four endpoints, one table schema, retries with exponential backoff, and at-least-once delivery. Minimal configuration by design, with SDKs for Go, Java, and TypeScript.
 
@@ -45,6 +56,8 @@ Forq is the missing middle between embedded libraries and enterprise solutions: 
 ### Bare Knit
 
 A knitting blog & podcast by my wife.
+
+<img src="/images/pics/bareknit-logo.png" alt="Bare Knit logo: a green knitted hat with a white pom-pom under the moon" width="150" height="150" loading="lazy" />
 
 This is a cozy corner of the internet where she posts her knitting podcasts, tutorials, and knitting-related life hacks.
 
