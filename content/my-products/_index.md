@@ -27,8 +27,6 @@ A breathing guide that floats over your Mac screen.
 
 For the nervous minutes before an interview, a sales call, or a 1-1 with your manager, or in the middle of one, when a question lands and you still need to look composed on camera. A soft circle guides your breathing on top of whatever is on your screen, and nobody on the other side can see it. Three techniques, all backed by published research, and nothing leaves your Mac.
 
-Coming soon to the Mac App Store. One price, no subscription.
-
 [Visit Ten Breaths](https://tenbreaths.app)
 
 ## Open Source
