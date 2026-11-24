@@ -49,6 +49,15 @@ Forq is the missing middle between embedded libraries and enterprise solutions: 
 
 [Visit Forq](https://forq.sh)
 
+### Nordyg
+A DNS client for macOS.
+
+<img src="/images/pics/nordyg-icon.png" alt="Nordyg app icon: a blue liquid N on a dark tile" width="160" height="160" loading="lazy" />
+
+Ask any resolver about any record, over UDP, TCP, DNS over TLS, DNS over HTTPS or DNS over QUIC, and see everything it sent back, with DNSSEC validated on your own Mac. It also traces a name from the root servers down, checks a domain's mail setup and its zone, looks up who registered a domain, and watches a query for changes. Free and open source.
+
+[Visit Nordyg](https://nordyg.com)
+
 ## My Friends' Products
 
 ### Bare Knit
